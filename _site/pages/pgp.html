@@ -8,9 +8,9 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Stephen Diehl</title>
-    <meta name="description" content="Personal Blog">
-    <meta name="author" content="Stephen Diehl">
+    <title>pgp</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
 
     <!-- Mobile Specific Metas
   ================================================== -->
@@ -18,16 +18,15 @@
 
     <!-- CSS
   ================================================== -->
-    <link rel="stylesheet" href="stylesheets/base.css">
-    <link rel="stylesheet" href="stylesheets/skeleton.css">
-    <link rel="stylesheet" href="stylesheets/typography.css">
-    <link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/code.css">
-    <link rel="stylesheet" href="stylesheets/custom.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
 
-    <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata' rel='stylesheet'>
-    <script type="text/javascript"
-      src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -35,7 +34,7 @@
         jax: ["input/TeX", "output/HTML-CSS"],
         tex2jax: {
           inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-          displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+          displayMath: [ ['$','$'], ["\\[","\\]"] ],
           processEscapes: true
         },
         "HTML-CSS": { availableFonts: ["TeX"] }
@@ -64,18 +63,20 @@
             <nav>
                 <h3 id="logo">Stephen Diehl</h3>
                 <ul>
-                    <li><a href="index.html">Writings</a></li>
-<li><a href="projects.html">Projects</a></li>
-<li><a href="pgp.html">PGP Key</a></li>
-<li><a href="https://github.com/sdiehl">Github</a></li>
-<li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
             </nav>
-            &nbsp;
+             
         </div>
 
         <div class="twelve columns offset-by-one content">
-              <div class="highlight"><pre>-----BEGIN PGP PUBLIC KEY BLOCK-----
+            <pre>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: GnuPG v1.4.12 (GNU/Linux)
 
 mQENBE+eo1YBCADPrRpyMHXcSyMvTonQia0kLMeGDgzN74gILfFnzDjSYbPR46Dq
@@ -106,7 +107,8 @@ ga3elxwewJfYOBYwlpCqqQPGWPt1wdWXkx/s0pC8cvIAhjrVoCXCszVJoJBBsh5J
 116jkg==
 =Vz+2
 -----END PGP PUBLIC KEY BLOCK-----
-</pre></div>
+</pre>
+
 
         </div>
     </div>
@@ -118,4 +120,3 @@ ga3elxwewJfYOBYwlpCqqQPGWPt1wdWXkx/s0pC8cvIAhjrVoCXCszVJoJBBsh5J
 <!-- End Document
 ================================================== -->
 </body>
-</html>

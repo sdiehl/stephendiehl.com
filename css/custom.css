@@ -99,3 +99,35 @@ table{background:#fff;border:1px solid #ccc;border-width:2px;border-collapse:col
 th, td{border:1px solid #ccc;padding:3px 10px;text-align:left;vertical-align:top;}
 tr.even td{background:#f7f7f7;}
 th{background:#edeff0;}
+
+.tikz_verybig {
+    width: 400px;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.tikz_big {
+    width: 200px;
+    height: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.tikz_small {
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+}
+
+.highlight {
+    margin-bottom: 20px;
+}
+
+code {
+    font-family: monospace;
+}

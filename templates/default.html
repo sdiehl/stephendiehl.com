@@ -8,9 +8,9 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Stephen Diehl</title>
-    <meta name="description" content="Personal Blog">
-    <meta name="author" content="Stephen Diehl">
+    <title>$title$</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
 
     <!-- Mobile Specific Metas
   ================================================== -->
@@ -18,12 +18,12 @@
 
     <!-- CSS
   ================================================== -->
-    <link rel="stylesheet" href="stylesheets/base.css">
-    <link rel="stylesheet" href="stylesheets/skeleton.css">
-    <link rel="stylesheet" href="stylesheets/typography.css">
-    <link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/code.css">
-    <link rel="stylesheet" href="stylesheets/custom.css">
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/typography.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/syntax.css">
+    <link rel="stylesheet" href="/css/custom.css">
 
     <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata' rel='stylesheet'>
     <script type="text/javascript"
@@ -64,26 +64,19 @@
             <nav>
                 <h3 id="logo">Stephen Diehl</h3>
                 <ul>
-                    <li><a href="index.html">Writings</a></li>
-<li><a href="projects.html">Projects</a></li>
-<li><a href="pgp.html">PGP Key</a></li>
-<li><a href="https://github.com/sdiehl">Github</a></li>
-<li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                    <li><a href="/">Index</a></li>
+                    <li><a href="/posts.html">Writings</a></li>
+                    <li><a href="/pages/projects.html">Projects</a></li>
+                    <li><a href="/pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
             </nav>
             &nbsp;
         </div>
 
         <div class="twelve columns offset-by-one content">
-            
-              <h3 id="new-site">New Site</h3>
-
-<p>Its been about two years so I figured I&#8217;d update my blog. The new blog is powered by a new
-Python static site generator that I threw together and will eventually open source. Here&#8217;s a 
-<a href="demo.html">demo</a>.</p>
-
-              <hr class="large">
-            
+            $body$
         </div>
     </div>
 
@@ -94,4 +87,3 @@ Python static site generator that I threw together and will eventually open sour
 <!-- End Document
 ================================================== -->
 </body>
-</html>
