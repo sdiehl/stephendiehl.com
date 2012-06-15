@@ -2,3 +2,5 @@ hakyll
 _cache
 *.hi
 *.o
+*.swp
+*.swo
