@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Categorical Programming: Introduction</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'] ],
+          displayMath: [ ["\[","\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="forward">Forward</h3>
+<p>This is a multipart blog post on the structure of the pure mathematical field of Category theory and and how it relates to real world programming in Haskell.</p>
+<p>Category theory distills the essense of a large variety of constructions in classical set theory out to more abstract context which can be used to reason about the large scale structure of other fields and mathematics, physics, and computer science.</p>
+<p>In a way some of the constructions in category theory are almost “too abstract” since they are often model very low-level universal properties of mathematics. This does often leave one questioning, what does this construction really mean? One migt be tempted to then try to go back to concrete set theory exmaples, but in doing so one is often distracted by the example and looses the insight essential nature of the theory.</p>
+<p>In short, often times the best intuition is derived from looking at the constructions in their full abstraction, i.e. that they are nothing more than abstract symbols and processses of manipulation on those symbols.</p>
+<h3 id="categories">Categories</h3>
+<p>A <em>category</em> is defined as a collection of three things:</p>
+<ol style="list-style-type: decimal">
+<li>A collection of <strong>objects</strong>.</li>
+<li>A collection of <strong>morphisms</strong>.</li>
+<li>An <strong>composition</strong> operation (.) which has the following property:</li>
+<li>For each object A there is an identity morphism $ id_A $.</li>
+</ol>
+<p>Which all obey the following properties:</p>
+<p><strong>Associativity</strong></p>
+<p>[ ( f . g ) . h = f . ( g . h ) ]</p>
+<p><strong>Identity</strong></p>
+<p>[ f . id_A = id_A . f = f ]</p>
+<p><strong>Composition Constraint</strong></p>
+<p>Morphisms also have associated objects $ A,B \in C $ referred to as domain and codomain written $ dom(f) $ and $ cod(f) $.</p>
+<p>If $ f . g $ is well defined then:</p>
+<p>[ dom(f) = cod(g) ]</p>
+<blockquote>
+<p>Morphisms are not functions. It is the other way around, in the category of SET functions are morphisms with objects as sets but this is a a special case. In general morphisms are a pure abstraction which is structurally similar to functions.</p>
+</blockquote>
+<h4 id="set">SET</h4>
+<p>Categories are often written in bold. For example a very common category is that of SET.</p>
+<ol style="list-style-type: decimal">
+<li>Classical sets as objects.</li>
+<li>Total functions as morphisms.</li>
+<li>A composition operation $ \circ $.</li>
+</ol>
+<p>[ g \circ f = \{ (x, g(f(x))) | x \in A \} ]</p>
+<ol start="4" style="list-style-type: decimal">
+<li>For each set <span class="math"><em>A</em></span> there is an identity function $ id_A $ which maps the set <span class="math"><em>A</em></span> to itself $ f(A) = A $.</li>
+</ol>
+<p>With the usual properties:</p>
+<p>[ ( f \circ g ) \circ h = f \circ ( g \circ h ) ]</p>
+<p>[ f \circ id_A = id_A \circ f = f ]</p>
+<p>In SET domain and codomain are sometimes referred to as domain and range.</p>
+<h4 id="hask">HASK</h4>
+<p>The set of all non-polymorphic Haskell types forms a category with Haskell functions as morphisms.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">head</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a
+<span class="fu">head</span> (x<span class="fu">:</span>_) <span class="fu">=</span>  x</code></pre>
+<p><br /> HASK also contains both a composition operator and a identity the Prelude.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(.)              ::</span> (b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> c
+f <span class="fu">.</span> g            <span class="fu">=</span>  \ x <span class="ot">-&gt;</span> f (g x)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span><span class="ot">               ::</span> a <span class="ot">-&gt;</span> a
+<span class="fu">id</span> x             <span class="fu">=</span>  x</code></pre>
+<p><br /> The the constraint on domain and codomain alignment is enforced by the type checker.</p>
+<h4 id="vec">VEC</h4>
+<p>For the linear-algebra inclined, a space of vectors with linear mappings between vector spaces also forms a category with.</p>
+<ol style="list-style-type: decimal">
+<li>Vectors spaces as objects.</li>
+<li>Linear mappings as morphisms.</li>
+<li>A composition operation $ \circ $ composing linear mappings.</li>
+<li>For each vector $ A $ there is an identity mapping $ id_A $.</li>
+</ol>
+<h4 id="cat">CAT</h4>
+<p>In the original definition of category we did not mention that the objects or arrows neccesarily form a set. Instead we stated in the definition that we need only have a collection of objects and arrows.</p>
+<p>A category which has its arrows and objects in a set is referred to as a <strong>small category</strong>. A category which does not is referred to as a <strong>large category</strong>.</p>
+<p>This begs the question as to whether we can form the category of all categories. The answer to this is no, because of the implications of self-referential sets. See <a href="http://en.wikipedia.org/wiki/Russell's_paradox">Russell’s Paradox</a>.</p>
+<p>It is however very illuminating to look at the category of all small categories called <strong>CAT</strong> which does indeed form a category with objects being categories and “mappings” called functors as morphisms between categories.</p>
+<p>The category of categories is where category theory starts to become interesting. More on this in the next post…</p>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
