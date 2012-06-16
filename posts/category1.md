@@ -9,22 +9,21 @@ This is a multipart blog post on the structure of the pure mathematical
 field of Category theory and and how it relates to real world
 programming in Haskell.
 
-Category theory distills the essense of a large variety of
-constructions in classical set theory out to more abstract
-context which can be used to reason about the large scale
-structure of other fields and mathematics, physics, and computer
-science.
+Category theory distills the essense of a large variety of constructions
+in classical set theory to more abstract context which can be used to
+reason about the large scale structure of mathematics, physics, and
+computer science.
 
 In a way some of the constructions in category theory are almost "too
 abstract" since they are often model very low-level universal properties
 of mathematics. This does often leave one questioning, what does this
-construction really mean? One migt be tempted to then try to go back to
-concrete set theory exmaples, but in doing so one is often distracted by
-the example and looses the insight essential nature of the theory.
+construction really mean? One might be tempted to then go back concrete
+set theory examples, but in doing so one might loose insight into the
+essential nature of the theory.
 
 In short, often times the best intuition is derived from looking
 at the constructions in their full abstraction, i.e. that they
-are nothing more than abstract symbols and processses of
+are nothing more than abstract symbols and processes of
 manipulation on those symbols.
 
 ### Categories
@@ -122,7 +121,7 @@ id x             =  x
 
 \
 
-The the constraint on domain and codomain alignment is enforced
+The constraint on domain and codomain alignment is enforced
 by the type checker.
 
 
@@ -139,7 +138,7 @@ between vector spaces also forms a category with.
 #### CAT
 
 In the original definition of category we did not mention that the
-objects or arrows neccesarily form a set. Instead we stated in the
+objects or arrows necessarily form a set. Instead we stated in the
 definition that we need only have a collection of objects and arrows.
 
 A category which has its arrows and objects in a set is referred to as a
@@ -153,7 +152,7 @@ Paradox](http://en.wikipedia.org/wiki/Russell's_paradox).
 
 It is however very illuminating to look at the category of all small
 categories called **CAT** which does indeed form a category with objects
-being categories and "mappings" called functors as morphisms between
+as categories and mappings called functors as morphisms between
 categories.
 
 The category of categories is where category theory starts to
