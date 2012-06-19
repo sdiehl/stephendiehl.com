@@ -81,7 +81,7 @@
 <p>In a way some of the constructions in category theory are almost “too abstract” since they are often model very low-level universal properties of mathematics. This does often leave one questioning, what does this construction really mean? One might be tempted to then go back concrete set theory examples, but in doing so one might loose insight into the essential nature of the theory.</p>
 <p>In short, often times the best intuition is derived from looking at the constructions in their full abstraction, i.e. that they are nothing more than abstract symbols and processes of manipulation on those symbols.</p>
 <h3 id="categories">Categories</h3>
-<p>A <em>category</em> is defined as a collection of three things:</p>
+<p>A <em>category</em> is a construction with three things:</p>
 <ol style="list-style-type: decimal">
 <li>A collection of <strong>objects</strong>.</li>
 <li>A collection of <strong>morphisms</strong>.</li>
@@ -100,6 +100,7 @@
 <blockquote>
 <p>Morphisms are not functions. It is the other way around, in the category of SET functions are morphisms with objects as sets but this is a a special case. In general morphisms are a pure abstraction which is structurally similar to functions.</p>
 </blockquote>
+<p><img src="../images/category1.svg" alt="Illustration"></img>.</p>
 <h4 id="set">SET</h4>
 <p>Categories are often written in bold. For example a very common category is that of SET.</p>
 <ol style="list-style-type: decimal">
@@ -116,7 +117,7 @@
 <p>[ f \circ id_A = id_A \circ f = f ]</p>
 <p>In SET domain and codomain are sometimes referred to as domain and range.</p>
 <h4 id="hask">HASK</h4>
-<p>The set of all non-polymorphic Haskell types forms a category with Haskell functions as morphisms.</p>
+<p>The set of all non-polymorphic Haskell types forms a category with Haskell functions as morphisms. For example:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">head</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a
 <span class="fu">head</span> (x<span class="fu">:</span>_) <span class="fu">=</span>  x</code></pre>
 <p><br /> HASK also contains both a composition operator and a identity the Prelude.</p>
@@ -125,6 +126,7 @@ f <span class="fu">.</span> g            <span class="fu">=</span>  \ x <span cl
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span><span class="ot">               ::</span> a <span class="ot">-&gt;</span> a
 <span class="fu">id</span> x             <span class="fu">=</span>  x</code></pre>
 <p><br /> The constraint on domain and codomain alignment is enforced by the type checker.</p>
+<p>A <strong>subcategory</strong> is a category contained within another category which also satisfies the category construction. A more advanced example that will be discussed later is that monads with an operation called Klesli composition form a category that is of much interest to Haskell programmers.</p>
 <h4 id="vec">VEC</h4>
 <p>For the linear-algebra inclined, a space of vectors with linear mappings between vector spaces also forms a category with.</p>
 <ol style="list-style-type: decimal">
@@ -134,8 +136,8 @@ f <span class="fu">.</span> g            <span class="fu">=</span>  \ x <span cl
 <li>For each vector $ A $ there is an identity mapping $ id_A $.</li>
 </ol>
 <h4 id="cat">CAT</h4>
-<p>In the original definition of category we did not mention that the objects or arrows necessarily form a set. Instead we stated in the definition that we need only have a collection of objects and arrows.</p>
-<p>A category which has its arrows and objects in a set is referred to as a <strong>small category</strong>. A category which does not is referred to as a <strong>large category</strong>.</p>
+<p>In the original definition of category we did not mention that the objects or morphisms necessarily form a set. Instead we stated in the definition that we need only have a collection of objects and morphisms.</p>
+<p>A category which has its morphisms and objects in a set is referred to as a <strong>small category</strong>. A category which does not is referred to as a <strong>large category</strong>.</p>
 <p>This begs the question as to whether we can form the category of all categories. The answer to this is no, because of the implications of self-referential sets. See <a href="http://en.wikipedia.org/wiki/Russell's_paradox">Russell’s Paradox</a>.</p>
 <p>It is however very illuminating to look at the category of all small categories called <strong>CAT</strong> which does indeed form a category with objects as categories and mappings called functors as morphisms between categories.</p>
 <p>The category of categories is where category theory starts to become interesting. More on this in the next post…</p>

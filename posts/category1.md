@@ -28,7 +28,7 @@ manipulation on those symbols.
 
 ### Categories
 
-A *category* is defined as a collection of three things:
+A *category* is a construction with three things:
 
 1. A collection of **objects**.
 2. A collection of **morphisms**.
@@ -65,6 +65,8 @@ dom(f) = cod(g)
 > is a a special case. In general morphisms are a pure abstraction which
 > is structurally similar to functions.
 
+![Illustration](/images/category1.svg).
+
 #### SET
 
 Categories are often written in bold. For example a very common
@@ -97,7 +99,7 @@ In SET domain and codomain are sometimes referred to as domain and range.
 #### HASK
 
 The set of all non-polymorphic Haskell types forms a category
-with Haskell functions as morphisms.
+with Haskell functions as morphisms. For example:
 
 ```haskell
 head :: [a] -> a
@@ -124,6 +126,11 @@ id x             =  x
 The constraint on domain and codomain alignment is enforced
 by the type checker.
 
+A **subcategory** is a category contained within another category
+which also satisfies the category construction. A more advanced
+example that will be discussed later is that monads with an
+operation called Klesli composition form a category that is of
+much interest to Haskell programmers.
 
 #### VEC
 
@@ -138,10 +145,10 @@ between vector spaces also forms a category with.
 #### CAT
 
 In the original definition of category we did not mention that the
-objects or arrows necessarily form a set. Instead we stated in the
-definition that we need only have a collection of objects and arrows.
+objects or morphisms necessarily form a set. Instead we stated in the
+definition that we need only have a collection of objects and morphisms.
 
-A category which has its arrows and objects in a set is referred to as a
+A category which has its morphisms and objects in a set is referred to as a
 **small category**. A category which does not is referred to as a
 **large category**.
 
