@@ -59,13 +59,14 @@ endpoint we say that the diagram **commutes**, meaning the
 compositions of morphisms converge at the same codomain
 irregardless of choice of composition.
 
-> Because of the ubiquity of diagrametic reasoning in category theory it
+> Because of the ubiquity of diagrammatic reasoning in category theory it
 > is common to speak of morphisms and **arrows** interchangeably.
 
-A very common phrase is that a property holds *such that the
-following diagram commutes*, meaning that the commutativity of the
-diagram is required. This allows us to express a large amount of
-information about required properties in a very compact way.
+A very common phrase is that a property holds *such that the following
+diagram commutes*, meaning that the commutativity of the diagram is
+required for some proposition to be true. This allows us to express a
+large amount of information about required properties in a very compact
+way.
 
 For example the definition of isomorphism could be written such
 that the following diagram commutes. The dotted line indicating
