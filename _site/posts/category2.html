@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Categorical Programming: Morphisms</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'] ],
+          displayMath: [ ["\[","\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h4 id="morphisms">Morphisms</h4>
+<p>Morphisms are the central idea of category theory. They let us express mappings between objects and more importantly let us discuss how compositions of morphisms relate to each other.</p>
+<p>The term homomorphism is often used to describe morphisms in a category since homomorphism describes a structure preserving property that is associative. This definition is baked into the category definition and thus sometime we refer to the set of morphisms in a category as the <strong>hom-set</strong> or $ \text{Hom}_C $</p>
+<p>There are some special cases of morphisms.</p>
+<blockquote>
+<p><strong>Endomorphism</strong>: $ f : A \rightarrow A $</p>
+</blockquote>
+<p>An endomorphism with equal domain and codomain.</p>
+<blockquote>
+<p><strong>Epimorphism</strong></p>
+</blockquote>
+<p>Is a morphism $ f : A \rightarrow B $ such that for any arbitrary morphisms $ g_1 : B \rightarrow C $, $ g_2 : B \rightarrow C $.</p>
+<p>Such that equality of left composition implies equality of $ g_1, g_2 $. i.e.,</p>
+<p>$ g_1 . f = g_2 . f \implies g_1 = g_2 $.</p>
+<blockquote>
+<p><strong>Monomorphism</strong></p>
+</blockquote>
+<p>A monomorphism is similar except with right composition.</p>
+<p>$ f . g_1 = f . g_2 \implies g_1 = g_2 $.</p>
+<p><img src="../images/epic_monic.svg" alt="Illustration"></img>.</p>
+<blockquote>
+<p><strong>Isomorphism</strong>: $ f : A \rightarrow B $ if there exists another morphism $ f^{-1} $ such that $ f . f^{-1} = \text{id}_A $ and $ f^{-1} . f = \text{id}_B $</p>
+</blockquote>
+<p>Isomorphisms are extremely important in category theory since they represent a form of “structural equality” between objects. Objects in the domain can be related to objects in the domain through the isomorphism.</p>
+<h4 id="diagrams">Diagrams</h4>
+<p>This leads to the next discussion of commutative diagrams. A commutative diagram is a diagrammatic way of expressing the equivalence of morphisms. We draw objects as labels and morphisms as arrows between labels. If one “chases” a path through the diagram and finds that all variations of paths lead to the same endpoint we say that the diagram <strong>commutes</strong>, meaning the compositions of morphisms converge at the same codomain irregardless of choice of composition.</p>
+<blockquote>
+<p>Because of the ubiquity of diagrametic reasoning in category theory it is common to speak of morphisms and <strong>arrows</strong> interchangeably.</p>
+</blockquote>
+<p>A very common phrase is that a property holds <em>such that the following diagram commutes</em>, meaning that the commutativity of the diagram is required. This allows us to express a large amount of information about required properties in a very compact way.</p>
+<p>For example the definition of isomorphism could be written such that the following diagram commutes. The dotted line indicating the required inverse of $ f $ required to exist by the definition.</p>
+<p><img src="../images/iso.svg" alt="Illustration"></img>.</p>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
