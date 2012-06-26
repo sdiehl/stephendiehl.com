@@ -6,6 +6,13 @@ import Control.Category (id)
 import Control.Arrow ((>>>), (***), arr)
 import Data.Monoid (mempty, mconcat)
 
+import Hakyll
+import Text.Pandoc
+
+-- Python tipy preprocessor
+py_pre :: Compiler Resource String
+py_pre = getResourceString >>> unixFilter "tipy" ["--preprocess"]
+
 main :: IO ()
 main = hakyll $ do
     match "images/*" $ do
@@ -26,7 +33,13 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route   $ setExtension "html"
-        compile $ pageCompiler
+        {-compile $ pageCompiler-}
+            {->>> applyTemplateCompiler "templates/default.html"-}
+            {->>> relativizeUrlsCompiler-}
+        compile $ py_pre
+            >>> arr readPage
+            >>> addDefaultFields
+            >>> pageRenderPandoc
             >>> applyTemplateCompiler "templates/default.html"
             >>> relativizeUrlsCompiler
 

@@ -21,3 +21,4 @@ title: Projects
 * [greenlet-monad](https://github.com/sdiehl/greenlet-monad)
 * [greengoop](https://github.com/sdiehl/greengoop)
 * [django-sense](https://github.com/sdiehl/django-sense)
+* [tipy](https://github.com/sdiehl/tipy)
