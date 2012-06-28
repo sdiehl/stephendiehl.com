@@ -10,15 +10,15 @@ morphisms and objects between the two categories. More precisely
 it is a mapping between $ t: A \\rightarrow B $ such that for
 every object in A there exists
 
-$$
+$
 t: A \\rightarrow t(A) \\in B
-$$
+$
 
 And for each morphism $ f $
 
-$$
+$
 t(f): t(X) \\rightarrow t(Y) \\in B
-$$
+$
 
 In functional programming we differentiate between the functorial
 action on objects  ( ``` t a ``` )  from the functorial action on
@@ -38,9 +38,9 @@ class Functor t where
 The essential nature of Functors is that we preserve composition
 struction under mapping. Namely:
 
-$$
+$
 t(g . f ) = (t g) . (t f)
-$$
+$
 
 ```haskell
 fmap (g . f) = fmap g . fmap f
@@ -92,15 +92,15 @@ A rough illustration of the List functor pictorially.
 A slight variant on the traditional functor is a **contravariant
 functor** which reverses the domain and codomain of morphisms.
 
-$$
+$
 t: A \\rightarrow t(A) \\in B
-$$
+$
 
 And for each morphism $ f $
 
-$$
+$
 t(f): t(Y) \\rightarrow t(X) \\in B
-$$
+$
 
 ![Illustration](/images/confunctor.svg).
 
