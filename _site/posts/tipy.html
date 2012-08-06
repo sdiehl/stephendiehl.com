@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Tipy: A Simple Python Preprocessor</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'] ],
+          displayMath: [ ["\[","\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/hire.html">Hire Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <p>Tipy is a small Python document preprocessor in the style of troff. It is similar to that of Ned Batchelder’s <a href="http://nedbatchelder.com/code/cog/">Cog</a> but not as fully featured and intended only for preprocessing markdown documents.</p>
+<p><strong>Problem</strong>: You have a build chain of a bunch of unix utilities operating on a plaintext document, and you have Python code where you want inline the output of the code. In my case I wanted to provide this to Haskell Pandoc + Hakyll build chain. In fact this page is itself preprocessed with tipy.</p>
+<pre>
+```compiler
+&gt;&gt;&gt; def foo(x,y):
+...     return range(x,y)
+&gt;&gt;&gt; foo(1,2)
+```
+</pre>
+
+<p>For writing tutorials one often wants ot mimic an interactive shell session. This is provided through the <code>compiler=pycon</code> flag.</p>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="kw">def</span> foo(x,y):
+...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
+&gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre>
+<p>But you want the compiled version to look like it were an interactive shell session.</p>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="kw">def</span> foo(x,y):
+...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
+&gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">5</span>)
+[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</code></pre>
+<p><br /> Or if desired you can execute the entire script with the <code>compiler=pyexec</code> flag and inline the output of the whole script.</p>
+<pre class="sourceCode python"><code class="sourceCode python">
+<span class="ch">from</span> string <span class="ch">import</span> digits
+<span class="ch">from</span> itertools <span class="ch">import</span> izip
+
+<span class="kw">for</span> a,b in izip(<span class="dt">reversed</span>(digits), digits):
+    <span class="kw">print</span> a,b</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="dv">9</span> <span class="dv">0</span>
+<span class="dv">8</span> <span class="dv">1</span>
+<span class="dv">7</span> <span class="dv">2</span>
+<span class="dv">6</span> <span class="dv">3</span>
+<span class="dv">5</span> <span class="dv">4</span>
+<span class="dv">4</span> <span class="dv">5</span>
+<span class="dv">3</span> <span class="dv">6</span>
+<span class="dv">2</span> <span class="dv">7</span>
+<span class="dv">1</span> <span class="dv">8</span>
+<span class="dv">0</span> <span class="dv">9</span></code></pre>
+<h3 id="more-examples">More Examples</h3>
+<pre class="sourceCode python"><code class="sourceCode python">
+<span class="ch">from</span> numpy.random <span class="ch">import</span> randn
+
+matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
+<span class="kw">print</span> matrix</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">[[[-<span class="fl">0.69592307</span> -<span class="fl">0.6827801</span>  -<span class="fl">1.22670659</span>]
+  [ <span class="fl">0.02685761</span>  <span class="fl">1.18373632</span> -<span class="fl">0.63654198</span>]
+  [ <span class="fl">0.70126075</span>  <span class="fl">0.39098962</span> -<span class="fl">0.32449031</span>]]
+
+ [[ <span class="fl">0.04646231</span> -<span class="fl">1.00043092</span> -<span class="fl">0.83073721</span>]
+  [ <span class="fl">0.39315742</span> -<span class="fl">0.23101511</span>  <span class="fl">0.22436535</span>]
+  [ <span class="fl">0.39087745</span> -<span class="fl">0.85579629</span> -<span class="fl">0.48800939</span>]]
+
+ [[-<span class="fl">0.88454445</span>  <span class="fl">0.17449154</span>  <span class="fl">1.15248377</span>]
+  [-<span class="fl">0.61821521</span> -<span class="fl">0.66223017</span>  <span class="fl">0.20963977</span>]
+  [-<span class="fl">0.43597462</span> -<span class="fl">0.49610656</span> -<span class="fl">1.66209149</span>]]]</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
+&gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
+&gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
+<table border="1">
+  <thead>
+    <tr>
+      <th></th>
+      <th>
+0
+</th>
+      <th>
+1
+</th>
+      <th>
+2
+</th>
+      <th>
+3
+</th>
+      <th>
+4
+</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>
+<strong>0</strong>
+</td>
+      <td> 
+0.576348
+</td>
+      <td>
+-1.221676
+</td>
+      <td>
+-0.259521
+</td>
+      <td>
+-0.408295
+</td>
+      <td> 
+1.723084
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>1</strong>
+</td>
+      <td>
+-0.497034
+</td>
+      <td> 
+1.396192
+</td>
+      <td>
+-0.365588
+</td>
+      <td> 
+0.096752
+</td>
+      <td>
+-1.480081
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>2</strong>
+</td>
+      <td>
+-0.098289
+</td>
+      <td>
+-0.095938
+</td>
+      <td>
+-0.408797
+</td>
+      <td> 
+0.098845
+</td>
+      <td>
+-0.669008
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>3</strong>
+</td>
+      <td> 
+0.228493
+</td>
+      <td>
+-0.304387
+</td>
+      <td> 
+0.276027
+</td>
+      <td> 
+0.172692
+</td>
+      <td> 
+2.070182
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>4</strong>
+</td>
+      <td> 
+0.252371
+</td>
+      <td>
+-0.676908
+</td>
+      <td> 
+1.407807
+</td>
+      <td> 
+0.345093
+</td>
+      <td>
+-0.799448
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="integration-with-hakyll">Integration with Hakyll</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Hakyll</span>
+
+<span class="co">-- Python tipy preprocessor</span>
+<span class="ot">py_pre ::</span> <span class="dt">Compiler</span> <span class="dt">Resource</span> <span class="dt">String</span>
+py_pre <span class="fu">=</span> getResourceString <span class="fu">&gt;&gt;&gt;</span> unixFilter <span class="st">&quot;tipy&quot;</span> [<span class="st">&quot;--preprocess&quot;</span>]
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> hakyll <span class="fu">$</span> <span class="kw">do</span>
+    match <span class="st">&quot;yourpage&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+        compile <span class="fu">$</span> py_pre
+            <span class="fu">&gt;&gt;&gt;</span> arr readPage
+            <span class="fu">&gt;&gt;&gt;</span> pageRenderPandoc</code></pre>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>

@@ -59,8 +59,8 @@ endpoint we say that the diagram **commutes**, meaning the
 compositions of morphisms converge at the same codomain
 irregardless of choice of composition.
 
-> Because of the ubiquity of diagrammatic reasoning in category theory it
-> is common to speak of morphisms and **arrows** interchangeably.
+Because of the ubiquity of diagrammatic reasoning in category theory it
+is common to speak of morphisms and **arrows** interchangeably.
 
 A very common phrase is that a property holds *such that the following
 diagram commutes*, meaning that the commutativity of the diagram is

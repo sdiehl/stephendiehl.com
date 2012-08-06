@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Projects</title>
+    <title>hire</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -76,27 +76,37 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <p><strong>Tutorials</strong></p>
-<ul>
-<li><a href="https://github.com/sdiehl/gevent-tutorial">Gevent Tutorial</a></li>
-<li><a href="https://github.com/sdiehl/coroutine-tutorial">Coroutine Tutorial</a></li>
-</ul>
-<p><strong>Haskell</strong></p>
-<ul>
-<li><a href="https://github.com/sdiehl/pipes-zeromq">pipes-zeromq</a></li>
-<li>tensor-classes</li>
-</ul>
-<p><strong>Python</strong></p>
-<ul>
-<li><a href="https://github.com/sdiehl/pure-python">pure-python</a></li>
-<li><a href="https://github.com/sdiehl/sockjs-gevent">sockjs-gevent</a></li>
-<li><a href="https://github.com/sdiehl/gevent_viz">gevent-viz</a></li>
-<li><a href="https://github.com/sdiehl/kaylee">kaylee</a></li>
-<li><a href="https://github.com/sdiehl/greenlet-monad">greenlet-monad</a></li>
-<li><a href="https://github.com/sdiehl/greengoop">greengoop</a></li>
-<li><a href="https://github.com/sdiehl/django-sense">django-sense</a></li>
-<li><a href="https://github.com/sdiehl/tipy">tipy</a></li>
-</ul>
+            <p>I’m available for consulting and possibly full-time positions in the Cambridge/Boston area. Let’s talk about your idea and what I can do.</p>
+<p>I don’t respond to third party recruiter emails. I’m also completely uninterested in any projects related to “social media”.</p>
+<p>To contact me via email run this Python script to generate my contact information. If you can’t get it to run then you’re probably not the kind of person I want to work for.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co">#!/usr/bin/env python</span>
+<span class="co"># Generate contact information for Stephen Diehl</span>
+<span class="co"># http://www.stephendiehl.com</span>
+
+<span class="ch">import</span> os
+<span class="ch">import</span> sys
+<span class="ch">import</span> zlib
+<span class="ch">import</span> numpy
+<span class="ch">import</span> string
+
+EMAIL = <span class="st">&quot;&quot;&quot;</span>
+<span class="ch">\xcd\xce\xbf\xca\xc2\xbf\xc8</span><span class="st">.</span><span class="ch">\xc7</span><span class="st">.</span><span class="ch">\xbe\xc3\xbf\xc2\xc6</span><span class="st">@</span><span class="ch">\xc1\xc7\xbb\xc3\xc6</span><span class="st">.</span><span class="ch">\xbd\xc9\xc7</span>
+<span class="st">&quot;&quot;&quot;</span>
+CHECKSUM = <span class="bn">0x87980992</span>
+
+y = string.letters
+n = <span class="dt">len</span>(y)
+M = numpy.identity(n, dtype=numpy.int16)
+M[:n, n<span class="dv">-1</span>] = <span class="dv">1</span>
+
+a = numpy.array(<span class="dt">map</span>(<span class="dt">ord</span>, y), dtype=numpy.int16)
+x = <span class="st">''</span>.join(<span class="dt">map</span>(<span class="dt">chr</span>, numpy.dot(M, a)))
+uncipher = string.maketrans(x,y)
+
+CONTACT = string.translate(EMAIL, uncipher)
+
+<span class="kw">assert</span> zlib.adler32(CONTACT) &amp; <span class="bn">0xffffffff</span> == CHECKSUM, <span class="st">&quot;Wrong&quot;</span>
+sys.stdout.write(CONTACT)</code></pre>
         </div>
     </div>
 

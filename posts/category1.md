@@ -3,28 +3,16 @@ title: Categorical Programming: Introduction
 date: September 8, 2012
 ---
 
-### Forward
+### Forwar
 
-This is a multipart blog post on the structure of the pure mathematical
+This is a multipart blog post on the structure of the mathematical
 field of Category theory and and how it relates to real world
-programming in Haskell.
+programming.
 
 Category theory distills the essense of a large variety of constructions
-in classical set theory to more abstract context which can be used to
+in traditional set theory to more abstract context which can be used to
 reason about the large scale structure of mathematics, physics, and
 computer science.
-
-In a way some of the constructions in category theory are almost "too
-abstract" since they are often model very low-level universal properties
-of mathematics. This does often leave one questioning, what does this
-construction really mean? One might be tempted to then go back concrete
-set theory examples, but in doing so one might loose insight into the
-essential nature of the theory.
-
-In short, often times the best intuition is derived from looking
-at the constructions in their full abstraction, i.e. that they
-are nothing more than abstract symbols and processes of
-manipulation on those symbols.
 
 ### Categories
 
@@ -112,13 +100,13 @@ HASK also contains both a composition operator and a identity the
 Prelude.
 
 ```haskell
-(.)              :: (b -> c) -> (a -> b) -> a -> c
-f . g            =  \ x -> f (g x)
+(.) :: (b -> c) -> (a -> b) -> a -> c
+f . g =  \ x -> f (g x)
 ```
 
 ```haskell
-id               :: a -> a
-id x             =  x
+id :: a -> a
+id x =  x
 ```
 
 \
