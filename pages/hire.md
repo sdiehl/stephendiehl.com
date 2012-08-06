@@ -1,15 +1,14 @@
 I'm available for consulting and possibly full-time positions in the
 Cambridge/Boston area.  Let's talk about your idea and what I can do.
 
-I don't respond to third party recruiter emails. I'm also 
+I generally don't respond to third party recruiter emails. I'm also 
 completely uninterested in any projects related to "social media".
 
 To contact me via email run this Python script to generate my contact
-information. If you can't get it to run then you're probably not the
-kind of person I want to work for.
+information. I find this is an effective filter to find the kind
+of people I'd like to work with.
 
 ```python
-#!/usr/bin/env python
 # Generate contact information for Stephen Diehl
 # http://www.stephendiehl.com
 
