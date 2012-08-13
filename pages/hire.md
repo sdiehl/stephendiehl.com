@@ -1,12 +1,15 @@
+---
+title: Stephen Diehl boston python developer gevent
+---
+
 I'm available for consulting and possibly full-time positions in the
 Cambridge/Boston area.  Let's talk about your idea and what I can do.
 
-I generally don't respond to third party recruiter emails. I'm also 
-completely uninterested in any projects related to "social media".
-
 To contact me via email run this Python script to generate my contact
 information. I find this is an effective filter to find the kind
-of people I'd like to work with.
+of people I'd like to work with. 
+
+Hint: If you're using IPython use the %paste magic method.
 
 ```python
 # Generate contact information for Stephen Diehl

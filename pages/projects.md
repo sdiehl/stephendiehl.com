@@ -14,6 +14,7 @@ title: Projects
 
 **Python**
 
+* [numpush](https://github.com/sdiehl/numpush)
 * [pure-python](https://github.com/sdiehl/pure-python)
 * [sockjs-gevent](https://github.com/sdiehl/sockjs-gevent)
 * [gevent-viz](https://github.com/sdiehl/gevent_viz)

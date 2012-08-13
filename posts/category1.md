@@ -3,7 +3,7 @@ title: Categorical Programming: Introduction
 date: September 8, 2012
 ---
 
-### Forwar
+### Forward
 
 This is a multipart blog post on the structure of the mathematical
 field of Category theory and and how it relates to real world
