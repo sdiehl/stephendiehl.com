@@ -7,28 +7,28 @@ date: September 10, 2012
 
 A functor is a pair of mappings between categories that maps
 morphisms and objects between the two categories. More precisely
-it is a mapping between $ t: A \\rightarrow B $ such that for
+it is a mapping between $ T: A \\rightarrow B $ such that for
 every object in A there exists
 
 $
-t: A \\rightarrow t(A) \\in B
+T: A \\rightarrow T(A) \\in B
 $
 
 And for each morphism $ f $
 
 $
-t(f): t(X) \\rightarrow t(Y) \\in B
+T(f): T(X) \\rightarrow T(Y) \\in B
 $
 
 In functional programming we differentiate between the functorial
-action on objects  ( ``` t a ``` )  from the functorial action on
-morphisms usually denoted ``` fmap f ```.
+action on an object  ( ``` T a ``` )  from the functorial action on
+a morphism usually denoted ``` fmap f ```.
 
 In **Hask** the Functor typeclass is defined with:
 
 ```haskell
-class Functor t where
-  fmap :: (a -> b) -> t a -> t b
+class Functor T where
+  fmap :: (a -> b) -> T a -> T b
 ```
 
 ![Illustration](/images/functor.svg).
@@ -39,7 +39,7 @@ The essential nature of Functors is that we preserve composition
 struction under mapping. Namely:
 
 $
-t(g . f ) = (t g) . (t f)
+T ( g . f ) = (T g) . (T f)
 $
 
 ```haskell
@@ -93,13 +93,13 @@ A slight variant on the traditional functor is a **contravariant
 functor** which reverses the domain and codomain of morphisms.
 
 $
-t: A \\rightarrow t(A) \\in B
+t: A \\rightarrow T(A) \\in B
 $
 
 And for each morphism $ f $
 
 $
-t(f): t(Y) \\rightarrow t(X) \\in B
+T(f): T(Y) \\rightarrow T(X) \\in B
 $
 
 ![Illustration](/images/confunctor.svg).

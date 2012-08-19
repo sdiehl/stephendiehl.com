@@ -117,7 +117,7 @@ by the type checker.
 A **subcategory** is a category contained within another category
 which also satisfies the category construction. A more advanced
 example that will be discussed later is that monads with an
-operation called Klesli composition form a category that is of
+operation called Kleisli composition form a category that is of
 much interest to Haskell programmers.
 
 #### VEC
