@@ -48,20 +48,25 @@ the third column is the definition of the construction.
 
 <tr>
     <td>Morphisms</td>
-    <td> $ A,B \\in Hom_C $ </td>
-    <td> $ A \\rightarrow B $ </td>
+    <td> $$ A,B \in \text{Hom}_C $$ </td>
+    <td> $$ A \rightarrow B $$ </td>
 </tr>
 
 <tr>
     <td>Composition</td>
-    <td> $ f : B \\rightarrow C $ <br/> $ g : A \\rightarrow B $ </td>
-    <td> $ f \\circ g : A \\rightarrow C $ </td>
+    <td>
+    $$ 
+        f : B \rightarrow C \\
+        g : A \rightarrow B  
+    $$
+    </td>
+    <td> $$ f . g : A \rightarrow C $$ </td>
 </tr>
 
 <tr>
     <td>Identities</td>
-    <td>For any $ A $ </td>
-    <td> $ id_A : A \\rightarrow A $ </td>
+    <td> $$ \text{For all } A $$ </td>
+    <td> $$ \text{id}_A : A \rightarrow A $$ </td>
 </tr>
 
 </table>
@@ -69,19 +74,17 @@ the third column is the definition of the construction.
 The corresponding definition table for a category is that of the
 laws for the category. 
 
-**Associativity**
-
 <table>
 <th>Set</th>
 <tr>
     <td> Associativity </td>
-    <td> $ f,g \\in Hom_C $</td>
-    <td> $ ( f . g ) . h = f . ( g . h ) $ </td>
+    <td> $$ f,g \in \text{Hom}_C $$</td>
+    <td> $$ ( f . g ) . h = f . ( g . h ) $$ </td>
 </tr>
 <tr>
     <td> Identity </td>
-    <td> $ A \\in C $</td>
-    <td> $ f . id_A  = id_A . f = f $ </td>
+    <td> $$ A \in C $$</td>
+    <td> $$ f . \text{id}_A  = \text{id}_A . f = f $$ </td>
 </tr>
 </table>
 
@@ -101,47 +104,47 @@ set theoretic definitions are often generalized.
 
 1. Classical sets as objects.
 2. Total functions as morphisms.
-3. A composition operation $ \\circ $.
+3. A composition operation $ (\\circ) $.
 
 <table>
 <th>**Set**</th>
 <tr>
     <td>Objects</td>
-    <td>Set $ C $ </td>
+    <td>Set: $ C $ </td>
 </tr>
 
 <tr>
     <td>Morphisms</td>
     <td>Total functions over $ C $ </td>
+    <td>...........................</td>
 </tr>
 
 <tr>
     <td>Composition</td>
-    <td> $ f : B \\rightarrow C $ <br/> $ g : A \\rightarrow B $ </td>
-    <td> 
-    $ f \\circ g : A \\rightarrow C $  <br/>
-    $ f \\circ g = \\lambda x. f (g a) $ 
+    <td> $$ 
+        f : B \rightarrow C \\ 
+        g : A \rightarrow B 
+    $$
+    </td>
+    <td> $$ 
+        f \circ g : A \rightarrow C \\
+        f \circ g = \lambda x. f (g a) 
+    $$
     </td>
 </tr>
 
 <tr>
     <td>Identities</td>
-    <td>$ A \\in C $</td>
-    <td>
-    $ id_A :: A \\rightarrow A $ <br/>
-    $ id_A = \\lambda x . x $
+    <td> $$ A \in C $$ </td>
+    <td> 
+    $$
+        \text{id}_A :: A \rightarrow A \\
+        \text{id}_A = \lambda x . x
+    $$
     </td>
 </tr>
 
 </table>
-
-
-\[
-g \\circ f = \\{ (x, g(f(x))) | x \\in A \\}
-\]
-
-4. For each set $A$ there is an identity function $ id_A $ which
-maps the set $A$ to itself $ f(A) = A $.
 
 With the usual properties:
 
@@ -154,7 +157,7 @@ With the usual properties:
 
 <tr>
     <td> Identities </td>
-    <td> $ f \\circ id_A  = id_A \\circ f = f $ </td>
+    <td> $ f \\circ \\text{id}\_A  = \\text{id}\_A \\circ f = f $ </td>
 </tr>
 
 </table>
@@ -189,11 +192,11 @@ id x =  x
 The constraint on domain and codomain alignment is enforced
 by the type checker.
 
-A **subcategory** is a category contained within another category
-which also satisfies the category construction. A more advanced
-example that will be discussed later is that monads with an
-operation called Kleisli composition form a category that is of
-much interest to Haskell programmers.
+A **subcategory** is a category contained within another category which
+also satisfies the category construction. A more advanced example
+that will be discussed later is that monads with an operation called
+Kleisli composition forms a category that is of much interest to Haskell
+programmers.
 
 #### VEC
 

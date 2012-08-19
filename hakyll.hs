@@ -13,6 +13,16 @@ import Text.Pandoc
 py_pre :: Compiler Resource String
 py_pre = getResourceString >>> unixFilter "tipy" ["--preprocess"]
 
+-- Tikz for drawing commutative diagrams
+cats_pre :: Compiler Resource String
+cats_pre = getResourceString >>> unixFilter "cats" ["--preprocess"]
+
+-- MathJax as Math backend
+pandocOptions :: WriterOptions
+pandocOptions = defaultHakyllWriterOptions
+    { writerHTMLMathMethod = MathJax ""
+    }
+
 main :: IO ()
 main = hakyll $ do
     match "images/*" $ do
@@ -39,7 +49,7 @@ main = hakyll $ do
         compile $ py_pre
             >>> arr readPage
             >>> addDefaultFields
-            >>> pageRenderPandoc
+            >>> pageRenderPandocWith defaultHakyllParserState pandocOptions
             >>> applyTemplateCompiler "templates/default.html"
             >>> relativizeUrlsCompiler
 

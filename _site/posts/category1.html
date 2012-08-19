@@ -33,8 +33,9 @@
         extensions: ["tex2jax.js"],
         jax: ["input/TeX", "output/HTML-CSS"],
         tex2jax: {
-          inlineMath: [ ['$','$'] ],
-          displayMath: [ ["\[","\]"] ],
+          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+          // Needs to escaped for Pandoc
+          displayMath: [ ["\\[","\\]"] ],
           processEscapes: true
         },
         "HTML-CSS": { availableFonts: ["TeX"] }
@@ -107,10 +108,10 @@ Objects
 Morphisms
 </td>
     <td> 
-$ A,B \in Hom_C $
+\[ A,B \in \text{Hom}_C \]
 </td>
     <td> 
-$ A \rightarrow B $
+\[ A \rightarrow B \]
 </td>
 </tr>
 
@@ -118,11 +119,15 @@ $ A \rightarrow B $
     <td>
 Composition
 </td>
-    <td> 
-$ f : B \rightarrow C $ <br /> $ g : A \rightarrow B $
+    <td>
+    
+\[ 
+        f : B \rightarrow C \\
+        g : A \rightarrow B  
+    \]
 </td>
     <td> 
-$ f \circ g : A \rightarrow C $
+\[ f . g : A \rightarrow C \]
 </td>
 </tr>
 
@@ -130,18 +135,17 @@ $ f \circ g : A \rightarrow C $
     <td>
 Identities
 </td>
-    <td>
-For any $ A $
+    <td> 
+\[ \text{For all } A \]
 </td>
     <td> 
-$ id_A : A \rightarrow A $
+\[ \text{id}_A : A \rightarrow A \]
 </td>
 </tr>
 
 </table>
 
 <p>The corresponding definition table for a category is that of the laws for the category.</p>
-<p><strong>Associativity</strong></p>
 <table>
 <th>
 Set
@@ -151,10 +155,10 @@ Set
 Associativity
 </td>
     <td> 
-$ f,g \in Hom_C $
+\[ f,g \in \text{Hom}_C \]
 </td>
     <td> 
-$ ( f . g ) . h = f . ( g . h ) $
+\[ ( f . g ) . h = f . ( g . h ) \]
 </td>
 </tr>
 <tr>
@@ -162,10 +166,10 @@ $ ( f . g ) . h = f . ( g . h ) $
 Identity
 </td>
     <td> 
-$ A \in C $
+\[ A \in C \]
 </td>
     <td> 
-$ f . id_A = id_A . f = f $
+\[ f . \text{id}_A  = \text{id}_A . f = f \]
 </td>
 </tr>
 </table>
@@ -177,7 +181,7 @@ $ f . id_A = id_A . f = f $
 <ol style="list-style-type: decimal">
 <li>Classical sets as objects.</li>
 <li>Total functions as morphisms.</li>
-<li>A composition operation $ \circ $.</li>
+<li>A composition operation $ (\circ) $.</li>
 </ol>
 <table>
 <th>
@@ -188,7 +192,7 @@ $ f . id_A = id_A . f = f $
 Objects
 </td>
     <td>
-Set $ C $
+Set: $ C $
 </td>
 </tr>
 
@@ -199,6 +203,9 @@ Morphisms
     <td>
 Total functions over $ C $
 </td>
+    <td>
+………………………
+</td>
 </tr>
 
 <tr>
@@ -206,11 +213,16 @@ Total functions over $ C $
 Composition
 </td>
     <td> 
-$ f : B \rightarrow C $ <br /> $ g : A \rightarrow B $
+\[ 
+        f : B \rightarrow C \\ 
+        g : A \rightarrow B 
+    \]
 </td>
     <td> 
-    
-$ f \circ g : A \rightarrow C $ <br /> $ f \circ g = \lambda x. f (g a) $
+\[ 
+        f \circ g : A \rightarrow C \\
+        f \circ g = \lambda x. f (g a) 
+    \]
 </td>
 </tr>
 
@@ -218,22 +230,20 @@ $ f \circ g : A \rightarrow C $ <br /> $ f \circ g = \lambda x. f (g a) $
     <td>
 Identities
 </td>
-    <td>
-$ A \in C $
+    <td> 
+\[ A \in C \]
 </td>
-    <td>
+    <td> 
     
-$ id_A :: A \rightarrow A $ <br /> $ id_A = \lambda x . x $
+\[
+        \text{id}_A :: A \rightarrow A \\
+        \text{id}_A = \lambda x . x
+    \]
 </td>
 </tr>
 
 </table>
 
-
-<p>[ g \circ f = \{ (x, g(f(x))) | x \in A \} ]</p>
-<ol start="4" style="list-style-type: decimal">
-<li>For each set <span class="math"><em>A</em></span> there is an identity function $ id_A $ which maps the set <span class="math"><em>A</em></span> to itself $ f(A) = A $.</li>
-</ol>
 <p>With the usual properties:</p>
 <table>
 <th>
@@ -253,7 +263,7 @@ $ ( f \circ g ) \circ h = f \circ ( g \circ h ) $
 Identities
 </td>
     <td> 
-$ f \circ id_A = id_A \circ f = f $
+$ f \circ \text{id}_A = \text{id}_A \circ f = f $
 </td>
 </tr>
 
@@ -269,7 +279,7 @@ f <span class="fu">.</span> g <span class="fu">=</span>  \ x <span class="ot">-&
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span><span class="ot"> ::</span> a <span class="ot">-&gt;</span> a
 <span class="fu">id</span> x <span class="fu">=</span>  x</code></pre>
 <p><br /> The constraint on domain and codomain alignment is enforced by the type checker.</p>
-<p>A <strong>subcategory</strong> is a category contained within another category which also satisfies the category construction. A more advanced example that will be discussed later is that monads with an operation called Kleisli composition form a category that is of much interest to Haskell programmers.</p>
+<p>A <strong>subcategory</strong> is a category contained within another category which also satisfies the category construction. A more advanced example that will be discussed later is that monads with an operation called Kleisli composition forms a category that is of much interest to Haskell programmers.</p>
 <h4 id="vec">VEC</h4>
 <p>For the linear-algebra inclined, a space of vectors with linear mappings between vector spaces also forms a category with.</p>
 <ol style="list-style-type: decimal">
