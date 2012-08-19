@@ -79,42 +79,186 @@
             <h3 id="forward">Forward</h3>
 <p>This is a multipart blog post on the structure of the mathematical field of Category theory and and how it relates to real world programming.</p>
 <p>Category theory distills the essense of a large variety of constructions in traditional set theory to more abstract context which can be used to reason about the large scale structure of mathematics, physics, and computer science.</p>
+<p>If one were to try and describe the essence of category theory, it is that it is study of relationships between between mappings of elements, but at a level of generality where there is no notion of individual elements. Instead elements arise only out of their relationships between each other.</p>
+<p>This tutorial is a humble attempt to provide a bridge between the mathematical literature and the everyday language of the working Haskell programming programmer. Any and all feedback is welcome!</p>
 <h3 id="categories">Categories</h3>
 <p>A <em>category</em> is a construction with three things:</p>
 <ol style="list-style-type: decimal">
 <li>A collection of <strong>objects</strong>.</li>
 <li>A collection of <strong>morphisms</strong>.</li>
-<li>An <strong>composition</strong> operation (.) which has the following property:</li>
+<li>An <strong>composition</strong> operation (.) which has the.</li>
 <li>For each object A there is an identity morphism $ id_A $.</li>
 </ol>
-<p>Which all obey the following properties:</p>
+<p>I will use the following tabular format for the definition of categories from here out. The first column is the type of construction, the second column is the constraints on the objects involved in the definition, and the third column is the definition of the construction.</p>
+<table>
+<th>
+Category
+</th>
+<tr>
+    <td>
+Objects
+</td>
+    <td></td>
+    <td></td>
+</tr>
+
+<tr>
+    <td>
+Morphisms
+</td>
+    <td> 
+$ A,B \in Hom_C $
+</td>
+    <td> 
+$ A \rightarrow B $
+</td>
+</tr>
+
+<tr>
+    <td>
+Composition
+</td>
+    <td> 
+$ f : B \rightarrow C $ <br /> $ g : A \rightarrow B $
+</td>
+    <td> 
+$ f \circ g : A \rightarrow C $
+</td>
+</tr>
+
+<tr>
+    <td>
+Identities
+</td>
+    <td>
+For any $ A $
+</td>
+    <td> 
+$ id_A : A \rightarrow A $
+</td>
+</tr>
+
+</table>
+
+<p>The corresponding definition table for a category is that of the laws for the category.</p>
 <p><strong>Associativity</strong></p>
-<p>[ ( f . g ) . h = f . ( g . h ) ]</p>
-<p><strong>Identity</strong></p>
-<p>[ f . id_A = id_A . f = f ]</p>
-<p><strong>Composition Constraint</strong></p>
-<p>Morphisms also have associated objects $ A,B \in C $ referred to as domain and codomain written $ dom(f) $ and $ cod(f) $.</p>
-<p>If $ f . g $ is well defined then:</p>
-<p>[ dom(f) = cod(g) ]</p>
-<blockquote>
-<p>Morphisms are not functions. It is the other way around, in the category of SET functions are morphisms with objects as sets but this is a a special case. In general morphisms are a pure abstraction which is structurally similar to functions.</p>
-</blockquote>
+<table>
+<th>
+Set
+</th>
+<tr>
+    <td> 
+Associativity
+</td>
+    <td> 
+$ f,g \in Hom_C $
+</td>
+    <td> 
+$ ( f . g ) . h = f . ( g . h ) $
+</td>
+</tr>
+<tr>
+    <td> 
+Identity
+</td>
+    <td> 
+$ A \in C $
+</td>
+    <td> 
+$ f . id_A = id_A . f = f $
+</td>
+</tr>
+</table>
+
+<p>It is worth noting the common confusion that morphisms are not functions. It is the other way around, in the category <strong>SET</strong> functions are morphisms with objects as sets but this is a a special case. In general morphisms are a pure abstraction which have structural similarity to functions.</p>
 <p><img src="../images/category1.svg" alt="Illustration"></img>.</p>
 <h4 id="set">SET</h4>
-<p>Categories are often written in bold. For example a very common category is that of SET.</p>
+<p>Categories are often written in bold. For example the category <strong>SET</strong> is often a motivating topic of discussion since classical set theoretic definitions are often generalized.</p>
 <ol style="list-style-type: decimal">
 <li>Classical sets as objects.</li>
 <li>Total functions as morphisms.</li>
 <li>A composition operation $ \circ $.</li>
 </ol>
+<table>
+<th>
+<strong>Set</strong>
+</th>
+<tr>
+    <td>
+Objects
+</td>
+    <td>
+Set $ C $
+</td>
+</tr>
+
+<tr>
+    <td>
+Morphisms
+</td>
+    <td>
+Total functions over $ C $
+</td>
+</tr>
+
+<tr>
+    <td>
+Composition
+</td>
+    <td> 
+$ f : B \rightarrow C $ <br /> $ g : A \rightarrow B $
+</td>
+    <td> 
+    
+$ f \circ g : A \rightarrow C $ <br /> $ f \circ g = \lambda x. f (g a) $
+</td>
+</tr>
+
+<tr>
+    <td>
+Identities
+</td>
+    <td>
+$ A \in C $
+</td>
+    <td>
+    
+$ id_A :: A \rightarrow A $ <br /> $ id_A = \lambda x . x $
+</td>
+</tr>
+
+</table>
+
+
 <p>[ g \circ f = \{ (x, g(f(x))) | x \in A \} ]</p>
 <ol start="4" style="list-style-type: decimal">
 <li>For each set <span class="math"><em>A</em></span> there is an identity function $ id_A $ which maps the set <span class="math"><em>A</em></span> to itself $ f(A) = A $.</li>
 </ol>
 <p>With the usual properties:</p>
-<p>[ ( f \circ g ) \circ h = f \circ ( g \circ h ) ]</p>
-<p>[ f \circ id_A = id_A \circ f = f ]</p>
-<p>In SET domain and codomain are sometimes referred to as domain and range.</p>
+<table>
+<th>
+<strong>Set</strong>
+</th>
+<tr>
+    <td> 
+Associativity
+</td>
+    <td> 
+$ ( f \circ g ) \circ h = f \circ ( g \circ h ) $
+</td>
+</tr>
+
+<tr>
+    <td> 
+Identities
+</td>
+    <td> 
+$ f \circ id_A = id_A \circ f = f $
+</td>
+</tr>
+
+</table>
+
 <h4 id="hask">HASK</h4>
 <p>The set of all non-polymorphic Haskell types forms a category with Haskell functions as morphisms. For example:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">head</span><span class="ot"> ::</span> [a] <span class="ot">-&gt;</span> a

@@ -12,8 +12,8 @@ discuss how compositions of morphisms relate to each other.
 The term homomorphism is often used to describe morphisms in a
 category since homomorphism describes a structure preserving
 property that is associative. This definition is baked into the
-category definition and thus sometime we refer to the set of
-morphisms in a category as the **hom-set** or $ \\text\{Hom\}_C $
+category definition and thus the convention of referring to the
+morphisms in a category as the **homset** or $ \\text\{Hom\}_C $
 
 There are some special cases of morphisms.
 
