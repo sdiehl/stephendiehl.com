@@ -81,32 +81,82 @@
 <p>Morphisms are the central idea of category theory. They let us express mappings between objects and more importantly let us discuss how compositions of morphisms relate to each other.</p>
 <p>The term homomorphism is often used to describe morphisms in a category since homomorphism describes a structure preserving property that is associative. This definition is baked into the category definition and thus the convention of referring to the morphisms in a category as the <strong>homset</strong> or $ \text{Hom}_C $</p>
 <p>There are some special cases of morphisms.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Morphisms</th>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Endomorphism</td>
+<td align="left">\[ A \in C \]</td>
+<td align="left">\[ f : A \rightarrow A \]</td>
+</tr>
+<tr class="even">
+<td align="left">Epimorphism</td>
+<td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
+<td align="left">\[  g_1 . f = g_2 . f \implies g_1 = g_2 \]</td>
+</tr>
+<tr class="odd">
+<td align="left">Monomorphism</td>
+<td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
+<td align="left">\[  f . g_1  = f .  g_2  \implies g_1 = g_2 \]</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p><strong>Endomorphism</strong>: $ f : A \rightarrow A $</p>
+<p><strong>Endomorphism</strong></p>
 </blockquote>
-<p>An endomorphism with equal domain and codomain.</p>
+<p>An endomorphism is a morphism with equal domain and codomain.</p>
 <blockquote>
 <p><strong>Epimorphism</strong></p>
 </blockquote>
-<p>Is a morphism $ f : A \rightarrow B $ such that for any arbitrary morphisms $ g_1 : B \rightarrow C $, $ g_2 : B \rightarrow C $.</p>
-<p>Such that equality of left composition implies equality of $ g_1, g_2 $. i.e.,</p>
-<p>$ g_1 . f = g_2 . f \implies g_1 = g_2 $.</p>
+<p>Is a morphism $ f : A \rightarrow B $ such that for any arbitrary morphisms:</p>
+<p>\[ 
+g_1 : B \rightarrow C \\
+g_2 : B \rightarrow C
+\]</p>
+<p>The equality of left composition implies equality of $ g_1, g_2 $:</p>
+<p>\[ g_1 . f = g_2 . f \implies g_1 = g_2 \]</p>
 <blockquote>
 <p><strong>Monomorphism</strong></p>
 </blockquote>
 <p>A monomorphism is similar except with right composition.</p>
-<p>$ f . g_1 = f . g_2 \implies g_1 = g_2 $.</p>
-<p><img src="../images/epic_monic.svg" alt="Illustration"></img>.</p>
+<p>\[ f . g_1  = f . g_2  \implies g_1 = g_2 \]</p>
 <blockquote>
-<p><strong>Isomorphism</strong>: $ f : A \rightarrow B $ if there exists another morphism $ f^{-1} $ such that $ f . f^{-1} = \text{id}_A $ and $ f^{-1} . f = \text{id}_B $</p>
+<p><strong>Isomorphism</strong></p>
 </blockquote>
-<p>Isomorphisms are extremely important in category theory since they represent a form of “structural equality” between objects. Objects in the domain can be related to objects in the domain through the isomorphism.</p>
+<p>$ f : A \rightarrow B $ is an isomorphism if there exists another morphism $ f^{-1} $ such that</p>
+<p>\[ 
+    f . f^{-1} = \text{id}_A \\
+    f^{-1} . f = \text{id}_B 
+\]</p>
+<p>We say two objects are isomorphic if there exists an isomorphism between them, written as \[ A \cong B \].</p>
+<h4 id="morphisms-in-set">Morphisms in Set</h4>
+<p>In SET morphisms are functions between sets. The notion monomorphism can be thought of as a generalization of injective or one-to-one functions. Recall that injectivity refers to the property that for two elements $ x_1, x_2 $ in a set $ S $ we must have:</p>
+<p>If you stare closely at the notion of monomorphim and injectivity it becomes clear that the monomorphism is a <strong>pointless</strong> analogue of injectivity. Pointless or <strong>point-free</strong> meaning that it excludes the notion of a elements and expresses the same thought purely in terms of categories and morphisms.</p>
+<p>\[
+    \forall x_1, x_2 \in S: f(x_1) = f(x_2) \implies x_1 = x_2
+\]</p>
+<p>\[
+    \forall g_1, g_2 \in \text{Hom}_S: f \circ g_1 = f \circ g_2 \implies g_1 = g_2
+\]</p>
+<p>The same applies for <strong>surjective</strong> ( onto ) functions which are generalized by epimorphisms, given this new notation let us now refer to injective functions as <strong>monic</strong> and surjective functions as <strong>epic</strong>.</p>
+<p><img src="../images/epic_monic.svg" alt="Illustration"></img>.</p>
+<p>In SET we call a function which is both epic and monic a <strong>bijection</strong>, namely this is a function $ f $ which maps all elements to a unique value and that each element finds a corresponding element in the codomain under $ f $. In SET it is not difficult to see that these two combined conditions imply that $ f $ must be invertable ( $ f^{-1} $ ) which is precisely the definition of isomorphism from above.</p>
+<p>Isomorphisms are extremely important in category theory since they represent a form of “structural equality” between objects. Namely that through the isomorphism we can move back and forth between either object and dicuss properties of objects in terms of their isomorphisms all without the notion of elements!</p>
+<h4 id="motivating-example-of-isomorphisms">Motivating Example of Isomorphisms</h4>
 <h4 id="diagrams">Diagrams</h4>
 <p>This leads to the next discussion of commutative diagrams. A commutative diagram is a diagrammatic way of expressing the equivalence of morphisms. We draw objects as labels and morphisms as arrows between labels. If one “chases” a path through the diagram and finds that all variations of paths lead to the same endpoint we say that the diagram <strong>commutes</strong>, meaning the compositions of morphisms converge at the same codomain irregardless of choice of composition.</p>
 <p>Because of the ubiquity of diagrammatic reasoning in category theory it is common to speak of morphisms and <strong>arrows</strong> interchangeably.</p>
 <p>A very common phrase is that a property holds <em>such that the following diagram commutes</em>, meaning that the commutativity of the diagram is required for some proposition to be true. This allows us to express a large amount of information about required properties in a very compact way.</p>
 <p>For example the definition of isomorphism could be written such that the following diagram commutes. The dotted line indicating the required inverse of $ f $ required to exist by the definition.</p>
 <p><img src="../images/iso.svg" alt="Illustration"></img>.</p>
+<h4 id="control.arrow">Control.Arrow</h4>
+<p>Beware, there is a library in Haskell found in <code>Control.Arrow</code> that can be somewhat misleading to those studying category theory and Haskell. The <code>Arrows</code> package does not model categorical arrows. Arrows are a more exotic structure known as Freyd categories.</p>
         </div>
     </div>
 

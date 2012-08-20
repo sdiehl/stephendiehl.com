@@ -131,3 +131,10 @@ th{background:#edeff0;}
 code {
     font-family: monospace;
 }
+
+p img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+}
