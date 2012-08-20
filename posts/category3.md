@@ -10,25 +10,25 @@ morphisms and objects between the two categories. More precisely
 it is a mapping between $ T: A \\rightarrow B $ such that for
 every object in A there exists
 
-$
-T: A \\rightarrow T(A) \\in B
-$
+$$
+T: A \rightarrow T(A) \in B
+$$
 
-And for each morphism $ f $
+And for each morphism $ f : X \\rightarrow Y $
 
-$
-T(f): T(X) \\rightarrow T(Y) \\in B
-$
+$$
+T(f): T(X) \rightarrow T(Y) \in B
+$$
 
-In functional programming we differentiate between the functorial
-action on an object  ( ``` T a ``` )  from the functorial action on
-a morphism usually denoted ``` fmap f ```.
+In functional programming we differentiate between the **functorial
+action** or **functorial image** on an object ( ``` T a ``` ) from the
+functorial action on a morphism usually denoted ``` fmap f ```.
 
 In **Hask** the Functor typeclass is defined with:
 
 ```haskell
-class Functor T where
-  fmap :: (a -> b) -> T a -> T b
+class Functor t where
+  fmap :: (a -> b) -> t a -> t b
 ```
 
 ![Illustration](/images/functor.svg).
@@ -36,11 +36,11 @@ class Functor T where
 #### Functor laws
 
 The essential nature of Functors is that we preserve composition
-struction under mapping. Namely:
+structure under mapping. Namely:
 
-$
+$$
 T ( g . f ) = (T g) . (T f)
-$
+$$
 
 ```haskell
 fmap (g . f) = fmap g . fmap f
@@ -48,11 +48,11 @@ fmap (g . f) = fmap g . fmap f
 
 \
 
-Or pictorally:
+And pictorially:
 
 ![Illustration](/images/functor_comp.svg).
 
-The previous law also implictly depends on the preservation of
+The previous law also implicitly depends on the preservation of
 identities, indeed the identity morphism for an object must be preserved
 by functorial action.
 
@@ -60,8 +60,9 @@ by functorial action.
 fmap id = id
 ```
 
-Or pictorially: 
 \
+
+And pictorially: 
 
 ![Illustration](/images/functor_id.svg).
 
@@ -90,17 +91,18 @@ A rough illustration of the List functor pictorially.
 #### Contravariant Functors
 
 A slight variant on the traditional functor is a **contravariant
-functor** which reverses the domain and codomain of morphisms.
+functor** which reverses the domain and codomain of functorial
+image of the morphism.
 
-$
-t: A \\rightarrow T(A) \\in B
-$
+$$
+t: A \rightarrow T(A) \in B
+$$
 
 And for each morphism $ f $
 
-$
-T(f): T(Y) \\rightarrow T(X) \\in B
-$
+$$
+T(f): T(Y) \rightarrow T(X) \in B
+$$
 
 ![Illustration](/images/confunctor.svg).
 

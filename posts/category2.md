@@ -67,8 +67,11 @@ In SET morphisms are functions between sets. The notion
 monomorphism can be thought of as a generalization of
 injective or one-to-one functions. Recall that injectivity
 refers to the property that for two elements $ x_1, x_2 $ in a
-set $ S $ we must have:
+set $ S $ we have:
 
+$$
+    \forall x_1, x_2 \in S: f(x_1) = f(x_2) \implies x_1 = x_2
+$$
 
 If you stare closely at the notion of monomorphim and injectivity it
 becomes clear that the monomorphism is a **pointless** analogue of
@@ -77,17 +80,14 @@ notion of a elements and expresses the same thought purely in terms
 of categories and morphisms. 
 
 $$
-    \forall x_1, x_2 \in S: f(x_1) = f(x_2) \implies x_1 = x_2
-$$
-
-$$
     \forall g_1, g_2 \in \text{Hom}_S: f \circ g_1 = f \circ g_2 \implies g_1 = g_2
 $$
 
 
-The same applies for **surjective** ( onto ) functions which are generalized by
-epimorphisms, given this new notation let us now refer to injective
-functions as **monic** and surjective functions as **epic**.
+The same applies for **surjective** ( onto ) functions which are
+generalized by epimorphisms, given this new notation let us now refer
+( when talking about SET! ) to injective functions as **monic** and
+surjective functions as **epic**.
 
 ![Illustration](/images/epic_monic.svg).
 
@@ -104,6 +104,7 @@ they represent a form of "structural equality" between objects.
 Namely that through the isomorphism we can move back and forth
 between either object and dicuss properties of objects in terms
 of their isomorphisms all without the notion of elements!
+
 
 #### Motivating Example of Isomorphisms
 
