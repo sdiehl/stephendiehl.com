@@ -128,6 +128,13 @@ th{background:#edeff0;}
     margin-bottom: 20px;
 }
 
+div > pre.sourceCode {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding-left: 20px;
+    border-left: 1px solid #ccc;
+}
+
 code {
     font-family: monospace;
 }
