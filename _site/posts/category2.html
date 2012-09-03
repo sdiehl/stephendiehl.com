@@ -92,18 +92,18 @@
 <tbody>
 <tr class="odd">
 <td align="left">Endomorphism</td>
-<td align="left">$ A C $ $</td>
-<td align="left">f : A A $</td>
+<td align="left">\[ A \in C \]</td>
+<td align="left">\[ f : A \rightarrow A \]</td>
 </tr>
 <tr class="even">
 <td align="left">Epimorphism</td>
-<td align="left">$ g_1, g_2 _C $ $</td>
-<td align="left">g_1 . f = g_2 . f g_1 = g_2 $</td>
+<td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
+<td align="left">\[  g_1 . f = g_2 . f \implies g_1 = g_2 \]</td>
 </tr>
 <tr class="odd">
 <td align="left">Monomorphism</td>
-<td align="left">$ g_1, g_2 _C $ $</td>
-<td align="left">f . g_1 = f . g_2 g_1 = g_2 $</td>
+<td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
+<td align="left">\[  f . g_1  = f .  g_2  \implies g_1 = g_2 \]</td>
 </tr>
 </tbody>
 </table>
@@ -115,25 +115,35 @@
 <p><strong>Epimorphism</strong></p>
 </blockquote>
 <p>Is a morphism $ f : A \rightarrow B $ such that for any arbitrary morphisms:</p>
-<p>$ g_1 : B C \ g_2 : B C $</p>
+<p>\[ 
+g_1 : B \rightarrow C \\
+g_2 : B \rightarrow C
+\]</p>
 <p>The equality of left composition implies equality of $ g_1, g_2 $:</p>
-<p>$ g_1 . f = g_2 . f g_1 = g_2 $</p>
+<p>\[ g_1 . f = g_2 . f \implies g_1 = g_2 \]</p>
 <blockquote>
 <p><strong>Monomorphism</strong></p>
 </blockquote>
 <p>A monomorphism is similar except with right composition.</p>
-<p>$ f . g_1 = f . g_2 g_1 = g_2 $</p>
+<p>\[ f . g_1  = f . g_2  \implies g_1 = g_2 \]</p>
 <blockquote>
 <p><strong>Isomorphism</strong></p>
 </blockquote>
 <p>$ f : A \rightarrow B $ is an isomorphism if there exists another morphism $ f^{-1} $ such that</p>
-<p>$ f . f^{-1} = <em>A \ f^{-1} . f = </em>B $</p>
-<p>We say two objects are isomorphic if there exists an isomorphism between them, written as $ A B $.</p>
+<p>\[ 
+    f . f^{-1} = \text{id}_A \\
+    f^{-1} . f = \text{id}_B 
+\]</p>
+<p>We say two objects are isomorphic if there exists an isomorphism between them, written as \[ A \cong B \].</p>
 <h4 id="morphisms-in-set">Morphisms in Set</h4>
 <p>In SET morphisms are functions between sets. The notion monomorphism can be thought of as a generalization of injective or one-to-one functions. Recall that injectivity refers to the property that for two elements $ x_1, x_2 $ in a set $ S $ we have:</p>
-<p>$ x_1, x_2 S: f(x_1) = f(x_2) x_1 = x_2 $</p>
+<p>\[
+    \forall x_1, x_2 \in S: f(x_1) = f(x_2) \implies x_1 = x_2
+\]</p>
 <p>If you stare closely at the notion of monomorphim and injectivity it becomes clear that the monomorphism is a <strong>pointless</strong> analogue of injectivity. Pointless or <strong>point-free</strong> meaning that it excludes the notion of a elements and expresses the same thought purely in terms of categories and morphisms.</p>
-<p>$ g_1, g_2 _S: f g_1 = f g_2 g_1 = g_2 $</p>
+<p>\[
+    \forall g_1, g_2 \in \text{Hom}_S: f \circ g_1 = f \circ g_2 \implies g_1 = g_2
+\]</p>
 <p>The same applies for <strong>surjective</strong> ( onto ) functions which are generalized by epimorphisms, given this new notation let us now refer ( when talking about SET! ) to injective functions as <strong>monic</strong> and surjective functions as <strong>epic</strong>.</p>
 <p><img src="../images/epic_monic.svg" alt="Illustration"></img>.</p>
 <p>In SET we call a function which is both epic and monic a <strong>bijection</strong>, namely this is a function $ f $ which maps all elements to a unique value and that each element finds a corresponding element in the codomain under $ f $. In SET it is not difficult to see that these two combined conditions imply that $ f $ must be invertable ( $ f^{-1} $ ) which is precisely the definition of isomorphism from above.</p>

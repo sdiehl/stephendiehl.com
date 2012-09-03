@@ -79,9 +79,13 @@
         <div class="twelve columns offset-by-one content">
             <h4 id="functor">Functor</h4>
 <p>A functor is a pair of mappings between categories that maps morphisms and objects between the two categories. More precisely it is a mapping between $ T: A \rightarrow B $ such that for every object in A there exists</p>
-<p>$ T: A T(A) B $</p>
+<p>\[
+T: A \rightarrow T(A) \in B
+\]</p>
 <p>And for each morphism $ f : X \rightarrow Y $</p>
-<p>$ T(f): T(X) T(Y) B $</p>
+<p>\[
+T(f): T(X) \rightarrow T(Y) \in B
+\]</p>
 <p>In functional programming we differentiate between the <strong>functorial action</strong> or <strong>functorial image</strong> on an object ( <code>T a</code> ) from the functorial action on a morphism usually denoted <code>fmap f</code>.</p>
 <p>In <strong>Hask</strong> the Functor typeclass is defined with:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> t <span class="kw">where</span>
@@ -89,7 +93,9 @@
 <p><img src="../images/functor.svg" alt="Illustration"></img>.</p>
 <h4 id="functor-laws">Functor laws</h4>
 <p>The essential nature of Functors is that we preserve composition structure under mapping. Namely:</p>
-<p>$ T ( g . f ) = (T g) . (T f) $</p>
+<p>\[
+T ( g . f ) = (T g) . (T f)
+\]</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> (g <span class="fu">.</span> f) <span class="fu">=</span> <span class="fu">fmap</span> g <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
 <p><br /> And pictorially:</p>
 <p><img src="../images/functor_comp.svg" alt="Illustration"></img>.</p>
@@ -111,9 +117,13 @@
 <p><img src="../images/fmap.svg" alt="Illustration"></img>.</p>
 <h4 id="contravariant-functors">Contravariant Functors</h4>
 <p>A slight variant on the traditional functor is a <strong>contravariant functor</strong> which reverses the domain and codomain of functorial image of the morphism.</p>
-<p>$ t: A T(A) B $</p>
+<p>\[
+t: A \rightarrow T(A) \in B
+\]</p>
 <p>And for each morphism $ f $</p>
-<p>$ T(f): T(Y) T(X) B $</p>
+<p>\[
+T(f): T(Y) \rightarrow T(X) \in B
+\]</p>
 <p><img src="../images/confunctor.svg" alt="Illustration"></img>.</p>
 <p>Traditional functors as discussed above can also be referred to <strong>covariant functors</strong>.</p>
         </div>

@@ -88,9 +88,9 @@
 <li>A collection of <strong>objects</strong>.</li>
 <li>A collection of <strong>morphisms</strong>.</li>
 <li><p>A <strong>composition</strong> operation (.) which given two other morphisms yields a <em>composite morphism</em> denoted</p>
-<p>$ ( f . g ) $</p></li>
+<p>\[ ( f . g ) \]</p></li>
 <li><p>For each object $ A $ there is an identity morphism</p>
-<p>$ _A $</p></li>
+<p>\[ \text{id}_A \]</p></li>
 </ol>
 <p>Unlike most discussions, I’m going to stop the mathematical discussion right here and go straight to code so as to not scare the math-phobic Haskell programmer away!</p>
 <h4 id="category-of-haskell-types">Category of Haskell types</h4>
@@ -167,14 +167,14 @@ f <span class="fu">.</span><span class="ot"> g ::</span> <span class="dt">A</spa
 <p><br /> This notion finds a direct analogue in the categorical definition of homsets.</p>
 <h4 id="homsets">Homsets</h4>
 <p>A category is constructed out a collection of morphisms, a morphism has two associated values, its domain $ \text{dom} $ and codomain $ \text{cod} $. The collection of other morphisms in the category with the same values is called a <strong>homset</strong> as written $ \text{Hom}(A,B) $.</p>
-<p>Given a specific category $ C $, we refer to the set of all morphisms in the category as the homset over C $ _C $ with:</p>
-<p>$ (A B) (A,B) $</p>
+<p>Given a specific category $ C $, we refer to the set of all morphisms in the category as the homset over C \[ \text{Hom}_C \] with:</p>
+<p>\[ (A \rightarrow B) \in \text{Hom}(A,B) \]</p>
 <p>For composition to be well defined we require that composition itself be a mapping only defined for:</p>
-<p>$ (.) : (A,B) (B,C) (A,C) $</p>
+<p>\[ (.) : \text{Hom}(A,B) \rightarrow \text{Hom}(B,C) \rightarrow \text{Hom}(A,C) \]</p>
 <p>Haskell programmers should be familiar with this notion of “aligning types”.</p>
 <p>It is important to note that this definition is intentionally abstract. While in some concrete categories morphisms are functions in the traditional sense, in general homsets are merely abstract collections of 2-tuples with some abstract binary compostion operation subject to some constraints.</p>
 <p>There is some ambiguity in the way that functional programmers and category theorists compose morphisms. Most category theorists would reverse the arguments to get composition as.</p>
-<p>$ (.) : (B,C) (A,B) (A,C) $</p>
+<p>\[ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) \]</p>
 <p>This can lend itself to some confusion and I will try to adopt the functional programmers notation wherever possible.</p>
 <h4 id="formal-definition-of-categories">Formal Definition of Categories</h4>
 <p>I will use the following tabular format for the definition of categories from here out. The first column is the type of construction, the second column is the constraints on the objects involved in the definition, and the third column is the definition of the construction.</p>
@@ -187,7 +187,7 @@ Category
 Objects
 </td>
     <td> 
-$ X, Y C $
+\[ X, Y \in C \]
 </td>
     <td></td>
 </tr>
@@ -197,10 +197,10 @@ $ X, Y C $
 Morphisms
 </td>
     <td> 
-$ f _C $
+\[ f \in \text{Hom}_C \]
 </td>
     <td> 
-$ f: X Y $
+\[ f: X \rightarrow Y \]
 </td>
 </tr>
 
@@ -210,10 +210,13 @@ Composition
 </td>
     <td>
     
-$ f : X Y \ g : Y Z<br /> $
+\[ 
+        f : X \rightarrow Y \\
+        g : Y \rightarrow Z  
+    \]
 </td>
     <td> 
-$ f . g : X Z $
+\[ f . g : X \rightarrow Z \]
 </td>
 </tr>
 
@@ -222,10 +225,10 @@ $ f . g : X Z $
 Identities
 </td>
     <td> 
-$  X C $
+\[ \text{For all } X \in C \]
 </td>
     <td> 
-$ _A : X X $
+\[ \text{id}_A : X \rightarrow X \]
 </td>
 </tr>
 
@@ -241,10 +244,10 @@ Category Laws
 Associativity
 </td>
     <td> 
-$ f,g,h _C $
+\[ f,g,h \in \text{Hom}_C \]
 </td>
     <td> 
-$ ( f . g ) . h = f . ( g . h ) $
+\[ ( f . g ) . h = f . ( g . h ) \]
 </td>
 </tr>
 <tr>
@@ -252,10 +255,13 @@ $ ( f . g ) . h = f . ( g . h ) $
 Identity
 </td>
     <td> 
-$ A C \ f : A B $
+\[ 
+        A \in C \\
+        f : A \rightarrow B
+    \]
 </td>
     <td> 
-$ f . <em>A = </em>B . f = f $
+\[ f . \text{id}_A  = \text{id}_B . f = f \]
 </td>
 </tr>
 </table>
@@ -294,10 +300,16 @@ Total functions over $ S $
 Composition
 </td>
     <td> 
-$ f : B C \ g : A B $
+\[ 
+        f : B \rightarrow C \\ 
+        g : A \rightarrow B 
+    \]
 </td>
     <td> 
-$ f g : A C \ f g = x. f (g a) $
+\[ 
+        f \circ g : A \rightarrow C \\
+        f \circ g = \lambda x. f (g a) 
+    \]
 </td>
 </tr>
 
@@ -306,11 +318,14 @@ $ f g : A C \ f g = x. f (g a) $
 Identities
 </td>
     <td> 
-$ A S $
+\[ A \in S \]
 </td>
     <td> 
     
-$ <em>A :: A A \ </em>A = x . x $
+\[
+        \text{id}_A :: A \rightarrow A \\
+        \text{id}_A = \lambda x . x
+    \]
 </td>
 </tr>
 
@@ -375,7 +390,7 @@ Objects
 </td>
     <td> </td>
     <td> 
-$ $
+\[ \emptyset \]
 </td>
 </tr>
 
@@ -385,7 +400,7 @@ Morphisms
 </td>
     <td> </td>
     <td> 
-$ $
+\[ \emptyset \]
 </td>
 </tr>
 
@@ -406,10 +421,10 @@ Composition
 Identities
 </td>
     <td> 
-$  A $
+\[ \text{For all } A \]
 </td>
     <td> 
-$ _A : A A $
+\[ \text{id}_A : A \rightarrow A \]
 </td>
 </tr>
 
@@ -429,7 +444,7 @@ Objects
 singleton set
 </td>
     <td> 
-$ {X} $
+\[ {X} \]
 </td>
 </tr>
 
@@ -439,7 +454,7 @@ Morphisms
 </td>
     <td> </td>
     <td> 
-$ f : X X $
+\[ f : X \rightarrow X \]
 </td>
 </tr>
 
@@ -449,7 +464,7 @@ Composition
 </td>
     <td> </td>
     <td> 
-$ (f . f) = _X $
+\[ (f . f) = \text{id}_X \]
 </td>
 </tr>
 
@@ -458,11 +473,14 @@ $ (f . f) = _X $
 Identities
 </td>
     <td> 
-$  A $
+\[ \text{For all } A \]
 </td>
     <td>
     
-$ <em>X : X X \ </em>X = x. X $
+\[ 
+        \text{id}_X : X \rightarrow X  \\
+        \text{id}_X = \lambda x. X
+    \]
 </td>
 </tr>
 
