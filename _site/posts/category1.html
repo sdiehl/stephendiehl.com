@@ -79,7 +79,7 @@
         <div class="twelve columns offset-by-one content">
             <h3 id="forward">Forward</h3>
 <p>This is a multipart blog post on the structure of the mathematical field of Category theory and how it relates to real world programming.</p>
-<p>Category theory distills the essence of a large variety of constructions in traditional set theory to more abstract context which can be used to reason about the large scale structure of mathematics, physics, and computer science.</p>
+<p>Category theory distills the essence of a large variety of constructions in traditional set theory to more abstract context which can be used to reason about general concepts in computer science and mathematics.</p>
 <p>If one were to try and describe the essence of category theory, it is that it is study of relationships between between mappings of elements, but at a level of generality where there is no notion of individual elements. Instead elements arise only out of their relationships between each other.</p>
 <p>This tutorial is a humble attempt to provide a bridge between the mathematical literature and the everyday language of the working Haskell programming programmer. Any and all feedback is welcome!</p>
 <h3 id="categories">Categories</h3>
@@ -88,9 +88,9 @@
 <li>A collection of <strong>objects</strong>.</li>
 <li>A collection of <strong>morphisms</strong>.</li>
 <li><p>A <strong>composition</strong> operation (.) which given two other morphisms yields a <em>composite morphism</em> denoted</p>
-<p>\[ ( f . g ) \]</p></li>
+<p>$ ( f . g ) $</p></li>
 <li><p>For each object $ A $ there is an identity morphism</p>
-<p>\[ \text{id}_A \]</p></li>
+<p>$ _A $</p></li>
 </ol>
 <p>Unlike most discussions, I’m going to stop the mathematical discussion right here and go straight to code so as to not scare the math-phobic Haskell programmer away!</p>
 <h4 id="category-of-haskell-types">Category of Haskell types</h4>
@@ -167,14 +167,14 @@ f <span class="fu">.</span><span class="ot"> g ::</span> <span class="dt">A</spa
 <p><br /> This notion finds a direct analogue in the categorical definition of homsets.</p>
 <h4 id="homsets">Homsets</h4>
 <p>A category is constructed out a collection of morphisms, a morphism has two associated values, its domain $ \text{dom} $ and codomain $ \text{cod} $. The collection of other morphisms in the category with the same values is called a <strong>homset</strong> as written $ \text{Hom}(A,B) $.</p>
-<p>Given a specific category $ C $, we refer to the set of all morphisms in the category as the homset over C \[ \text{Hom}_C \] with:</p>
-<p>\[ (A \rightarrow B) \in \text{Hom}(A,B) \]</p>
+<p>Given a specific category $ C $, we refer to the set of all morphisms in the category as the homset over C $ _C $ with:</p>
+<p>$ (A B) (A,B) $</p>
 <p>For composition to be well defined we require that composition itself be a mapping only defined for:</p>
-<p>\[ (.) : \text{Hom}(A,B) \rightarrow \text{Hom}(B,C) \rightarrow \text{Hom}(A,C) \]</p>
+<p>$ (.) : (A,B) (B,C) (A,C) $</p>
 <p>Haskell programmers should be familiar with this notion of “aligning types”.</p>
 <p>It is important to note that this definition is intentionally abstract. While in some concrete categories morphisms are functions in the traditional sense, in general homsets are merely abstract collections of 2-tuples with some abstract binary compostion operation subject to some constraints.</p>
 <p>There is some ambiguity in the way that functional programmers and category theorists compose morphisms. Most category theorists would reverse the arguments to get composition as.</p>
-<p>\[ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) \]</p>
+<p>$ (.) : (B,C) (A,B) (A,C) $</p>
 <p>This can lend itself to some confusion and I will try to adopt the functional programmers notation wherever possible.</p>
 <h4 id="formal-definition-of-categories">Formal Definition of Categories</h4>
 <p>I will use the following tabular format for the definition of categories from here out. The first column is the type of construction, the second column is the constraints on the objects involved in the definition, and the third column is the definition of the construction.</p>
@@ -187,7 +187,7 @@ Category
 Objects
 </td>
     <td> 
-\[ X, Y \in C \]
+$ X, Y C $
 </td>
     <td></td>
 </tr>
@@ -197,10 +197,10 @@ Objects
 Morphisms
 </td>
     <td> 
-\[ f \in \text{Hom}_C \]
+$ f _C $
 </td>
     <td> 
-\[ f: X \rightarrow Y \]
+$ f: X Y $
 </td>
 </tr>
 
@@ -210,13 +210,10 @@ Composition
 </td>
     <td>
     
-\[ 
-        f : X \rightarrow Y \\
-        g : Y \rightarrow Z  
-    \]
+$ f : X Y \ g : Y Z<br /> $
 </td>
     <td> 
-\[ f . g : X \rightarrow Z \]
+$ f . g : X Z $
 </td>
 </tr>
 
@@ -225,10 +222,10 @@ Composition
 Identities
 </td>
     <td> 
-\[ \text{For all } X \in C \]
+$  X C $
 </td>
     <td> 
-\[ \text{id}_A : X \rightarrow X \]
+$ _A : X X $
 </td>
 </tr>
 
@@ -244,10 +241,10 @@ Category Laws
 Associativity
 </td>
     <td> 
-\[ f,g,h \in \text{Hom}_C \]
+$ f,g,h _C $
 </td>
     <td> 
-\[ ( f . g ) . h = f . ( g . h ) \]
+$ ( f . g ) . h = f . ( g . h ) $
 </td>
 </tr>
 <tr>
@@ -255,13 +252,10 @@ Associativity
 Identity
 </td>
     <td> 
-\[ 
-        A \in C \\
-        f : A \rightarrow B
-    \]
+$ A C \ f : A B $
 </td>
     <td> 
-\[ f . \text{id}_A  = \text{id}_B . f = f \]
+$ f . <em>A = </em>B . f = f $
 </td>
 </tr>
 </table>
@@ -300,16 +294,10 @@ Total functions over $ S $
 Composition
 </td>
     <td> 
-\[ 
-        f : B \rightarrow C \\ 
-        g : A \rightarrow B 
-    \]
+$ f : B C \ g : A B $
 </td>
     <td> 
-\[ 
-        f \circ g : A \rightarrow C \\
-        f \circ g = \lambda x. f (g a) 
-    \]
+$ f g : A C \ f g = x. f (g a) $
 </td>
 </tr>
 
@@ -318,14 +306,11 @@ Composition
 Identities
 </td>
     <td> 
-\[ A \in S \]
+$ A S $
 </td>
     <td> 
     
-\[
-        \text{id}_A :: A \rightarrow A \\
-        \text{id}_A = \lambda x . x
-    \]
+$ <em>A :: A A \ </em>A = x . x $
 </td>
 </tr>
 
@@ -356,6 +341,26 @@ $ f \circ \text{id}_A = \text{id}_A \circ f = f $
 
 </table>
 
+<p>If we define a toy <code>Cat</code> typeclass with the above definition and define an instance for Haskell (-&gt;) from <code>GHC.Prim</code> we have:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Hask</span> <span class="fu">=</span> (<span class="ot">-&gt;</span>)
+
+<span class="kw">class</span> <span class="dt">Cat</span> cat <span class="kw">where</span>
+<span class="ot">    ident ::</span> cat a a
+<span class="ot">    comp  ::</span> cat b c <span class="ot">-&gt;</span> cat a b <span class="ot">-&gt;</span> cat a c
+
+<span class="kw">instance</span> <span class="dt">Cat</span> <span class="dt">Hask</span> <span class="kw">where</span>
+    ident x  <span class="fu">=</span> x
+    comp f g <span class="fu">=</span> \x <span class="ot">-&gt;</span> f (g x)</code></pre>
+<p>We see that we of course recover the identitiy function and compostion from the Prelude.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Cat</span> <span class="dt">Hask</span> <span class="kw">where</span>
+    ident <span class="fu">=</span> <span class="fu">id</span>
+    comp  <span class="fu">=</span> (<span class="fu">.</span>)
+
+<span class="co">-- Equivalent definition from Control.Category</span>
+
+<span class="kw">instance</span> <span class="dt">Category</span> (<span class="ot">-&gt;</span>) <span class="kw">where</span>
+    <span class="fu">id</span> <span class="fu">=</span> Prelude.id
+    (<span class="fu">.</span>) <span class="fu">=</span> (<span class="fu">Prelude..</span>)</code></pre>
 <p>It is worth noting the common confusion that morphisms are not functions. It is the other way around, in the category SET functions are morphisms with objects as sets but this is a special case. In general morphisms are a pure abstraction which have structural similarity to functions.</p>
 <h4 id="trivial-categories">Trivial Categories</h4>
 <p>A <strong>subcategory</strong> is a category contained within another category which also satisfies the category construction. A more advanced example that will be discussed later is that monads with an operation called Kleisli composition forms a category that is of much interest to Haskell programmers.</p>
@@ -370,7 +375,7 @@ Objects
 </td>
     <td> </td>
     <td> 
-\[ \emptyset \]
+$ $
 </td>
 </tr>
 
@@ -380,7 +385,7 @@ Morphisms
 </td>
     <td> </td>
     <td> 
-\[ \emptyset \]
+$ $
 </td>
 </tr>
 
@@ -401,10 +406,10 @@ Composition
 Identities
 </td>
     <td> 
-\[ \text{For all } A \]
+$  A $
 </td>
     <td> 
-\[ \text{id}_A : A \rightarrow A \]
+$ _A : A A $
 </td>
 </tr>
 
@@ -424,7 +429,7 @@ Objects
 singleton set
 </td>
     <td> 
-\[ {X} \]
+$ {X} $
 </td>
 </tr>
 
@@ -434,7 +439,7 @@ Morphisms
 </td>
     <td> </td>
     <td> 
-\[ f : X \rightarrow X \]
+$ f : X X $
 </td>
 </tr>
 
@@ -444,7 +449,7 @@ Composition
 </td>
     <td> </td>
     <td> 
-\[ (f . f) = \text{id}_X \]
+$ (f . f) = _X $
 </td>
 </tr>
 
@@ -453,14 +458,11 @@ Composition
 Identities
 </td>
     <td> 
-\[ \text{For all } A \]
+$  A $
 </td>
     <td>
     
-\[ 
-        \text{id}_X : X \rightarrow X  \\
-        \text{id}_X = \lambda x. X
-    \]
+$ <em>X : X X \ </em>X = x. X $
 </td>
 </tr>
 
@@ -481,7 +483,6 @@ Identities
 <p>A category which has its morphisms and objects in a set is referred to as a <strong>small category</strong>. A category which does not is referred to as a <strong>large category</strong>.</p>
 <p>This begs the question as to whether we can form the category of all categories. The answer to this is no, because of the implications of self-referential sets. See <a href="http://en.wikipedia.org/wiki/Russell's_paradox">Russell’s Paradox</a>.</p>
 <p>It is however very illuminating to look at the category of all small categories called <strong>CAT</strong> which does indeed form a category with objects as categories and mappings called functors as morphisms between categories.</p>
-<p>The category of categories is where category theory starts to become interesting. More on this in the next post…</p>
         </div>
     </div>
 

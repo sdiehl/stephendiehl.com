@@ -152,7 +152,7 @@ $ ghc-llvm hello.hs > hello.bc
 
 Its also worth noting that GHC lets you customize the path locations of ``opt `` and ``llc``.
 
-```
+```bash
 -pgmlo - The program to use as the llvm optimiser
 -pgmlc - The program to use as the llvm compiler
 ```

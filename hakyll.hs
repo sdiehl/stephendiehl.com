@@ -1,21 +1,31 @@
 {-# LANGUAGE OverloadedStrings #-}
-import Hakyll
 
 import Prelude hiding (id)
 import Control.Category (id)
-import Control.Arrow ((>>>), (***), arr)
+import Control.Arrow ((>>>), (***), arr, (>>^))
+import Control.Applicative
 import Data.Monoid (mempty, mconcat)
 
 import Hakyll
+import Tikz
+
 import Text.Pandoc
+import System.IO.Unsafe
+
+renderPandocThrough ::(Compiler (Page Pandoc) (Page Pandoc)) -> Compiler Resource (Page String)
+renderPandocThrough p = readPageCompiler >>> addDefaultFields >>> arr applySelf 
+                        >>> pageReadPandoc >>> p >>> arr (fmap writePandoc)
+
+catTransformer = cached "Commutative Diagrams" $ renderPandocThrough $ catInplace
+
+catInplace :: Compiler (Page Pandoc) (Page Pandoc)
+catInplace =  timedCompiler "Commutative diagrams" $ unsafeCompiler $ \(Page md b) -> do
+    compiled <- bottomUpM doTikz $ b
+    return $ (Page md compiled)
 
 -- Python tipy preprocessor
 py_pre :: Compiler Resource String
 py_pre = getResourceString >>> unixFilter "tipy" ["--preprocess"]
-
--- Tikz for drawing commutative diagrams
-cats_pre :: Compiler Resource String
-cats_pre = getResourceString >>> unixFilter "cats" ["--preprocess"]
 
 -- MathJax as Math backend
 pandocOptions :: WriterOptions
@@ -43,9 +53,6 @@ main = hakyll $ do
 
     match "posts/*" $ do
         route   $ setExtension "html"
-        {-compile $ pageCompiler-}
-            {->>> applyTemplateCompiler "templates/default.html"-}
-            {->>> relativizeUrlsCompiler-}
         compile $ py_pre
             >>> arr readPage
             >>> addDefaultFields

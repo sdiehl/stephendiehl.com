@@ -92,172 +92,25 @@
 ...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
 &gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre>
 <p>But you want the compiled version to look like it were an interactive shell session.</p>
-<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="kw">def</span> foo(x,y):
-...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
-&gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">5</span>)
-[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</code></pre>
+<pre class="pycon"><code>&gt;&gt;&gt; def foo(x,y):
+...     return range(x,y)
+
+&gt;&gt;&gt; foo(1,5)</code></pre>
 <p><br /> Or if desired you can execute the entire script with the <code>compiler=pyexec</code> flag and inline the output of the whole script.</p>
-<pre class="sourceCode python"><code class="sourceCode python">
-<span class="ch">from</span> string <span class="ch">import</span> digits
-<span class="ch">from</span> itertools <span class="ch">import</span> izip
+<pre class="pyexec"><code>from string import digits
+from itertools import izip
 
-<span class="kw">for</span> a,b in izip(<span class="dt">reversed</span>(digits), digits):
-    <span class="kw">print</span> a,b</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="dv">9</span> <span class="dv">0</span>
-<span class="dv">8</span> <span class="dv">1</span>
-<span class="dv">7</span> <span class="dv">2</span>
-<span class="dv">6</span> <span class="dv">3</span>
-<span class="dv">5</span> <span class="dv">4</span>
-<span class="dv">4</span> <span class="dv">5</span>
-<span class="dv">3</span> <span class="dv">6</span>
-<span class="dv">2</span> <span class="dv">7</span>
-<span class="dv">1</span> <span class="dv">8</span>
-<span class="dv">0</span> <span class="dv">9</span></code></pre>
+for a,b in izip(reversed(digits), digits):
+    print a,b</code></pre>
 <h3 id="more-examples">More Examples</h3>
-<pre class="sourceCode python"><code class="sourceCode python">
-<span class="ch">from</span> numpy.random <span class="ch">import</span> randn
+<pre class="pyexec"><code>from numpy.random import randn
 
-matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
-<span class="kw">print</span> matrix</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">0.74170346</span> -<span class="fl">0.71530643</span>  <span class="fl">0.46867294</span>]
-  [ <span class="fl">0.19286168</span>  <span class="fl">0.57619562</span> -<span class="fl">1.98430698</span>]
-  [-<span class="fl">0.12290191</span>  <span class="fl">0.47557638</span>  <span class="fl">0.24432454</span>]]
-
- [[ <span class="fl">0.35584838</span>  <span class="fl">0.62739487</span>  <span class="fl">0.14005047</span>]
-  [-<span class="fl">0.0661159</span>   <span class="fl">0.99416133</span> -<span class="fl">0.40103344</span>]
-  [ <span class="fl">0.03296842</span> -<span class="fl">0.83595489</span> -<span class="fl">0.48656265</span>]]
-
- [[-<span class="fl">0.49026859</span>  <span class="fl">0.34771084</span> -<span class="fl">0.45171136</span>]
-  [-<span class="fl">0.72363787</span>  <span class="fl">0.65205222</span> -<span class="fl">1.02589486</span>]
-  [-<span class="fl">0.12554545</span> -<span class="fl">0.55796632</span> -<span class="fl">0.78768846</span>]]]</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
-&gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
-&gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
-<table border="1">
-  <thead>
-    <tr>
-      <th></th>
-      <th>
-0
-</th>
-      <th>
-1
-</th>
-      <th>
-2
-</th>
-      <th>
-3
-</th>
-      <th>
-4
-</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-      <td>
-<strong>0</strong>
-</td>
-      <td> 
-1.502117
-</td>
-      <td> 
-0.390901
-</td>
-      <td>
--0.954354
-</td>
-      <td> 
-0.141258
-</td>
-      <td> 
-1.906899
-</td>
-    </tr>
-    <tr>
-      <td>
-<strong>1</strong>
-</td>
-      <td>
--0.571246
-</td>
-      <td>
--0.231359
-</td>
-      <td>
--0.034110
-</td>
-      <td>
--2.121231
-</td>
-      <td> 
-0.615009
-</td>
-    </tr>
-    <tr>
-      <td>
-<strong>2</strong>
-</td>
-      <td> 
-2.543600
-</td>
-      <td>
--1.747395
-</td>
-      <td>
--0.412768
-</td>
-      <td> 
-0.777827
-</td>
-      <td>
--2.181317
-</td>
-    </tr>
-    <tr>
-      <td>
-<strong>3</strong>
-</td>
-      <td> 
-0.986268
-</td>
-      <td> 
-0.096426
-</td>
-      <td> 
-0.949855
-</td>
-      <td>
--1.353615
-</td>
-      <td> 
-0.293137
-</td>
-    </tr>
-    <tr>
-      <td>
-<strong>4</strong>
-</td>
-      <td>
--1.468875
-</td>
-      <td>
--1.634753
-</td>
-      <td>
--0.245191
-</td>
-      <td> 
-0.818186
-</td>
-      <td>
--0.065466
-</td>
-    </tr>
-  </tbody>
-</table>
-
+matrix = randn(3,3,3)
+print matrix</code></pre>
+<pre class="pycon"><code>&gt;&gt;&gt; from pandas import DataFrame
+&gt;&gt;&gt; from numpy.random import randn
+pragma:dataframe
+&gt;&gt;&gt; DataFrame(randn(5,5))</code></pre>
 <h3 id="integration-with-hakyll">Integration with Hakyll</h3>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Hakyll</span>
 

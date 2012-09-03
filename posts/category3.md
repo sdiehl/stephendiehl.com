@@ -72,10 +72,10 @@ The classic example is Haskell functor over ``Pair`` values and
 the list functor.
 
 ```haskell
-data Pair a = Pair a a deriving Show
+data Pair a b = Pair a b
 
 instance Functor Pair where
-    fmap f (Pair x y) = Pair (f x) (f y)
+    fmap f (Pair x y) = Pair (x) (f y)
 
 instance Functor [] where
     fmap f []       =  []

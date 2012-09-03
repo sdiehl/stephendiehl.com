@@ -10,9 +10,8 @@ field of Category theory and how it relates to real world
 programming.
 
 Category theory distills the essence of a large variety of constructions
-in traditional set theory to more abstract context which can be used to
-reason about the large scale structure of mathematics, physics, and
-computer science.
+in traditional set theory to more abstract context which can be used
+to reason about general concepts in computer science and mathematics.
 
 If one were to try and describe the essence of category theory, it is
 that it is study of relationships between between mappings of elements,
@@ -301,6 +300,37 @@ With the usual properties:
 
 </table>
 
+If we define a toy ``Cat`` typeclass with the above definition
+and define an instance for Haskell (->) from ``GHC.Prim`` we
+have:
+
+```haskell
+type Hask = (->)
+
+class Cat cat where
+    ident :: cat a a
+    comp  :: cat b c -> cat a b -> cat a c
+
+instance Cat Hask where
+    ident x  = x
+    comp f g = \x -> f (g x)
+```
+
+We see that we of course recover the identitiy function and
+compostion from the Prelude.
+
+```haskell
+instance Cat Hask where
+    ident = id
+    comp  = (.)
+
+-- Equivalent definition from Control.Category
+
+instance Category (->) where
+    id = Prelude.id
+    (.) = (Prelude..)
+```
+
 It is worth noting the common confusion that morphisms are not
 functions. It is the other way around, in the category SET functions
 are morphisms with objects as sets but this is a special case. In
@@ -418,6 +448,3 @@ It is however very illuminating to look at the category of all small
 categories called **CAT** which does indeed form a category with objects
 as categories and mappings called functors as morphisms between
 categories.
-
-The category of categories is where category theory starts to
-become interesting. More on this in the next post...

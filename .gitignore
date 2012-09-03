@@ -4,3 +4,6 @@ _cache
 *.o
 *.swp
 *.swo
+*.aux
+*.log
+*.pdf
