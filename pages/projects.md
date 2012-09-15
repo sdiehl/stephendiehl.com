@@ -19,6 +19,7 @@ title: Projects
 **Python**
 
 * [numpush](https://github.com/sdiehl/numpush) - *Distributed data/code push for Numpy derivative structures*
+* [flowlet](https://github.com/sdiehl/flowlet) - *A small CPython structure for building coroutine pipelines*
 * [kaylee](https://github.com/sdiehl/kaylee) - *Map-Reduce with ZeroMQ*
 * [pure-python](https://github.com/sdiehl/pure-python) - *Cython interface for Pure LLVM*
 * [sockjs-gevent](https://github.com/sdiehl/sockjs-gevent) - *SocksJS gevent backend*

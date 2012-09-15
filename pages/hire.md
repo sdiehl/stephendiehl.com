@@ -5,9 +5,9 @@ title: Stephen Diehl boston python developer gevent
 I'm available for consulting and possibly full-time positions in the
 Cambridge/Boston area.  Let's talk about your idea and what I can do.
 
-To contact me via email run one of the following scripts Python script
-to generate my contact information. I find this is an effective filter
-against the deluge of emails from recruiters.
+To contact me via email run the following Python script to generate my
+contact information. I find this is an effective filter against the
+deluge of emails from recruiters.
 
 Hint: If you're using IPython use the %paste magic method.
 
