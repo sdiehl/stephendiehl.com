@@ -1,5 +1,5 @@
 ---
-title: Stephen Diehl boston python developer gevent
+title: Stephen Diehl
 ---
 
 **Hi, I'm Stephen Diehl.**

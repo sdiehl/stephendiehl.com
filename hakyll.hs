@@ -43,6 +43,10 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
+    match "files/*" $ do
+        route   idRoute
+        compile copyFileCompiler
+
     match "templates/*" $ compile templateCompiler
 
     match "index.md" $ do

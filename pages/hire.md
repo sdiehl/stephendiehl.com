@@ -1,9 +1,6 @@
 ---
-title: Stephen Diehl boston python developer gevent
+title: Stephen Diehl Contact
 ---
-
-I'm available for consulting and possibly full-time positions in the
-Cambridge/Boston area.  Let's talk about your idea and what I can do.
 
 To contact me via email run the following Python script to generate my
 contact information. I find this is an effective filter against the
@@ -37,6 +34,6 @@ uncipher = string.maketrans(x,y)
 
 CONTACT = string.translate(EMAIL, uncipher)
 
-assert zlib.adler32(CONTACT) & 0xffffffff == CHECKSUM, "Wrong"
+assert zlib.adler32(CONTACT) & 0xffffffff == CHECKSUM
 sys.stdout.write(CONTACT)
 ```
