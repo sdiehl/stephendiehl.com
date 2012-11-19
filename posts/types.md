@@ -322,8 +322,8 @@ type over a type, for example the "type of list of type integers".
 λ: :kind Int
 Int :: * 
 
+λ: :kind []
 [] :: * -> *
-λ: :kind 1
 ```
 
 For example let's inspect some simple type instances in the GHCI

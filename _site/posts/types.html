@@ -222,8 +222,8 @@ Foo(<span class="dv">2</span>)</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">λ: <span class="fu">:</span>kind <span class="dt">Int</span>
 <span class="dt">Int</span><span class="ot"> ::</span> <span class="fu">*</span> 
 
-[]<span class="ot"> ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>
-λ: <span class="fu">:</span>kind <span class="dv">1</span></code></pre>
+λ: <span class="fu">:</span>kind []
+[]<span class="ot"> ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span></code></pre>
 <p>For example let’s inspect some simple type instances in the GHCI shell and the magic commands <code>:kind</code> and <code>:type</code>.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">λ: <span class="kw">data</span> <span class="dt">List</span> a <span class="fu">=</span> <span class="dt">Nil</span> <span class="fu">|</span> <span class="dt">Cons</span> a
 λ: <span class="fu">:</span>kind <span class="dt">List</span>
