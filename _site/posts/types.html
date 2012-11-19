@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Stephen Diehl Contact</title>
+    <title>types</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -78,32 +78,7 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <p>To contact me via email run the following Python script to generate my contact information. I find this is an effective filter against the deluge of emails from recruiters.</p>
-<p>I’m not available for hire.</p>
-<p>Hint: If you’re using IPython use the %paste magic method.</p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
-<span class="co"># http://www.stephendiehl.com</span>
-
-<span class="ch">import</span> os
-<span class="ch">import</span> sys
-<span class="ch">import</span> numpy
-<span class="ch">import</span> string
-
-EMAIL = <span class="st">&quot;&quot;&quot;</span>
-<span class="ch">\xcd\xce\xbf\xca\xc2\xbf\xc8</span><span class="st">.</span><span class="ch">\xc7</span><span class="st">.</span><span class="ch">\xbe\xc3\xbf\xc2\xc6</span><span class="st">@</span><span class="ch">\xc1\xc7\xbb\xc3\xc6</span><span class="st">.</span><span class="ch">\xbd\xc9\xc7</span>
-<span class="st">&quot;&quot;&quot;</span>
-
-y = string.letters
-n = <span class="dt">len</span>(y)
-M = numpy.identity(n, dtype=numpy.int16)
-M[:n, n<span class="dv">-1</span>] = <span class="dv">1</span>
-
-a = numpy.array(<span class="dt">map</span>(<span class="dt">ord</span>, y), dtype=numpy.int16)
-x = <span class="st">''</span>.join(<span class="dt">map</span>(<span class="dt">chr</span>, numpy.dot(M, a)))
-uncipher = string.maketrans(x,y)
-
-CONTACT = string.translate(EMAIL, uncipher)
-sys.stdout.write(CONTACT)</code></pre>
+            
         </div>
     </div>
 

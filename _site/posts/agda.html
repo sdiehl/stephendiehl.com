@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Agda Quickstart Guide</title>
+    <title>agda</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -78,16 +78,7 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <h3 id="agda-quickstart-guide">Agda Quickstart Guide</h3>
-<p>There wasn’t much information on about bootstrapping an Agda installation so I figured I’d write a quick guide. I’m assuming you have the neccesary Haskell infastructure in place.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> agda agda-executable</code></pre>
-<p><br /> Then download and install the standard library.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> http://www.cse.chalmers.se/~nad/software/lib-0.6.tar.gz
-<span class="kw">tar</span> xzf lib-0.6.tar.gz
-<span class="kw">mkdir</span> ~/.agda
-<span class="kw">cp</span> -R lib-0.6/src ~/.agda</code></pre>
-<p><br /> Then to compile a file called <code>SOURCE.agda</code> execute the following command in your build script.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/.agda&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> SOURCE.agda</code></pre>
+            
         </div>
     </div>
 

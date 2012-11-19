@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Categorical Programming: Functors</title>
+    <title>category3</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -78,55 +78,7 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <h4 id="functor">Functor</h4>
-<p>A functor is a pair of mappings between categories that maps morphisms and objects between the two categories. More precisely it is a mapping between $ T: A \rightarrow B $ such that for every object in A there exists</p>
-<p>\[
-T: A \rightarrow T(A) \in B
-\]</p>
-<p>And for each morphism $ f : X \rightarrow Y $</p>
-<p>\[
-T(f): T(X) \rightarrow T(Y) \in B
-\]</p>
-<p>In functional programming we differentiate between the <strong>functorial action</strong> or <strong>functorial image</strong> on an object ( <code>T a</code> ) from the functorial action on a morphism usually denoted <code>fmap f</code>.</p>
-<p>In <strong>Hask</strong> the Functor typeclass is defined with:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> t <span class="kw">where</span>
-<span class="ot">  fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> t b</code></pre>
-<p><img src="../images/functor.svg" alt="Illustration"></img>.</p>
-<h4 id="functor-laws">Functor laws</h4>
-<p>The essential nature of Functors is that we preserve composition structure under mapping. Namely:</p>
-<p>\[
-T ( g . f ) = (T g) . (T f)
-\]</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> (g <span class="fu">.</span> f) <span class="fu">=</span> <span class="fu">fmap</span> g <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
-<p><br /> And pictorially:</p>
-<p><img src="../images/functor_comp.svg" alt="Illustration"></img>.</p>
-<p>The previous law also implicitly depends on the preservation of identities, indeed the identity morphism for an object must be preserved by functorial action.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> <span class="fu">id</span> <span class="fu">=</span> <span class="fu">id</span></code></pre>
-<p><br /> And pictorially:</p>
-<p><img src="../images/functor_id.svg" alt="Illustration"></img>.</p>
-<h4 id="hask">Hask</h4>
-<p>The classic example is Haskell functor over <code>Pair</code> values and the list functor.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pair</span> a b <span class="fu">=</span> <span class="dt">Pair</span> a b
-
-<span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Pair</span> <span class="kw">where</span>
-    <span class="fu">fmap</span> f (<span class="dt">Pair</span> x y) <span class="fu">=</span> <span class="dt">Pair</span> (x) (f y)
-
-<span class="kw">instance</span> <span class="kw">Functor</span> [] <span class="kw">where</span>
-    <span class="fu">fmap</span> f []       <span class="fu">=</span>  []
-    <span class="fu">fmap</span> f (x<span class="fu">:</span>xs)   <span class="fu">=</span>  f x <span class="fu">:</span> <span class="fu">fmap</span> f xs</code></pre>
-<p><br /> A rough illustration of the List functor pictorially.</p>
-<p><img src="../images/fmap.svg" alt="Illustration"></img>.</p>
-<h4 id="contravariant-functors">Contravariant Functors</h4>
-<p>A slight variant on the traditional functor is a <strong>contravariant functor</strong> which reverses the domain and codomain of functorial image of the morphism.</p>
-<p>\[
-t: A \rightarrow T(A) \in B
-\]</p>
-<p>And for each morphism $ f $</p>
-<p>\[
-T(f): T(Y) \rightarrow T(X) \in B
-\]</p>
-<p><img src="../images/confunctor.svg" alt="Illustration"></img>.</p>
-<p>Traditional functors as discussed above can also be referred to <strong>covariant functors</strong>.</p>
+            
         </div>
     </div>
 
