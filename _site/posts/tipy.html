@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>tipy</title>
+    <title>Tipy: A Simple Python Preprocessor</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -78,7 +78,200 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            
+            <p>Tipy is a small Python document preprocessor in the style of troff. It is similar to that of Ned Batchelder’s <a href="http://nedbatchelder.com/code/cog/">Cog</a> but not as fully featured and intended only for preprocessing markdown documents.</p>
+<p><strong>Problem</strong>: You have a build chain of a bunch of unix utilities operating on a plaintext document, and you have Python code where you want inline the output of the code. In my case I wanted to provide this to Haskell Pandoc + Hakyll build chain. In fact this page is itself preprocessed with tipy.</p>
+<pre>
+```compiler
+&gt;&gt;&gt; def foo(x,y):
+...     return range(x,y)
+&gt;&gt;&gt; foo(1,2)
+```
+</pre>
+
+<p>For writing tutorials one often wants ot mimic an interactive shell session. This is provided through the <code>compiler=pycon</code> flag.</p>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="kw">def</span> foo(x,y):
+...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
+&gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">2</span>)</code></pre>
+<p>But you want the compiled version to look like it were an interactive shell session.</p>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="kw">def</span> foo(x,y):
+...     <span class="kw">return</span> <span class="dt">range</span>(x,y)
+&gt;&gt;&gt; foo(<span class="dv">1</span>,<span class="dv">5</span>)
+[<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>]</code></pre>
+<p><br /> Or if desired you can execute the entire script with the <code>compiler=pyexec</code> flag and inline the output of the whole script.</p>
+<pre class="sourceCode python"><code class="sourceCode python">
+<span class="ch">from</span> string <span class="ch">import</span> digits
+<span class="ch">from</span> itertools <span class="ch">import</span> izip
+
+<span class="kw">for</span> a,b in izip(<span class="dt">reversed</span>(digits), digits):
+    <span class="kw">print</span> a,b</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="dv">9</span> <span class="dv">0</span>
+<span class="dv">8</span> <span class="dv">1</span>
+<span class="dv">7</span> <span class="dv">2</span>
+<span class="dv">6</span> <span class="dv">3</span>
+<span class="dv">5</span> <span class="dv">4</span>
+<span class="dv">4</span> <span class="dv">5</span>
+<span class="dv">3</span> <span class="dv">6</span>
+<span class="dv">2</span> <span class="dv">7</span>
+<span class="dv">1</span> <span class="dv">8</span>
+<span class="dv">0</span> <span class="dv">9</span></code></pre>
+<h3 id="more-examples">More Examples</h3>
+<pre class="sourceCode python"><code class="sourceCode python">
+<span class="ch">from</span> numpy.random <span class="ch">import</span> randn
+
+matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
+<span class="kw">print</span> matrix</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">0.94771493</span>  <span class="fl">1.35361709</span> -<span class="fl">1.57208154</span>]
+  [-<span class="fl">1.53426322</span> -<span class="fl">0.02403871</span>  <span class="fl">1.40356824</span>]
+  [-<span class="fl">0.21163682</span> -<span class="fl">0.38134904</span> -<span class="fl">0.60454231</span>]]
+
+ [[-<span class="fl">0.38771814</span> -<span class="fl">1.7424667</span>  -<span class="fl">0.93124001</span>]
+  [ <span class="fl">0.50680683</span>  <span class="fl">1.29002515</span> -<span class="fl">0.44203714</span>]
+  [ <span class="fl">0.72156487</span> -<span class="fl">0.01000732</span> -<span class="fl">0.38208258</span>]]
+
+ [[ <span class="fl">0.42968243</span> -<span class="fl">0.33683218</span>  <span class="fl">0.9073584</span> ]
+  [ <span class="fl">0.49143021</span> -<span class="fl">0.25674892</span> -<span class="fl">1.38483483</span>]
+  [-<span class="fl">1.37991165</span>  <span class="fl">0.91165572</span> -<span class="fl">1.15850003</span>]]]</code></pre>
+<pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
+&gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
+&gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
+<table border="1">
+  <thead>
+    <tr>
+      <th></th>
+      <th>
+0
+</th>
+      <th>
+1
+</th>
+      <th>
+2
+</th>
+      <th>
+3
+</th>
+      <th>
+4
+</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+<strong>0</strong>
+</td>
+      <td>
+-0.432909
+</td>
+      <td> 
+1.049270
+</td>
+      <td>
+-1.279941
+</td>
+      <td> 
+0.880398
+</td>
+      <td>
+-0.939592
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>1</strong>
+</td>
+      <td> 
+1.503658
+</td>
+      <td>
+-1.187152
+</td>
+      <td>
+-0.134469
+</td>
+      <td>
+-0.442621
+</td>
+      <td> 
+0.253172
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>2</strong>
+</td>
+      <td> 
+1.225330
+</td>
+      <td>
+-1.955234
+</td>
+      <td> 
+0.165436
+</td>
+      <td> 
+0.151475
+</td>
+      <td> 
+0.078285
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>3</strong>
+</td>
+      <td>
+-0.097867
+</td>
+      <td>
+-1.341639
+</td>
+      <td> 
+0.108496
+</td>
+      <td> 
+0.482488
+</td>
+      <td>
+-0.350074
+</td>
+    </tr>
+    <tr>
+      <td>
+<strong>4</strong>
+</td>
+      <td> 
+0.390925
+</td>
+      <td> 
+1.102578
+</td>
+      <td> 
+1.440371
+</td>
+      <td>
+-0.879878
+</td>
+      <td>
+-0.456703
+</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="integration-with-hakyll">Integration with Hakyll</h3>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Hakyll</span>
+
+<span class="co">-- Python tipy preprocessor</span>
+<span class="ot">py_pre ::</span> <span class="dt">Compiler</span> <span class="dt">Resource</span> <span class="dt">String</span>
+py_pre <span class="fu">=</span> getResourceString <span class="fu">&gt;&gt;&gt;</span> unixFilter <span class="st">&quot;tipy&quot;</span> [<span class="st">&quot;--preprocess&quot;</span>]
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> hakyll <span class="fu">$</span> <span class="kw">do</span>
+    match <span class="st">&quot;yourpage&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+        compile <span class="fu">$</span> py_pre
+            <span class="fu">&gt;&gt;&gt;</span> arr readPage
+            <span class="fu">&gt;&gt;&gt;</span> pageRenderPandoc</code></pre>
         </div>
     </div>
 

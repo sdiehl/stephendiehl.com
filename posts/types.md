@@ -1,3 +1,8 @@
+---
+title: Haskell Types for Python Programmers ( Part 1 )  
+date: November 19, 2012
+---
+
 #### Haskell Types for Python Programmers ( Part 1 )
 
 This is a three part blog about how to think about some of the core
