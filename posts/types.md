@@ -378,6 +378,8 @@ heterogeneously typed structures.[^4]
 
 * [Subtypes vs. Where Clauses: Constraining Parametric Polymorphism](www.cs.cornell.edu/andru/papers/where-clauses.pdf)
 * [The Category Pattern](http://www.haskellforall.com/2012/08/the-category-design-pattern.html)
+* [Haskell for C Programmers](http://www.haskell.org/haskellwiki/Haskell_Tutorial_for_C_Programmers)
+* [Making Our Own Types and Typeclasses](http://learnyouahaskell.com/making-our-own-types-and-typeclasses)
 
 [^1]: See the discussion of currying later.
 
