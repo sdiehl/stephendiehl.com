@@ -28,9 +28,21 @@ cp -R lib-0.6/src ~/.agda
 
 \
 
-Then to compile a file called ``SOURCE.agda`` execute the following
-command in your build script.
+The Hello World program for Agda. Suprisingly printing to the screen is
+non-trivial, but logic is not!
+
+```haskell
+module HelloLogic where
+ 
+open import Data.Bool
+open import Data.Product
+ 
+test : Bool → Bool → Bool × Bool × Bool
+test x y = x ∧ y , x ∨ y , not x
+```
 
 ```bash
-$ agda --compile --include-path="~/.agda" --include-path="." SOURCE.agda
+$ agda --compile --include-path=".agda/" --include-path="." HelloLogic.agda
 ```
+
+It then type checks. Your work here is done!

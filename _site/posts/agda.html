@@ -86,8 +86,16 @@
 <span class="kw">tar</span> xzf lib-0.6.tar.gz
 <span class="kw">mkdir</span> ~/.agda
 <span class="kw">cp</span> -R lib-0.6/src ~/.agda</code></pre>
-<p><br /> Then to compile a file called <code>SOURCE.agda</code> execute the following command in your build script.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/.agda&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> SOURCE.agda</code></pre>
+<p><br /> The Hello World program for Agda. Suprisingly printing to the screen is non-trivial, but logic is not!</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">HelloLogic</span> <span class="kw">where</span>
+ 
+open <span class="kw">import</span> <span class="dt">Data.Bool</span>
+open <span class="kw">import</span> <span class="dt">Data.Product</span>
+ 
+test <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">→</span> <span class="dt">Bool</span> <span class="ot">→</span> <span class="dt">Bool</span> × <span class="dt">Bool</span> × <span class="dt">Bool</span>
+test x y <span class="fu">=</span> x ∧ y , x ∨ y , <span class="fu">not</span> x</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;.agda/&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> HelloLogic.agda</code></pre>
+<p>It then type checks. Your work here is done!</p>
         </div>
     </div>
 
