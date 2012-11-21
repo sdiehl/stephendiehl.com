@@ -370,10 +370,6 @@ defintion. Therefore for lists of all types ( including lists of lists )
 we get fmap definitions for free, simply by substitution of one of the
 rigid type variables in our parametric type signature. 
 
-Contrary to the myth that static types can't represent heterogeneously
-typed structures we can also write down functors over
-heterogeneously typed structures.[^4]
-
 #### Further Reading:
 
 * [Subtypes vs. Where Clauses: Constraining Parametric Polymorphism](www.cs.cornell.edu/andru/papers/where-clauses.pdf)
@@ -388,15 +384,3 @@ heterogeneously typed structures.[^4]
 [^3]: The name comes from category theory where functors are
 mappings between categories that preserve aspects of the
 [specific notions of structure of the category](http://ncatlab.org/nlab/show/functor).
-
-[^4]: The myth that Haskell does not permit heterogenous structure
-is easily debunked:
-
-    ```haskell
-    data Thing = forall x. Thing x
-
-    lst :: [Thing]
-    lst = [Thing 1.5, Thing "foo", Thing 3]
-
-    data Numeric = forall x. (Num x) => Numeric x
-    ```
