@@ -95,7 +95,7 @@ functor** which reverses the domain and codomain of functorial
 image of the morphism.
 
 $$
-t: X \rightarrow T(X) \in \text{Hom}_B
+t: X \rightarrow T(X) \in B
 $$
 
 And for each morphism $ f : X \\rightarrow Y \\in \\text{Hom}_A $
