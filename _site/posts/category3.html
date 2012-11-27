@@ -78,14 +78,14 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <h4 id="functor">Functor</h4>
-<p>A functor is a pair of mappings between categories that maps morphisms and objects between the two categories. More precisely it is a mapping between $ T: A \rightarrow B $ such that for every object in A there exists</p>
+            <h4 id="functors">Functors</h4>
+<p>A functor is a collection of mappings between categories that map between the the morphism and objects of two categories. More precisely it is a mapping between the categories $ T: A \rightarrow B $ such that for every object in $ X \in A $ there exists</p>
 <p>\[
-T: A \rightarrow T(A) \in B
+T: X \rightarrow T(X) \in B
 \]</p>
-<p>And for each morphism $ f : X \rightarrow Y $</p>
+<p>And for each morphism $ f : X \rightarrow Y \in \text{Hom}_A $</p>
 <p>\[
-T(f): T(X) \rightarrow T(Y) \in B
+T(f): T(X) \rightarrow T(Y) \in \text{Hom}_B
 \]</p>
 <p>In functional programming we differentiate between the <strong>functorial action</strong> or <strong>functorial image</strong> on an object ( <code>T a</code> ) from the functorial action on a morphism usually denoted <code>fmap f</code>.</p>
 <p>In <strong>Hask</strong> the Functor typeclass is defined with:</p>
@@ -119,11 +119,11 @@ T ( g . f ) = (T g) . (T f)
 <h4 id="contravariant-functors">Contravariant Functors</h4>
 <p>A slight variant on the traditional functor is a <strong>contravariant functor</strong> which reverses the domain and codomain of functorial image of the morphism.</p>
 <p>\[
-t: A \rightarrow T(A) \in B
+t: X \rightarrow T(X) \in \text{Hom}_B
 \]</p>
-<p>And for each morphism $ f $</p>
+<p>And for each morphism $ f : X \rightarrow Y \in \text{Hom}_A $</p>
 <p>\[
-T(f): T(Y) \rightarrow T(X) \in B
+T(f): T(Y) \rightarrow T(X) \in \text{Hom}_B
 \]</p>
 <p><img src="../images/confunctor.svg" alt="Illustration"></img>.</p>
 <p>Traditional functors as discussed above can also be referred to <strong>covariant functors</strong>.</p>

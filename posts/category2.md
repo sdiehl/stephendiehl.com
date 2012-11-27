@@ -20,8 +20,8 @@ There are some special cases of morphisms.
 Morphisms    
 ------------  ---                              ---
 Endomorphism  $$ A \in C $$                    $$ f : A \rightarrow A $$
-Epimorphism   $$ g_1, g_2 \in \text{Hom}_C $$  $$  g_1 . f = g_2 . f \implies g_1 = g_2 $$
-Monomorphism  $$ g_1, g_2 \in \text{Hom}_C $$  $$  f . g_1  = f .  g_2  \implies g_1 = g_2 $$
+Epimorphism   $$ g_1, g_2 \in \text{Hom}_C $$  $$  f . g_1  = f . g_2 \implies g_1 = g_2 $$
+Monomorphism  $$ g_1, g_2 \in \text{Hom}_C $$  $$  g_1 . f = g_2 . f  \implies g_1 = g_2 $$
 
 > **Endomorphism**
 
@@ -44,9 +44,15 @@ $$ g_1 . f = g_2 . f \implies g_1 = g_2 $$
 
 > **Monomorphism**
 
-A monomorphism is similar except with right composition.
+A monomorphism is similar except with right composition. With:
 
-$$ f . g_1  = f . g_2  \implies g_1 = g_2 $$
+$$ 
+f : B \rightarrow C \\
+g_1 : A \rightarrow B \\
+g_2 : A \rightarrow B
+$$
+
+$$ f . g_1 = f . g_2 \implies g_1 = g_2 $$
 
 > **Isomorphism**
 
@@ -54,8 +60,8 @@ $ f : A \\rightarrow B $ is an isomorphism if there exists another
 morphism $ f^\{-1\} $ such that 
 
 $$ 
-    f . f^{-1} = \text{id}_A \\
-    f^{-1} . f = \text{id}_B 
+    f^{-1} . f = \text{id}_A \\
+    f . f^{-1} = \text{id}_B 
 $$
 
 We say two objects are isomorphic if there exists an isomorphism

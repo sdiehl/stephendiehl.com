@@ -110,7 +110,7 @@ which should be familiar to all.
 
 ```haskell
 (.) :: (b -> c) -> (a -> b) -> a -> c
-f . g =  \ x -> f (g x)
+g . f =  \ x -> g (f x)
 ```
 
 \
@@ -131,8 +131,7 @@ composition. Namely:
 f :: A -> B
 g :: B -> C
 
-f . g :: A -> C
-
+g . f :: A -> C
 ```
 
 \
@@ -155,7 +154,7 @@ $$ (A \rightarrow B) \in \text{Hom}(A,B) $$
 For composition to be well defined we require that composition
 itself be a mapping only defined for:
 
-$$ (.) : \text{Hom}(A,B) \rightarrow \text{Hom}(B,C) \rightarrow \text{Hom}(A,C) $$ 
+$$ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) $$ 
 
 Haskell programmers should be familiar with this notion of
 "aligning types".
@@ -165,15 +164,6 @@ While in some concrete categories morphisms are functions in the
 traditional sense, in general homsets are merely abstract collections of
 2-tuples with some abstract binary compostion operation subject to some
 constraints.
-
-There is some ambiguity in the way that functional programmers
-and category theorists compose morphisms. Most category
-theorists would reverse the arguments to get composition as.
-
-$$ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) $$ 
-
-This can lend itself to some confusion and I will try to adopt the
-functional programmers notation wherever possible.
 
 #### Formal Definition of Categories
 
@@ -204,7 +194,7 @@ the third column is the definition of the construction.
         g : Y \rightarrow Z  
     $$
     </td>
-    <td> $$ f . g : X \rightarrow Z $$ </td>
+    <td> $$ g . f : X \rightarrow Z $$ </td>
 </tr>
 
 <tr>
@@ -260,13 +250,13 @@ set theoretic definitions are often generalized.
 <tr>
     <td>Composition</td>
     <td> $$ 
-        f : B \rightarrow C \\ 
-        g : A \rightarrow B 
+        f : A \rightarrow B \\ 
+        g : B \rightarrow C 
     $$
     </td>
     <td> $$ 
-        f \circ g : A \rightarrow C \\
-        f \circ g = \lambda x. f (g a) 
+        g \circ f : A \rightarrow C \\
+        g \circ f = \lambda a. g (f a) 
     $$
     </td>
 </tr>
@@ -295,7 +285,7 @@ With the usual properties:
 
 <tr>
     <td> Identities </td>
-    <td> $ f \\circ \\text{id}\_A  = \\text{id}\_A \\circ f = f $ </td>
+    <td> $ \\text{id}\_B \\circ f = f \\circ \\text{id}\_A = f $ </td>
 </tr>
 
 </table>

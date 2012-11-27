@@ -99,12 +99,12 @@
 <tr class="even">
 <td align="left">Epimorphism</td>
 <td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
-<td align="left">\[  g_1 . f = g_2 . f \implies g_1 = g_2 \]</td>
+<td align="left">\[  f . g_1  = f . g_2 \implies g_1 = g_2 \]</td>
 </tr>
 <tr class="odd">
 <td align="left">Monomorphism</td>
 <td align="left">\[ g_1, g_2 \in \text{Hom}_C \]</td>
-<td align="left">\[  f . g_1  = f .  g_2  \implies g_1 = g_2 \]</td>
+<td align="left">\[  g_1 . f = g_2 . f  \implies g_1 = g_2 \]</td>
 </tr>
 </tbody>
 </table>
@@ -125,15 +125,20 @@ g_2 : B \rightarrow C
 <blockquote>
 <p><strong>Monomorphism</strong></p>
 </blockquote>
-<p>A monomorphism is similar except with right composition.</p>
-<p>\[ f . g_1  = f . g_2  \implies g_1 = g_2 \]</p>
+<p>A monomorphism is similar except with right composition. With:</p>
+<p>\[ 
+f : B \rightarrow C \\
+g_1 : A \rightarrow B \\
+g_2 : A \rightarrow B
+\]</p>
+<p>\[ f . g_1 = f . g_2 \implies g_1 = g_2 \]</p>
 <blockquote>
 <p><strong>Isomorphism</strong></p>
 </blockquote>
 <p>$ f : A \rightarrow B $ is an isomorphism if there exists another morphism $ f^{-1} $ such that</p>
 <p>\[ 
-    f . f^{-1} = \text{id}_A \\
-    f^{-1} . f = \text{id}_B 
+    f^{-1} . f = \text{id}_A \\
+    f . f^{-1} = \text{id}_B 
 \]</p>
 <p>We say two objects are isomorphic if there exists an isomorphism between them, written as \[ A \cong B \].</p>
 <h4 id="morphisms-in-set">Morphisms in Set</h4>

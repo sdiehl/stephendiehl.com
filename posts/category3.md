@@ -3,21 +3,21 @@ title: Categorical Programming: Functors
 date: September 10, 2012
 ---
 
-#### Functor
+#### Functors
 
-A functor is a pair of mappings between categories that maps
-morphisms and objects between the two categories. More precisely
-it is a mapping between $ T: A \\rightarrow B $ such that for
-every object in A there exists
-
-$$
-T: A \rightarrow T(A) \in B
-$$
-
-And for each morphism $ f : X \\rightarrow Y $
+A functor is a collection of mappings between categories that map
+between the the morphism and objects of two categories. More precisely
+it is a mapping between the categories $ T: A \\rightarrow B $ such that
+for every object in $ X \\in A $ there exists
 
 $$
-T(f): T(X) \rightarrow T(Y) \in B
+T: X \rightarrow T(X) \in B
+$$
+
+And for each morphism $ f : X \\rightarrow Y \\in \\text{Hom}_A $
+
+$$
+T(f): T(X) \rightarrow T(Y) \in \text{Hom}_B
 $$
 
 In functional programming we differentiate between the **functorial
@@ -95,13 +95,13 @@ functor** which reverses the domain and codomain of functorial
 image of the morphism.
 
 $$
-t: A \rightarrow T(A) \in B
+t: X \rightarrow T(X) \in \text{Hom}_B
 $$
 
-And for each morphism $ f $
+And for each morphism $ f : X \\rightarrow Y \\in \\text{Hom}_A $
 
 $$
-T(f): T(Y) \rightarrow T(X) \in B
+T(f): T(Y) \rightarrow T(X) \in \text{Hom}_B
 $$
 
 ![Illustration](/images/confunctor.svg).

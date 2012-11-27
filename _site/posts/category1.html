@@ -156,7 +156,7 @@ Function Composition
 <span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">head</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>] <span class="fu">=</span> <span class="dv">1</span></code></pre>
 <p><br /> The Haskell prelude also contains a function composition operator which should be familiar to all.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(.) ::</span> (b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> c
-f <span class="fu">.</span> g <span class="fu">=</span>  \ x <span class="ot">-&gt;</span> f (g x)</code></pre>
+g <span class="fu">.</span> f <span class="fu">=</span>  \ x <span class="ot">-&gt;</span> g (f x)</code></pre>
 <p><br /> And similarly a polymorphic identity function.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span><span class="ot"> ::</span> forall a<span class="fu">.</span> a <span class="ot">-&gt;</span> a
 <span class="fu">id</span> x <span class="fu">=</span>  x</code></pre>
@@ -164,19 +164,16 @@ f <span class="fu">.</span> g <span class="fu">=</span>  \ x <span class="ot">-&
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">f ::</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">B</span>
 <span class="ot">g ::</span> <span class="dt">B</span> <span class="ot">-&gt;</span> <span class="dt">C</span>
 
-f <span class="fu">.</span><span class="ot"> g ::</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">C</span></code></pre>
+g <span class="fu">.</span><span class="ot"> f ::</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">C</span></code></pre>
 <p><br /> This notion finds a direct analogue in the categorical definition of homsets.</p>
 <h4 id="homsets">Homsets</h4>
 <p>A category is constructed out a collection of morphisms, a morphism has two associated values, its domain $ \text{dom} $ and codomain $ \text{cod} $. The collection of other morphisms in the category with the same values is called a <strong>homset</strong> as written $ \text{Hom}(A,B) $.</p>
 <p>Given a specific category $ C $, we refer to the set of all morphisms in the category as the homset over C \[ \text{Hom}_C \] with:</p>
 <p>\[ (A \rightarrow B) \in \text{Hom}(A,B) \]</p>
 <p>For composition to be well defined we require that composition itself be a mapping only defined for:</p>
-<p>\[ (.) : \text{Hom}(A,B) \rightarrow \text{Hom}(B,C) \rightarrow \text{Hom}(A,C) \]</p>
+<p>\[ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) \]</p>
 <p>Haskell programmers should be familiar with this notion of “aligning types”.</p>
 <p>It is important to note that this definition is intentionally abstract. While in some concrete categories morphisms are functions in the traditional sense, in general homsets are merely abstract collections of 2-tuples with some abstract binary compostion operation subject to some constraints.</p>
-<p>There is some ambiguity in the way that functional programmers and category theorists compose morphisms. Most category theorists would reverse the arguments to get composition as.</p>
-<p>\[ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) \]</p>
-<p>This can lend itself to some confusion and I will try to adopt the functional programmers notation wherever possible.</p>
 <h4 id="formal-definition-of-categories">Formal Definition of Categories</h4>
 <p>I will use the following tabular format for the definition of categories from here out. The first column is the type of construction, the second column is the constraints on the objects involved in the definition, and the third column is the definition of the construction.</p>
 <table>
@@ -217,7 +214,7 @@ Composition
     \]
 </td>
     <td> 
-\[ f . g : X \rightarrow Z \]
+\[ g . f : X \rightarrow Z \]
 </td>
 </tr>
 
@@ -302,14 +299,14 @@ Composition
 </td>
     <td> 
 \[ 
-        f : B \rightarrow C \\ 
-        g : A \rightarrow B 
+        f : A \rightarrow B \\ 
+        g : B \rightarrow C 
     \]
 </td>
     <td> 
 \[ 
-        f \circ g : A \rightarrow C \\
-        f \circ g = \lambda x. f (g a) 
+        g \circ f : A \rightarrow C \\
+        g \circ f = \lambda a. g (f a) 
     \]
 </td>
 </tr>
@@ -351,7 +348,7 @@ $ ( f \circ g ) \circ h = f \circ ( g \circ h ) $
 Identities
 </td>
     <td> 
-$ f \circ \text{id}_A = \text{id}_A \circ f = f $
+$ \text{id}_B \circ f = f \circ \text{id}_A = f $
 </td>
 </tr>
 
