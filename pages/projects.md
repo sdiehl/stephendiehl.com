@@ -18,7 +18,7 @@ title: Projects
 
 **Python**
 
-* [numpush](https://github.com/sdiehl/numpush) - *Distributed data/code push for Numpy derivative structures*
+* [blaze](https://github.com/ContinuumIO/blaze) - Blaze is the next generation of NumPy
 * [flowlet](https://github.com/sdiehl/flowlet) - *A small CPython structure for building coroutine pipelines*
 * [kaylee](https://github.com/sdiehl/kaylee) - *Map-Reduce with ZeroMQ*
 * [pure-python](https://github.com/sdiehl/pure-python) - *Cython interface for Pure LLVM*
@@ -28,3 +28,4 @@ title: Projects
 * [greengoop](https://github.com/sdiehl/greengoop) - *Misc Gevent concurrent patterns*
 * [django-sense](https://github.com/sdiehl/django-sense) - *View profiling for Django*
 * [tipy](https://github.com/sdiehl/tipy) - *A small preprocessor for Python tutorials*
+* [numpush](https://github.com/sdiehl/numpush) - *Distributed data/code push for Numpy derivative structures*
