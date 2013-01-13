@@ -149,6 +149,21 @@ P(A) &amp;= \{ a | a \subseteq A \} \\
 P(f) &amp;= \{ f(a) | a \in A \}
 \end{align}
 \]</p>
+<h4 id="applicative-functors">Applicative Functors</h4>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> f <span class="ot">=&gt;</span> <span class="kw">Applicative</span> f <span class="kw">where</span>
+    <span class="co">-- | Lift a value.</span>
+<span class="ot">    pure ::</span> a <span class="ot">-&gt;</span> f a
+
+    <span class="co">-- | Sequential application.</span>
+<span class="ot">    (&lt;*&gt;) ::</span> f (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</code></pre>
+<pre><code>pure id &lt;*&gt; v = v
+pure f &lt;*&gt; pure x = pure (f x)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Applicative</span> ((<span class="ot">-&gt;</span>) a) <span class="kw">where</span>
+    pure <span class="fu">=</span> <span class="fu">const</span>
+    (<span class="fu">&lt;*&gt;</span>) f g x <span class="fu">=</span> f x (g x)</code></pre>
+<p><img src="../images/applicative.svg" alt="Applicative"></img>.</p>
+<p><img src="../images/applicative2.svg" alt="Applicative"></img>.</p>
+<p><img src="../images/applicative3.svg" alt="Applicative"></img>.</p>
         </div>
     </div>
 

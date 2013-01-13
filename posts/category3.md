@@ -108,3 +108,31 @@ P(A) &= \{ a | a \subseteq A \} \\
 P(f) &= \{ f(a) | a \in A \}
 \end{align}
 $$
+
+#### Applicative Functors
+
+```haskell
+class Functor f => Applicative f where
+    -- | Lift a value.
+    pure :: a -> f a
+
+    -- | Sequential application.
+    (<*>) :: f (a -> b) -> f a -> f b
+```
+
+```
+pure id <*> v = v
+pure f <*> pure x = pure (f x)
+```
+
+```haskell
+instance Applicative ((->) a) where
+    pure = const
+    (<*>) f g x = f x (g x)
+```
+
+![Applicative](/images/applicative.svg).
+
+![Applicative](/images/applicative2.svg).
+
+![Applicative](/images/applicative3.svg).
