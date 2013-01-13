@@ -732,12 +732,11 @@ $$
 This is often written as an arrow with an excalamation point to
 indicate a unique morphism.
 
-
-![Illustration](/images/initial.svg).
-
 $$
 0 \xrightarrow{\hspace{1em}!\hspace{1em}} A.
 $$
+
+![Illustration](/images/initial.svg).
 
 The dual notion is that of a **terminal** element $ 1 \\in \\text{ob}(C) $.
 
