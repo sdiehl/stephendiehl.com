@@ -127,6 +127,9 @@ T(f \circ g) &amp;= T(f) \circ T(g)
     <span class="fu">fmap</span> f []       <span class="fu">=</span>  []
     <span class="fu">fmap</span> f (x<span class="fu">:</span>xs)   <span class="fu">=</span>  f x <span class="fu">:</span> <span class="fu">fmap</span> f xs</code></pre>
 <p>We see the the list functor is a mapping between <strong>Hask</strong> type <code>a</code> and the list parameterized by the type <code>a</code>. The functor maps values of type <code>a</code> to ordered collections of values of type <code>a</code> namely <code>[a]</code>. As well as functions over types <code>a -&gt; b</code> to ordered collections of type <code>b</code> namely <code>fmap f</code>.</p>
+<p>The constructor <code>[]</code> is an example of an <strong>endofunctor</strong> over <strong>Hask</strong>.</p>
+<pre><code>[] :: * -&gt; *
+[] :: [a]</code></pre>
 <p>Another classic example is Haskell functor over <code>Pair</code> values and the pair functor.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pair</span> a b <span class="fu">=</span> <span class="dt">Pair</span> a b
 
@@ -150,20 +153,26 @@ P(f) &amp;= \{ f(a) | a \in A \}
 \end{align}
 \]</p>
 <h4 id="applicative-functors">Applicative Functors</h4>
+<p>Maps types of results into types of effectful computations. (<code>IO a</code>)</p>
+<p>Maps functions into functions that chain the results of effectful computations <code>fmap f</code>.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> f <span class="ot">=&gt;</span> <span class="kw">Applicative</span> f <span class="kw">where</span>
     <span class="co">-- | Lift a value.</span>
 <span class="ot">    pure ::</span> a <span class="ot">-&gt;</span> f a
 
     <span class="co">-- | Sequential application.</span>
 <span class="ot">    (&lt;*&gt;) ::</span> f (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</code></pre>
-<pre><code>pure id &lt;*&gt; v = v
-pure f &lt;*&gt; pure x = pure (f x)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">pure <span class="fu">id</span> <span class="fu">&lt;*&gt;</span> v <span class="fu">=</span> v
+pure f <span class="fu">&lt;*&gt;</span> pure x <span class="fu">=</span> pure (f x)</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Applicative</span> ((<span class="ot">-&gt;</span>) a) <span class="kw">where</span>
     pure <span class="fu">=</span> <span class="fu">const</span>
     (<span class="fu">&lt;*&gt;</span>) f g x <span class="fu">=</span> f x (g x)</code></pre>
 <p><img src="../images/applicative.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative2.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative3.svg" alt="Applicative"></img>.</p>
+<pre><code>let res = f &lt;$&gt; a &lt;*&gt; b &lt;*&gt; c where 
+    a = readLn :: IO String
+    b = readLn :: IO String
+    c = readLn :: IO String</code></pre>
         </div>
     </div>
 

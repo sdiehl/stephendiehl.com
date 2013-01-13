@@ -102,14 +102,12 @@ time:
 3
 ```
 
-Haskell is the opposite of Python in that arguments are
-explicitly not tuples, they are functions which return functions
-of a single argument. This is the motivation for that notation
-and the right associativity of the ``(->)`` operator.
+Evaluation in Haskell is quite different from Python in that arguments
+are explicitly not tuples. Unless explictly indicated Haskell functions
+are curried functions each of a single argument.
 
-The standard library also defines two important functions for
-coercing between single arguments of tuples and curried
-functions.
+The standard library also defines two important functions for coercing
+between single arguments of tuples and curried functions.
 
 ```haskell
 curry :: ((a,b)->c) -> a->b->c
@@ -129,10 +127,12 @@ root a b = (b + sqrt(b^2-4))/(2*a)
 ```
 
 ```python
+# (a,b) -> a
 def fst(tup):
     a,b = tup
     return a
 
+# Int -> Int -> Int
 def root(a, b):
     return (b + sqrt(b^2-4))/(2*a)
 ```
@@ -143,9 +143,20 @@ uncurry root :: (c, c) -> c
 ```
 
 ```python
-def curry_fst(a,b):
-    return a
+# a -> b -> a
+def curry_fst(a):
+    def _curry_fst(b):
+        return a
+    return _curry_fst
 
+# Int -> Int -> Int
+def curry_root(a):
+    def _curry_root(b):
+        return (b + sqrt(b^2-4))/(2*a)
+    return _curry_root
+
+
+# (Int, Int) -> Int
 def uncurry_root(tup):
     a,b = tup
     return (b + sqrt(b^2-4))/(2*a)

@@ -71,6 +71,14 @@ of type ``a`` to ordered collections of values of type ``a`` namely
 ``[a]``. As well as functions over types ``a -> b`` to ordered
 collections of type ``b`` namely ``fmap f``.
 
+The constructor ``[]`` is an example of an **endofunctor** over
+**Hask**.
+
+```
+[] :: * -> *
+[] :: [a]
+```
+
 Another classic example is Haskell functor over ``Pair`` values and
 the pair functor.
 
@@ -111,6 +119,11 @@ $$
 
 #### Applicative Functors
 
+Maps types of results into types of effectful computations. (``IO a``)
+
+Maps functions into functions that chain the results of effectful
+computations ``fmap f``.
+
 ```haskell
 class Functor f => Applicative f where
     -- | Lift a value.
@@ -120,7 +133,7 @@ class Functor f => Applicative f where
     (<*>) :: f (a -> b) -> f a -> f b
 ```
 
-```
+```haskell
 pure id <*> v = v
 pure f <*> pure x = pure (f x)
 ```
@@ -136,3 +149,10 @@ instance Applicative ((->) a) where
 ![Applicative](/images/applicative2.svg).
 
 ![Applicative](/images/applicative3.svg).
+
+```
+let res = f <$> a <*> b <*> c where 
+    a = readLn :: IO String
+    b = readLn :: IO String
+    c = readLn :: IO String
+```

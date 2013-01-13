@@ -139,7 +139,7 @@ x1</code></pre>
 &lt;function &lt;<span class="kw">lambda</span>&gt; at <span class="bn">0x7fe2ba959b90</span>&gt;
 &gt;&gt;&gt; addOne(<span class="dv">2</span>)
 <span class="dv">3</span></code></pre>
-<p>Haskell is the opposite of Python in that arguments are explicitly not tuples, they are functions which return functions of a single argument. This is the motivation for that notation and the right associativity of the <code>(-&gt;)</code> operator.</p>
+<p>Evaluation in Haskell is quite different from Python in that arguments are explicitly not tuples. Unless explictly indicated Haskell functions are curried functions each of a single argument.</p>
 <p>The standard library also defines two important functions for coercing between single arguments of tuples and curried functions.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">curry</span><span class="ot"> ::</span> ((a,b)<span class="ot">-&gt;</span>c) <span class="ot">-&gt;</span> a<span class="ot">-&gt;</span>b<span class="ot">-&gt;</span>c
 <span class="fu">curry</span> f a b <span class="fu">=</span> f (a,b)
@@ -151,17 +151,30 @@ x1</code></pre>
 <span class="fu">fst</span> (a,b) <span class="fu">=</span> a
 <span class="co">-- Multiple argument</span>
 root a b <span class="fu">=</span> (b <span class="fu">+</span> <span class="fu">sqrt</span>(b<span class="fu">^</span><span class="dv">2-4</span>))<span class="fu">/</span>(<span class="dv">2</span><span class="fu">*</span>a)</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> fst(tup):
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># (a,b) -&gt; a</span>
+<span class="kw">def</span> fst(tup):
     a,b = tup
     <span class="kw">return</span> a
 
+<span class="co"># Int -&gt; Int -&gt; Int</span>
 <span class="kw">def</span> root(a, b):
     <span class="kw">return</span> (b + sqrt(b^<span class="dv">2-4</span>))/(<span class="dv">2</span>*a)</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">curry</span><span class="ot"> fst ::</span> c <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c
 <span class="fu">uncurry</span><span class="ot"> root ::</span> (c, c) <span class="ot">-&gt;</span> c</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> curry_fst(a,b):
-    <span class="kw">return</span> a
+<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># a -&gt; b -&gt; a</span>
+<span class="kw">def</span> curry_fst(a):
+    <span class="kw">def</span> _curry_fst(b):
+        <span class="kw">return</span> a
+    <span class="kw">return</span> _curry_fst
 
+<span class="co"># Int -&gt; Int -&gt; Int</span>
+<span class="kw">def</span> curry_root(a):
+    <span class="kw">def</span> _curry_root(b):
+        <span class="kw">return</span> (b + sqrt(b^<span class="dv">2-4</span>))/(<span class="dv">2</span>*a)
+    <span class="kw">return</span> _curry_root
+
+
+<span class="co"># (Int, Int) -&gt; Int</span>
 <span class="kw">def</span> uncurry_root(tup):
     a,b = tup
     <span class="kw">return</span> (b + sqrt(b^<span class="dv">2-4</span>))/(<span class="dv">2</span>*a)</code></pre>
