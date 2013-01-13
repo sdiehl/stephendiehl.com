@@ -42,6 +42,12 @@ g_2 $:
 
 $$ g_1 . f = g_2 . f \implies g_1 = g_2 $$
 
+In arrow notation this is often written as:
+
+$$
+A \twoheadrightarrow B
+$$
+
 > **Monomorphism**
 
 A monomorphism is similar except with right composition. With:
@@ -54,6 +60,10 @@ $$
 
 $$ f . g_1 = f . g_2 \implies g_1 = g_2 $$
 
+In arrow notation this is often written:
+
+$ A \\hookrightarrow B$.
+
 > **Isomorphism**
 
 $ f : A \\rightarrow B $ is an isomorphism if there exists another
@@ -65,7 +75,17 @@ $$
 $$
 
 We say two objects are isomorphic if there exists an isomorphism
-between them,  written as $$ A \cong B $$.
+between them,  written as
+
+$$
+A \cong B
+$$
+
+Or in arrow notation:
+
+$$
+A \xrightarrow{\sim} B
+$$
 
 #### Morphisms in Set
 

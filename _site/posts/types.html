@@ -185,7 +185,7 @@ main <span class="fu">=</span> addOne <span class="dt">Foo</span></code></pre>
     No instance <span class="kw">for</span> <span class="kw">(</span>Num Foo<span class="kw">)</span>
       arising from a use of <span class="kw">`</span>addOne<span class="st">'</span>
 <span class="st">    Possible fix: add an instance declaration for (Num Foo)</span></code></pre>
-<p>In short, Python’s notion of duck typing and <strong>ad-hoc polymorphism</strong> with constraints in Haskell are quite similar from a structural standpoint, but with the exception that Python defers failures to runtime since it is not able to reason about the types of arguments while Haskell is able to reject a large class of invalid programs at compile time.</p>
+<p>In short, Python’s notion of duck typing and <strong>ad-hoc polymorphism</strong> with constraints in Haskell are quite similar from a structural standpoint, but with the exception that Python is not able to reason about types in question and defers failures to runtime since it is not able to reason about the types of arguments while Haskell is able to reject a large class of invalid programs at compile time.</p>
 <p>To remedy the Python program, we make the Foo class quack like a integer.</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="kw">class</span> Foo(<span class="dt">object</span>):
     <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, x):
@@ -249,7 +249,7 @@ Foo(<span class="dv">2</span>)</code></pre>
 <p>The type in the constructor of a is still rigid within the functor defintion. Therefore for lists of all types ( including lists of lists ) we get fmap definitions for free, simply by substitution of one of the rigid type variables in our parametric type signature.</p>
 <h4 id="further-reading">Further Reading:</h4>
 <ul>
-<li><a href="www.cs.cornell.edu/andru/papers/where-clauses.pdf">Subtypes vs. Where Clauses: Constraining Parametric Polymorphism</a></li>
+<li><a href="http://www.cs.cornell.edu/andru/papers/where-clauses.pdf">Subtypes vs. Where Clauses: Constraining Parametric Polymorphism</a></li>
 <li><a href="http://www.haskellforall.com/2012/08/the-category-design-pattern.html">The Category Pattern</a></li>
 <li><a href="http://www.haskell.org/haskellwiki/Haskell_Tutorial_for_C_Programmers">Haskell for C Programmers</a></li>
 <li><a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses">Making Our Own Types and Typeclasses</a></li>

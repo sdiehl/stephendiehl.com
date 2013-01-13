@@ -1,0 +1,24 @@
+\documentclass{article}
+\include{preview}
+\usepackage[pdftex,active,tightpage]{preview}
+\usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{matrix}
+\begin{document}
+\begin{preview}
+\begin{tikzpicture}[node distance=2cm, auto]
+
+\node (A) {$A$};
+\node (B) [right of=A] {$B$};
+\node (C) [below of=B] {$C$};
+\node (Bd) [below of=A] {$B$};
+
+\draw[->] (A) to node {$f$} (B);
+\draw[->] (A) to node [swap] {$ g \circ f $} (Bd);
+\draw[->] (B) to node {$ h \circ g $} (C);
+\draw[->] (Bd) to node {$h$} (C);
+\draw[->] (B) to node [swap] {$g$} (Bd);
+
+\end{tikzpicture}
+\end{preview}
+\end{document}

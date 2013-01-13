@@ -21,26 +21,35 @@ each other.
 
 This tutorial is a humble attempt to provide a bridge between the
 mathematical literature and the everyday language of the working Haskell
-programming programmer. Any and all feedback is welcome!
+programming programmer.
 
 ### Categories
 
-A **category**  $ C $ is a construction with three things:
+A **category**  $ C $ is a construction with four definitions:
 
-1. A collection of **objects**.
-2. A collection of **morphisms**.
-3. A **composition** operation (.) which given two other
-morphisms yields a *composite morphism* denoted
+1. A collection of **objects**. Written $ \\text{ob}(C) $.
+
+![Illustration](/images/objects.svg).
+
+2. A collection of **morphisms**. Written $ \\text{hom}(C) $.
+
+![Illustration](/images/morphisms.svg).
+
+3. A **composition** operation $ ( \\circ ) $ or written in
+   Haskell as $ ( . ) $. The composition of morphsism yields morphisms in $ C $.
 
     $$ ( f . g ) $$
 
-4. For each object $ A $ there is an identity morphism 
+    $$ ( f \circ g ) $$
+
+![Illustration](/images/composition2.svg).
+
+4. For each object $ A $ there is an **identity** morphism .
 
     $$ \text{id}_A $$
 
-Unlike most discussions, I'm going to stop the mathematical
-discussion right here and go straight to code so as to not scare
-the math-phobic Haskell programmer away!
+![Illustration](/images/identity.svg).
+
 
 #### Category of Haskell types
 
@@ -110,7 +119,7 @@ which should be familiar to all.
 
 ```haskell
 (.) :: (b -> c) -> (a -> b) -> a -> c
-g . f =  \ x -> g (f x)
+g . f =  \x -> g (f x)
 ```
 
 \
@@ -125,7 +134,7 @@ id x =  x
 \
 
 Like most statically typed languages Haskell enforces types in
-composition. Namely:
+composition.
 
 ```haskell
 f :: A -> B
@@ -134,36 +143,27 @@ g :: B -> C
 g . f :: A -> C
 ```
 
-\
-
-This notion finds a direct analogue in the categorical definition
-of homsets.
-
 #### Homsets
 
-A category is constructed out a collection of morphisms, a morphism
-has two associated values, its domain $ \\text{dom} $ and codomain $
-\\text{cod} $. The collection of other morphisms in the category with
-the same values is called a **homset** as written $ \\text{Hom}(A,B) $.
+A category is constructed out a collection of morphisms, over
+objects in the categotry. The collection of other morphisms in 
+a category is called a **homset** and written as:
 
-Given a specific category $ C $, we refer to the set of all morphisms in
-the category as the homset over C $$ \text{Hom}_C $$ with:
+$$ \text{Hom}(C) $$ 
 
-$$ (A \rightarrow B) \in \text{Hom}(A,B) $$
+A individual a morphism $ f $ has two associated values, its **domain**
+$ \\text{dom}(f) $ and **codomain** $ \\text{cod}(f) $.
+
+Elements in the homset are morphisms between objects in C,
+namely if $ A,B \\in \\text{ob}(C) $ then the set of morphisms in
+$ C $ between $ A $ and $ B $ is written:
+
+$$ \text{Hom}(A,B) $$
 
 For composition to be well defined we require that composition
 itself be a mapping only defined for:
 
-$$ (.) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) $$ 
-
-Haskell programmers should be familiar with this notion of
-"aligning types".
-
-It is important to note that this definition is intentionally abstract.
-While in some concrete categories morphisms are functions in the
-traditional sense, in general homsets are merely abstract collections of
-2-tuples with some abstract binary compostion operation subject to some
-constraints.
+$$ ( \circ ) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) $$ 
 
 #### Formal Definition of Categories
 
@@ -173,7 +173,7 @@ column is the constraints on the objects involved in the definition, and
 the third column is the definition of the construction.
 
 <table>
-<th>Category</th>
+<th>**Category**</th>
 <tr>
     <td>Objects</td>
     <td> $$ X, Y \in C $$ </td>
@@ -182,7 +182,7 @@ the third column is the definition of the construction.
 
 <tr>
     <td>Morphisms</td>
-    <td> $$ f \in \text{Hom}_C $$ </td>
+    <td> $$ f \in \text{Hom}(C) $$ </td>
     <td> $$ f: X \rightarrow Y $$ </td>
 </tr>
 
@@ -203,18 +203,19 @@ the third column is the definition of the construction.
     <td> $$ \text{id}_A : X \rightarrow X $$ </td>
 </tr>
 
+
+
+
 </table>
+
+
+![Illustration](/images/composition.svg).
 
 The corresponding definition table for a category is that of the
 laws for the category. 
 
 <table>
-<th>Category Laws</th>
-<tr>
-    <td> Associativity </td>
-    <td> $$ f,g,h \in \text{Hom}_C $$</td>
-    <td> $$ ( f . g ) . h = f . ( g . h ) $$ </td>
-</tr>
+<th>**Category Laws**</th>
 <tr>
     <td> Identity </td>
     <td> $$ 
@@ -223,10 +224,23 @@ laws for the category.
     $$</td>
     <td> $$ f . \text{id}_A  = \text{id}_B . f = f $$ </td>
 </tr>
+<tr>
+    <td> Associativity </td>
+    <td> $$ f,g,h \in \text{Hom}(C) $$</td>
+    <td> $$ ( h . g ) . f = h . ( g . f ) $$ </td>
+</tr>
 </table>
 
+![Illustration](/images/category_law_1.svg).
 
-![Illustration](/images/category1.svg).
+![Illustration](/images/category_law_2.svg).
+
+In textbooks these diagrams are often written in the common
+diagramatic form:
+
+![Illustration](/images/category_alt_law_1.svg).
+
+![Illustration](/images/category_alt_law_2.svg).
 
 #### SET
 
@@ -239,12 +253,13 @@ set theoretic definitions are often generalized.
 <tr>
     <td>Objects</td>
     <td>Set: $ S $ </td>
+    <td>........................</td>
 </tr>
 
 <tr>
     <td>Morphisms</td>
     <td>Total functions over $ S $ </td>
-    <td>...........................</td>
+    <td>........................</td>
 </tr>
 
 <tr>
@@ -290,6 +305,7 @@ With the usual properties:
 
 </table>
 
+
 If we define a toy ``Cat`` typeclass with the above definition
 and define an instance for Haskell (->) from ``GHC.Prim`` we
 have:
@@ -329,17 +345,16 @@ similarity to functions.
 
 #### Trivial Categories
 
+There are a set of generic categories known as **discrete categories**
+that are illuminating to look to give concrete examples of categories.
 A **subcategory** is a category contained within another category which
-also satisfies the category construction. A more advanced example
-that will be discussed later is that monads with an operation called
-Kleisli composition forms a category that is of much interest to Haskell
-programmers.
+also satisfies the category construction.
 
-There are also some simple categories, the simplest being the $ 0 $
-category, which is the category with no objects and no morphisms.
+There are also some simple categories, the simplest being the
+**Zero** category, which is the category with no objects and no morphisms.
 
 <table>
-<th>0</th>
+<th>**Zero**</th>
 <tr>
     <td>Objects</td>
     <td> </td>
@@ -368,11 +383,14 @@ category, which is the category with no objects and no morphisms.
 
 The category laws are vacuously true for this category.
 
-A slightly more interesting ( only slightly!) is the $ 1 $
+A slightly more interesting ( only slightly! ) is the **One**
 category.
 
+
+![Illustration](/images/one.svg).
+
 <table>
-<th>1</th>
+<th>**One**</th>
 <tr>
     <td>Objects</td>
     <td> singleton set </td>
@@ -406,35 +424,389 @@ category.
 Since the only morphism in the category is also the identity all the
 laws hold merely by substitution.
 
-It is also trivially true that $ 0 $ is a subcategory of $ 1 $ , $ 1 $
-is also a subcategory of itself.
+It is also trivially true that **Zero** is a subcategory of **One**.
 
-#### Vector Spaces
 
-For the linear-algebra inclined, a space of vectors with linear mappings
-between vector spaces also forms a category with.
+<table>
+<th>**Two**</th>
+<tr>
+    <td>Objects</td>
+    <td> $$ {X,Y} $$ </td>
+</tr>
 
-1. Vectors spaces as objects.
-2. Linear mappings as morphisms.
-3. A composition operation $ \\circ $ composing linear mappings.
-4. For each vector $ A $ there is an identity mapping $ \\text{id}_A $.
+<tr>
+    <td>Morphisms</td>
+    <td> </td>
+    <td> $$ f : X \rightarrow X $$ </td>
+</tr>
 
-#### Infinity and Categories of Categories
+<tr>
+    <td>Composition</td>
+    <td> </td>
+    <td> $$ (f . f) = \text{id}_X $$ </td>
+</tr>
 
-In the original definition of category we did not mention that the
-objects or morphisms necessarily form a set. Instead we stated in the
-definition that we need only have a collection of objects and morphisms.
+<tr>
+    <td>Identities</td>
+    <td> $$ \text{For all } A $$ </td>
+    <td>
+    $$ 
+        \text{id}_X : X \rightarrow X  \\
+        \text{id}_X = \lambda x. X \\
+        \text{id}_Y : Y \rightarrow Y  \\
+        \text{id}_Y = \lambda x. X
+    $$
+    </td>
+</tr>
 
-A category which has its morphisms and objects in a set is referred to as a
-**small category**. A category which does not is referred to as a
-**large category**.
+</table>
 
-This begs the question as to whether we can form the category
-of all categories. The answer to this is no, because of
-the implications of self-referential sets. See [Russell's
-Paradox](http://en.wikipedia.org/wiki/Russell's_paradox).
+![Illustration](/images/two.svg).
 
-It is however very illuminating to look at the category of all small
-categories called **CAT** which does indeed form a category with objects
-as categories and mappings called functors as morphisms between
-categories.
+```haskell
+{-# LANGUAGE GADTs #-}
+
+import Prelude hiding (id, (.))
+import Control.Category
+
+data Zero a b where
+    Idz :: Zero () ()
+
+data One a b where
+    Ida :: One a ()
+
+
+instance Category Zero where
+    id = Idz
+    Idz . Idz = Idz
+
+instance Category One where
+    id = Ida
+    Ida . Ida = Ida
+```
+
+#### Discrete Categories
+
+Discrete categories are categories where the only morphisms are
+identity morphisms.
+
+```haskell
+{-# LANGUAGE GADTs #-}
+
+import Prelude hiding (id, (.))
+import Control.Category
+
+data Discrete n n where
+    Auto :: Discrete n n
+
+instance Category Discrete where
+    id = Auto
+    Auto . Auto = Auto
+```
+
+In a discrete category it follows that if there exists a
+morphisms between objects $ A $ and $ B $ then $ A $ must equal $
+B $. Discrete categories are often indexed by the cardinality of the
+number of singleton objects in the category.
+
+#### Algebraic Categories
+
+From algebra there are several examples of categories.
+
+<table>
+<th>**Vec**</th>
+<tr>
+    <td>Objects</td>
+    <td>Vector spaces</td>
+</tr>
+
+<tr>
+    <td>Morphisms</td>
+    <td>Linear mappings</td>
+</tr>
+
+<tr>
+    <td>Composition</td>
+    <td>Composition of linear mappings</td>
+</tr>
+
+<tr>
+    <td>Identities</td>
+    <td> Identity mappings </td>
+</tr>
+</table>
+
+
+
+<table>
+<th>**Grp**</th>
+<tr>
+    <td>Objects</td>
+    <td>Groups</td>
+</tr>
+
+<tr>
+    <td>Morphisms</td>
+    <td>Group homomorphisms</td>
+</tr>
+
+<tr>
+    <td>Composition</td>
+    <td>Composition of group homomorphsisms</td>
+</tr>
+
+<tr>
+    <td>Identities</td>
+    <td> Identity mappings </td>
+</tr>
+</table>
+
+<table>
+<th>**Mon**</th>
+<tr>
+    <td>Objects</td>
+    <td>Monoids</td>
+</tr>
+
+<tr>
+    <td>Morphisms</td>
+    <td>Monoid homomorphisms</td>
+</tr>
+
+<tr>
+    <td>Composition</td>
+    <td>Composition of monoid homomorphsisms</td>
+</tr>
+
+<tr>
+    <td>Identities</td>
+    <td>Identity mappings</td>
+</tr>
+</table>
+
+For example considering the Monoid type of Haskell string types
+we find that this gives rise to a subcategory of **Hask**.
+Consider the type definition for Monoid.
+
+```haskell
+class Monoid a where
+  mempty :: a
+  mappend :: a -> a -> a
+  mconcat :: [a] -> a
+```
+
+The instance for String types is:
+
+```haskell
+type String = [Char]
+
+instance Monoid String where
+        mempty  = []
+        mappend = (++)
+```
+
+<table>
+<th>**Str**</th>
+<tr>
+    <td>Objects</td>
+    <td>Characters</td>
+    <td>```Char```
+</tr>
+
+<tr>
+    <td>Morphisms</td>
+    <td>Strings</td>
+    <td>```[Char]```</td>
+</tr>
+
+<tr>
+    <td>Composition</td>
+    <td>String concatention</td>
+    <td>```(++)```</td>
+</tr>
+
+<tr>
+    <td>Identities</td>
+    <td>Empty string</td>
+    <td>```""```</td>
+</tr>
+</table>
+
+It is easy to show that the identity laws hold.
+
+```haskell
+a ++ ""  = "" ++ a == a
+```
+
+Concatetention is a linear mapping so it is also easy to show
+that composition laws must also hold for all characters.
+
+```haskell
+(a ++ b) ++ c = a ++ (b ++ c)
+```
+
+In short we epxect order-independent append operations. For
+example:
+
+```haskell
+"foo" ++ "bar" + "" ++ "baz" == "foobarbaz"
+"foo" ++ "bar" ++ "baz"      == "foobarbaz"
+"foo" ++ ("bar" ++ "baz")    == "foobarbaz"
+("foo" ++ "bar") ++ "baz"    == "foobarbaz"
+```
+
+#### Logic
+
+<table>
+<th>Deductive Logic<th>
+<tr>
+    <td>Objects</td>
+    <td>Propositions</td>
+    <td>$ \\alpha,\\beta,\\gamma $</td>
+</tr>
+
+<tr>
+    <td>Morphisms</td>
+    <td>Proofs</td>
+    <td>$ \\alpha \\vdash \\beta $</td>
+</tr>
+
+<tr>
+    <td>Composition</td>
+    <td>Proof Trees</td>
+    <td>$$
+    \frac{\alpha \vdash \beta \hspace{1em} \beta \vdash \gamma}{\alpha \vdash \gamma} 
+    $$
+    </td>
+</tr>
+
+<tr>
+    <td>Identities</td>
+    <td>Identity mappings</td>
+    <td>$$
+    \frac{}{\alpha \vdash \alpha} 
+    $$
+    </td>
+</tr>
+</table>
+
+#### Duality
+
+The important results of category is the notion of **duality**. Simply
+put for any theorem about a category $ C $ we can obtain a new theorem
+by swapping domain and codomain of each morphism and changing the
+argument order of composition we obtain a result that also holds over in
+category $ C^\\text{op} $ referred to the **dual theorem**.
+
+1) Objects of $ C^\\text{op} $ are identical to $ C $.
+2) Morphisms of the form $ f : B \\rightarrow A $ in $ C^\\text{op} $ are the morphisms
+$ f : A \\rightarrow B $ in $ C $. 
+3) Compositions of the form $ g \\circ f $ in $ C^\\text{op} $ are of the form $ f \\circ g $ in $ C $.
+4) Identities in $ C^\\text{op} $  are the same as in $ C $.
+
+We can build dual categories in Haskell from categories
+
+```haskell
+{-# LANGUAGE TypeOperators #-}
+
+data Op k a b = Op { unOp :: k b a }
+
+instance Category k => Category (Op k) where
+  id = Op id
+  (Op f) . (Op g) = Op (g . f)
+```
+
+#### Terminal and Initial
+
+Many categories have a special elements or classes of elements
+where morphisms between objects are uniquely identified. For
+example a the case where all objects in the category have a
+single morphism between a single element, such an element is
+called **initial**. For an initial object $ I \\in \\text{obj}(C) $
+to be initial we have:
+
+$$
+\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(0, A) | = 1
+$$
+
+This is often written as an arrow with an excalamation point to
+indicate a unique morphism.
+
+
+![Illustration](/images/initial.svg).
+
+$$
+0 \xrightarrow{\hspace{1em}!\hspace{1em}} A.
+$$
+
+The dual notion is that of a **terminal** element $ 1 \\in \\text{ob}(C) $.
+
+$$
+\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(A, 1) | = 1
+$$
+
+$$
+A \xrightarrow{\hspace{1em}!\hspace{1em}} 1.
+$$
+
+![Illustration](/images/final.svg).
+
+Initial and terminal objects are unique up to isomorphism. For example
+in the category **Set** the initial element is the null set while the
+terminal element is the singleton set collapsing any set to a
+singleton set.
+
+$$
+\begin{align}
+x &\xrightarrow{\hspace{1em}!\hspace{1em}} \{x\} \\
+\{\} &\xrightarrow{\hspace{1em}!\hspace{1em}} x
+\end{align}
+$$
+
+In the category **One** the terminal object is also the initial
+object, such a category is said to have a **zero object**.
+
+In the category of vector spaces **Vec** the zero object is the
+zero dimensional vector space.
+
+The subject of whether **Hask** has initial and terminal objects is
+a hairy issue that divides the implementation of Haskell language
+from the category theoretic interpretation of Haskell. Although
+the definitions below satisfy the requirements it is possible to
+find counter examples in the Haskell runtime that would break the
+neccessary properties. See the 
+[void package](http://hackage.haskell.org/package/void) for more 
+details.
+
+**Initial**
+
+```haskell
+newtype Void = Void Void
+
+absurd :: Void -> a
+absurd (Void a) = absurd a
+```
+
+**Terminal**
+
+```haskell
+data () = ()	
+
+term :: forall a. a -> ()
+term _ = ()	
+```
+
+
+The [category](https://github.com/ekmett/categories/tree/master/Control/Category)
+library defines this notation using fairly exotic type structures but
+this concept can be modeled in Haskell's type system!
+
+```haskell
+class Category k => HasTerminalObject k where
+    type Terminal k :: *
+    terminate :: a `k` Terminal k
+
+class Category k => HasInitialObject k where
+    type Initial k :: *
+    initiate :: Initial k `k` a
+```

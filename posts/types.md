@@ -237,12 +237,12 @@ $ ghc fail.hs
     Possible fix: add an instance declaration for (Num Foo)
 ```
 
-In short, Python's notion of duck typing and **ad-hoc
-polymorphism** with constraints in Haskell are quite similar from a
-structural standpoint, but with the exception that Python defers
-failures to runtime since it is not able to reason about the
-types of arguments while Haskell is able to reject a large class
-of invalid programs at compile time.
+In short, Python's notion of duck typing and **ad-hoc polymorphism**
+with constraints in Haskell are quite similar from a structural
+standpoint, but with the exception that Python is not able to reason
+about types in question and defers failures to runtime since it is not
+able to reason about the types of arguments while Haskell is able to
+reject a large class of invalid programs at compile time.
 
 To remedy the Python program, we make the Foo class quack like a
 integer.
@@ -372,7 +372,7 @@ rigid type variables in our parametric type signature.
 
 #### Further Reading:
 
-* [Subtypes vs. Where Clauses: Constraining Parametric Polymorphism](www.cs.cornell.edu/andru/papers/where-clauses.pdf)
+* [Subtypes vs. Where Clauses: Constraining Parametric Polymorphism](http://www.cs.cornell.edu/andru/papers/where-clauses.pdf)
 * [The Category Pattern](http://www.haskellforall.com/2012/08/the-category-design-pattern.html)
 * [Haskell for C Programmers](http://www.haskell.org/haskellwiki/Haskell_Tutorial_for_C_Programmers)
 * [Making Our Own Types and Typeclasses](http://learnyouahaskell.com/making-our-own-types-and-typeclasses)

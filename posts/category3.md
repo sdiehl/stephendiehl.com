@@ -46,25 +46,9 @@ $$
 fmap (g . f) = fmap g . fmap f
 ```
 
-\
-
-And pictorially:
-
-![Illustration](/images/functor_comp.svg).
-
-The previous law also implicitly depends on the preservation of
-identities, indeed the identity morphism for an object must be preserved
-by functorial action.
-
 ```haskell
 fmap id = id
 ```
-
-\
-
-And pictorially: 
-
-![Illustration](/images/functor_id.svg).
 
 #### Hask
 
@@ -82,29 +66,3 @@ instance Functor [] where
     fmap f (x:xs)   =  f x : fmap f xs
 ```
 
-\
-
-A rough illustration of the List functor pictorially.
-
-![Illustration](/images/fmap.svg).
-
-#### Contravariant Functors
-
-A slight variant on the traditional functor is a **contravariant
-functor** which reverses the domain and codomain of functorial
-image of the morphism.
-
-$$
-t: X \rightarrow T(X) \in B
-$$
-
-And for each morphism $ f : X \\rightarrow Y \\in \\text{Hom}_A $
-
-$$
-T(f): T(Y) \rightarrow T(X) \in \text{Hom}_B
-$$
-
-![Illustration](/images/confunctor.svg).
-
-Traditional functors as discussed above can also be referred to
-**covariant functors**.

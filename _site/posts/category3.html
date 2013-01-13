@@ -98,12 +98,7 @@ T(f): T(X) \rightarrow T(Y) \in \text{Hom}_B
 T ( g . f ) = (T g) . (T f)
 \]</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> (g <span class="fu">.</span> f) <span class="fu">=</span> <span class="fu">fmap</span> g <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
-<p><br /> And pictorially:</p>
-<p><img src="../images/functor_comp.svg" alt="Illustration"></img>.</p>
-<p>The previous law also implicitly depends on the preservation of identities, indeed the identity morphism for an object must be preserved by functorial action.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> <span class="fu">id</span> <span class="fu">=</span> <span class="fu">id</span></code></pre>
-<p><br /> And pictorially:</p>
-<p><img src="../images/functor_id.svg" alt="Illustration"></img>.</p>
 <h4 id="hask">Hask</h4>
 <p>The classic example is Haskell functor over <code>Pair</code> values and the list functor.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pair</span> a b <span class="fu">=</span> <span class="dt">Pair</span> a b
@@ -114,19 +109,6 @@ T ( g . f ) = (T g) . (T f)
 <span class="kw">instance</span> <span class="kw">Functor</span> [] <span class="kw">where</span>
     <span class="fu">fmap</span> f []       <span class="fu">=</span>  []
     <span class="fu">fmap</span> f (x<span class="fu">:</span>xs)   <span class="fu">=</span>  f x <span class="fu">:</span> <span class="fu">fmap</span> f xs</code></pre>
-<p><br /> A rough illustration of the List functor pictorially.</p>
-<p><img src="../images/fmap.svg" alt="Illustration"></img>.</p>
-<h4 id="contravariant-functors">Contravariant Functors</h4>
-<p>A slight variant on the traditional functor is a <strong>contravariant functor</strong> which reverses the domain and codomain of functorial image of the morphism.</p>
-<p>\[
-t: X \rightarrow T(X) \in B
-\]</p>
-<p>And for each morphism $ f : X \rightarrow Y \in \text{Hom}_A $</p>
-<p>\[
-T(f): T(Y) \rightarrow T(X) \in \text{Hom}_B
-\]</p>
-<p><img src="../images/confunctor.svg" alt="Illustration"></img>.</p>
-<p>Traditional functors as discussed above can also be referred to <strong>covariant functors</strong>.</p>
         </div>
     </div>
 
