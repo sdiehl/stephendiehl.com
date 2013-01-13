@@ -532,7 +532,7 @@ From algebra there are several examples of categories.
 
 <tr>
     <td>Identities</td>
-    <td> Identity mappings </td>
+    <td></td>
 </tr>
 </table>
 
@@ -682,7 +682,7 @@ example:
 
 <tr>
     <td>Identities</td>
-    <td>Identity mappings</td>
+    <td>Identity propositions</td>
     <td>$$
     \frac{}{\alpha \vdash \alpha} 
     $$

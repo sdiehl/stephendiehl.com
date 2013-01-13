@@ -56,6 +56,21 @@
 </head>
 <body>
 
+<div style="display:none">
+\def\reflect#1{{#1}^\dagger}
+\def\inverse#1{{#1}^{-1}}
+\def\dual#1{{#1}^{\rm op}}
+\def\identgen#1#2{I^{#1}_{#2}}
+\def\arrow{\rightarrow}
+\def\arrowsub#1{\yyarrowa{_{#1}}}
+\def\arrowsuper#1{\yyarrowa{^{#1}}}
+\def\arrowsubsuper#1#2{\yyarrowa{_{#1}^{#2}}}
+\(\newcommand{\cat}[1]{\mathcal{#1}}\)
+\(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
+\(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
+\(\newcommand{\id}[1]{\text{id}_{#1}}\)
+</div>
+
     <!-- Primary Page Layout
     ================================================== -->
 
@@ -120,17 +135,17 @@
 
 matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
 <span class="kw">print</span> matrix</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python">[[[ -<span class="fl">1.84108549e-01</span>  -<span class="fl">5.22896555e-02</span>   <span class="fl">2.13344373e-01</span>]
-  [  <span class="fl">1.06504815e+00</span>  -<span class="fl">1.66427229e+00</span>   <span class="fl">7.52344986e-01</span>]
-  [  <span class="fl">1.38697558e-01</span>   <span class="fl">1.46052261e+00</span>  -<span class="fl">1.78055383e+00</span>]]
+<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">0.51524989</span>  <span class="fl">0.77538606</span> -<span class="fl">0.19276447</span>]
+  [-<span class="fl">2.17193251</span> -<span class="fl">0.17391925</span>  <span class="fl">0.95888428</span>]
+  [ <span class="fl">0.31599597</span>  <span class="fl">1.0893692</span>   <span class="fl">0.24757833</span>]]
 
- [[  <span class="fl">1.97426465e+00</span>  -<span class="fl">4.75802070e-01</span>   <span class="fl">3.61309121e-01</span>]
-  [ -<span class="fl">2.37804304e-01</span>  -<span class="fl">1.12302362e+00</span>   <span class="fl">2.15421663e-01</span>]
-  [  <span class="fl">1.35559875e-01</span>  -<span class="fl">2.35696950e-01</span>   <span class="fl">8.48578974e-01</span>]]
+ [[-<span class="fl">1.98720959</span>  <span class="fl">1.24241695</span>  <span class="fl">1.49796861</span>]
+  [-<span class="fl">0.29687401</span> -<span class="fl">0.32233763</span> -<span class="fl">0.81892802</span>]
+  [ <span class="fl">0.64916683</span>  <span class="fl">1.27601129</span> -<span class="fl">0.64732527</span>]]
 
- [[ -<span class="fl">9.06070226e-01</span>   <span class="fl">4.92926887e-02</span>   <span class="fl">1.04927331e+00</span>]
-  [  <span class="fl">4.90852018e-01</span>  -<span class="fl">1.88112143e-03</span>  -<span class="fl">3.82500545e-01</span>]
-  [ -<span class="fl">1.06441571e+00</span>   <span class="fl">6.18645384e-01</span>  -<span class="fl">3.37960188e-01</span>]]]</code></pre>
+ [[-<span class="fl">0.30263633</span>  <span class="fl">0.41182296</span> -<span class="fl">2.03945481</span>]
+  [-<span class="fl">0.41030855</span>  <span class="fl">1.44409882</span>  <span class="fl">2.05820923</span>]
+  [ <span class="fl">1.66631684</span> -<span class="fl">0.92828783</span>  <span class="fl">0.23489476</span>]]]</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
 &gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
 &gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
@@ -160,40 +175,40 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
       <td>
 <strong>0</strong>
 </td>
-      <td> 
-0.672652
-</td>
-      <td> 
-0.064873
-</td>
       <td>
--1.362447
-</td>
-      <td>
--1.182251
+-0.113455
 </td>
       <td> 
-0.889460
+0.845276
+</td>
+      <td> 
+0.817854
+</td>
+      <td> 
+0.755390
+</td>
+      <td> 
+0.382920
 </td>
     </tr>
     <tr>
       <td>
 <strong>1</strong>
 </td>
+      <td>
+-0.522506
+</td>
       <td> 
-0.979551
+0.784275
 </td>
       <td>
--0.552400
+-0.011211
 </td>
       <td> 
-0.263893
+1.139455
 </td>
-      <td> 
-0.209167
-</td>
-      <td> 
-0.013621
+      <td>
+-0.822705
 </td>
     </tr>
     <tr>
@@ -201,19 +216,19 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>2</strong>
 </td>
       <td>
--0.090362
+-1.365248
+</td>
+      <td> 
+1.089657
+</td>
+      <td> 
+0.204454
 </td>
       <td>
--1.010249
+-0.417758
 </td>
-      <td> 
-1.924695
-</td>
-      <td> 
-0.498307
-</td>
-      <td> 
-0.580102
+      <td>
+-0.482618
 </td>
     </tr>
     <tr>
@@ -221,39 +236,39 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>3</strong>
 </td>
       <td> 
-1.626392
+0.712442
+</td>
+      <td>
+-1.321117
+</td>
+      <td>
+-0.447333
 </td>
       <td> 
-1.335212
+0.939471
 </td>
       <td> 
-0.244793
-</td>
-      <td> 
-0.255122
-</td>
-      <td> 
-0.138010
+0.403315
 </td>
     </tr>
     <tr>
       <td>
 <strong>4</strong>
 </td>
+      <td>
+-0.957292
+</td>
       <td> 
-1.140312
+0.942788
 </td>
       <td>
--1.245491
+-0.354687
 </td>
-      <td> 
-0.371632
+      <td>
+-1.391036
 </td>
-      <td> 
-1.182623
-</td>
-      <td> 
-0.647123
+      <td>
+-0.348103
 </td>
     </tr>
   </tbody>

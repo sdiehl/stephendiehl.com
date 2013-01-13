@@ -5,55 +5,74 @@ date: September 10, 2012
 
 #### Functors
 
-A functor is a collection of mappings between categories that map
-between the the morphism and objects of two categories. More precisely
-it is a mapping between the categories $ T: A \\rightarrow B $ such that
-for every object in $ X \\in A $ there exists
+A functor is a collection of mappings between categories that
+maps morphisms to morphisms and objects two objects. A functor
+between two categories $ \\mathcal{C} , \\mathcal{D} $.
 
 $$
-T: X \rightarrow T(X) \in B
+T: \mathcal{C} \rightarrow \mathcal{D}
 $$
 
-And for each morphism $ f : X \\rightarrow Y \\in \\text{Hom}_A $
+$$
+\begin{align}
+T &: \ob{\mathcal{C}} \rightarrow \ob{\mathcal{D}} \\
+T &: \hom{\mathcal{C}} \rightarrow \hom{\mathcal{D}}
+\end{align}
+$$
+
+satisfying several laws:
 
 $$
-T(f): T(X) \rightarrow T(Y) \in \text{Hom}_B
+\begin{align}
+T(\id{A})    &= \id{T(A)} \\
+T(f \circ g) &= T(f) \circ T(g)
+\end{align}
 $$
 
 In functional programming we differentiate between the **functorial
 action** or **functorial image** on an object ( ``` T a ``` ) from the
-functorial action on a morphism usually denoted ``` fmap f ```.
+functorial action on a Haskell function is denoted ``` fmap f ```. In
+the math notation these are both written as $ T(x) $ and $ T(f) $.
 
-In **Hask** the Functor typeclass is defined with:
+![Illustration](/images/functors2.svg).
+
+![Illustration](/images/functors.svg).
+
+![Illustration](/images/functors3.svg).
+
+#### Functor
+
+In **Hask** the Functor typeclass is defined as:
 
 ```haskell
 class Functor t where
   fmap :: (a -> b) -> t a -> t b
 ```
 
-![Illustration](/images/functor.svg).
-
-#### Functor laws
-
-The essential nature of Functors is that we preserve composition
-structure under mapping. Namely:
-
-$$
-T ( g . f ) = (T g) . (T f)
-$$
+The functor laws manifest as following identities:
 
 ```haskell
 fmap (g . f) = fmap g . fmap f
-```
-
-```haskell
 fmap id = id
 ```
 
-#### Hask
+The canonical example is the list functor which lifts a function
+into the ordered elements of a list.
 
-The classic example is Haskell functor over ``Pair`` values and
-the list functor.
+```haskell
+instance Functor [] where
+    fmap f []       =  []
+    fmap f (x:xs)   =  f x : fmap f xs
+```
+
+We see the the list functor is a mapping between **Hask** type ``a``
+and the list parameterized by the type ``a``. The functor maps values
+of type ``a`` to ordered collections of values of type ``a`` namely
+``[a]``. As well as functions over types ``a -> b`` to ordered
+collections of type ``b`` namely ``fmap f``.
+
+Another classic example is Haskell functor over ``Pair`` values and
+the pair functor.
 
 ```haskell
 data Pair a b = Pair a b
@@ -61,8 +80,31 @@ data Pair a b = Pair a b
 instance Functor Pair where
     fmap f (Pair x y) = Pair (x) (f y)
 
-instance Functor [] where
-    fmap f []       =  []
-    fmap f (x:xs)   =  f x : fmap f xs
 ```
 
+In the first article we defined the trivial category **One**
+which also supports a functor instance.
+
+```haskell
+data One a b where
+    Ida :: One a ()
+
+instance Category One where
+    id = Ida
+    Ida . Ida = Ida
+
+instance Functor One where
+  fmap f (Ida a _) = Ida (f a) ()
+```
+
+A more mathematical example is the powerset defined as the set of
+all subsets over a set $ A $. The functor is defined as the
+powerset operator, written $ 2^A $ as well as a morphism mapping
+that lifts $ f $ over
+
+$$
+\begin{align}
+P(A) &= \{ a | a \subseteq A \} \\
+P(f) &= \{ f(a) | a \in A \}
+\end{align}
+$$

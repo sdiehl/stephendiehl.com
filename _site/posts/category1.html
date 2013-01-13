@@ -56,6 +56,21 @@
 </head>
 <body>
 
+<div style="display:none">
+\def\reflect#1{{#1}^\dagger}
+\def\inverse#1{{#1}^{-1}}
+\def\dual#1{{#1}^{\rm op}}
+\def\identgen#1#2{I^{#1}_{#2}}
+\def\arrow{\rightarrow}
+\def\arrowsub#1{\yyarrowa{_{#1}}}
+\def\arrowsuper#1{\yyarrowa{^{#1}}}
+\def\arrowsubsuper#1#2{\yyarrowa{_{#1}^{#2}}}
+\(\newcommand{\cat}[1]{\mathcal{#1}}\)
+\(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
+\(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
+\(\newcommand{\id}[1]{\text{id}_{#1}}\)
+</div>
+
     <!-- Primary Page Layout
     ================================================== -->
 
@@ -632,9 +647,7 @@ Composition of linear mappings
     <td>
 Identities
 </td>
-    <td> 
-Identity mappings
-</td>
+    <td></td>
 </tr>
 </table>
 
@@ -842,7 +855,7 @@ Proof Trees
 Identities
 </td>
     <td>
-Identity mappings
+Identity propositions
 </td>
     <td>
 \[
