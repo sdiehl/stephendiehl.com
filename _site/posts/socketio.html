@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>All posts</title>
+    <title>Nginx Socket.IO Proxy</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -18,12 +18,12 @@
 
     <!-- CSS
   ================================================== -->
-    <link rel="stylesheet" href="./css/base.css">
-    <link rel="stylesheet" href="./css/skeleton.css">
-    <link rel="stylesheet" href="./css/typography.css">
-    <link rel="stylesheet" href="./css/layout.css">
-    <link rel="stylesheet" href="./css/syntax.css">
-    <link rel="stylesheet" href="./css/custom.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
 
     <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
@@ -79,12 +79,12 @@
             <nav>
                 <h3 id="logo">Stephen Diehl</h3>
                 <ul>
-                    <li><a href="./">Index</a></li>
-                    <li><a href="./pages/slides.html">Talks</a></li>
-                    <li><a href="./posts.html">Writings</a></li>
-                    <li><a href="./pages/projects.html">Projects</a></li>
-                    <li><a href="./pages/hire.html">Contact Me</a></li>
-                    <li><a href="./pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../pages/slides.html">Talks</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -93,35 +93,35 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <h3>Writings</h3>
-<ul>
-    <li>
-    <a href="./posts/agda.html">Agda Quickstart Guide</a> - <em>Jun 15, 2012</em>
-</li>
-<li>
-    <a href="./posts/category1.html">Categorical Programming: Introduction</a> - <em>September 8, 2012</em>
-</li>
-<li>
-    <a href="./posts/category2.html">Categorical Programming: Morphisms</a> - <em>September 9, 2012</em>
-</li>
-<li>
-    <a href="./posts/category3.html">Categorical Programming: Functors</a> - <em>September 10, 2012</em>
-</li>
-<li>
-    <a href="./posts/essential_haskell.html">A Haskell Reading List</a> - <em>August 15, 2012</em>
-</li>
-<li>
-    <a href="./posts/socketio.html">Nginx Socket.IO Proxy</a> - <em>September 8, 2012</em>
-</li>
-<li>
-    <a href="./posts/tipy.html">Tipy: A Simple Python Preprocessor</a> - <em>August 6, 2012</em>
-</li>
-<li>
-    <a href="./posts/types.html">Haskell Types for Python Programmers ( Part 1 )</a> - <em>November 19, 2012</em>
-</li>
+            <h4 id="nginx-socket.io-proxy">Nginx Socket.IO Proxy</h4>
+<p>To use socketio behind Nginx follow these directions. You will need to replace your existing version of nginx with a custom build version from source:</p>
+<ol style="list-style-type: decimal">
+<li>git clone git@github.com:yaoweibin/nginx_tcp_proxy_module.git</li>
+<li>wget ‘http://nginx.org/download/nginx-1.2.1.tar.gz’</li>
+<li>tar -xzvf nginx-1.2.1.tar.gz</li>
+<li>cd nginx-1.2.1/</li>
+<li>patch -p1 &lt; ../tcp.patch</li>
+<li>./configure –add-module=..</li>
+<li>make</li>
+<li>make install</li>
+</ol>
+<p>Then add to your <code>tcp_proxy.conf</code>.</p>
+<pre><code>tcp {
 
-</ul>
+       upstream cluster {
+           server 192.168.0.1:80;
+           server 192.168.0.2:80;
 
+           check interval=3000 rise=2 fall=5 timeout=1000;
+       }
+
+       server {
+           listen 8888;
+
+           proxy_pass cluster;
+       }
+   }</code></pre>
+<p>You can also use the nginx websocket proxy using by using the nginx tcp proxy to forward the websocket packets on a desired port.</p>
         </div>
     </div>
 
