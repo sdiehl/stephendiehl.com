@@ -19,9 +19,9 @@ but at a level of generality where there is no notion of individual
 elements. Instead elements arise only out of their relationships between
 each other.
 
-This tutorial is a humble attempt to provide a bridge between the
-mathematical literature and the everyday language of the working Haskell
-programming programmer.
+This tutorial is a humble attempt to provide a bridge between the dense
+literature and an easy introduction to category theory for Haskell
+programmers.
 
 ### Categories
 
