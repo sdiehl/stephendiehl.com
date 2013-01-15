@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>My Setup</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+          // Needs to escaped for Pandoc
+          displayMath: [ ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+<div style="display:none">
+\def\reflect#1{{#1}^\dagger}
+\def\inverse#1{{#1}^{-1}}
+\def\dual#1{{#1}^{\rm op}}
+\def\identgen#1#2{I^{#1}_{#2}}
+\def\arrow{\rightarrow}
+\def\arrowsub#1{\yyarrowa{_{#1}}}
+\def\arrowsuper#1{\yyarrowa{^{#1}}}
+\def\arrowsubsuper#1#2{\yyarrowa{_{#1}^{#2}}}
+\(\newcommand{\cat}[1]{\mathcal{#1}}\)
+\(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
+\(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
+\(\newcommand{\id}[1]{\text{id}_{#1}}\)
+</div>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../pages/slides.html">Talks</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h4 id="setup">Setup</h4>
+<p>I run Arch Linux on my Lenovo x220 and all of my servers. I’ve used nothing else since 2002, and continue to advocate Arch Linux as being the purset usable system that reflects Unix ideals.</p>
+<blockquote>
+<p>Be Simple</p>
+</blockquote>
+<p>No cruft, no bullshit. Do one thing and do it well.</p>
+<blockquote>
+<p>Be Correct</p>
+</blockquote>
+<p>Simplicity of implementation, code-elegance, and minimalism lead to clean, correct, simple code,</p>
+<blockquote>
+<p>Be Usable</p>
+</blockquote>
+<p>The end user is fully responsible. Software should not do hand-holding, or second-guessing.</p>
+<blockquote>
+<p>Be Open</p>
+</blockquote>
+<p>Software should not put boundaries and abstractions between the user and the implementation.</p>
+<blockquote>
+<p>Be Free</p>
+</blockquote>
+<p>Users are not only permitted to make all decisions concerning system configuration, but also choose how they use the software free of coercion.</p>
+<h4 id="arch-linux-2013.01.04">Arch Linux 2013.01.04</h4>
+<p>My current working system consists entirely of the following packages:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="co"># Base</span>
+linux
+pacman
+<span class="kw">bash</span>
+ca-certificates
+dbus-core
+hwdetect
+<span class="kw">gcc</span>
+gcc-fortran
+gcc-libs
+clang
+valgrind
+llvm
+glibc
+glib2
+
+<span class="co"># Math</span>
+mpfr
+gmp
+cloog
+isl
+blas
+lapack
+arpack
+
+<span class="co"># Network</span>
+dhcpcd
+dhclient
+wireless_tools
+wpa_supplicant
+wpa_supplicant_gui
+<span class="kw">wget</span>
+wireshark-cli
+wireshark-gtk
+
+<span class="co"># Terminals</span>
+urxvt-unicode
+sakura
+xterm
+
+<span class="co"># Laptop</span>
+cpufrequtils
+laptop-mode-tools
+xbindkeys
+xf86-input-evdev
+xf86-input-synaptics
+powertop
+
+<span class="co"># Drivers</span>
+xf86-video-intel
+
+<span class="co"># System</span>
+<span class="kw">autoconf</span>
+<span class="kw">automake</span>
+binutils
+<span class="kw">bison</span>
+fakeroot
+<span class="kw">flex</span>
+<span class="kw">gcc</span>
+libtool
+<span class="kw">m4</span>
+<span class="kw">make</span>
+<span class="kw">patch</span>
+pkg-config
+htop
+
+<span class="co"># Shell</span>
+<span class="kw">zsh</span>
+
+<span class="co"># Sound</span>
+alsa-lib
+alsa-oss
+alsa-plugins
+alsa-utils
+
+<span class="co"># Base</span>
+git
+vim-runtime
+rxvt-unicode
+
+<span class="co"># Haskell</span>
+ghc
+haskell-x11
+haskell-x11-xft
+cabal-install
+xmonad
+xmonad-contrib
+xmobar
+dmenu
+dzen2
+
+<span class="co"># Essential Haskell</span>
+cabal-dev
+xmonad
+stm
+pandoc
+lens
+lens
+categories
+network
+HTTP
+unix
+process
+quickcheck
+hashtable
+parsec
+cloud
+hmatrix
+vect
+repa
+accelerate
+pipes
+uniplate
+pointfree
+pointful
+djinn
+pandoc
+hakyll
+
+<span class="co"># Python</span>
+python2
+python2-pip
+python2-virtualenv
+virtualenvwrapper
+
+<span class="co"># Numeric libs in site-packages</span>
+python2-numpy
+python2-scipy
+python2-matplotlib
+pypy
+
+<span class="co"># Xorg</span>
+xorg-server
+xorg-init
+xorg-xinput
+
+<span class="co"># Desktop</span>
+pcmanfm
+gvim
+chromium
+firefox
+flashplugin
+vifm
+tmux
+feh
+unclutter
+xlock
+epdfview
+
+<span class="co"># Media</span>
+mpd
+ncmcpp
+ffmpeg
+vlc
+
+<span class="co"># Latex</span>
+texlive-bin
+texlive-core
+texinfo
+texlive-latexextra
+texlive-pictures
+texlive-pstricks
+ghostscript
+
+<span class="co"># Drawing</span>
+inkscape
+
+<span class="co"># IRC</span>
+irssi
+
+<span class="co"># Dev</span>
+zeromq
+openmpi
+<span class="kw">gdb</span>
+libevent
+libev
+<span class="kw">gc</span>
+cython
+
+lua
+go
+scala
+scala
+openjdk6
+julia-git
+jsoftware
+
+<span class="co"># PLT</span>
+ocaml
+agda
+coq
+pure
+strategoxt
+libaterm
+antlr2
+
+<span class="co"># GPU Programming</span>
+libcl
+opencl-nvidia
+cuda
+
+<span class="co"># Databases</span>
+postgres
+redis
+hdf5
+
+<span class="co"># Compression</span>
+<span class="kw">xz</span>
+<span class="kw">tar</span>
+<span class="kw">gzip</span>
+<span class="kw">bzip2</span>
+unrar
+
+<span class="co"># Codecs</span>
+mpg123
+
+<span class="co"># Fonts</span>
+ttf-bitstream-vera
+ttf-dejavu
+ttf-freefont
+ttf-inconsolata-g
+ttf-liberation
+monaco-linux-font
+
+<span class="co"># Misc</span>
+par
+fuse</code></pre>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>

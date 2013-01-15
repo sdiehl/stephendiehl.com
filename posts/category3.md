@@ -150,7 +150,7 @@ instance Applicative ((->) a) where
 
 ![Applicative](/images/applicative3.svg).
 
-```
+```haskell
 let res = f <$> a <*> b <*> c where 
     a = readLn :: IO String
     b = readLn :: IO String

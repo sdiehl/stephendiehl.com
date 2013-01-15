@@ -3,17 +3,11 @@ title: Categorical Programming: Morphisms
 date: September 9, 2012
 ---
 
-#### Morphisms
+### Morphisms
 
 Morphisms are the central idea of category theory. They let us
 express mappings between objects and more importantly let us
 discuss how compositions of morphisms relate to each other.
-
-The term homomorphism is often used to describe morphisms in a
-category since homomorphism describes a structure preserving
-property that is associative. This definition is baked into the
-category definition and thus the convention of referring to the
-morphisms in a category as the **homset** or $ \\text\{Hom\}_C $
 
 There are some special cases of morphisms.
 
@@ -23,7 +17,7 @@ Endomorphism  $$ A \in C $$                    $$ f : A \rightarrow A $$
 Epimorphism   $$ g_1, g_2 \in \text{Hom}_C $$  $$  f . g_1  = f . g_2 \implies g_1 = g_2 $$
 Monomorphism  $$ g_1, g_2 \in \text{Hom}_C $$  $$  g_1 . f = g_2 . f  \implies g_1 = g_2 $$
 
-> **Endomorphism**
+#### Endomorphism
 
 An endomorphism is a morphism with equal domain and codomain.
 

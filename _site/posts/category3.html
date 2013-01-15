@@ -169,10 +169,10 @@ pure f <span class="fu">&lt;*&gt;</span> pure x <span class="fu">=</span> pure (
 <p><img src="../images/applicative.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative2.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative3.svg" alt="Applicative"></img>.</p>
-<pre><code>let res = f &lt;$&gt; a &lt;*&gt; b &lt;*&gt; c where 
-    a = readLn :: IO String
-    b = readLn :: IO String
-    c = readLn :: IO String</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> res <span class="fu">=</span> f <span class="fu">&lt;$&gt;</span> a <span class="fu">&lt;*&gt;</span> b <span class="fu">&lt;*&gt;</span> c <span class="kw">where</span> 
+    a <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span>
+    b <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span>
+    c <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span></code></pre>
         </div>
     </div>
 
