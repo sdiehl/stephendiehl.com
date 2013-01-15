@@ -25,18 +25,18 @@ programmers.
 
 ### Categories
 
-A **category**  $ C $ is a construction with four definitions:
+A **category**  $ \\C $ is a construction with four definitions:
 
-1. A collection of **objects**. Written $ \\text{ob}(C) $.
+1. A collection of **objects**. Written $ \\text{ob}(\\C) $.
 
 ![Illustration](/images/objects.svg).
 
-2. A collection of **morphisms**. Written $ \\text{hom}(C) $.
+2. A collection of **morphisms**. Written $ \\text{hom}(\\C) $.
 
 ![Illustration](/images/morphisms.svg).
 
 3. A **composition** operation $ ( \\circ ) $ or written in
-   Haskell as $ ( . ) $. The composition of morphsism yields morphisms in $ C $.
+   Haskell as $ ( . ) $. The composition of morphsism yields morphisms in $ \\C $.
 
     $$ ( f . g ) $$
 
@@ -149,21 +149,21 @@ A category is constructed out a collection of morphisms, over
 objects in the categotry. The collection of other morphisms in 
 a category is called a **homset** and written as:
 
-$$ \text{Hom}(C) $$ 
+$$ \hom{\C} $$ 
 
 A individual a morphism $ f $ has two associated values, its **domain**
 $ \\text{dom}(f) $ and **codomain** $ \\text{cod}(f) $.
 
-Elements in the homset are morphisms between objects in C,
-namely if $ A,B \\in \\text{ob}(C) $ then the set of morphisms in
-$ C $ between $ A $ and $ B $ is written:
+Elements in the homset are morphisms between objects in $ \\C $,
+namely if $ A,B \\in \\ob{\\C} $ then the set of morphisms in
+$ \\C $ between $ A $ and $ B $ is written:
 
-$$ \text{Hom}(A,B) $$
+$$ \hom{A,B} $$
 
 For composition to be well defined we require that composition
 itself be a mapping only defined for:
 
-$$ ( \circ ) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) $$ 
+$$ ( \circ ) : \hom{B,C} \rightarrow \hom{A,B} \rightarrow \hom{A,C} $$ 
 
 #### Formal Definition of Categories
 
@@ -176,13 +176,13 @@ the third column is the definition of the construction.
 <th>**Category**</th>
 <tr>
     <td>Objects</td>
-    <td> $$ X, Y \in C $$ </td>
+    <td> $$ X, Y \in \C $$ </td>
     <td></td>
 </tr>
 
 <tr>
     <td>Morphisms</td>
-    <td> $$ f \in \text{Hom}(C) $$ </td>
+    <td> $$ f \in \hom{\C} $$ </td>
     <td> $$ f: X \rightarrow Y $$ </td>
 </tr>
 
@@ -199,7 +199,7 @@ the third column is the definition of the construction.
 
 <tr>
     <td>Identities</td>
-    <td> $$ \text{For all } X \in C $$ </td>
+    <td> $$ \text{For all } X \in \C $$ </td>
     <td> $$ \text{id}_A : X \rightarrow X $$ </td>
 </tr>
 
@@ -219,14 +219,14 @@ laws for the category.
 <tr>
     <td> Identity </td>
     <td> $$ 
-        A \in C \\
+        A \in \C \\
         f : A \rightarrow B
     $$</td>
     <td> $$ f . \text{id}_A  = \text{id}_B . f = f $$ </td>
 </tr>
 <tr>
     <td> Associativity </td>
-    <td> $$ f,g,h \in \text{Hom}(C) $$</td>
+    <td> $$ f,g,h \in \hom{\C} $$</td>
     <td> $$ ( h . g ) . f = h . ( g . f ) $$ </td>
 </tr>
 </table>
@@ -437,7 +437,12 @@ It is also trivially true that **Zero** is a subcategory of **One**.
 <tr>
     <td>Morphisms</td>
     <td> </td>
-    <td> $$ f : X \rightarrow X $$ </td>
+    <td> 
+    $$
+    f : X \rightarrow X \\
+    g : Y \rightarrow Y
+    $$
+    </td>
 </tr>
 
 <tr>
@@ -693,16 +698,16 @@ example:
 #### Duality
 
 The important results of category is the notion of **duality**. Simply
-put for any theorem about a category $ C $ we can obtain a new theorem
+put for any theorem about a category $ \\C $ we can obtain a new theorem
 by swapping domain and codomain of each morphism and changing the
 argument order of composition we obtain a result that also holds over in
-category $ C^\\text{op} $ referred to the **dual theorem**.
+category $ \\C^\\text{op} $ referred to the **dual theorem**.
 
-1) Objects of $ C^\\text{op} $ are identical to $ C $.
-2) Morphisms of the form $ f : B \\rightarrow A $ in $ C^\\text{op} $ are the morphisms
-$ f : A \\rightarrow B $ in $ C $. 
-3) Compositions of the form $ g \\circ f $ in $ C^\\text{op} $ are of the form $ f \\circ g $ in $ C $.
-4) Identities in $ C^\\text{op} $  are the same as in $ C $.
+1) Objects of $ \\C^\\text{op} $ are identical to $ \\C $.
+2) Morphisms of the form $ f : B \\rightarrow A $ in $ \\C^\\text{op} $ are the morphisms
+$ f : A \\rightarrow B $ in $ \\C $. 
+3) Compositions of the form $ g \\circ f $ in $ \\C^\\text{op} $ are of the form $ f \\circ g $ in $ \\C $.
+4) Identities in $ \\C^\\text{op} $  are the same as in $ \\C $.
 
 We can build dual categories in Haskell from categories
 
@@ -726,7 +731,7 @@ called **initial**. For an initial object $ I \\in \\text{obj}(C) $
 to be initial we have:
 
 $$
-\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(0, A) | = 1
+\forall A \in \ob{\C} \hspace{1em} | \text{hom}(0, A) | = 1
 $$
 
 This is often written as an arrow with an excalamation point to
@@ -738,10 +743,10 @@ $$
 
 ![Illustration](/images/initial.svg).
 
-The dual notion is that of a **terminal** element $ 1 \\in \\text{ob}(C) $.
+The dual notion is that of a **terminal** element $ 1 \\in \\ob{\\C} $.
 
 $$
-\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(A, 1) | = 1
+\forall A \in \ob{\C}  \hspace{1em} | \text{hom}(A, 1) | = 1
 $$
 
 $$

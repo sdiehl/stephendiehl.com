@@ -69,6 +69,11 @@
 \(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
 \(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
 \(\newcommand{\id}[1]{\text{id}_{#1}}\)
+\(\newcommand{\C}{\mathcal{C}}\)
+\(\newcommand{\D}{\mathcal{D}}\)
+
+\(\newcommand{\dom}[1]{\text{dom}(#1)}\)
+\(\newcommand{\cod}[1]{\text{cod}(#1)}\)
 </div>
 
     <!-- Primary Page Layout
@@ -99,17 +104,17 @@
 <p>If one were to try and describe the essence of category theory, it is that it is study of relationships between between mappings of elements, but at a level of generality where there is no notion of individual elements. Instead elements arise only out of their relationships between each other.</p>
 <p>This tutorial is a humble attempt to provide a bridge between the dense literature and an easy introduction to category theory for Haskell programmers.</p>
 <h3 id="categories">Categories</h3>
-<p>A <strong>category</strong> $ C $ is a construction with four definitions:</p>
+<p>A <strong>category</strong> $ \C $ is a construction with four definitions:</p>
 <ol style="list-style-type: decimal">
-<li>A collection of <strong>objects</strong>. Written $ \text{ob}(C) $.</li>
+<li>A collection of <strong>objects</strong>. Written $ \text{ob}(\C) $.</li>
 </ol>
 <p><img src="../images/objects.svg" alt="Illustration"></img>.</p>
 <ol start="2" style="list-style-type: decimal">
-<li>A collection of <strong>morphisms</strong>. Written $ \text{hom}(C) $.</li>
+<li>A collection of <strong>morphisms</strong>. Written $ \text{hom}(\C) $.</li>
 </ol>
 <p><img src="../images/morphisms.svg" alt="Illustration"></img>.</p>
 <ol start="3" style="list-style-type: decimal">
-<li><p>A <strong>composition</strong> operation $ ( \circ ) $ or written in Haskell as $ ( . ) $. The composition of morphsism yields morphisms in $ C $.</p>
+<li><p>A <strong>composition</strong> operation $ ( \circ ) $ or written in Haskell as $ ( . ) $. The composition of morphsism yields morphisms in $ \C $.</p>
 <p>\[ ( f . g ) \]</p>
 <p>\[ ( f \circ g ) \]</p></li>
 </ol>
@@ -192,12 +197,12 @@ g <span class="fu">.</span> f <span class="fu">=</span>  \x <span class="ot">-&g
 g <span class="fu">.</span><span class="ot"> f ::</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">C</span></code></pre>
 <h4 id="homsets">Homsets</h4>
 <p>A category is constructed out a collection of morphisms, over objects in the categotry. The collection of other morphisms in a category is called a <strong>homset</strong> and written as:</p>
-<p>\[ \text{Hom}(C) \]</p>
+<p>\[ \hom{\C} \]</p>
 <p>A individual a morphism $ f $ has two associated values, its <strong>domain</strong> $ \text{dom}(f) $ and <strong>codomain</strong> $ \text{cod}(f) $.</p>
-<p>Elements in the homset are morphisms between objects in C, namely if $ A,B \in \text{ob}(C) $ then the set of morphisms in $ C $ between $ A $ and $ B $ is written:</p>
-<p>\[ \text{Hom}(A,B) \]</p>
+<p>Elements in the homset are morphisms between objects in $ \C $, namely if $ A,B \in \ob{\C} $ then the set of morphisms in $ \C $ between $ A $ and $ B $ is written:</p>
+<p>\[ \hom{A,B} \]</p>
 <p>For composition to be well defined we require that composition itself be a mapping only defined for:</p>
-<p>\[ ( \circ ) : \text{Hom}(B,C) \rightarrow \text{Hom}(A,B) \rightarrow \text{Hom}(A,C) \]</p>
+<p>\[ ( \circ ) : \hom{B,C} \rightarrow \hom{A,B} \rightarrow \hom{A,C} \]</p>
 <h4 id="formal-definition-of-categories">Formal Definition of Categories</h4>
 <p>I will use the following tabular format for the definition of categories from here out. The first column is the type of construction, the second column is the constraints on the objects involved in the definition, and the third column is the definition of the construction.</p>
 <table>
@@ -209,7 +214,7 @@ g <span class="fu">.</span><span class="ot"> f ::</span> <span class="dt">A</spa
 Objects
 </td>
     <td> 
-\[ X, Y \in C \]
+\[ X, Y \in \C \]
 </td>
     <td></td>
 </tr>
@@ -219,7 +224,7 @@ Objects
 Morphisms
 </td>
     <td> 
-\[ f \in \text{Hom}(C) \]
+\[ f \in \hom{\C} \]
 </td>
     <td> 
 \[ f: X \rightarrow Y \]
@@ -247,7 +252,7 @@ Composition
 Identities
 </td>
     <td> 
-\[ \text{For all } X \in C \]
+\[ \text{For all } X \in \C \]
 </td>
     <td> 
 \[ \text{id}_A : X \rightarrow X \]
@@ -272,7 +277,7 @@ Identity
 </td>
     <td> 
 \[ 
-        A \in C \\
+        A \in \C \\
         f : A \rightarrow B
     \]
 </td>
@@ -285,7 +290,7 @@ Identity
 Associativity
 </td>
     <td> 
-\[ f,g,h \in \text{Hom}(C) \]
+\[ f,g,h \in \hom{\C} \]
 </td>
     <td> 
 \[ ( h . g ) . f = h . ( g . f ) \]
@@ -542,7 +547,11 @@ Morphisms
 </td>
     <td> </td>
     <td> 
-\[ f : X \rightarrow X \]
+    
+\[
+    f : X \rightarrow X \\
+    g : Y \rightarrow Y
+    \]
 </td>
 </tr>
 
@@ -866,12 +875,12 @@ Identity propositions
 </table>
 
 <h4 id="duality">Duality</h4>
-<p>The important results of category is the notion of <strong>duality</strong>. Simply put for any theorem about a category $ C $ we can obtain a new theorem by swapping domain and codomain of each morphism and changing the argument order of composition we obtain a result that also holds over in category $ C^\text{op} $ referred to the <strong>dual theorem</strong>.</p>
+<p>The important results of category is the notion of <strong>duality</strong>. Simply put for any theorem about a category $ \C $ we can obtain a new theorem by swapping domain and codomain of each morphism and changing the argument order of composition we obtain a result that also holds over in category $ \C^\text{op} $ referred to the <strong>dual theorem</strong>.</p>
 <ol style="list-style-type: decimal">
-<li>Objects of $ C^\text{op} $ are identical to $ C $.</li>
-<li>Morphisms of the form $ f : B \rightarrow A $ in $ C^\text{op} $ are the morphisms $ f : A \rightarrow B $ in $ C $.</li>
-<li>Compositions of the form $ g \circ f $ in $ C^\text{op} $ are of the form $ f \circ g $ in $ C $.</li>
-<li>Identities in $ C^\text{op} $ are the same as in $ C $.</li>
+<li>Objects of $ \C^\text{op} $ are identical to $ \C $.</li>
+<li>Morphisms of the form $ f : B \rightarrow A $ in $ \C^\text{op} $ are the morphisms $ f : A \rightarrow B $ in $ \C $.</li>
+<li>Compositions of the form $ g \circ f $ in $ \C^\text{op} $ are of the form $ f \circ g $ in $ \C $.</li>
+<li>Identities in $ \C^\text{op} $ are the same as in $ \C $.</li>
 </ol>
 <p>We can build dual categories in Haskell from categories</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE TypeOperators #-}</span>
@@ -884,16 +893,16 @@ Identity propositions
 <h4 id="terminal-and-initial">Terminal and Initial</h4>
 <p>Many categories have a special elements or classes of elements where morphisms between objects are uniquely identified. For example a the case where all objects in the category have a single morphism between a single element, such an element is called <strong>initial</strong>. For an initial object $ I \in \text{obj}(C) $ to be initial we have:</p>
 <p>\[
-\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(0, A) | = 1
+\forall A \in \ob{\C} \hspace{1em} | \text{hom}(0, A) | = 1
 \]</p>
 <p>This is often written as an arrow with an excalamation point to indicate a unique morphism.</p>
 <p>\[
 0 \xrightarrow{\hspace{1em}!\hspace{1em}} A.
 \]</p>
 <p><img src="../images/initial.svg" alt="Illustration"></img>.</p>
-<p>The dual notion is that of a <strong>terminal</strong> element $ 1 \in \text{ob}(C) $.</p>
+<p>The dual notion is that of a <strong>terminal</strong> element $ 1 \in \ob{\C} $.</p>
 <p>\[
-\forall A \in \text{obj}(C)  \hspace{1em} | \text{hom}(A, 1) | = 1
+\forall A \in \ob{\C}  \hspace{1em} | \text{hom}(A, 1) | = 1
 \]</p>
 <p>\[
 A \xrightarrow{\hspace{1em}!\hspace{1em}} 1.

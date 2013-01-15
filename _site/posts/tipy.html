@@ -69,6 +69,11 @@
 \(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
 \(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
 \(\newcommand{\id}[1]{\text{id}_{#1}}\)
+\(\newcommand{\C}{\mathcal{C}}\)
+\(\newcommand{\D}{\mathcal{D}}\)
+
+\(\newcommand{\dom}[1]{\text{dom}(#1)}\)
+\(\newcommand{\cod}[1]{\text{cod}(#1)}\)
 </div>
 
     <!-- Primary Page Layout
@@ -135,17 +140,17 @@
 
 matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
 <span class="kw">print</span> matrix</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python">[[[  <span class="fl">1.46345536e-01</span>  -<span class="fl">1.21609447e+00</span>  -<span class="fl">5.28671676e-01</span>]
-  [ -<span class="fl">1.50763792e+00</span>  -<span class="fl">3.35252661e-01</span>   <span class="fl">1.60084047e-01</span>]
-  [ -<span class="fl">4.65155464e-01</span>  -<span class="fl">6.44112779e-01</span>   <span class="fl">1.44200709e+00</span>]]
+<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">1.62657756</span>  <span class="fl">0.43342253</span> -<span class="fl">1.08629401</span>]
+  [ <span class="fl">2.6854978</span>   <span class="fl">1.09127374</span>  <span class="fl">0.84940727</span>]
+  [-<span class="fl">0.64124698</span> -<span class="fl">0.96931772</span> -<span class="fl">0.65458277</span>]]
 
- [[ -<span class="fl">1.06285302e-01</span>   <span class="fl">2.41609022e-01</span>  -<span class="fl">1.05220202e+00</span>]
-  [ -<span class="fl">5.49371026e-01</span>  -<span class="fl">9.10705506e-01</span>  -<span class="fl">1.35421232e+00</span>]
-  [  <span class="fl">8.84542684e-01</span>   <span class="fl">4.52287086e-01</span>   <span class="fl">1.55807113e+00</span>]]
+ [[-<span class="fl">1.28104631</span>  <span class="fl">0.22693178</span>  <span class="fl">1.35035488</span>]
+  [-<span class="fl">0.32012587</span>  <span class="fl">0.52585321</span>  <span class="fl">0.26135927</span>]
+  [ <span class="fl">1.1800054</span>  -<span class="fl">1.83804349</span> -<span class="fl">1.4548702</span> ]]
 
- [[ -<span class="fl">6.46229110e-01</span>  -<span class="fl">9.37743728e-01</span>   <span class="fl">1.94545976e+00</span>]
-  [  <span class="fl">8.48098806e-01</span>   <span class="fl">1.83598816e-03</span>  -<span class="fl">5.93985982e-01</span>]
-  [ -<span class="fl">4.87211752e-01</span>  -<span class="fl">1.42341201e-01</span>  -<span class="fl">1.34616848e+00</span>]]]</code></pre>
+ [[ <span class="fl">0.31232876</span> -<span class="fl">1.07785005</span> -<span class="fl">0.99071559</span>]
+  [-<span class="fl">0.5689593</span>  -<span class="fl">0.22596073</span> -<span class="fl">0.23618122</span>]
+  [ <span class="fl">0.06544344</span>  <span class="fl">0.37460414</span> -<span class="fl">0.97520072</span>]]]</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
 &gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
 &gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
@@ -175,100 +180,100 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
       <td>
 <strong>0</strong>
 </td>
-      <td>
--0.281480
-</td>
-      <td>
--0.579961
+      <td> 
+0.700156
 </td>
       <td> 
-0.308766
+0.424926
+</td>
+      <td> 
+2.034723
 </td>
       <td>
--1.353905
+-1.058673
 </td>
-      <td>
--1.080957
+      <td> 
+1.223501
 </td>
     </tr>
     <tr>
       <td>
 <strong>1</strong>
 </td>
+      <td> 
+0.906413
+</td>
       <td>
--0.329421
+-0.303769
 </td>
       <td> 
-2.375841
+1.360548
 </td>
       <td>
--0.052999
-</td>
-      <td> 
-1.587246
+-0.526357
 </td>
       <td>
--1.213401
+-0.264044
 </td>
     </tr>
     <tr>
       <td>
 <strong>2</strong>
 </td>
-      <td> 
-0.791783
+      <td>
+-0.580709
+</td>
+      <td>
+-1.072914
+</td>
+      <td>
+-0.210257
 </td>
       <td> 
-0.168310
+0.738662
 </td>
-      <td> 
-0.197262
-</td>
-      <td> 
-0.100538
-</td>
-      <td> 
-1.003561
+      <td>
+-0.617046
 </td>
     </tr>
     <tr>
       <td>
 <strong>3</strong>
 </td>
-      <td>
--0.749811
+      <td> 
+0.021451
 </td>
       <td> 
-0.656691
+0.090637
 </td>
       <td> 
-0.230626
+0.350639
 </td>
       <td>
--1.095460
+-1.575886
 </td>
-      <td>
--0.258079
+      <td> 
+2.258214
 </td>
     </tr>
     <tr>
       <td>
 <strong>4</strong>
 </td>
-      <td> 
-2.346681
+      <td>
+-1.638284
 </td>
       <td> 
-1.042820
+0.877928
 </td>
       <td> 
-2.367221
+1.307586
 </td>
       <td> 
-1.386719
+0.181033
 </td>
       <td>
--0.296147
+-0.838999
 </td>
     </tr>
   </tbody>
