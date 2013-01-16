@@ -203,9 +203,6 @@ the third column is the definition of the construction.
     <td> $$ \text{id}_A : X \rightarrow X $$ </td>
 </tr>
 
-
-
-
 </table>
 
 
@@ -343,12 +340,33 @@ are morphisms with objects as sets but this is a special case. In
 general morphisms are a pure abstraction which have structural
 similarity to functions.
 
-#### Trivial Categories
+#### Classes of categories
 
-There are a set of generic categories known as **discrete categories**
-that are illuminating to look to give concrete examples of categories.
-A **subcategory** is a category contained within another category which
-also satisfies the category construction.
+There are three classes of categories that are studied:
+
+- **Concrete categories** - Model mathematical structures with
+  structure-preserving mappings between objects. Examples: ( **Vec** )
+
+- **Real world categories** - Model real world systems such as
+  type systems and physical processes. Examples: ( **Hask** )
+
+- **Abstract categories** - Categories studied for relationship
+  to other categories or motivating the discussion of the large
+  scale structure of mathematics. Examples: ( **Cat** )
+
+\
+
+Four out purposes we'll discuss a small set of **concrete categories**
+that don't require much knowledge of abstract algebra.
+
+THe notion of a **subcategory** is also important, it is a category
+contained within another category which also satisfies the category
+construction.
+
+It is are illuminating to look at the trivial categories , namely
+categories with small amounts of objects and morphisms to gain a general
+understanding of their structure even though they are not of much
+practical interest.
 
 There are also some simple categories, the simplest being the
 **Zero** category, which is the category with no objects and no morphisms.
@@ -662,8 +680,11 @@ example:
 
 #### Logic
 
+Deductive logic also forms a category with propositions as
+objects and proof trees as morphisms between objects.
+
 <table>
-<th>Deductive Logic<th>
+<th>Deductive Logic ( **Prf** )<th>
 <tr>
     <td>Objects</td>
     <td>Propositions</td>
@@ -687,7 +708,7 @@ example:
 
 <tr>
     <td>Identities</td>
-    <td>Identity propositions</td>
+    <td>Tautologies</td>
     <td>$$
     \frac{}{\alpha \vdash \alpha} 
     $$
@@ -727,7 +748,7 @@ Many categories have a special elements or classes of elements
 where morphisms between objects are uniquely identified. For
 example a the case where all objects in the category have a
 single morphism between a single element, such an element is
-called **initial**. For an initial object $ I \\in \\text{obj}(C) $
+called **initial**. For an initial object $ I \\in \\text{obj}(\\C) $
 to be initial we have:
 
 $$

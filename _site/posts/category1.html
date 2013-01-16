@@ -259,9 +259,6 @@ Identities
 </td>
 </tr>
 
-
-
-
 </table>
 
 
@@ -416,8 +413,16 @@ $ \text{id}_B \circ f = f \circ \text{id}_A = f $
     <span class="fu">id</span> <span class="fu">=</span> Prelude.id
     (<span class="fu">.</span>) <span class="fu">=</span> (<span class="fu">Prelude..</span>)</code></pre>
 <p>It is worth noting the common confusion that morphisms are not functions. It is the other way around, in the category SET functions are morphisms with objects as sets but this is a special case. In general morphisms are a pure abstraction which have structural similarity to functions.</p>
-<h4 id="trivial-categories">Trivial Categories</h4>
-<p>There are a set of generic categories known as <strong>discrete categories</strong> that are illuminating to look to give concrete examples of categories. A <strong>subcategory</strong> is a category contained within another category which also satisfies the category construction.</p>
+<h4 id="classes-of-categories">Classes of categories</h4>
+<p>There are three classes of categories that are studied:</p>
+<ul>
+<li><p><strong>Concrete categories</strong> - Model mathematical structures with structure-preserving mappings between objects. Examples: ( <strong>Vec</strong> )</p></li>
+<li><p><strong>Real world categories</strong> - Model real world systems such as type systems and physical processes. Examples: ( <strong>Hask</strong> )</p></li>
+<li><p><strong>Abstract categories</strong> - Categories studied for relationship to other categories or motivating the discussion of the large scale structure of mathematics. Examples: ( <strong>Cat</strong> )</p></li>
+</ul>
+<p><br /> Four out purposes we’ll discuss a small set of <strong>concrete categories</strong> that don’t require much knowledge of abstract algebra.</p>
+<p>THe notion of a <strong>subcategory</strong> is also important, it is a category contained within another category which also satisfies the category construction.</p>
+<p>It is are illuminating to look at the trivial categories , namely categories with small amounts of objects and morphisms to gain a general understanding of their structure even though they are not of much practical interest.</p>
 <p>There are also some simple categories, the simplest being the <strong>Zero</strong> category, which is the category with no objects and no morphisms.</p>
 <table>
 <th>
@@ -817,9 +822,10 @@ Empty string
 <span class="st">&quot;foo&quot;</span> <span class="fu">++</span> (<span class="st">&quot;bar&quot;</span> <span class="fu">++</span> <span class="st">&quot;baz&quot;</span>)    <span class="fu">==</span> <span class="st">&quot;foobarbaz&quot;</span>
 (<span class="st">&quot;foo&quot;</span> <span class="fu">++</span> <span class="st">&quot;bar&quot;</span>) <span class="fu">++</span> <span class="st">&quot;baz&quot;</span>    <span class="fu">==</span> <span class="st">&quot;foobarbaz&quot;</span></code></pre>
 <h4 id="logic">Logic</h4>
+<p>Deductive logic also forms a category with propositions as objects and proof trees as morphisms between objects.</p>
 <table>
 <th>
-Deductive Logic
+Deductive Logic ( <strong>Prf</strong> )
 <th>
 <tr>
     <td>
@@ -864,7 +870,7 @@ Proof Trees
 Identities
 </td>
     <td>
-Identity propositions
+Tautologies
 </td>
     <td>
 \[
@@ -891,7 +897,7 @@ Identity propositions
   <span class="fu">id</span> <span class="fu">=</span> <span class="dt">Op</span> <span class="fu">id</span>
   (<span class="dt">Op</span> f) <span class="fu">.</span> (<span class="dt">Op</span> g) <span class="fu">=</span> <span class="dt">Op</span> (g <span class="fu">.</span> f)</code></pre>
 <h4 id="terminal-and-initial">Terminal and Initial</h4>
-<p>Many categories have a special elements or classes of elements where morphisms between objects are uniquely identified. For example a the case where all objects in the category have a single morphism between a single element, such an element is called <strong>initial</strong>. For an initial object $ I \in \text{obj}(C) $ to be initial we have:</p>
+<p>Many categories have a special elements or classes of elements where morphisms between objects are uniquely identified. For example a the case where all objects in the category have a single morphism between a single element, such an element is called <strong>initial</strong>. For an initial object $ I \in \text{obj}(\C) $ to be initial we have:</p>
 <p>\[
 \forall A \in \ob{\C} \hspace{1em} | \text{hom}(0, A) | = 1
 \]</p>
