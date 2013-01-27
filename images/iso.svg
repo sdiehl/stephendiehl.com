@@ -10,11 +10,11 @@
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    version="1.1"
-   width="416.10309"
-   height="295.34305"
+   width="334.30865"
+   height="239.81136"
    id="svg2"
    xml:space="preserve"
-   inkscape:version="0.48.3.1 r9886"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="iso.svg"><sodipodi:namedview
      pagecolor="#ffffff"
      bordercolor="#666666"
@@ -24,14 +24,14 @@
      guidetolerance="10"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:window-width="1360"
-     inkscape:window-height="748"
+     inkscape:window-width="1914"
+     inkscape:window-height="1060"
      id="namedview109"
      showgrid="false"
      inkscape:zoom="0.97211759"
-     inkscape:cx="554.74539"
-     inkscape:cy="127.69442"
-     inkscape:window-x="1920"
+     inkscape:cx="556.84977"
+     inkscape:cy="62.5638"
+     inkscape:window-x="0"
      inkscape:window-y="14"
      inkscape:window-maximized="0"
      inkscape:current-layer="svg2"
@@ -40,18 +40,12 @@
      fit-margin-top="20"
      fit-margin-left="20"
      fit-margin-right="20"
-     fit-margin-bottom="20"><sodipodi:guide
-       orientation="0,1"
-       position="61.076637,248.35288"
-       id="guide3105" /><sodipodi:guide
-       orientation="0,1"
-       position="87.050861,225.4647"
-       id="guide3107" /></sodipodi:namedview><metadata
+     fit-margin-bottom="20" /><metadata
      id="metadata8"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title /></cc:Work></rdf:RDF></metadata><defs
      id="defs6" /><g
-     transform="matrix(3.1270762,0,0,-3.1270762,30.587506,59.030324)"
+     transform="matrix(2.4470035,0,0,-2.4470035,28.284948,50.542057)"
      id="g10"><g
        id="g12"><g
          id="g14"><g
@@ -67,6 +61,7 @@
      y="0"
      id="tspan26"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">A</tspan></text>
+
 
 <g
    transform="translate(3.821,69.485)"
@@ -86,6 +81,7 @@
      id="tspan42"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">B</tspan></text>
 
+
 <g
    transform="translate(60.221,69.485)"
    id="g44" /></g></g><g
@@ -104,6 +100,7 @@
      id="tspan58"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">A</tspan></text>
 
+
 <g
    transform="translate(60.513,12.792)"
    id="g60" /></g></g><g
@@ -121,6 +118,7 @@
      y="0"
      id="tspan74"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">B</tspan></text>
+
 
 <g
    transform="translate(116.914,12.792)"
@@ -151,6 +149,7 @@
      id="tspan98"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">f</tspan></text>
 
+
 <g
    transform="translate(32.782,78.346)"
    id="g100" /></g></g><g
@@ -180,6 +179,7 @@
      id="tspan122"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMR10;-inkscape-font-specification:CMR10">id</tspan></text>
 
+
 <text
    transform="matrix(1,0,0,-1,25.894,32.61)"
    id="text124"><tspan
@@ -187,6 +187,7 @@
      y="0"
      id="tspan126"
      style="font-size:6.97380018px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI7;-inkscape-font-specification:CMMI7">A</tspan></text>
+
 
 <g
    transform="translate(17.591,34.104)"
@@ -218,6 +219,7 @@
      id="tspan152"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">f</tspan></text>
 
+
 <text
    transform="matrix(1,0,0,-1,73.719,45.072)"
    id="text154"><tspan
@@ -226,6 +228,7 @@
      id="tspan156"
      style="font-size:6.97380018px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMSY7;-inkscape-font-specification:CMSY7">−</tspan></text>
 
+
 <text
    transform="matrix(1,0,0,-1,79.946,45.072)"
    id="text158"><tspan
@@ -233,6 +236,7 @@
      y="0"
      id="tspan160"
      style="font-size:6.97380018px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMR7;-inkscape-font-specification:CMR7">1</tspan></text>
+
 
 <g
    transform="translate(67.769,41.456)"
@@ -263,6 +267,7 @@
      id="tspan184"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI10;-inkscape-font-specification:CMMI10">f</tspan></text>
 
+
 <g
    transform="translate(89.475,5.758)"
    id="g186" /></g></g><g
@@ -292,6 +297,7 @@
      id="tspan208"
      style="font-size:9.96259975px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMR10;-inkscape-font-specification:CMR10">id</tspan></text>
 
+
 <text
    transform="matrix(1,0,0,-1,104.418,48.062)"
    id="text210"><tspan
@@ -299,6 +305,7 @@
      y="0"
      id="tspan212"
      style="font-size:6.97380018px;font-variant:normal;font-weight:normal;writing-mode:lr-tb;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;font-family:CMMI7;-inkscape-font-specification:CMMI7">B</tspan></text>
+
 
 <g
    transform="translate(96.116,49.557)"

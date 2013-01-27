@@ -38,7 +38,25 @@
           displayMath: [ ["\\[","\\]"] ],
           processEscapes: true
         },
-        "HTML-CSS": { availableFonts: ["TeX"] }
+        "HTML-CSS": { availableFonts: ["TeX"] },
+
+        TeX: {
+            Macros: {
+                cat : ["\\mathcal{#1}", 1],
+                ob  : ["\\mathrm{ob}(#1)", 1],
+                hom : ["\\mathrm{hom}(#1)", 1],
+                id  : ["\text{id}_{#1}}", 1],
+                C   : "\\mathcal{C}",
+                D   : "\\mathcal{D}",
+
+                iso    : "{\cong}\)",
+                Hask   : "{\cat{Hask}}\)",
+                yoneda : "{\mathcal{Y}}\)",
+
+                dom: ["{\text{dom}(#1)}\)", 1],
+                cod: ["{\text{cod}(#1)}\)", 1],
+            }
+        }
       });
     </script>
 
@@ -57,23 +75,7 @@
 <body>
 
 <div style="display:none">
-\def\reflect#1{{#1}^\dagger}
-\def\inverse#1{{#1}^{-1}}
-\def\dual#1{{#1}^{\rm op}}
-\def\identgen#1#2{I^{#1}_{#2}}
-\def\arrow{\rightarrow}
-\def\arrowsub#1{\yyarrowa{_{#1}}}
-\def\arrowsuper#1{\yyarrowa{^{#1}}}
-\def\arrowsubsuper#1#2{\yyarrowa{_{#1}^{#2}}}
-\(\newcommand{\cat}[1]{\mathcal{#1}}\)
-\(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
-\(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
-\(\newcommand{\id}[1]{\text{id}_{#1}}\)
-\(\newcommand{\C}{\mathcal{C}}\)
-\(\newcommand{\D}{\mathcal{D}}\)
-
-\(\newcommand{\dom}[1]{\text{dom}(#1)}\)
-\(\newcommand{\cod}[1]{\text{cod}(#1)}\)
+<p>Category Theory Definitions for Haskell Programmers</p>
 </div>
 
     <!-- Primary Page Layout
@@ -140,17 +142,17 @@
 
 matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)
 <span class="kw">print</span> matrix</code></pre>
-<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">0.33493057</span>  <span class="fl">0.18709675</span> -<span class="fl">0.38233799</span>]
-  [-<span class="fl">0.86813616</span> -<span class="fl">0.65803977</span>  <span class="fl">0.55541329</span>]
-  [ <span class="fl">0.42556354</span>  <span class="fl">0.86838447</span> -<span class="fl">0.04550021</span>]]
+<pre class="sourceCode python"><code class="sourceCode python">[[[ <span class="fl">0.87384886</span>  <span class="fl">1.10042995</span>  <span class="fl">0.52644698</span>]
+  [ <span class="fl">0.05515031</span>  <span class="fl">1.75182108</span> -<span class="fl">0.84839704</span>]
+  [-<span class="fl">0.37791255</span>  <span class="fl">1.17172837</span> -<span class="fl">0.24673184</span>]]
 
- [[ <span class="fl">0.14567789</span>  <span class="fl">0.30606823</span>  <span class="fl">1.82214789</span>]
-  [-<span class="fl">0.00191226</span>  <span class="fl">0.14379514</span>  <span class="fl">1.31460249</span>]
-  [ <span class="fl">0.0063021</span>  -<span class="fl">0.27671729</span> -<span class="fl">0.21513059</span>]]
+ [[-<span class="fl">0.46233076</span> -<span class="fl">0.69123018</span>  <span class="fl">1.24125113</span>]
+  [ <span class="fl">0.91453965</span>  <span class="fl">0.63715779</span> -<span class="fl">0.41715256</span>]
+  [ <span class="fl">0.83910807</span>  <span class="fl">0.32550366</span>  <span class="fl">0.55375259</span>]]
 
- [[-<span class="fl">0.02555921</span> -<span class="fl">1.47360632</span>  <span class="fl">0.96627173</span>]
-  [-<span class="fl">1.06090501</span>  <span class="fl">0.95036385</span>  <span class="fl">0.91986238</span>]
-  [-<span class="fl">0.49644406</span> -<span class="fl">0.97019643</span>  <span class="fl">0.78454195</span>]]]</code></pre>
+ [[-<span class="fl">0.09908159</span>  <span class="fl">0.31567219</span>  <span class="fl">1.32048744</span>]
+  [-<span class="fl">1.27451615</span>  <span class="fl">0.21500499</span>  <span class="fl">1.18276999</span>]
+  [ <span class="fl">1.06164149</span> -<span class="fl">0.64851271</span>  <span class="fl">0.45097092</span>]]]</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python">&gt;&gt;&gt; <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
 &gt;&gt;&gt; <span class="ch">from</span> numpy.random <span class="ch">import</span> randn
 &gt;&gt;&gt; DataFrame(randn(<span class="dv">5</span>,<span class="dv">5</span>))</code></pre>
@@ -181,19 +183,19 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>0</strong>
 </td>
       <td> 
-0.493215
+0.155057
+</td>
+      <td>
+-0.636046
+</td>
+      <td>
+-0.249919
+</td>
+      <td>
+-0.538309
 </td>
       <td> 
-1.039183
-</td>
-      <td> 
-0.277877
-</td>
-      <td> 
-1.025241
-</td>
-      <td> 
-1.635546
+0.050738
 </td>
     </tr>
     <tr>
@@ -201,19 +203,19 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>1</strong>
 </td>
       <td> 
-0.673808
-</td>
-      <td> 
-0.937498
+0.429938
 </td>
       <td>
--0.205575
+-0.737175
+</td>
+      <td>
+-0.684797
+</td>
+      <td>
+-1.568546
 </td>
       <td> 
-0.018388
-</td>
-      <td> 
-0.909959
+0.234116
 </td>
     </tr>
     <tr>
@@ -221,19 +223,19 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>2</strong>
 </td>
       <td>
--0.317379
+-1.717486
+</td>
+      <td>
+-0.876523
 </td>
       <td> 
-1.678150
+0.269544
 </td>
       <td> 
-0.052605
+0.160080
 </td>
       <td> 
-0.322294
-</td>
-      <td> 
-1.742382
+0.381532
 </td>
     </tr>
     <tr>
@@ -241,39 +243,39 @@ matrix = randn(<span class="dv">3</span>,<span class="dv">3</span>,<span class="
 <strong>3</strong>
 </td>
       <td> 
-1.410634
+0.184032
 </td>
       <td>
--2.627276
+-0.961406
 </td>
       <td> 
-1.785758
+0.922398
 </td>
-      <td>
--0.220575
+      <td> 
+0.630373
 </td>
-      <td>
--1.687933
+      <td> 
+0.027919
 </td>
     </tr>
     <tr>
       <td>
 <strong>4</strong>
 </td>
-      <td> 
-1.567826
+      <td>
+-0.008060
 </td>
       <td> 
-0.246444
+0.479016
 </td>
       <td>
--0.880172
+-0.759369
 </td>
       <td> 
-0.285023
+0.177433
 </td>
-      <td>
--0.426840
+      <td> 
+0.437547
 </td>
     </tr>
   </tbody>

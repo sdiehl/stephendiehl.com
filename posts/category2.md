@@ -83,9 +83,9 @@ $$
 
 #### Morphisms in Set
 
-In SET morphisms are functions between sets. The notion
+In **SET** morphisms are functions between sets. The notion
 monomorphism can be thought of as a generalization of
-injective or one-to-one functions. Recall that injectivity
+injective or one-to-one functions. Recall that **injectivity**
 refers to the property that for two elements $ x_1, x_2 $ in a
 set $ S $ we have:
 
@@ -93,31 +93,37 @@ $$
     \forall x_1, x_2 \in S: f(x_1) = f(x_2) \implies x_1 = x_2
 $$
 
-If you stare closely at the notion of monomorphim and injectivity it
-becomes clear that the monomorphism is a **pointless** analogue of
-injectivity. Pointless or **point-free** meaning that it excludes the
-notion of a elements and expresses the same thought purely in terms
-of categories and morphisms. 
+We can express the equivelant notion in terms of composition with
+two arbitrary functions $g_1, g_2$ such that the the first is
+left-cancellative, which preserves which the core idea is that that
+anything non-equal in the domain of $f$ must also be non-equal in the
+image of $f$.
 
 $$
-    \forall g_1, g_2 \in \text{Hom}_S: f \circ g_1 = f \circ g_2 \implies g_1 = g_2
+    \forall g_1, g_2 \in \hom{S}: f \circ g_1 = f \circ g_2 \implies g_1 = g_2
 $$
 
+The same applies for **surjective** functions which are
+generalized by epimorphisms. The core idea in this case is that
+the regardless of what $f$ does to the domain it does not alter
+the image when composed with $g_1, g_2$ generalinzing the notion
+of epimorphism.
 
-The same applies for **surjective** ( onto ) functions which are
-generalized by epimorphisms, given this new notation let us now refer
-( when talking about SET! ) to injective functions as **monic** and
-surjective functions as **epic**.
+$$
+    \forall g_1, g_2 \in \hom{S}: g_1 \circ f = g_2 \circ f \implies g_1 = g_2
+$$
+
+Some texts will refer to monomorphisms as **monic** and epimorphisms as
+**epic**.
 
 ![Illustration](/images/epic_monic.svg).
 
-In SET we call a function which is both epic and monic a **bijection**,
+In *SET* we call a function which is both epic and monic a **bijection**,
 namely this is a function $ f $ which maps all elements to a unique
 value and that each element finds a corresponding element in the
 codomain under $ f $. In SET it is not difficult to see that these two
-combined conditions imply that $ f $ must be invertable ( $
-f^{-1} $ ) which is precisely
-the definition of isomorphism from above.
+combined conditions imply that $ f $ must be invertable $ ( f^{-1} ) $
+which is precisely the definition of isomorphism from above.
 
 Isomorphisms are extremely important in category theory since
 they represent a form of "structural equality" between objects.
@@ -126,7 +132,27 @@ between either object and dicuss properties of objects in terms
 of their isomorphisms all without the notion of elements!
 
 
-#### Motivating Example of Isomorphisms
+<table>
+<th>Morphisms in **Set**</th>
+<tr>
+    <td> Monmorphism </td>
+    <td> Injective functions </td>
+    <td> One-to-one functions </td>
+</tr>
+
+<tr>
+    <td> Epimorphism </td>
+    <td> Surjective functions </td>
+    <td> Onto functions </td>
+</tr>
+
+<tr>
+    <td> Isomorphism </td>
+    <td> Bijective functions </td>
+    <td> Invertable functions </td>
+</tr>
+
+</table>
 
 #### Diagrams
 
@@ -154,10 +180,6 @@ the required inverse of $ f $ required to exist by the definition.
 
 ![Illustration](/images/iso.svg).
 
-#### Control.Arrow
 
-Beware, there is a library in Haskell found in ``Control.Arrow`` that can
-be somewhat misleading to those studying category theory and
-Haskell. The ``Arrows`` package does not model categorical
-arrows. Arrows are a more exotic structure known as Freyd
-categories.
+#### Examples of Isomorphisms
+

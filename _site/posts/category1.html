@@ -38,7 +38,25 @@
           displayMath: [ ["\\[","\\]"] ],
           processEscapes: true
         },
-        "HTML-CSS": { availableFonts: ["TeX"] }
+        "HTML-CSS": { availableFonts: ["TeX"] },
+
+        TeX: {
+            Macros: {
+                cat : ["\\mathcal{#1}", 1],
+                ob  : ["\\mathrm{ob}(#1)", 1],
+                hom : ["\\mathrm{hom}(#1)", 1],
+                id  : ["\text{id}_{#1}}", 1],
+                C   : "\\mathcal{C}",
+                D   : "\\mathcal{D}",
+
+                iso    : "{\cong}\)",
+                Hask   : "{\cat{Hask}}\)",
+                yoneda : "{\mathcal{Y}}\)",
+
+                dom: ["{\text{dom}(#1)}\)", 1],
+                cod: ["{\text{cod}(#1)}\)", 1],
+            }
+        }
       });
     </script>
 
@@ -57,23 +75,7 @@
 <body>
 
 <div style="display:none">
-\def\reflect#1{{#1}^\dagger}
-\def\inverse#1{{#1}^{-1}}
-\def\dual#1{{#1}^{\rm op}}
-\def\identgen#1#2{I^{#1}_{#2}}
-\def\arrow{\rightarrow}
-\def\arrowsub#1{\yyarrowa{_{#1}}}
-\def\arrowsuper#1{\yyarrowa{^{#1}}}
-\def\arrowsubsuper#1#2{\yyarrowa{_{#1}^{#2}}}
-\(\newcommand{\cat}[1]{\mathcal{#1}}\)
-\(\newcommand{\ob}[1]{\mathrm{ob}(#1)}\)
-\(\newcommand{\hom}[1]{\mathrm{hom}(#1)}\)
-\(\newcommand{\id}[1]{\text{id}_{#1}}\)
-\(\newcommand{\C}{\mathcal{C}}\)
-\(\newcommand{\D}{\mathcal{D}}\)
-
-\(\newcommand{\dom}[1]{\text{dom}(#1)}\)
-\(\newcommand{\cod}[1]{\text{cod}(#1)}\)
+<p>Category Theory Definitions for Haskell Programmers</p>
 </div>
 
     <!-- Primary Page Layout
@@ -103,6 +105,7 @@
 <p>Category theory distills the essence of a large variety of constructions in traditional set theory to more abstract context which can be used to reason about general concepts in computer science and mathematics.</p>
 <p>If one were to try and describe the essence of category theory, it is that it is study of relationships between between mappings of elements, but at a level of generality where there is no notion of individual elements. Instead elements arise only out of their relationships between each other.</p>
 <p>This tutorial is a humble attempt to provide a bridge between the dense literature and an easy introduction to category theory for Haskell programmers.</p>
+<p>This series can also be thought as surface reading of the brilliant <a href="http://hackage.haskell.org/package/categories">categories library on Hackage</a> and many examples are drawn from it.</p>
 <h3 id="categories">Categories</h3>
 <p>A <strong>category</strong> $ \C $ is a construction with four definitions:</p>
 <ol style="list-style-type: decimal">
@@ -625,7 +628,7 @@ Identities
     <span class="dt">Auto</span> <span class="fu">.</span> <span class="dt">Auto</span> <span class="fu">=</span> <span class="dt">Auto</span></code></pre>
 <p>In a discrete category it follows that if there exists a morphisms between objects $ A $ and $ B $ then $ A $ must equal $ B $. Discrete categories are often indexed by the cardinality of the number of singleton objects in the category.</p>
 <h4 id="algebraic-categories">Algebraic Categories</h4>
-<p>From algebra there are several examples of categories.</p>
+<p>From algebra there are several examples of categories. For example vector spaces over the real field.</p>
 <table>
 <th>
 <strong>Vec</strong>
@@ -821,8 +824,9 @@ Empty string
 <span class="st">&quot;foo&quot;</span> <span class="fu">++</span> <span class="st">&quot;bar&quot;</span> <span class="fu">++</span> <span class="st">&quot;baz&quot;</span>      <span class="fu">==</span> <span class="st">&quot;foobarbaz&quot;</span>
 <span class="st">&quot;foo&quot;</span> <span class="fu">++</span> (<span class="st">&quot;bar&quot;</span> <span class="fu">++</span> <span class="st">&quot;baz&quot;</span>)    <span class="fu">==</span> <span class="st">&quot;foobarbaz&quot;</span>
 (<span class="st">&quot;foo&quot;</span> <span class="fu">++</span> <span class="st">&quot;bar&quot;</span>) <span class="fu">++</span> <span class="st">&quot;baz&quot;</span>    <span class="fu">==</span> <span class="st">&quot;foobarbaz&quot;</span></code></pre>
+<h4 id="some-more-categories">Some More Categories</h4>
 <h4 id="logic">Logic</h4>
-<p>Deductive logic also forms a category with propositions as objects and proof trees as morphisms between objects.</p>
+<p>Deductive logic also forms an important category with propositions as objects and proof trees as morphisms between objects.</p>
 <table>
 <th>
 Deductive Logic ( <strong>Prf</strong> )

@@ -23,6 +23,10 @@ This tutorial is a humble attempt to provide a bridge between the dense
 literature and an easy introduction to category theory for Haskell
 programmers.
 
+This series can also be thought as surface reading of the brilliant
+[categories library on Hackage](http://hackage.haskell.org/package/categories) 
+and many examples are drawn from it.
+
 ### Categories
 
 A **category**  $ \\C $ is a construction with four definitions:
@@ -534,7 +538,8 @@ number of singleton objects in the category.
 
 #### Algebraic Categories
 
-From algebra there are several examples of categories.
+From algebra there are several examples of categories. For
+example vector spaces over the real field.
 
 <table>
 <th>**Vec**</th>
@@ -678,9 +683,11 @@ example:
 ("foo" ++ "bar") ++ "baz"    == "foobarbaz"
 ```
 
+#### Some More Categories
+
 #### Logic
 
-Deductive logic also forms a category with propositions as
+Deductive logic also forms an important category with propositions as
 objects and proof trees as morphisms between objects.
 
 <table>
