@@ -18,7 +18,7 @@ title: Projects
 
 **Python**
 
-* [blaze](https://github.com/ContinuumIO/blaze) - Blaze is the next generation of NumPy
+* [blaze](https://github.com/ContinuumIO/blaze-core) - Blaze is the next generation of NumPy
 * [flowlet](https://github.com/sdiehl/flowlet) - *A small CPython structure for building coroutine pipelines*
 * [kaylee](https://github.com/sdiehl/kaylee) - *Map-Reduce with ZeroMQ*
 * [pure-python](https://github.com/sdiehl/pure-python) - *Cython interface for Pure LLVM*
