@@ -45,7 +45,7 @@
                 cat : ["\\mathcal{#1}", 1],
                 ob  : ["\\mathrm{ob}(#1)", 1],
                 hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\text{id}_{#1}}", 1],
+                id  : ["\\text{id}_{#1}", 1],
                 C   : "\\mathcal{C}",
                 D   : "\\mathcal{D}",
 
@@ -160,8 +160,59 @@ P(f) &amp;= \{ f(a) | a \in A \}
 \end{align}
 \]</p>
 <h4 id="applicative-functors">Applicative Functors</h4>
-<p>Maps types of results into types of effectful computations. (<code>IO a</code>)</p>
-<p>Maps functions into functions that chain the results of effectful computations <code>fmap f</code>.</p>
+<table>
+<th>
+Functor Intution
+</th>
+
+<tr>
+    <td> </td>
+    <td> 
+Computations
+</td>
+    <td> 
+Containers
+</td>
+</tr>
+
+<tr>
+    <td> 
+Object Action
+</td>
+    <td> 
+Maps types of results into types of effectful computations.
+</td>
+    <td> 
+Map unboxed objects into boxed objects
+</td>
+</tr>
+
+<tr>
+    <td> 
+Morphism Action
+</td>
+    <td>  
+Maps functions into functions that chain the results of effectful computations.
+</td>
+    <td> 
+Map computations over unboxed objects into computations over elementwise boxed containers.
+</td>
+</tr>
+
+<tr>
+    <td> 
+Identity Action
+</td>
+    <td> 
+Idempotent effects
+</td>
+    <td> 
+Identity boxes
+</td>
+</tr>
+
+</table>
+
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> f <span class="ot">=&gt;</span> <span class="kw">Applicative</span> f <span class="kw">where</span>
     <span class="co">-- | Lift a value.</span>
 <span class="ot">    pure ::</span> a <span class="ot">-&gt;</span> f a

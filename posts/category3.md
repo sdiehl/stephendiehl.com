@@ -119,10 +119,36 @@ $$
 
 #### Applicative Functors
 
-Maps types of results into types of effectful computations. (``IO a``)
+<table>
+<th>Functor Intution</th>
 
-Maps functions into functions that chain the results of effectful
-computations ``fmap f``.
+<tr>
+    <td> </td>
+    <td> Computations </td>
+    <td> Containers </td>
+</tr>
+
+<tr>
+    <td> Object Action </td>
+    <td> Maps types of results into types of effectful computations. </td>
+    <td> Map unboxed objects into boxed objects </td>
+</tr>
+
+<tr>
+    <td> Morphism Action </td>
+    <td>  Maps functions into functions that chain the results of effectful
+computations.  </td>
+    <td> Map computations over unboxed objects into computations
+    over elementwise boxed containers. </td>
+</tr>
+
+<tr>
+    <td> Identity Action </td>
+    <td> Idempotent effects </td>
+    <td> Identity boxes </td>
+</tr>
+
+</table>
 
 ```haskell
 class Functor f => Applicative f where
