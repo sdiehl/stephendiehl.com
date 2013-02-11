@@ -9,6 +9,8 @@ Here is a list of what I consider the Haskell Canon. Papers which
 and books which are the signal, not the noise.
 
 * [Typeclassopedia](http://www.haskell.org/haskellwiki/Typeclassopedia)
+* [The Algebra of Algebraic Datatypes](http://chris-taylor.github.com/blog/2013/02/10/the-algebra-of-algebraic-data-types/)
+* [Some interesting features of Haskell's type system](https://jeltsch.wordpress.com/2013/02/09/some-interesting-features-of-haskells-type-system/)
 * [Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire](http://eprints.eemcs.utwente.nl/7281/01/db-utwente-40501F46.pdf)
 * [Applicative Programming with Effects](http://www.soi.city.ac.uk/~ross/papers/Applicative.html)
 * [Kleisli Arrows of Outrageous Fortune](http://personal.cis.strath.ac.uk/~conor/Kleisli.pdf)
