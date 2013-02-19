@@ -5,19 +5,11 @@ date: September 8, 2012
 
 ### Forward
 
-This is a multipart blog post on the structure of the mathematical
-field of Category theory and how it relates to real world
-programming.
-
-Category theory distills the essence of a large variety of constructions
-in traditional set theory to more abstract context which can be used
-to reason about general concepts in computer science and mathematics.
-
-If one were to try and describe the essence of category theory, it is
-that it is study of relationships between between mappings of elements,
-but at a level of generality where there is no notion of individual
-elements. Instead elements arise only out of their relationships between
-each other.
+Categorical programming is a style of programming that uses high-level
+concepts from mathematics as design patterns for organising, abstracting
+and structuring logic with the end goal of having well-defined
+definitions and a rigorous system for reasoning about both the type and
+value semantics of a program.
 
 This tutorial is a humble attempt to provide a bridge between the dense
 literature and an easy introduction to category theory for Haskell
