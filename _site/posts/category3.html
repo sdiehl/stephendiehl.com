@@ -152,13 +152,16 @@ T(f \circ g) &amp;= T(f) \circ T(g)
 
 <span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">One</span> <span class="kw">where</span>
   <span class="fu">fmap</span> f (<span class="dt">Ida</span> a _) <span class="fu">=</span> <span class="dt">Ida</span> (f a) ()</code></pre>
-<p>A more mathematical example is the powerset defined as the set of all subsets over a set $ A $. The functor is defined as the powerset operator, written $ 2^A $ as well as a morphism mapping that lifts $ f $ over</p>
+<p>A more mathematical example is the powerset defined as the set of all subsets over a set $ A $. The functor is defined as the powerset operator, written $ 2^A $ as well as a morphism mapping that lifts $ f $ over the powerset.</p>
 <p>\[
 \begin{align}
 P(A) &amp;= \{ a | a \subseteq A \} \\
 P(f) &amp;= \{ f(a) | a \in A \}
 \end{align}
 \]</p>
+<p>The functor itself is from <strong>Set</strong> to <strong>Set</strong>. In Haskell this is this is implemented as the list monad. Which maps a function aver a given list and concatenates the resulting lists to get a list of all possible results from all possible inputs.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Functor</span> [] <span class="kw">where</span>
+    <span class="fu">fmap</span> f xs <span class="fu">=</span> [ f a <span class="fu">|</span> a <span class="ot">&lt;-</span> xs ]</code></pre>
 <h4 id="applicative-functors">Applicative Functors</h4>
 <table>
 <th>

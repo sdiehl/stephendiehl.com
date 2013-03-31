@@ -103,9 +103,8 @@
             <h4 id="haskell-types-for-python-programmers-part-1">Haskell Types for Python Programmers ( Part 1 )</h4>
 <p>This is a three part blog about how to think about some of the core ideas of Haskell in the everyday language of Python of programmers.</p>
 <ul>
-<li>Part 1. Constrained genericity vs dynamic typing</li>
-<li>Part 2. Parametric polymorphism vs objects and subtyping</li>
-<li>Part 3. Category theory vs design patterns</li>
+<li>Part 1. Type signatures and type classes</li>
+<li>Part 2. Parametric polymorphism and ad-hoc polymorphism vs subtype polymorphism</li>
 </ul>
 <h4 id="introduction">Introduction</h4>
 <p>In Haskell all functions have two definitions.</p>
@@ -130,7 +129,7 @@ x1</code></pre>
 <p>A rough equivelant in Python would be.</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> addOne(x):
     <span class="kw">return</span> x<span class="dv">+1</span></code></pre>
-<p>A signature <code>a -&gt; a -&gt; a</code> is a function of two arguments<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup> of the same type, returning a value of the same as both the arguments.</p>
+<p>A signature <code>a -&gt; a -&gt; a</code> is a function of two arguments of the same type, returning a value of the same as both the arguments.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">add x y <span class="fu">=</span> x<span class="fu">+</span>y</code></pre>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> add(x,y):
     <span class="kw">return</span> x+y</code></pre>
@@ -241,7 +240,7 @@ Foo(<span class="dv">2</span>)</code></pre>
 <span class="fu">&gt;&gt;&gt;</span> <span class="dt">Foo</span> <span class="dv">1</span> <span class="fu">+</span> <span class="dt">Foo</span> <span class="dv">1</span>
 <span class="dt">Foo</span> <span class="dv">2</span></code></pre>
 <h4 id="higher-functions">Higher Functions</h4>
-<p>It could be argued that core idea of functional programming is composition<sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup>. Namely the composition of higher functions, and in typed functional languages; the constrained composition of functions.</p>
+<p>It could be argued that core idea of functional programming is composition<sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup>. Namely the composition of higher functions, and in typed functional languages; the constrained composition of functions.</p>
 <p>For types for to be useful for functional progrmaming we require that we be able to compose functions with other functions while maintaining expressivity and type safety. For example we would like to write down a generic function which takes a “object with some structure” and apply a function over the internal structure.</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="dt">map</span>(f, xs):
     <span class="kw">return</span> (f(x) <span class="kw">for</span> x in xs)</code></pre>
@@ -250,7 +249,7 @@ Foo(<span class="dv">2</span>)</code></pre>
 <span class="kw">def</span> <span class="dt">map</span>(f, xs):
     <span class="kw">return</span> <span class="dt">iter</span>(f(x) <span class="kw">for</span> x in xs.<span class="ot">__iter__</span>())</code></pre>
 <p>Notice that in Python we have two qualitatively different classes of “things” in the signature: objects and iterables of objects.</p>
-<p>If we mentally translate our word “iterable” to “functor”<sup><a href="#fn3" class="footnoteRef" id="fnref3">3</a></sup> in Haskell we might describe the input function as <code>a -&gt; b</code> over types <code>a</code> and <code>b</code> over a functor on a ( <code>f a</code> ) to a functor on b (<code>f b</code> ).</p>
+<p>If we mentally translate our word “iterable” to “functor”<sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup> in Haskell we might describe the input function as <code>a -&gt; b</code> over types <code>a</code> and <code>b</code> over a functor on a ( <code>f a</code> ) to a functor on b (<code>f b</code> ).</p>
 <p>In this case we have two categories of types in the signature a’s and b’s. When multiple type variables occur in the signature we call them <code>rigid</code>. Type variables that are not rigid are free.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span><span class="ot"> ::</span> <span class="kw">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</code></pre>
 <p>The type <code>f a</code> represents a type constructor of with one type parameter a. The signature of the type we call the <strong>kind</strong>. The kind of the a simple type is <code>*</code>. The kind of a unary type is <code>* -&gt; *</code> or a type over a type, for example the “type of list of type integers”.</p>
@@ -285,16 +284,14 @@ Foo(<span class="dv">2</span>)</code></pre>
 <h4 id="further-reading">Further Reading:</h4>
 <ul>
 <li><a href="http://www.cs.cornell.edu/andru/papers/where-clauses.pdf">Subtypes vs. Where Clauses: Constraining Parametric Polymorphism</a></li>
-<li><a href="http://www.haskellforall.com/2012/08/the-category-design-pattern.html">The Category Pattern</a></li>
 <li><a href="http://www.haskell.org/haskellwiki/Haskell_Tutorial_for_C_Programmers">Haskell for C Programmers</a></li>
 <li><a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses">Making Our Own Types and Typeclasses</a></li>
 </ul>
 <div class="footnotes">
 <hr></hr>
 <ol>
-<li id="fn1"><p>See the discussion of currying later.<a href="#fnref1">↩</a></p></li>
-<li id="fn2"><p>Along with the rejection of mutable state and implicit effects.<a href="#fnref2">↩</a></p></li>
-<li id="fn3"><p>The name comes from category theory where functors are mappings between categories that preserve aspects of the <a href="http://ncatlab.org/nlab/show/functor">specific notions of structure of the category</a>.<a href="#fnref3">↩</a></p></li>
+<li id="fn1"><p>Along with the rejection of mutable state and implicit effects.<a href="#fnref1">↩</a></p></li>
+<li id="fn2"><p>The name comes from category theory where functors are mappings between categories that preserve aspects of the <a href="http://ncatlab.org/nlab/show/functor">specific notions of structure of the category</a>.<a href="#fnref2">↩</a></p></li>
 </ol>
 </div>
         </div>

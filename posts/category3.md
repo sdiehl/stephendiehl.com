@@ -108,7 +108,7 @@ instance Functor One where
 A more mathematical example is the powerset defined as the set of
 all subsets over a set $ A $. The functor is defined as the
 powerset operator, written $ 2^A $ as well as a morphism mapping
-that lifts $ f $ over
+that lifts $ f $ over the powerset.
 
 $$
 \begin{align}
@@ -116,6 +116,16 @@ P(A) &= \{ a | a \subseteq A \} \\
 P(f) &= \{ f(a) | a \in A \}
 \end{align}
 $$
+
+The functor itself is from **Set** to **Set**. In Haskell this is this
+is implemented as the list monad. Which maps a function aver a given
+list and concatenates the resulting lists to get a list of all possible
+results from all possible inputs.
+
+```haskell
+instance Functor [] where
+    fmap f xs = [ f a | a <- xs ]
+```
 
 #### Applicative Functors
 

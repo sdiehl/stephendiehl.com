@@ -8,9 +8,8 @@ date: November 19, 2012
 This is a three part blog about how to think about some of the core
 ideas of Haskell in the everyday language of Python of programmers.
 
-- Part 1. Constrained genericity vs dynamic typing
-- Part 2. Parametric polymorphism vs objects and subtyping 
-- Part 3. Category theory vs design patterns
+- Part 1. Type signatures and type classes
+- Part 2. Parametric polymorphism and ad-hoc polymorphism vs subtype polymorphism
 
 #### Introduction
 
@@ -64,7 +63,7 @@ def addOne(x):
     return x+1
 ```
 
-A signature ``a -> a -> a`` is a function of two arguments[^1] of the same
+A signature ``a -> a -> a`` is a function of two arguments of the same
 type, returning a value of the same as both the arguments.
 
 ```haskell
@@ -384,11 +383,8 @@ rigid type variables in our parametric type signature.
 #### Further Reading:
 
 * [Subtypes vs. Where Clauses: Constraining Parametric Polymorphism](http://www.cs.cornell.edu/andru/papers/where-clauses.pdf)
-* [The Category Pattern](http://www.haskellforall.com/2012/08/the-category-design-pattern.html)
 * [Haskell for C Programmers](http://www.haskell.org/haskellwiki/Haskell_Tutorial_for_C_Programmers)
 * [Making Our Own Types and Typeclasses](http://learnyouahaskell.com/making-our-own-types-and-typeclasses)
-
-[^1]: See the discussion of currying later.
 
 [^2]: Along with the rejection of mutable state and implicit effects.
 
