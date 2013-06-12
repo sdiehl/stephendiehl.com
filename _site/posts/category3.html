@@ -230,10 +230,11 @@ pure f <span class="fu">&lt;*&gt;</span> pure x <span class="fu">=</span> pure (
 <p><img src="../images/applicative.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative2.svg" alt="Applicative"></img>.</p>
 <p><img src="../images/applicative3.svg" alt="Applicative"></img>.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> res <span class="fu">=</span> f <span class="fu">&lt;$&gt;</span> a <span class="fu">&lt;*&gt;</span> b <span class="fu">&lt;*&gt;</span> c <span class="kw">where</span> 
-    a <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span>
-    b <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span>
-    c <span class="fu">=</span><span class="ot"> readLn ::</span> <span class="dt">IO</span> <span class="dt">String</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">let</span> res <span class="fu">=</span> (,,) <span class="fu">&lt;$&gt;</span> a <span class="fu">&lt;*&gt;</span> b <span class="fu">&lt;*&gt;</span> c <span class="kw">where</span> 
+    a <span class="fu">=</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>]
+    b <span class="fu">=</span> [<span class="ch">'a'</span>,<span class="ch">'b'</span>,<span class="ch">'c'</span>]
+    c <span class="fu">=</span> [<span class="kw">True</span>, <span class="kw">False</span>]</code></pre>
+<pre><code>(1,'a',True),(1,'a',False),(1,'b',True),(1,'b',False),(1,'c',True),(1,'c',False),(2,'a',True),(2,'a',False),(2,'b',True),(2,'b',False),(2,'c',True),(2,'c',False),(3,'a',True),(3,'a',False),(3,'b',True),(3,'b',False),(3,'c',True),(3,'c',False)</code></pre>
         </div>
     </div>
 

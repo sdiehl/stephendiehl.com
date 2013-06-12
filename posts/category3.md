@@ -187,8 +187,12 @@ instance Applicative ((->) a) where
 ![Applicative](/images/applicative3.svg).
 
 ```haskell
-let res = f <$> a <*> b <*> c where 
-    a = readLn :: IO String
-    b = readLn :: IO String
-    c = readLn :: IO String
+let res = (,,) <$> a <*> b <*> c where 
+    a = [1,2,3]
+    b = ['a','b','c']
+    c = [True, False]
+```
+
+```
+(1,'a',True),(1,'a',False),(1,'b',True),(1,'b',False),(1,'c',True),(1,'c',False),(2,'a',True),(2,'a',False),(2,'b',True),(2,'b',False),(2,'c',True),(2,'c',False),(3,'a',True),(3,'a',False),(3,'b',True),(3,'b',False),(3,'c',True),(3,'c',False)
 ```

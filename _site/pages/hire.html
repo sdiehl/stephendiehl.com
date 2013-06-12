@@ -100,9 +100,31 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <p>To contact me via email run the following Python script to generate my contact information. I find this is an effective filter against the deluge of emails from recruiters.</p>
-<p>I’m not available for hire.</p>
-<p>Hint: If you’re using IPython use the %paste magic method.</p>
+            <p>To contact me via email run one of the following scripts to generate my contact information. I find this is an effective filter against the deluge of emails from recruiters.</p>
+<p><strong>Haskell</strong></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
+<span class="co">-- http://www.stephendiehl.com</span>
+
+<span class="kw">import</span> <span class="dt">Data.Char</span> (<span class="fu">ord</span>, <span class="fu">chr</span>)
+<span class="kw">import</span> <span class="dt">Data.Ix</span> (<span class="fu">inRange</span>)
+ 
+<span class="ot">cipher ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
+cipher k <span class="fu">=</span> <span class="fu">map</span> f
+  <span class="kw">where</span>
+    f c
+      <span class="fu">|</span> <span class="fu">inRange</span> (<span class="ch">'a'</span>,<span class="ch">'z'</span>) c <span class="fu">=</span> tr <span class="ch">'a'</span> k c
+      <span class="fu">|</span> <span class="fu">inRange</span> (<span class="ch">'A'</span>,<span class="ch">'Z'</span>) c <span class="fu">=</span> tr <span class="ch">'A'</span> k c
+      <span class="fu">|</span> <span class="fu">otherwise</span> <span class="fu">=</span> c
+ 
+<span class="ot">uncipher ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
+uncipher k <span class="fu">=</span> cipher (<span class="fu">-</span>k)
+ 
+<span class="ot">tr ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span>
+tr base offset char <span class="fu">=</span> <span class="fu">chr</span> <span class="fu">$</span> <span class="fu">ord</span> base <span class="fu">+</span> (<span class="fu">ord</span> char <span class="fu">-</span> <span class="fu">ord</span> base <span class="fu">+</span> offset) <span class="ot">`mod`</span> <span class="dv">26</span>
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> <span class="fu">putStrLn</span> <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre>
+<p><strong>Python</strong></p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>
 
