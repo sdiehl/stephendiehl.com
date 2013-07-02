@@ -101,6 +101,7 @@
 
         <div class="twelve columns offset-by-one content">
             <p>To contact me via email run one of the following scripts to generate my contact information. I find this is an effective filter against the deluge of emails from recruiters.</p>
+<p>I am currently available for hire.</p>
 <p><strong>Haskell</strong></p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
 <span class="co">-- http://www.stephendiehl.com</span>
@@ -137,7 +138,7 @@ EMAIL = <span class="st">&quot;&quot;&quot;</span>
 <span class="ch">\xcd\xce\xbf\xca\xc2\xbf\xc8</span><span class="st">.</span><span class="ch">\xc7</span><span class="st">.</span><span class="ch">\xbe\xc3\xbf\xc2\xc6</span><span class="st">@</span><span class="ch">\xc1\xc7\xbb\xc3\xc6</span><span class="st">.</span><span class="ch">\xbd\xc9\xc7</span>
 <span class="st">&quot;&quot;&quot;</span>
 
-y = string.letters
+y = string.ascii_letters
 n = <span class="dt">len</span>(y)
 M = numpy.identity(n, dtype=numpy.int16)
 M[:n, n<span class="dv">-1</span>] = <span class="dv">1</span>
