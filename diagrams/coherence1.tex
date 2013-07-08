@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex,active,tightpage]{preview}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usetikzlibrary{arrows,shapes}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\begin{preview}
+
+\begin{tikzcd}
+T^3 \arrow{r}{T \mu} \arrow[swap]{d}{\mu T}
+& T^2 \arrow{d}{\mu} \\
+T^2 \arrow{r}{\mu}
+& T
+\end{tikzcd}
+
+\end{preview}
+\end{document}

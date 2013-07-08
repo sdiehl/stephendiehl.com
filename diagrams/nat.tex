@@ -1,0 +1,22 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex,active,tightpage]{preview}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usetikzlibrary{arrows,shapes}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\begin{preview}
+
+\begin{tikzcd}
+    \mathcal{A} \arrow[bend left=50]{r}{F}[name=U,below]{}
+\arrow[bend right=50, swap]{r}{G}[name=D]{}
+& \mathcal{B}
+\arrow[Rightarrow,to path=(U) -- (D)]{}
+\end{tikzcd}
+
+\end{preview}
+\end{document}

@@ -1,0 +1,23 @@
+\documentclass[12pt]{article}
+\usepackage[pdftex,active,tightpage]{preview}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+\usepackage{epstopdf}
+\usetikzlibrary{arrows,shapes}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\begin{preview}
+
+\begin{tikzcd}[node distance=2cm, auto]
+T \arrow{r}{\eta T} \arrow[swap]{d}{T \eta}
+   \arrow[equal]{rd}
+& T^2 \arrow{d}{\mu} \\
+T^2 \arrow[swap]{r}{\mu}
+& T
+\end{tikzcd}
+
+\end{preview}
+\end{document}
