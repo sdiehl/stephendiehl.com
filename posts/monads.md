@@ -78,10 +78,10 @@ T^3 &= T T T: \mathcal{C} \rightarrow \mathcal{C}
 $$
 
 ```haskell
-newtype (Compose g f) x = C { unC :: g (f x) }
+newtype (FComp g f) x = FComp { unCompose :: g (f x) }
 
-instance (Functor f, Functor g) => Functor (Compose g f) where
-	fmap f (C xs) = C $ fmap (fmap f) xs
+instance (Functor b c f, Functor a b g) => Functor a c (FComp g f) where
+	fmap f (FComp xs) = FComp $ fmap (fmap f) xs
 ```
 
 ***
@@ -235,8 +235,6 @@ do x <- m
      do b <- f a
         g b
 ```
-
-***
 
 ***
 

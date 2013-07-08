@@ -140,10 +140,10 @@ T^2 &amp;= T T : \mathcal{C} \rightarrow \mathcal{C} \\
 T^3 &amp;= T T T: \mathcal{C} \rightarrow \mathcal{C}
 \end{align*}
 \]</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> (<span class="dt">Compose</span> g f) x <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> g (f x) }
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> (<span class="dt">FComp</span> g f) x <span class="fu">=</span> <span class="dt">FComp</span> {<span class="ot"> unCompose ::</span> g (f x) }
 
-<span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">Compose</span> g f) <span class="kw">where</span>
-	<span class="fu">fmap</span> f (<span class="dt">C</span> xs) <span class="fu">=</span> <span class="dt">C</span> <span class="fu">$</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f) xs</code></pre>
+<span class="kw">instance</span> (<span class="kw">Functor</span> b c f, <span class="kw">Functor</span> a b g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> a c (<span class="dt">FComp</span> g f) <span class="kw">where</span>
+	<span class="fu">fmap</span> f (<span class="dt">FComp</span> xs) <span class="fu">=</span> <span class="dt">FComp</span> <span class="fu">$</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f) xs</code></pre>
 <hr></hr>
 <p>For two functors \(F,G\) between two categories \(\mathcal{A,B}\):</p>
 <p>\[
@@ -242,7 +242,6 @@ m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="
 <span class="fu">=</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
      <span class="kw">do</span> b <span class="ot">&lt;-</span> f a
         g b</code></pre>
-<hr></hr>
 <hr></hr>
 <p>The final result is given a monad we can form a new category called the <em>Kleisli category</em> out the monad. The objects are embedded in our original <code>c</code> category, but our arrows are now Kleisli arrows <code>a -&gt; t b</code>, thus arrows in the Kleisli category map to different objects then the underlying category it is formed from. The composition operator <code>(&gt;=&gt;)</code> over Kleisli arrows is then precisely morphism composition for Kleisli category.</p>
 <p>Simply put, the monad laws are the category laws for the Kleisli category.</p>
