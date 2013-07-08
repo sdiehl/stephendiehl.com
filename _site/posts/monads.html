@@ -102,7 +102,7 @@
         <div class="twelve columns offset-by-one content">
             <h3 id="monads-made-difficult">Monads Made Difficult</h3>
 <p>This is a short, fast and analogy-free introduction to Haskell monads derived from a categorical perspective. This assumes you are familiar with Haskell typeclasses and basic category theory.</p>
-<p>In the beginning there is a category \(\mathcal{C}\) with objects and morphisms.</p>
+<p>Suppose we have a category \(\mathcal{C}\) with objects and morphisms.</p>
 <ul>
 <li>Objects : \(●\)</li>
 <li>Morphisms : \(● \rightarrow ●\)</li>
@@ -111,23 +111,28 @@
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Category</span> c <span class="kw">where</span>
 <span class="ot">    id  ::</span> c x x
 <span class="ot">    (.) ::</span> c y z <span class="ot">-&gt;</span> c x y <span class="ot">-&gt;</span> c x z</code></pre>
-<p>In Haskell there is a category called <em>Hask</em>.</p>
+<p>In Haskell there is a category <em>Hask</em>.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Hask</span> <span class="fu">=</span> (<span class="ot">-&gt;</span>)
  
 <span class="kw">instance</span> <span class="dt">Category</span> <span class="dt">Hask</span> <span class="kw">where</span>
     <span class="fu">id</span> x <span class="fu">=</span> x
     (g <span class="fu">.</span> f) x <span class="fu">=</span> g (f x)</code></pre>
 <hr></hr>
-<p>Between two categories we construct a <em>functor</em> (\(T\)), which maps between objects and morphisms of categories.</p>
+<p>Between two categories we can construct a <em>functor</em> denoted \(T\) which maps between objects and morphisms of categories.</p>
 <ul>
 <li>Objects : \(T(●)\)</li>
 <li>Morphisms : \(T (● \rightarrow ●)\)</li>
 </ul>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="dt">Category</span> c, <span class="dt">Category</span> d) <span class="ot">=&gt;</span> <span class="kw">Functor</span> c d f <span class="kw">where</span>
-<span class="ot">    fmap ::</span> c a b <span class="ot">-&gt;</span> d (f a) (f b)</code></pre>
-<p>The identity functor \(1_\mathcal{C}\) for a category \(\mathcal{C}\) is functor mapping all objects to themselves and all morphisms to themselves.</p>
+<p>With the condition that \(T (f \circ g) = T (f) \circ T (g)\). In Haskell we have:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="dt">Category</span> c, <span class="dt">Category</span> d) <span class="ot">=&gt;</span> <span class="kw">Functor</span> c d t <span class="kw">where</span>
+<span class="ot">    fmap ::</span> c a b <span class="ot">-&gt;</span> d (t a) (t b)</code></pre>
+<p>The identity functor \(1_\mathcal{C}\) for a category \(\mathcal{C}\) is a functor mapping all objects to themselves and all morphisms to themselves.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Id</span> a <span class="fu">=</span> <span class="dt">Id</span> a
+
+<span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Hask</span> <span class="dt">Hask</span> <span class="dt">Id</span> <span class="kw">where</span>
+    <span class="fu">fmap</span> f (<span class="dt">Id</span> a) <span class="fu">=</span> <span class="dt">Id</span> (f a)</code></pre>
 <p>An <em>endofunctor</em> is a functor from a category to itself.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Endofunctor</span> c f <span class="fu">=</span> <span class="kw">Functor</span> c c f</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Endofunctor</span> c t <span class="fu">=</span> <span class="kw">Functor</span> c c t</code></pre>
 <p>The repeated image of a endofunctor over a category is written with exponential notation:</p>
 <p>\[
 \begin{align*}
@@ -135,6 +140,10 @@ T^2 &amp;= T T : \mathcal{C} \rightarrow \mathcal{C} \\
 T^3 &amp;= T T T: \mathcal{C} \rightarrow \mathcal{C}
 \end{align*}
 \]</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> (<span class="dt">Compose</span> g f) x <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> g (f x) }
+
+<span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">Compose</span> g f) <span class="kw">where</span>
+	<span class="fu">fmap</span> f (<span class="dt">C</span> xs) <span class="fu">=</span> <span class="dt">C</span> <span class="fu">$</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f) xs</code></pre>
 <hr></hr>
 <p>For two functors \(F,G\) between two categories \(\mathcal{A,B}\):</p>
 <p>\[
@@ -157,20 +166,20 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <img src="../images/naturality.svg" width="200px"></img>
 </p>
 
-<p>Expressible in our general category class as the following type alias, and in Hask as a family of polymorphic functions with signature:</p>
+<p>This is expressible in our general category class as the following existential type:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> k f g <span class="fu">=</span> forall a<span class="fu">.</span> k (f a) (g a)</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> <span class="dt">Hask</span> f g <span class="fu">=</span> forall a<span class="fu">.</span> f a <span class="ot">-&gt;</span> g a</code></pre>
+<p>And in the case of <em>Hask</em> we a family of polymorphic functions with signature: <code>forall a. f a -&gt; g a</code>.</p>
 <hr></hr>
-<p>We finally can define our <em>monad</em> over a category \(\mathcal{C}\) to be a triple of:</p>
-<ul>
+<p>We finally can define a <em>monad</em> over a category \(\mathcal{C}\) to be a triple of:</p>
+<ol style="list-style-type: decimal">
 <li>An endofunctor \(T: \mathcal{C} \rightarrow \mathcal{C}\)</li>
 <li>A natural transformation \(\eta : 1_\mathcal{C} \rightarrow T\)</li>
-<li>A natural transformation \(\mu : \mathcal{T}^2 \rightarrow T\)</li>
-</ul>
+<li>A natural transformation \(\mu : T^2 \rightarrow T\)</li>
+</ol>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="dt">Endofunctor</span> c t) <span class="ot">=&gt;</span> <span class="kw">Monad</span> c t <span class="kw">where</span>
-<span class="ot">    eta ::</span> c a (t a)
+<span class="ot">    eta ::</span> c (<span class="dt">Id</span> a) (t a)
 <span class="ot">    mu  ::</span> c (t (t a)) (t a)</code></pre>
-<p>With several <em>coherence conditions</em> commonly called the <em>monad laws</em>.</p>
+<p>With two <em>coherence conditions</em>:</p>
 <p>\[
 \mu \circ T \mu = \mu \circ \mu T \\
 \]</p>
@@ -185,7 +194,7 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <img src="../images/coherence2.svg" width="200px"></img>
 </p>
 
-<p>Or triple can be defined as a series of <em>string diagrams</em>.</p>
+<p>Alternatively we can express our triple as a series of <em>string diagrams</em>.</p>
 <p>
 <img src="../images/string3.svg"></img>
 </p>
@@ -200,7 +209,7 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 </p>
 
 <hr></hr>
-<p>In Haskell we define a bind <code>(&gt;&gt;=)</code> operator defined in terms of the natural transformations and <code>fmap</code> of the underlying functor. The <code>join</code> and <code>return</code> functions are also just aliases for the two natural transformations.</p>
+<p>In Haskell we define a bind <code>(&gt;&gt;=)</code> operator defined in terms of the natural transformations and <code>fmap</code> of the underlying functor. The <code>join</code> and <code>return</code> functions can be defined in terms of <code>mu</code> and <code>eta</code>.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&gt;&gt;=) ::</span> (<span class="kw">Monad</span> c t) <span class="ot">=&gt;</span> c a (t b) <span class="ot">-&gt;</span> c (t a) (t b)
 (<span class="fu">&gt;&gt;=</span>) f <span class="fu">=</span> mu <span class="fu">.</span> <span class="fu">fmap</span> f
  
@@ -214,15 +223,14 @@ m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">m ::</span> t a
 <span class="ot">f ::</span> a <span class="ot">-&gt;</span> t b
 <span class="ot">g ::</span> b <span class="ot">-&gt;</span> t c</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> x <span class="ot">&lt;-</span> m
-   <span class="fu">return</span> x
-
-<span class="fu">=</span> <span class="kw">do</span> m
-
-<span class="kw">do</span> y <span class="ot">&lt;-</span> <span class="fu">return</span> x
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> y <span class="ot">&lt;-</span> <span class="fu">return</span> x
    f y
 
 <span class="fu">=</span> <span class="kw">do</span> f x</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> x <span class="ot">&lt;-</span> m
+   <span class="fu">return</span> x
+
+<span class="fu">=</span> <span class="kw">do</span> m</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">do</span> b <span class="ot">&lt;-</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
              f a
      g b
@@ -235,7 +243,23 @@ m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="
      <span class="kw">do</span> b <span class="ot">&lt;-</span> f a
         g b</code></pre>
 <hr></hr>
-<p>In the case of Hask where <code>c = (-&gt;)</code> then we indeed see an equivelant derivation of Monad and Functor similar to the prelude ( if the Prelude had the proper Functor/Monad hierarchy! ).</p>
+<hr></hr>
+<p>The final result is given a monad we can form a new category called the <em>Kleisli category</em> out the monad. The objects are embedded in our original <code>c</code> category, but our arrows are now Kleisli arrows <code>a -&gt; t b</code>, thus arrows in the Kleisli category map to different objects then the underlying category it is formed from. The composition operator <code>(&gt;=&gt;)</code> over Kleisli arrows is then precisely morphism composition for Kleisli category.</p>
+<p>Simply put, the monad laws are the category laws for the Kleisli category.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&gt;=&gt;) ::</span> (<span class="kw">Monad</span> c t) <span class="ot">=&gt;</span> c y (t z) <span class="ot">-&gt;</span> c x (t y) <span class="ot">-&gt;</span> c x (t z)
+f <span class="fu">&gt;=&gt;</span> g <span class="fu">=</span> mu <span class="fu">.</span> <span class="fu">fmap</span> f <span class="fu">.</span> g 
+
+<span class="kw">newtype</span> <span class="dt">Kleisli</span> c t a b <span class="fu">=</span> <span class="dt">Kleisli</span> (c a (t b))
+
+<span class="kw">instance</span> (<span class="kw">Monad</span> c t) <span class="ot">=&gt;</span> <span class="dt">Category</span> (<span class="dt">Kleisli</span> c t) <span class="kw">where</span>
+    <span class="co">-- id :: (Monad c t) =&gt; c a (t a)</span>
+    <span class="fu">id</span> <span class="fu">=</span> <span class="dt">Kleisli</span> eta
+
+    <span class="co">-- (.) :: (Monad c t) =&gt; c y (t z) -&gt; c x (t y) -&gt; c x (t z)</span>
+    (<span class="dt">Kleisli</span> f) <span class="fu">.</span> (<span class="dt">Kleisli</span> g) <span class="fu">=</span> <span class="dt">Kleisli</span> ( f <span class="fu">&gt;=&gt;</span> g )</code></pre>
+<hr></hr>
+<p>The Kleisli category over <em>Hask</em> is the typical monad concept used in day-to-day Haskell programming.</p>
+<p>In the case of Hask where <code>c = (-&gt;)</code> then we indeed see the instance give rise to the Monad and Functor instances similar to the Prelude ( if the Prelude had the proper Functor/Monad hierarchy! ).</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> t <span class="kw">where</span>
 <span class="ot">    fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> t b
 
@@ -245,27 +269,27 @@ m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="
 
 <span class="ot">  (&gt;&gt;=) ::</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> t b) <span class="ot">-&gt;</span> t b
   ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
-<p>The List monad would have the implementation:</p>
-<ul>
+<p>For instance the <strong>List monad</strong> would have have:</p>
+<ol style="list-style-type: decimal">
 <li>\(\eta\) returns a singleton list from a single element.</li>
 <li>\(\mu\) turns a nested list into a flat list.</li>
 <li>\(\mathtt{fmap}\) applies a function over the elements of a list.</li>
-</ul>
+</ol>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Functor</span> [] <span class="kw">where</span>
     <span class="fu">fmap</span> f (x<span class="fu">:</span>xs) <span class="fu">=</span> f x <span class="fu">:</span> <span class="fu">fmap</span> f xs
 
 <span class="kw">instance</span> <span class="kw">Monad</span> [] <span class="kw">where</span>
-<span class="ot">  eta ::</span> a <span class="ot">-&gt;</span> [a]
+  <span class="co">-- eta :: a -&gt; [a]</span>
   eta x <span class="fu">=</span> [x]
 
-<span class="ot">  mu ::</span> [[a]] <span class="ot">-&gt;</span> [a]
+  <span class="co">-- mu :: [[a]] -&gt; [a]</span>
   mu <span class="fu">=</span> <span class="fu">concat</span></code></pre>
-<p>The IO monad would have the intuition of implementation:</p>
-<ul>
-<li>\(\eta\) returns a pure value usable within the context of the computation.</li>
+<p>The <strong>IO monad</strong> would intuitively have the implementation:</p>
+<ol style="list-style-type: decimal">
+<li>\(\eta\) returns a pure value to a value within the context of the computation.</li>
 <li>\(\mu\) turns a sequence of IO operation into a single IO operation.</li>
 <li>\(\mathtt{fmap}\) applies a function over the result of the computation.</li>
-</ul>
+</ol>
         </div>
     </div>
 

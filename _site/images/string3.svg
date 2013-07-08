@@ -67,7 +67,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
      inkscape:cx="218.59903"
-     inkscape:cy="147.78164"
+     inkscape:cy="140.99593"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -75,10 +75,10 @@
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:window-width="1069"
-     inkscape:window-height="1060"
-     inkscape:window-x="0"
-     inkscape:window-y="14"
+     inkscape:window-width="1360"
+     inkscape:window-height="762"
+     inkscape:window-x="1920"
+     inkscape:window-y="0"
      inkscape:window-maximized="0"
      showguides="true"
      inkscape:guide-bbox="true" />
@@ -184,7 +184,7 @@
        sodipodi:cy="131.7562"
        sodipodi:rx="5.8928571"
        sodipodi:ry="5.8928571"
-       d="m 106.60714,131.7562 a 5.8928571,5.8928571 0 1 1 -11.78571,0 5.8928571,5.8928571 0 1 1 11.78571,0 z"
+       d="m 106.60714,131.7562 c 0,3.25453 -2.63832,5.89285 -5.89285,5.89285 -3.254538,0 -5.89286,-2.63832 -5.89286,-5.89285 0,-3.25454 2.638322,-5.89286 5.89286,-5.89286 3.25453,0 5.89285,2.63832 5.89285,5.89286 z"
        transform="translate(-30.84422,794.49134)" />
     <path
        sodipodi:type="arc"
@@ -194,7 +194,7 @@
        sodipodi:cy="131.7562"
        sodipodi:rx="5.8928571"
        sodipodi:ry="5.8928571"
-       d="m 106.60714,131.7562 a 5.8928571,5.8928571 0 1 1 -11.78571,0 5.8928571,5.8928571 0 1 1 11.78571,0 z"
+       d="m 106.60714,131.7562 c 0,3.25453 -2.63832,5.89285 -5.89285,5.89285 -3.254538,0 -5.89286,-2.63832 -5.89286,-5.89285 0,-3.25454 2.638322,-5.89286 5.89286,-5.89286 3.25453,0 5.89285,2.63832 5.89285,5.89286 z"
        transform="translate(107.15578,794.49134)" />
     <text
        xml:space="preserve"
@@ -301,5 +301,19 @@
          x="323.28571"
          y="1056.2151"
          style="font-size:30px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Times New Roman;-inkscape-font-specification:Times New Roman">T</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:100px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman;-inkscape-font-specification:Times New Roman"
+       x="340.15176"
+       y="955.50085"
+       id="text3025"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan3027"
+         x="340.15176"
+         y="955.50085"
+         style="font-size:30px">1<tspan
+   style="font-size:65.00091553%;baseline-shift:sub"
+   id="tspan3029">T</tspan></tspan></text>
   </g>
 </svg>

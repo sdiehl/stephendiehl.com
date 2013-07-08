@@ -9,8 +9,8 @@ This is a short, fast and analogy-free introduction to Haskell
 monads derived from a categorical perspective. This assumes you
 are familiar with Haskell typeclasses and basic category theory.
 
-In the beginning there is a category $\mathcal{C}$ with objects
-and morphisms.
+Suppose we have a category $\mathcal{C}$ with objects and
+morphisms.
 
 * Objects   : $●$
 * Morphisms : $● \rightarrow ●$
@@ -24,7 +24,7 @@ class Category c where
     (.) :: c y z -> c x y -> c x z
 ```
 
-In Haskell there is a category called *Hask*.
+In Haskell there is a category *Hask*.
 
 ```haskell
 type Hask = (->)
@@ -36,25 +36,35 @@ instance Category Hask where
 
 ***
 
-Between two categories we construct a *functor* ($T$), which maps
-between objects and morphisms of categories.
+Between two categories we can construct a *functor* denoted $T$
+which maps between objects and morphisms of categories.
 
 * Objects   : $T(●)$
 * Morphisms : $T (● \rightarrow ●)$
 
+With the condition that $T (f \circ g) = T (f) \circ T (g)$. In
+Haskell we have:
+
 ```haskell
-class (Category c, Category d) => Functor c d f where
-    fmap :: c a b -> d (f a) (f b)
+class (Category c, Category d) => Functor c d t where
+    fmap :: c a b -> d (t a) (t b)
 ```
 
 The identity functor $1_\mathcal{C}$ for a category $\mathcal{C}$
-is functor mapping all objects to themselves and all morphisms to
-themselves.
+is a functor mapping all objects to themselves and all morphisms
+to themselves.
+
+```haskell
+data Id a = Id a
+
+instance Functor Hask Hask Id where
+    fmap f (Id a) = Id (f a)
+```
 
 An *endofunctor* is a functor from a category to itself.
 
 ```haskell
-type Endofunctor c f = Functor c c f
+type Endofunctor c t = Functor c c t
 ```
 
 The repeated image of a endofunctor over a category is written with
@@ -66,6 +76,13 @@ T^2 &= T T : \mathcal{C} \rightarrow \mathcal{C} \\
 T^3 &= T T T: \mathcal{C} \rightarrow \mathcal{C}
 \end{align*}
 $$
+
+```haskell
+newtype (Compose g f) x = C { unC :: g (f x) }
+
+instance (Functor f, Functor g) => Functor (Compose g f) where
+	fmap f (C xs) = C $ fmap (fmap f) xs
+```
 
 ***
 
@@ -99,34 +116,32 @@ $$
 <img src="/images/naturality.svg" width="200px"/>
 </p>
 
-Expressible in our general category class as the following type
-alias, and in Hask as a family of polymorphic functions with
-signature:
+This is expressible in our general category class as the
+following existential type:
 
 ```haskell
 type Nat k f g = forall a. k (f a) (g a)
 ```
 
-```haskell
-type Nat Hask f g = forall a. f a -> g a
-```
+And in the case of *Hask* we a family of polymorphic functions
+with signature: ``forall a. f a -> g a``.
 
 ***
 
-We finally can define our *monad* over a category $\mathcal{C}$
-to be a triple of:
+We finally can define a *monad* over a category $\mathcal{C}$ to
+be a triple of:
 
-* An endofunctor $T: \mathcal{C} \rightarrow \mathcal{C}$
-* A natural transformation $\eta : 1_\mathcal{C} \rightarrow T$
-* A natural transformation $\mu : \mathcal{T}^2 \rightarrow T$
+1. An endofunctor $T: \mathcal{C} \rightarrow \mathcal{C}$
+1. A natural transformation $\eta : 1_\mathcal{C} \rightarrow T$
+1. A natural transformation $\mu : T^2 \rightarrow T$
 
 ```haskell
 class (Endofunctor c t) => Monad c t where
-    eta :: c a (t a)
+    eta :: c (Id a) (t a)
     mu  :: c (t (t a)) (t a)
 ```
 
-With several *coherence conditions* commonly called the *monad laws*.
+With two *coherence conditions*:
 
 $$
 \mu \circ T \mu = \mu \circ \mu T \\
@@ -144,7 +159,8 @@ $$
 <img src="/images/coherence2.svg" width="200px"/>
 </p>
 
-Or triple can be defined as a series of *string diagrams*.
+Alternatively we can express our triple as a series of *string
+diagrams*.
 
 <p>
 <img src="/images/string3.svg"/>
@@ -164,8 +180,8 @@ With the coherence conditions given diagrammatically:
 
 In Haskell we define a bind ``(>>=)`` operator defined in terms
 of the natural transformations and ``fmap`` of the underlying
-functor. The ``join`` and ``return`` functions are also just
-aliases for the two natural transformations.
+functor. The ``join`` and ``return`` functions can be defined in
+terms of ``mu`` and ``eta``.
 
 ```haskell
 (>>=) :: (Monad c t) => c a (t b) -> c (t a) (t b)
@@ -193,15 +209,17 @@ g :: b -> t c
 ```
 
 ```haskell
-do x <- m
-   return x
-
-= do m
-
 do y <- return x
    f y
 
 = do f x
+```
+
+```haskell
+do x <- m
+   return x
+
+= do m
 ```
 
 ```haskell
@@ -220,9 +238,43 @@ do y <- return x
 
 ***
 
-In the case of Hask where ``c = (->)`` then we indeed see an
-equivelant derivation of Monad and Functor similar to the prelude
-( if the Prelude had the proper Functor/Monad hierarchy! ).
+***
+
+The final result is given a monad we can form a new category
+called the *Kleisli category* out the monad. The objects are
+embedded in our original ``c`` category, but our arrows are now
+Kleisli arrows ``a -> t b``, thus arrows in the Kleisli category
+map to different objects then the underlying category it is
+formed from. The composition operator ``(>=>)`` over Kleisli
+arrows is then precisely morphism composition for Kleisli
+category.
+
+Simply put, the monad laws are the category laws for the Kleisli
+category.
+
+```haskell
+(>=>) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
+f >=> g = mu . fmap f . g 
+
+newtype Kleisli c t a b = Kleisli (c a (t b))
+
+instance (Monad c t) => Category (Kleisli c t) where
+    -- id :: (Monad c t) => c a (t a)
+    id = Kleisli eta
+
+    -- (.) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
+    (Kleisli f) . (Kleisli g) = Kleisli ( f >=> g )
+```
+
+***
+
+The Kleisli category over *Hask* is the typical monad concept
+used in day-to-day Haskell programming.
+
+In the case of Hask where ``c = (->)`` then we indeed see the
+instance give rise to the Monad and Functor instances similar to
+the Prelude ( if the Prelude had the proper Functor/Monad
+hierarchy! ).
 
 ```haskell
 class Functor t where
@@ -236,11 +288,11 @@ class (Functor t) => Monad t where
   ma >>= f = join . fmap f
 ```
 
-The List monad would have the implementation:
+For instance the **List monad** would have have:
 
-* $\eta$ returns a singleton list from a single element.
-* $\mu$ turns a nested list into a flat list.
-* $\mathtt{fmap}$ applies a function over the elements of a
+1. $\eta$ returns a singleton list from a single element.
+1. $\mu$ turns a nested list into a flat list.
+1. $\mathtt{fmap}$ applies a function over the elements of a
   list.
 
 ```haskell
@@ -248,18 +300,18 @@ instance Functor [] where
     fmap f (x:xs) = f x : fmap f xs
 
 instance Monad [] where
-  eta :: a -> [a]
+  -- eta :: a -> [a]
   eta x = [x]
 
-  mu :: [[a]] -> [a]
+  -- mu :: [[a]] -> [a]
   mu = concat
 ```
 
-The IO monad would have the intuition of implementation:
+The **IO monad** would intuitively have the implementation:
 
-* $\eta$ returns a pure value usable within the context of the
-  computation.
-* $\mu$ turns a sequence of IO operation into a single
-  IO operation.
-* $\mathtt{fmap}$ applies a function over the result
-  of the computation.
+1. $\eta$ returns a pure value to a value within the context of
+   the computation.
+1. $\mu$ turns a sequence of IO operation into a single
+   IO operation.
+1. $\mathtt{fmap}$ applies a function over the result
+   of the computation.
