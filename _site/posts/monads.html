@@ -214,8 +214,11 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 (<span class="fu">&gt;&gt;=</span>) f <span class="fu">=</span> mu <span class="fu">.</span> <span class="fu">fmap</span> f
  
 <span class="fu">return</span> <span class="fu">=</span> eta
-join <span class="fu">=</span> mu</code></pre>
-<p>The equivalent coherence conditions expressed in terms of bind and return are:</p>
+join m <span class="fu">=</span> m <span class="fu">&gt;&gt;=</span> <span class="fu">id</span></code></pre>
+<p>In this form equivalent naturality conditions take the form:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> f <span class="fu">.</span> <span class="fu">return</span> <span class="fu">=</span> <span class="fu">return</span> <span class="fu">.</span> f
+<span class="fu">fmap</span> f <span class="fu">.</span> join <span class="fu">=</span> join <span class="fu">.</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f)</code></pre>
+<p>And the equivalent coherence conditions expressed in terms of bind and return are:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">return</span> a <span class="fu">&gt;&gt;=</span> f <span class="fu">==</span> f a
 m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="fu">==</span> m
 (m <span class="fu">&gt;&gt;=</span> f) <span class="fu">&gt;&gt;=</span> g <span class="fu">==</span> m <span class="fu">&gt;&gt;=</span> (\x <span class="ot">-&gt;</span> f x <span class="fu">&gt;&gt;=</span> g)</code></pre>

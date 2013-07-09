@@ -188,10 +188,17 @@ terms of ``mu`` and ``eta``.
 (>>=) f = mu . fmap f
  
 return = eta
-join = mu
+join m = m >>= id
 ```
 
-The equivalent coherence conditions expressed in terms of bind
+In this form equivalent naturality conditions take the form:
+
+```haskell
+fmap f . return = return . f
+fmap f . join = join . fmap (fmap f)
+```
+
+And the equivalent coherence conditions expressed in terms of bind
 and return are:
 
 ```haskell
