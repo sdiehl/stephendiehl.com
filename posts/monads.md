@@ -20,8 +20,8 @@ composition rule $(\circ)$ for combining morphisms associatively.
 
 ```haskell
 class Category c where
-    id  :: c x x
-    (.) :: c y z -> c x y -> c x z
+  id  :: c x x
+  (.) :: c y z -> c x y -> c x z
 ```
 
 In Haskell there is a category *Hask*.
@@ -30,8 +30,8 @@ In Haskell there is a category *Hask*.
 type Hask = (->)
  
 instance Category Hask where
-    id x = x
-    (g . f) x = g (f x)
+  id x = x
+  (g . f) x = g (f x)
 ```
 
 ***
@@ -47,7 +47,7 @@ Haskell we have:
 
 ```haskell
 class (Category c, Category d) => Functor c d t where
-    fmap :: c a b -> d (t a) (t b)
+  fmap :: c a b -> d (t a) (t b)
 ```
 
 The identity functor $1_\mathcal{C}$ for a category $\mathcal{C}$
@@ -55,10 +55,10 @@ is a functor mapping all objects to themselves and all morphisms
 to themselves.
 
 ```haskell
-data Id a = Id a
+newtype Id a = Id a
 
 instance Functor Hask Hask Id where
-    fmap f (Id a) = Id (f a)
+  fmap f (Id a) = Id (f a)
 ```
 
 An *endofunctor* is a functor from a category to itself.
@@ -81,7 +81,7 @@ $$
 newtype (FComp g f) x = FComp { unCompose :: g (f x) }
 
 instance (Functor b c f, Functor a b g) => Functor a c (FComp g f) where
-	fmap f (FComp xs) = FComp $ fmap (fmap f) xs
+  fmap f (FComp xs) = FComp $ fmap (fmap f) xs
 ```
 
 ***
@@ -137,8 +137,8 @@ be a triple of:
 
 ```haskell
 class (Endofunctor c t) => Monad c t where
-    eta :: c (Id a) (t a)
-    mu  :: c (t (t a)) (t a)
+  eta :: c (Id a) (t a)
+  mu  :: c (t (t a)) (t a)
 ```
 
 With two *coherence conditions*:
@@ -264,11 +264,11 @@ f >=> g = mu . fmap f . g
 newtype Kleisli c t a b = Kleisli (c a (t b))
 
 instance (Monad c t) => Category (Kleisli c t) where
-    -- id :: (Monad c t) => c a (t a)
-    id = Kleisli eta
+  -- id :: (Monad c t) => c a (t a)
+  id = Kleisli eta
 
-    -- (.) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
-    (Kleisli f) . (Kleisli g) = Kleisli ( f >=> g )
+  -- (.) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
+  (Kleisli f) . (Kleisli g) = Kleisli ( f >=> g )
 ```
 
 ***
@@ -283,7 +283,7 @@ hierarchy! ).
 
 ```haskell
 class Functor t where
-    fmap :: (a -> b) -> t a -> t b
+  fmap :: (a -> b) -> t a -> t b
 
 class (Functor t) => Monad t where
   eta :: a -> (t a)
@@ -302,7 +302,7 @@ For instance the **List monad** would have have:
 
 ```haskell
 instance Functor [] where
-    fmap f (x:xs) = f x : fmap f xs
+  fmap f (x:xs) = f x : fmap f xs
 
 instance Monad [] where
   -- eta :: a -> [a]
