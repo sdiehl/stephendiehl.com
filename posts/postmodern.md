@@ -29,7 +29,7 @@ Metaprogramming
 MacroPy is a metaprogramming framework which extends Python AST
 with a variety of syntatic constructs for modern language
 features which compile into standard Python code. For example we
-can achieve a measure algebraic datatypes using 
+can achieve a measure of algebraic datatypes:
 
 ```python
 from macropy.case_classes import case
