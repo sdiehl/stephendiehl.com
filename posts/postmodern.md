@@ -447,7 +447,7 @@ class Actor(object):
         self._serv = SimpleXMLRPCServer(address, allow_none=True, logRequests=False)
         self.address = address
 
-        for name in self._exports:
+        for name in self._export:
             self._serv.register_function(getattr(self, name))
 
     def push(self, thing):

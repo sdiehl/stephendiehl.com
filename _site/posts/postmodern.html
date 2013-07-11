@@ -380,7 +380,7 @@ gevent.joinall([
         <span class="ot">self</span>._serv = SimpleXMLRPCServer(address, allow_none=<span class="ot">True</span>, logRequests=<span class="ot">False</span>)
         <span class="ot">self</span>.address = address
 
-        <span class="kw">for</span> name in <span class="ot">self</span>._exports:
+        <span class="kw">for</span> name in <span class="ot">self</span>._export:
             <span class="ot">self</span>._serv.register_function(<span class="dt">getattr</span>(<span class="ot">self</span>, name))
 
     <span class="kw">def</span> push(<span class="ot">self</span>, thing):
