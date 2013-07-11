@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Navigating the Postmodern Python World</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+          // Needs to escaped for Pandoc
+          displayMath: [ ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] },
+
+        TeX: {
+            Macros: {
+                cat : ["\\mathcal{#1}", 1],
+                ob  : ["\\mathrm{ob}(#1)", 1],
+                hom : ["\\mathrm{hom}(#1)", 1],
+                id  : ["\\text{id}_{#1}", 1],
+                C   : "\\mathcal{C}",
+                D   : "\\mathcal{D}",
+
+                iso    : "{\cong}\)",
+                Hask   : "{\cat{Hask}}\)",
+                yoneda : "{\mathcal{Y}}\)",
+
+                dom: ["{\text{dom}(#1)}\)", 1],
+                cod: ["{\text{cod}(#1)}\)", 1],
+            }
+        }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+<div style="display:none">
+<p>Category Theory Definitions for Haskell Programmers</p>
+</div>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../pages/slides.html">Talks</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h2 id="navigating-the-postmodern-python-world">Navigating the Postmodern Python World</h2>
+<p>If there is one defining feature of modern Python, it’s simply that is that the definition of Python itself is becoming increasingly blurred. Many projects over the last few years have taken larger and larger leaps to extend Python and reconstruct what “Python” itself means.</p>
+<p>At the same time on there are variety of technologies encroaching on Python’s niche, each bringing a variety of advantages:</p>
+<ol style="list-style-type: decimal">
+<li>Go - ( Goroutines, Types, Interfaces )</li>
+<li>Rust - ( Traits, Speed, Types )</li>
+<li>Julia - ( Speed, Types, Multiple Dispatch )</li>
+<li>Scala - ( Traits, Speed, Types )</li>
+<li>Clojure ( Metaprogramming, DSLs, Protocols )</li>
+</ol>
+<p>This is a short field-guide to the various Python responses to these technologies and new libraries and models:</p>
+<h2 id="metaprogramming">Metaprogramming</h2>
+<p>MacroPy is a metaprogramming framework which extends Python AST with a variety of syntatic constructs for modern language features which compile into standard Python code. For example we can achieve a measure algebraic datatypes using</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> macropy.case_classes <span class="ch">import</span> case
+
+<span class="ot">@case</span>
+<span class="kw">class</span> Nil():
+    <span class="kw">pass</span>
+
+<span class="ot">@case</span>
+<span class="kw">class</span> Cons(x, xs):
+    <span class="kw">pass</span>
+
+Cons(<span class="dv">1</span>, Cons(<span class="dv">2</span>, Cons(<span class="dv">3</span>, Nil())))</code></pre>
+<p>And then pattern match on those declared types:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> <span class="dt">reduce</span>(op, my_list):
+    <span class="kw">with</span> switch(my_list):
+        <span class="kw">if</span> Cons(x, Nil()):
+            <span class="kw">return</span> x
+        <span class="kw">elif</span> Cons(x, xs):
+            <span class="kw">return</span> op(x, <span class="dt">reduce</span>(op, xs))</code></pre>
+<p>What is missing however is a extensible staged metaprogramming system along the lines of <a href="http://caml.inria.fr/pub/docs/tutorial-camlp4/">camlp4</a>. This is however being addressed in the <a href="https://github.com/mythonlang">Mython</a> which provides a parser framework <a href="https://github.com/mythonlang/pgen2">pgen2</a> for defining new syntax for quoted blocks.</p>
+<pre class="sourceCode python"><code class="sourceCode python">my[namedtupledef] Point(x, y): <span class="kw">pass</span>
+
+my[c]:
+    <span class="dt">int</span> add (<span class="dt">int</span> x, <span class="dt">int</span> y) {
+        <span class="kw">return</span> x + y;
+    }
+
+<span class="kw">print</span> <span class="st">&quot;Regular Python&quot;</span></code></pre>
+<h2 id="types">Types</h2>
+<p>Python is dynamically typed language and proud of it. While I certainly don’t wish to fan the flames of the typing holy-war, there is certainly a large school of thought that building reliable applications requires stronger guarantees than unit testing alone can provide. Type systems as defined by Benjamin Pierce are:</p>
+<blockquote>
+<p>… tractable syntactic method for <strong>proving</strong> the absence of certain program behaviors by classifying phrases according to the kinds of values they compute.</p>
+</blockquote>
+<p>The emphasis is on proving properties about the space of all program behavior instead of simply enumerating a finite number of cases. It’s doubtful that going full-static typing on Python is the right solution, however there are certainly better compromises that can be reached between excess dynamic dispatch and static guarantees. The <a href="http://www.mypy-lang.org/">MyPy project</a> has reached a nice equilibrium allowing both typed and untyped code to exist in a superset of the language. For example:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="kw">def</span> simple_typed(x : <span class="dt">int</span>, y : <span class="dt">int</span>) -&gt; <span class="dt">int</span>:
+    <span class="kw">return</span> x + y
+
+simple_typed(<span class="dv">1</span>, <span class="dv">2</span>)     <span class="co"># Type-checks succesfully</span>
+
+<span class="co"># Fails: Argument 2 to &quot;simple_typed&quot; has incompatible type # &quot;float&quot;</span>
+simple_typed(<span class="dv">1</span>, <span class="fl">2.0</span>)
+
+<span class="co"># Fails: Argument 2 to &quot;simple_typed&quot; has incompatible type &quot;str&quot;</span>
+simple_typed(<span class="dv">1</span>, <span class="st">&quot;foo&quot;</span>)</code></pre>
+<p>Of course that isn’t much more useful than C. So of course we aren’t limited to just simply typed functions, there are also variables types like generics, arrow types and a variety of built in type-level functions.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> typing <span class="ch">import</span> Iterator, typevar, Generic, Function, List
+
+T = typevar(<span class="st">'T'</span>)
+
+<span class="kw">def</span> example_typed(x : Iterator[<span class="dt">int</span>]) -&gt; Iterator[<span class="dt">str</span>]:
+    <span class="kw">for</span> i in x:
+        <span class="kw">yield</span> <span class="dt">str</span>(i)
+
+<span class="kw">def</span> example_generic(x : Iterator[T]) -&gt; Iterator[T]:
+    <span class="kw">for</span> i in x:
+        <span class="kw">yield</span> i</code></pre>
+<p>We can also model more advanced generic structures like Functors and Monads.</p>
+<pre class="sourceCode python"><code class="sourceCode python">a = typevar(<span class="st">'a'</span>)
+b = typevar(<span class="st">'b'</span>)
+
+<span class="kw">class</span> Functor(Generic[a]):
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, xs : List[a]) -&gt; <span class="ot">None</span>:
+        <span class="ot">self</span>._storage = xs
+
+    <span class="kw">def</span> <span class="dt">iter</span>(<span class="ot">self</span>) -&gt; Iterator[a]:
+        <span class="kw">return</span> <span class="dt">iter</span>(<span class="ot">self</span>._storage)
+
+
+<span class="kw">def</span> fmap(f : Function[[a], b], xs : Functor[a]) -&gt; Functor[b]:
+    <span class="kw">return</span> Functor([f(x) <span class="kw">for</span> x in xs.<span class="dt">iter</span>()])
+
+
+
+<span class="kw">class</span> Monad(Generic[a]):
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, val : a) -&gt; <span class="ot">None</span>:
+        <span class="ot">self</span>.val = val
+
+
+<span class="kw">class</span> IdMonad(Monad):
+
+    <span class="co"># Monad m =&gt; a -&gt; m a</span>
+    <span class="kw">def</span> unit(<span class="ot">self</span>, x : a) -&gt; Monad[b]:
+        <span class="kw">return</span> IdMonad(x)
+
+    <span class="co"># Monad m =&gt; m a -&gt; (a -&gt; m b) -&gt; m b</span>
+    <span class="kw">def</span> bind(<span class="ot">self</span>, x : Monad[a], f : Function[[a], Monad[b]]) -&gt; Monad[b]:
+        <span class="kw">return</span> f(x.val)
+
+    <span class="co"># Monad m =&gt; m (m a) -&gt; m a</span>
+    <span class="kw">def</span> join(<span class="ot">self</span>, x : Monad[Monad[a]]) -&gt; Monad[a]:
+        <span class="kw">return</span> x.val</code></pre>
+<h2 id="speed">Speed</h2>
+<p>The most important recent development in “higher-performance” Python is the development of the higher level DataFrame container provided by the <a href="http://pandas.pydata.org/pandas-docs/dev/index.html">Pandas library</a>. Pandas operates in a very hybrid-Python space, utilizing NumPy for some operations, Cython for others, and even vanilla C for some it’s internal hash tables. Panda’s undogmatic approach to the it’s underlying architecture has lead to it becoming the de-facto library for data analysis. Pandas development embodies much of what makes the numeric Python ecosystem great.</p>
+<pre class="sourceCode python"><code class="sourceCode python">In [<span class="dv">1</span>]: <span class="ch">from</span> pandas <span class="ch">import</span> DataFrame
+
+In [<span class="dv">2</span>]: titanic = DataFrame.from_csv(<span class="st">'titanic.csv'</span>)
+
+In [<span class="dv">3</span>]: titanic.groupby(<span class="st">'pclass'</span>).survived.mean()
+pclass
+1st       <span class="fl">0.619195</span>
+2nd       <span class="fl">0.429603</span>
+3rd       <span class="fl">0.255289</span>
+Name: survived</code></pre>
+<p>However the latest incarnation in attempts to improve Python performance has been to utilize the LLVM compiler infrastructure to selectively compile segments of Python code into native code. While there is currently a shootout between the various technologies doing this, most of them do something like the following:</p>
+<ol style="list-style-type: decimal">
+<li>Some form of <code>@jit</code> or <code>@compile</code> decorator is attached to a function.</li>
+<li>The AST or bytecode of the function is extracted and fed into the compiler pipeline where it is mapped into an internal AST determining how the given logic in the function lowers to machine code given a certain set of input types.</li>
+<li>The compiled function is called with a set of types, the arguments are inspected and code is generated given the arrangements of types. The resulting code is cached against arguments so that subsequent calls dispatch straight to the native code.</li>
+</ol>
+<p>These projects have resulted in increased interest in Python language technologies and the development of the <a href="https://github.com/llvmpy/llvmpy"><code>llvmpy</code></a> project which I suspect will be more significant to the history of Python than any specific JIT compiler.</p>
+<p>The simplest example of usage ( taken from the wonderful <a href="http://llvm.org/docs/tutorial/LangImpl1.html">Kaleidescope</a> tutorial ) is a to create a simple native multiply-add function and then call it by unboxing three Python integers:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> llvm.core <span class="ch">as</span> lc
+<span class="ch">import</span> llvm.ee <span class="ch">as</span> le
+
+mod = lc.Module.new(<span class="st">'mymodule'</span>)
+
+i32 = lc.Type.<span class="dt">int</span>(<span class="dv">32</span>)
+funty = lc.Type.function(lc.Type.<span class="dt">int</span>(), [i32, i32, i32])
+
+madd = lc.Function.new(mod, funty, <span class="st">&quot;multiply&quot;</span>)
+x = madd.args[<span class="dv">0</span>]
+y = madd.args[<span class="dv">1</span>]
+z = madd.args[<span class="dv">2</span>]
+
+block = madd.append_basic_block(<span class="st">&quot;L1&quot;</span>)
+
+builder = lc.Builder.new(block)
+x0 = builder.mul(x, y)
+x1 = builder.add(x0, z)
+
+builder.ret(x1)
+
+<span class="kw">print</span> mod
+
+tm = le.TargetMachine.new(features=<span class="st">''</span>, cm=le.CM_JITDEFAULT)
+eb = le.EngineBuilder.new(mod)
+engine = eb.create(tm)
+
+ax = le.GenericValue.<span class="dt">int</span>(i32, <span class="dv">1024</span>)
+ay = le.GenericValue.<span class="dt">int</span>(i32, <span class="dv">1024</span>)
+az = le.GenericValue.<span class="dt">int</span>(i32, <span class="dv">1024</span>)
+
+ret = engine.run_function(madd, [ax, ay, az])
+
+<span class="kw">print</span> ret.as_int()
+<span class="kw">print</span> mod.to_native_assembly()</code></pre>
+<p>Which compiles generates the following LLVM IR.</p>
+<pre class="sourceCode python"><code class="sourceCode python">define i32 @multiply(i32, i32, i32) {
+L1:
+  %<span class="dv">3</span> = mul i32 %<span class="dv">0</span>, %<span class="dv">1</span>
+  %<span class="dv">4</span> = add i32 %<span class="dv">3</span>, %<span class="dv">2</span>
+  ret i32 %<span class="dv">4</span>
+}</code></pre>
+<p>While this example is a bit contrived it is however possible to generate very fast JIT’d functions that integrate well with libraries like NumPy that store their data as large blocks of unboxed memory.</p>
+<h2 id="interfaces">Interfaces</h2>
+<p>The task of decomposing behavior into composable units instead of going explicit inheritance hierarchies is a problem that Python arguably does not solve particular well and can often lead to nightmarishly complicated use of mixins. However, some sanity can be regained by using ABC module to emulate and statically defined interfaces.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> heapq
+<span class="ch">import</span> collections
+
+<span class="kw">class</span> Heap(collections.Sized):
+   <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, initial=<span class="ot">None</span>, key=<span class="kw">lambda</span> x:x):
+       <span class="ot">self</span>.key = key
+       <span class="kw">if</span> initial:
+           <span class="ot">self</span>._data = [(key(item), item) <span class="kw">for</span> item in initial]
+           heapq.heapify(<span class="ot">self</span>._data)
+       <span class="kw">else</span>:
+           <span class="ot">self</span>._data = []
+
+   <span class="kw">def</span> pop(<span class="ot">self</span>):
+       <span class="kw">return</span> heapq.heappop(<span class="ot">self</span>._data)[<span class="dv">1</span>]
+
+   <span class="kw">def</span> push(<span class="ot">self</span>, item):
+       heapq.heappush(<span class="ot">self</span>._data, (<span class="ot">self</span>.key(item), item))
+
+   <span class="kw">def</span> <span class="dt">len</span>(<span class="ot">self</span>):
+       <span class="kw">return</span> <span class="dt">len</span>(<span class="ot">self</span>._data)</code></pre>
+<p>For example to build an equivalence class that spans all instances of classes that implement an <code>eq()</code> method, we might do the following:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> abc <span class="ch">import</span> ABCMeta, abstractmethod
+
+<span class="kw">class</span> Eq(<span class="dt">object</span>):
+
+    __metaclass__ = ABCMeta
+
+    <span class="ot">@classmethod</span>
+    <span class="kw">def</span> __subclasshook__(cls, C):
+        <span class="kw">if</span> cls is Eq:
+            <span class="kw">for</span> B in C.__mro__:
+                <span class="kw">if</span> <span class="st">&quot;eq&quot;</span> in B.__dict__:
+                    <span class="kw">if</span> B.__dict__[<span class="st">&quot;eq&quot;</span>]:
+                        <span class="kw">return</span> <span class="ot">True</span>
+                    <span class="kw">break</span>
+        <span class="kw">return</span> <span class="ot">NotImplemented</span>
+
+<span class="kw">def</span> eq(a, b):
+    <span class="kw">if</span> <span class="dt">isinstance</span>(a, Eq) and <span class="dt">isinstance</span>(b, Eq) and <span class="dt">type</span>(a) == <span class="dt">type</span>(b):
+        <span class="kw">return</span> a.eq(b)
+    <span class="kw">else</span>:
+        <span class="kw">raise</span> <span class="ot">NotImplementedError</span>
+
+<span class="kw">class</span> Foo(<span class="dt">object</span>):
+    <span class="kw">def</span> eq(<span class="ot">self</span>, other):
+        <span class="kw">return</span> <span class="ot">True</span>
+
+<span class="kw">class</span> Fizz(Foo):
+    <span class="kw">pass</span>
+
+<span class="kw">class</span> Bar(<span class="dt">object</span>):
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, val):
+        <span class="ot">self</span>.val = val
+
+    <span class="kw">def</span> eq(<span class="ot">self</span>, other):
+        <span class="kw">return</span> <span class="ot">self</span>.val == other.val
+
+<span class="kw">print</span> eq(Foo(), Foo())
+<span class="kw">print</span> eq(Bar(<span class="dv">1</span>), Bar(<span class="dv">1</span>))
+<span class="kw">print</span> eq(Foo(), Bar(<span class="dv">1</span>))
+<span class="kw">print</span> eq(Foo(), Fizz())</code></pre>
+<p>However extending this kind of interface notion to functions of multiple arguments and becomes increasingly contingent on querying <code>__dict__</code> and is brittle under composition. The heart of the problem is attempting to decompose everything into interfaces that vary on a single type, when what we really want is to declare interfaces that span families of multiple types. This kind of shortcoming in OOP goes straight to the heart of the <a href="http://en.wikipedia.org/wiki/Expression_problem">Expression Problem</a>.</p>
+<p>Languages like Scala, Haskell and Rust provide solutions to this problem in the form of traits and typeclasses. For example Haskell can automatically derive the differentiation equations for the cross product of all types which implement Floating point and Equality interfaces.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> (<span class="kw">Floating</span> a, <span class="kw">Eq</span> a) <span class="ot">=&gt;</span> <span class="kw">Floating</span> (<span class="dt">Dif</span> a) <span class="kw">where</span>
+    <span class="fu">pi</span>               <span class="fu">=</span> <span class="dt">C</span> <span class="fu">pi</span>
+
+    <span class="fu">exp</span> (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">exp</span> x)
+    <span class="fu">exp</span> (<span class="dt">D</span> x x')     <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">exp</span> x) (x' <span class="fu">*</span> r)
+
+    <span class="fu">log</span> (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">log</span> x)
+    <span class="fu">log</span> p<span class="fu">@</span>(<span class="dt">D</span> x x')   <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">log</span> x) (x' <span class="fu">/</span> p)
+
+    <span class="fu">sqrt</span> (<span class="dt">C</span> x)       <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">sqrt</span> x)
+    <span class="fu">sqrt</span> (<span class="dt">D</span> x x')    <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">sqrt</span> x) (x' <span class="fu">/</span> (<span class="dv">2</span> <span class="fu">*</span> r))</code></pre>
+<h2 id="asynchronous-programming">Asynchronous Programming</h2>
+<p>In this case again we have a variety of bolted-on solutions that address the problem partially but introduce a whole set of constraints and patterns which go against the grain of regular Python. Gevent in particular adds continuations to Python itself through splicing of the underlying C stack with assembly hacks. The resulting API is very elegant API but makes reasoning about control-flow and exceptions much more complex.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> gevent
+
+<span class="kw">def</span> foo():
+    <span class="kw">print</span>(<span class="st">'Running in foo'</span>)
+    gevent.sleep(<span class="dv">0</span>)
+    <span class="kw">print</span>(<span class="st">'Explicit context switch to foo again'</span>)
+
+<span class="kw">def</span> bar():
+    <span class="kw">print</span>(<span class="st">'Explicit context to bar'</span>)
+    gevent.sleep(<span class="dv">0</span>)
+    <span class="kw">print</span>(<span class="st">'Implicit context switch back to bar'</span>)
+
+gevent.joinall([
+    gevent.spawn(foo),
+    gevent.spawn(bar),
+])</code></pre>
+<p>The control flow is show below:</p>
+<div class="figure">
+<img src="http://sdiehl.github.io/gevent-tutorial/flow.gif"></img><p class="caption"></p>
+</div>
+<p>Through rather ungraceful monkey-patching of the standard library we can emulate Erlang-style actor behavior with asynchronous entry points and internal state:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> gevent
+<span class="ch">from</span> gevent.queue <span class="ch">import</span> Queue
+<span class="ch">from</span> SimpleXMLRPCServer <span class="ch">import</span> SimpleXMLRPCServer
+
+<span class="kw">class</span> Actor(<span class="dt">object</span>):
+    _export = [
+        <span class="st">'push'</span>,
+    ]
+
+    <span class="kw">def</span> <span class="ot">__init__</span>(<span class="ot">self</span>, address):
+        <span class="ot">self</span>.queue = Queue()
+
+        <span class="ot">self</span>._serv = SimpleXMLRPCServer(address, allow_none=<span class="ot">True</span>, logRequests=<span class="ot">False</span>)
+        <span class="ot">self</span>.address = address
+
+        <span class="kw">for</span> name in <span class="ot">self</span>._exports:
+            <span class="ot">self</span>._serv.register_function(<span class="dt">getattr</span>(<span class="ot">self</span>, name))
+
+    <span class="kw">def</span> push(<span class="ot">self</span>, thing):
+        <span class="ot">self</span>.queue.put(thing)
+
+    <span class="kw">def</span> poll(<span class="ot">self</span>):
+        <span class="kw">while</span> <span class="ot">True</span>:
+            <span class="kw">print</span>(<span class="ot">self</span>.queue.get())
+
+    <span class="kw">def</span> periodic(<span class="ot">self</span>):
+        <span class="kw">while</span> <span class="ot">True</span>:
+            <span class="kw">print</span>(<span class="st">'PING'</span>)
+            gevent.sleep(<span class="dv">5</span>)
+
+    <span class="kw">def</span> serve_forever(<span class="ot">self</span>):
+        gevent.spawn(<span class="ot">self</span>.ping)
+        gevent.spawn(<span class="ot">self</span>.get)
+        <span class="ot">self</span>._serv.serve_forever()
+
+<span class="kw">def</span> main():
+    <span class="ch">from</span> gevent.monkey <span class="ch">import</span> patch_all
+    patch_all()
+
+    serve = Actor((<span class="st">''</span>, <span class="dv">8000</span>))
+    serve.serve_forever()</code></pre>
+<h2 id="dsls">DSLs</h2>
+<p>The <a href="http://rise4fun.com/z3py/tutorial">Z3 project</a> is a embedding of an external API on top of the Python object layer. For instance in Z3 to solve the n-queens problem the problem is described with Python expressions and solved by the external SMT solver:</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> Z3 <span class="ch">import</span> *
+
+Q = [ Int(<span class="st">'Q_</span><span class="ot">%i</span><span class="st">'</span> % (i + <span class="dv">1</span>)) <span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">8</span>) ]
+
+<span class="co"># Each queen is in a column {1, ... 8 }</span>
+val_c = [ And(<span class="dv">1</span> &lt;= Q[i], Q[i] &lt;= <span class="dv">8</span>) <span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">8</span>) ]
+
+<span class="co"># At most one queen per column</span>
+col_c = [ Distinct(Q) ]
+
+<span class="co"># Diagonal constraint</span>
+diag_c = [ If(i == j, 
+              <span class="ot">True</span>, 
+              And(Q[i] - Q[j] != i - j, Q[i] - Q[j] != j - i)) 
+           <span class="kw">for</span> i in <span class="dt">range</span>(<span class="dv">8</span>) <span class="kw">for</span> j in <span class="dt">range</span>(i) ]
+
+solve(val_c + col_c + diag_c)</code></pre>
+<p>Several other projects from Theano, SymPy to PySpark make extensive use of the overloading of operators to layer domain-specific semantics on top of Python expressions.</p>
+<pre class="sourceCode python"><code class="sourceCode python"><span class="ch">from</span> sympy <span class="ch">import</span> Symbol
+<span class="ch">from</span> sympy.logic.inference <span class="ch">import</span> satisfiable
+
+x = Symbol(<span class="st">'x'</span>)
+y = Symbol(<span class="st">'y'</span>)
+satisfiable((x | y) &amp; (x | ~y) &amp; (~x | y))</code></pre>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
