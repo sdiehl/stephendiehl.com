@@ -137,7 +137,7 @@ be a triple of:
 
 ```haskell
 class (Endofunctor c t) => Monad c t where
-  eta :: c (Id a) (t a)
+  eta :: c a (t a)
   mu  :: c (t (t a)) (t a)
 ```
 

@@ -177,7 +177,7 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <li>A natural transformation \(\mu : T^2 \rightarrow T\)</li>
 </ol>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="dt">Endofunctor</span> c t) <span class="ot">=&gt;</span> <span class="kw">Monad</span> c t <span class="kw">where</span>
-<span class="ot">  eta ::</span> c (<span class="dt">Id</span> a) (t a)
+<span class="ot">  eta ::</span> c a (t a)
 <span class="ot">  mu  ::</span> c (t (t a)) (t a)</code></pre>
 <p>With two <em>coherence conditions</em>:</p>
 <p>\[

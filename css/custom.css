@@ -166,3 +166,8 @@ p img {
     margin-right: auto;
     padding: 20px;
 }
+
+sup {
+    vertical-align: super;
+    font-size: 8pt;
+}

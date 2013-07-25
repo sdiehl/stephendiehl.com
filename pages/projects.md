@@ -18,9 +18,8 @@ title: Projects
 
 **Python**
 
-* [blaze](https://github.com/ContinuumIO/blaze-core) - *Blaze is the next generation of NumPy*
+* [pyrewrite](https://github.com/sdiehl/pyrewrite) - *StrategoXT rewrite engine implemented in Python*
 * [opcurry](https://github.com/sdiehl/opcurry) - *Curried versions of the Python operator module*
-* [pyrewrite](https://github.com/sdiehl/pyrewrite) - *StrategoXT rewrite core implemented in Python*
 * [aterm](https://github.com/sdiehl/aterm) - *StrategoXT aterm AST implement in Python*
 * [kaylee](https://github.com/sdiehl/kaylee) - *Map-Reduce with ZeroMQ*
 * [pure-python](https://github.com/sdiehl/pure-python) - *Cython interface for Pure*
@@ -30,4 +29,3 @@ title: Projects
 * [greengoop](https://github.com/sdiehl/greengoop) - *Misc Gevent concurrent patterns*
 * [django-sense](https://github.com/sdiehl/django-sense) - *View profiling for Django*
 * [tipy](https://github.com/sdiehl/tipy) - *A small preprocessor for Python tutorials*
-* [flowlet](https://github.com/sdiehl/flowlet) - *A small CPython structure for building coroutine pipelines*
