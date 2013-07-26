@@ -97,7 +97,7 @@ composition is illuminating:
 There is however some debate whether monads are a usefull
 expression of effect encapsulation and whether or not there are
 more composable abstractions. The area of *effect systems* is an
-area of active research with other schools of thought [^Effects].
+area of active research with other schools of thought. [^Effects]
 
 <hr/>
 
@@ -1052,6 +1052,14 @@ main = do
       startSlave ctx 
 
     otherwise -> error "Invalid arguments: master|worker <port>"
+```
+
+We can then spawn any number of instances from the shell:
+
+```bash
+$ runhaskell cloud.hs worker 5001
+$ runhaskell cloud.hs worker 5002
+$ runhaskell cloud.hs master 5003
 ```
 
 #### Conclusion

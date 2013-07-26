@@ -140,7 +140,7 @@ main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></
 <div class="figure">
 <img src="../images/transformer.svg"></img><p class="caption"></p>
 </div>
-<p>There is however some debate whether monads are a usefull expression of effect encapsulation and whether or not there are more composable abstractions. The area of <em>effect systems</em> is an area of active research with other schools of thought <sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup>.</p>
+<p>There is however some debate whether monads are a usefull expression of effect encapsulation and whether or not there are more composable abstractions. The area of <em>effect systems</em> is an area of active research with other schools of thought. <sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
 <hr></hr>
 
 <h2 id="misconception-2">Misconception #2</h2>
@@ -814,6 +814,10 @@ main <span class="fu">=</span> <span class="kw">do</span>
       startSlave ctx 
 
     <span class="fu">otherwise</span> <span class="ot">-&gt;</span> <span class="fu">error</span> <span class="st">&quot;Invalid arguments: master|worker &lt;port&gt;&quot;</span></code></pre>
+<p>We can then spawn any number of instances from the shell:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ runhaskell cloud.hs worker 5001
+$ runhaskell cloud.hs worker 5002
+$ runhaskell cloud.hs master 5003</code></pre>
 <h4 id="conclusion">Conclusion</h4>
 <p>Hopefully you feel inspired and slightly more empowered to use Haskell in web related tasks. Now go save the software industry!</p>
 <div class="footnotes">
