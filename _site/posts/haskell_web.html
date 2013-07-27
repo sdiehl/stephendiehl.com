@@ -117,7 +117,7 @@ main <span class="fu">=</span> <span class="fu">writeFile</span> <span class="st
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
   content <span class="ot">&lt;-</span> <span class="fu">readFile</span> <span class="st">&quot;foo.txt&quot;</span>
-  forM_ <span class="fu">print</span> (<span class="fu">lines</span> content)</code></pre>
+  <span class="fu">mapM_</span> <span class="fu">print</span> (<span class="fu">lines</span> content)</code></pre>
 <p>This creates a small read print loop which interacts with user input and stores internal state:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Monad.State</span>
 

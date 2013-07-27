@@ -50,7 +50,7 @@ This reads from a file and prints the lines.
 main :: IO ()
 main = do
   content <- readFile "foo.txt"
-  forM_ print (lines content)
+  mapM_ print (lines content)
 ```
 
 This creates a small read print loop which interacts with user
