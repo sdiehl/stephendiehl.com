@@ -241,7 +241,7 @@ gen title elts  = H.html $ do
   H.head $
     H.title title
   H.body $
-    mapM_ H.li elts
+    H.ul $ mapM_ H.li elts
 
 main :: IO ()
 main = do
@@ -256,9 +256,11 @@ This would output HTML like the following:
       <title>My Blog</title>
    </head>
    <body>
-      <li>foo</li>
-      <li>bar</li>
-      <li>fizz</li>
+      <ul>
+          <li>foo</li>
+          <li>bar</li>
+          <li>fizz</li>
+      </ul>
    </body>
 </html>
 ```
@@ -657,7 +659,7 @@ $ cabal install digestive-functors digestive-functors-blaze
 Digestive functors solve the very mundane but mechanical task of
 validating forms. The library provides a way to specify views and
 validation logic and handle the control flow of validation
-between the end-user and the several. There are several backends
+between the end-user and the server. There are several backends
 to render the form and handle request/response cycles depending
 on your choice of framework For arbitrary reasons we'll choose
 Happstack for this example.

@@ -231,7 +231,7 @@ gen title elts  <span class="fu">=</span> H.html <span class="fu">$</span> <span
   H.head <span class="fu">$</span>
     H.title title
   H.body <span class="fu">$</span>
-    <span class="fu">mapM_</span> H.li elts
+    H.ul <span class="fu">$</span> <span class="fu">mapM_</span> H.li elts
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
@@ -242,9 +242,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
       <span class="kw">&lt;title&gt;</span>My Blog<span class="kw">&lt;/title&gt;</span>
    <span class="kw">&lt;/head&gt;</span>
    <span class="kw">&lt;body&gt;</span>
-      <span class="kw">&lt;li&gt;</span>foo<span class="kw">&lt;/li&gt;</span>
-      <span class="kw">&lt;li&gt;</span>bar<span class="kw">&lt;/li&gt;</span>
-      <span class="kw">&lt;li&gt;</span>fizz<span class="kw">&lt;/li&gt;</span>
+      <span class="kw">&lt;ul&gt;</span>
+          <span class="kw">&lt;li&gt;</span>foo<span class="kw">&lt;/li&gt;</span>
+          <span class="kw">&lt;li&gt;</span>bar<span class="kw">&lt;/li&gt;</span>
+          <span class="kw">&lt;li&gt;</span>fizz<span class="kw">&lt;/li&gt;</span>
+      <span class="kw">&lt;/ul&gt;</span>
    <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre>
 <p>In addition to generating HTML we can also derive from it’s internal ToMarkup classes to provide HTML representations for any datatype in Haskell. A silly example might be:</p>
@@ -516,7 +518,7 @@ test key val <span class="fu">=</span> <span class="kw">do</span>
     <span class="fu">print</span> result</code></pre>
 <h4 id="digestive-functors">Digestive Functors</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> digestive-functors digestive-functors-blaze</code></pre>
-<p>Digestive functors solve the very mundane but mechanical task of validating forms. The library provides a way to specify views and validation logic and handle the control flow of validation between the end-user and the several. There are several backends to render the form and handle request/response cycles depending on your choice of framework For arbitrary reasons we’ll choose Happstack for this example.</p>
+<p>Digestive functors solve the very mundane but mechanical task of validating forms. The library provides a way to specify views and validation logic and handle the control flow of validation between the end-user and the server. There are several backends to render the form and handle request/response cycles depending on your choice of framework For arbitrary reasons we’ll choose Happstack for this example.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> digestive-functors-happstack</code></pre>
 <p>We’ll build a simple signup page with username and email validation logic.</p>
 <div class="figure">
