@@ -248,11 +248,25 @@ do x <- m
 The final result is given a monad we can form a new category
 called the *Kleisli category* out the monad. The objects are
 embedded in our original ``c`` category, but our arrows are now
-Kleisli arrows ``a -> t b``, thus arrows in the Kleisli category
-map to different objects then the underlying category it is
-formed from. The composition operator ``(>=>)`` over Kleisli
-arrows is then precisely morphism composition for Kleisli
-category.
+Kleisli arrows ``a -> T b``. The composition operator ``(>=>)``
+over Kleisli arrows is then precisely morphism composition for
+Kleisli category.
+
+The mapping between a Kleisli category formed from a category
+$\mathcal{C}$ is that:
+
+1. Objects in the Kleisli category are objects from the underlying
+  category.
+1. Morphisms are Kleisli arrows of the form : $f : A \rightarrow
+  T B$
+1. Identity morphisms in the Kleisli category are precisely $\eta$
+  in the underlying category.
+1. Composition of morphisms $f \circ g$ in terms of the underlying category is
+  defined by the mapping:
+
+$$
+f \circ g = \mu ( T f ) g
+$$
 
 Simply put, the monad laws are the category laws for the Kleisli
 category.
@@ -271,10 +285,9 @@ instance (Monad c t) => Category (Kleisli c t) where
   (Kleisli f) . (Kleisli g) = Kleisli ( f >=> g )
 ```
 
-***
-
 The Kleisli category over *Hask* is the typical monad concept
-used in day-to-day Haskell programming.
+used in day-to-day Haskell programming and is usefull for in that
+it models effectful "functions" which take pure inputs.
 
 In the case of Hask where ``c = (->)`` then we indeed see the
 instance give rise to the Monad and Functor instances similar to

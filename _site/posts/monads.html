@@ -246,7 +246,17 @@ m <span class="fu">&gt;&gt;=</span> <span class="fu">return</span> <span class="
      <span class="kw">do</span> b <span class="ot">&lt;-</span> f a
         g b</code></pre>
 <hr></hr>
-<p>The final result is given a monad we can form a new category called the <em>Kleisli category</em> out the monad. The objects are embedded in our original <code>c</code> category, but our arrows are now Kleisli arrows <code>a -&gt; t b</code>, thus arrows in the Kleisli category map to different objects then the underlying category it is formed from. The composition operator <code>(&gt;=&gt;)</code> over Kleisli arrows is then precisely morphism composition for Kleisli category.</p>
+<p>The final result is given a monad we can form a new category called the <em>Kleisli category</em> out the monad. The objects are embedded in our original <code>c</code> category, but our arrows are now Kleisli arrows <code>a -&gt; T b</code>. The composition operator <code>(&gt;=&gt;)</code> over Kleisli arrows is then precisely morphism composition for Kleisli category.</p>
+<p>The mapping between a Kleisli category formed from a category \(\mathcal{C}\) is that:</p>
+<ol style="list-style-type: decimal">
+<li>Objects in the Kleisli category are objects from the underlying category.</li>
+<li>Morphisms are Kleisli arrows of the form : \(f : A \rightarrow T B\)</li>
+<li>Identity morphisms in the Kleisli category are precisely \(\eta\) in the underlying category.</li>
+<li>Composition of morphisms \(f \circ g\) in terms of the underlying category is defined by the mapping:</li>
+</ol>
+<p>\[
+f \circ g = \mu ( T f ) g
+\]</p>
 <p>Simply put, the monad laws are the category laws for the Kleisli category.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&gt;=&gt;) ::</span> (<span class="kw">Monad</span> c t) <span class="ot">=&gt;</span> c y (t z) <span class="ot">-&gt;</span> c x (t y) <span class="ot">-&gt;</span> c x (t z)
 f <span class="fu">&gt;=&gt;</span> g <span class="fu">=</span> mu <span class="fu">.</span> <span class="fu">fmap</span> f <span class="fu">.</span> g 
@@ -259,8 +269,7 @@ f <span class="fu">&gt;=&gt;</span> g <span class="fu">=</span> mu <span class="
 
   <span class="co">-- (.) :: (Monad c t) =&gt; c y (t z) -&gt; c x (t y) -&gt; c x (t z)</span>
   (<span class="dt">Kleisli</span> f) <span class="fu">.</span> (<span class="dt">Kleisli</span> g) <span class="fu">=</span> <span class="dt">Kleisli</span> ( f <span class="fu">&gt;=&gt;</span> g )</code></pre>
-<hr></hr>
-<p>The Kleisli category over <em>Hask</em> is the typical monad concept used in day-to-day Haskell programming.</p>
+<p>The Kleisli category over <em>Hask</em> is the typical monad concept used in day-to-day Haskell programming and is usefull for in that it models effectful “functions” which take pure inputs.</p>
 <p>In the case of Hask where <code>c = (-&gt;)</code> then we indeed see the instance give rise to the Monad and Functor instances similar to the Prelude ( if the Prelude had the proper Functor/Monad hierarchy! ).</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> t <span class="kw">where</span>
 <span class="ot">  fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> t b
