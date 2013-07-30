@@ -14,7 +14,7 @@ title: Projects
 * [llvm-gen](https://github.com/sdiehl/llvm-gen) - EDSL for code generation with LLVM
 * [pipes-zeromq](https://github.com/sdiehl/pipes-zeromq) - *ZeroMQ data piplines through pipes*
 * [cats](https://github.com/sdiehl/cats) - *Generate commutative diagrams inside of Pandoc with Tikz*
-* [homc](https://github.com/sdiehl/homc) - *Higher abstraction markup language for illustrating category theoretic structures*
+* homc - *Higher abstraction markup language for illustrating category theoretic structures*
 
 **Python**
 
