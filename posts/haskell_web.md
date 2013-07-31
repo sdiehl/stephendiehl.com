@@ -28,14 +28,13 @@ studying such topics for their own merit it is certainly not a
 prerequisite for using Haskell effectively. 
 
 Part of this confusion stems from the prevalent meme that
-managing side-effects is complex in Haskell is a extremely
-complicated. One large difference between Haskell and other
-languages is that *effects in Haskell are explicit and
-unambigious.* There is a clear demarcation between logic which
-can have effects and logic which cannot. The *pure by default*
-philosophy is central to Haskell and for good reasons,
-nevertheless managing effectful operations in Haskell is really
-not difficult.
+managing side-effects in Haskell is a extremely complicated. One
+large difference between Haskell and other languages is that
+*effects in Haskell are explicit and unambigious.* There is a
+clear demarcation between logic which can have effects and logic
+which cannot. The *pure by default* philosophy is central to
+Haskell and for good reasons, nevertheless managing effectful
+operations in Haskell is really not difficult.
 
 So, for example the following simple code writes to a file.
 
