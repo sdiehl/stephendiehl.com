@@ -129,7 +129,7 @@ with signature: ``forall a. f a -> g a``.
 ***
 
 We finally can define a *monad* over a category $\mathcal{C}$ to
-be a triple of:
+be a triple $(T, \eta, \mu)$ of:
 
 1. An endofunctor $T: \mathcal{C} \rightarrow \mathcal{C}$
 1. A natural transformation $\eta : 1_\mathcal{C} \rightarrow T$
