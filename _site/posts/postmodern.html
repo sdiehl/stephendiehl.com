@@ -396,8 +396,8 @@ gevent.joinall([
             gevent.sleep(<span class="dv">5</span>)
 
     <span class="kw">def</span> serve_forever(<span class="ot">self</span>):
-        gevent.spawn(<span class="ot">self</span>.ping)
-        gevent.spawn(<span class="ot">self</span>.get)
+        gevent.spawn(<span class="ot">self</span>.periodic)
+        gevent.spawn(<span class="ot">self</span>.poll)
         <span class="ot">self</span>._serv.serve_forever()
 
 <span class="kw">def</span> main():

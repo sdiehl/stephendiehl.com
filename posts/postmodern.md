@@ -463,8 +463,8 @@ class Actor(object):
             gevent.sleep(5)
 
     def serve_forever(self):
-        gevent.spawn(self.ping)
-        gevent.spawn(self.get)
+        gevent.spawn(self.periodic)
+        gevent.spawn(self.poll)
         self._serv.serve_forever()
 
 def main():
