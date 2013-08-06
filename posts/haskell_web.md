@@ -62,10 +62,10 @@ type Interact a = StateT Int IO a
 
 repl :: Interact ()
 repl = forever $ do
-  val   <- liftIO readLn
+  val   <- lift readLn
   state <- get
-  liftIO $ putStr "Total: "
-  liftIO $ print (val + state)
+  lift $ putStr "Total: "
+  lift $ print (val + state)
   put val
 
 main = runStateT repl 0
@@ -74,16 +74,10 @@ main = runStateT repl 0
 This is an example of a monad transformer, namely the composition
 of StateT ( State Transformer ) with the IO Monad.  The values
 from the IO monad are lifted into the State monad with the
-``liftM`` function.
+``lift`` function.
 
 ```haskell
-liftM :: Monad m => (a -> r) -> m a -> m r
-```
-
-The liftIO is the special case where (``m = IO``)
-
-```haskell
-liftIO :: MonadIO m => IO a -> m a
+lift :: (Monad m, MonadTrans t) => m a -> t m a
 ```
 
 While monad transformers can sometimes be unwiedly, they are

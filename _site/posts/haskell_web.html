@@ -125,17 +125,15 @@ main <span class="fu">=</span> <span class="kw">do</span>
 
 <span class="ot">repl ::</span> <span class="dt">Interact</span> ()
 repl <span class="fu">=</span> forever <span class="fu">$</span> <span class="kw">do</span>
-  val   <span class="ot">&lt;-</span> liftIO <span class="fu">readLn</span>
+  val   <span class="ot">&lt;-</span> lift <span class="fu">readLn</span>
   state <span class="ot">&lt;-</span> get
-  liftIO <span class="fu">$</span> <span class="fu">putStr</span> <span class="st">&quot;Total: &quot;</span>
-  liftIO <span class="fu">$</span> <span class="fu">print</span> (val <span class="fu">+</span> state)
+  lift <span class="fu">$</span> <span class="fu">putStr</span> <span class="st">&quot;Total: &quot;</span>
+  lift <span class="fu">$</span> <span class="fu">print</span> (val <span class="fu">+</span> state)
   put val
 
 main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></pre>
-<p>This is an example of a monad transformer, namely the composition of StateT ( State Transformer ) with the IO Monad. The values from the IO monad are lifted into the State monad with the <code>liftM</code> function.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">liftM ::</span> <span class="kw">Monad</span> m <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> r) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m r</code></pre>
-<p>The liftIO is the special case where (<code>m = IO</code>)</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">liftIO ::</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">IO</span> a <span class="ot">-&gt;</span> m a</code></pre>
+<p>This is an example of a monad transformer, namely the composition of StateT ( State Transformer ) with the IO Monad. The values from the IO monad are lifted into the State monad with the <code>lift</code> function.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">lift ::</span> (<span class="kw">Monad</span> m, <span class="dt">MonadTrans</span> t) <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> t m a</code></pre>
 <p>While monad transformers can sometimes be unwiedly, they are straightforward and even mechanical to use after understanding their implementation. An illustration of the two monad composition is illuminating:</p>
 <div class="figure">
 <img src="../images/transformer.svg"></img><p class="caption"></p>
