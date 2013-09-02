@@ -2,6 +2,7 @@
 \usepackage[pdftex,active,tightpage]{preview}
 \usepackage{tikz}
 \usepackage{tikz-cd}
+\usepackage{diagxy}
 \usepackage{amsmath}
 \usepackage{epstopdf}
 \usetikzlibrary{arrows,shapes}
@@ -11,12 +12,9 @@
 \begin{document}
 \begin{preview}
 
-\begin{tikzcd}
-T^3 \arrow{r}{T \mu} \arrow[swap]{d}{\mu T}
-& T^2 \arrow{d}{\mu} \\
-T^2 \arrow{r}{\mu}
-& T
-\end{tikzcd}
+$$\bfig
+\square(0,0)[T^3`T^2`T^2`T;T \mu`\mu T`\mu`\mu]
+\efig$$
 
 \end{preview}
 \end{document}

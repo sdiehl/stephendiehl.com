@@ -3,6 +3,7 @@
 \usepackage{tikz}
 \usepackage{tikz-cd}
 \usepackage{amsmath}
+\usepackage[]{diagxy}
 \usepackage{epstopdf}
 \usetikzlibrary{arrows,shapes}
 
@@ -11,13 +12,9 @@
 \begin{document}
 \begin{preview}
 
-\begin{tikzcd}[node distance=2cm, auto]
-T \arrow{r}{\eta T} \arrow[swap]{d}{T \eta}
-   \arrow[equal]{rd}
-& T^2 \arrow{d}{\mu} \\
-T^2 \arrow[swap]{r}{\mu}
-& T
-\end{tikzcd}
+$$\bfig
+\Vtrianglepair[T`T^2`T`T;\eta T` t \eta `1_T `\mu `1_T]
+\efig$$
 
 \end{preview}
 \end{document}

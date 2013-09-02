@@ -9,6 +9,9 @@ This is a short, fast and analogy-free introduction to Haskell
 monads derived from a categorical perspective. This assumes you
 are familiar with Haskell typeclasses and basic category theory.
 
+*If you aren't already comfortable with monads in Haskell, please
+don't read this. It will confuse your intution even more.*
+
 Suppose we have a category $\mathcal{C}$ with objects and
 morphisms.
 
@@ -61,6 +64,10 @@ instance Functor Hask Hask Id where
   fmap f (Id a) = Id (f a)
 ```
 
+To reduce noise we will not write ``(Id a)`` everywhere and
+instead will simply write ``a`` in our type signatures and this
+will mean the same thing in Haskell types.
+
 An *endofunctor* is a functor from a category to itself.
 
 ```haskell
@@ -78,10 +85,10 @@ T^3 &= T T T: \mathcal{C} \rightarrow \mathcal{C}
 $$
 
 ```haskell
-newtype (FComp g f) x = FComp { unCompose :: g (f x) }
+newtype FComp g f x = C { unC :: g (f x) }
 
-instance (Functor b c f, Functor a b g) => Functor a c (FComp g f) where
-  fmap f (FComp xs) = FComp $ fmap (fmap f) xs
+instance (Functor a b f, Functor c d g) => Functor a d (FComp f g) where
+  fmap f (C x) = C (fmap (fmap f) x)
 ```
 
 ***
@@ -93,13 +100,15 @@ F : \mathcal{A} \rightarrow \mathcal{B} \\
 G : \mathcal{A} \rightarrow \mathcal{B}
 $$
 
-We construct a *natural transformation* $\eta$ between functors
-$\eta : F \rightarrow G$ that associates every object in $X$ in
-$\mathcal{A}$ to a morphism in $\mathcal{B}$:
+We can construct a *natural transformation* $\eta$ which is a
+mapping between functors $\eta : F \rightarrow G$ that associates
+every object $X$ in $\mathcal{A}$ to a morphism in $\mathcal{B}$:
 
 $$
 \eta_X : F(X) \rightarrow G(X)
 $$
+
+Show diagrammaticlly as:
 
 <p>
 <img src="/images/nat.svg" width="150px"/>
@@ -120,7 +129,7 @@ This is expressible in our general category class as the
 following existential type:
 
 ```haskell
-type Nat k f g = forall a. k (f a) (g a)
+type Nat c f g = forall a. c (f a) (g a)
 ```
 
 And in the case of *Hask* we a family of polymorphic functions
@@ -141,15 +150,17 @@ class (Endofunctor c t) => Monad c t where
   mu  :: c (t (t a)) (t a)
 ```
 
-With two *coherence conditions*:
+With an associativity square: 
 
 $$
 \mu \circ T \mu = \mu \circ \mu T \\
 $$
 
 <p>
-<img src="/images/coherence1.svg" width="200px"/>
+<img src="/images/coherence1.svg" width="150x"/>
 </p>
+
+And a triangle equality: 
 
 $$
 \mu \circ T \eta = \mu \circ \eta T = 1_T \\
@@ -191,15 +202,17 @@ return = eta
 join m = m >>= id
 ```
 
-In this form equivalent naturality conditions take the form:
+In this form equivalent naturality conditions for the monad's
+natural transformations give rise to regular the monad laws by
+substitution with our new definitions.
 
 ```haskell
-fmap f . return = return . f
+fmap f . return = return . f          
 fmap f . join = join . fmap (fmap f)
 ```
 
-And the equivalent coherence conditions expressed in terms of bind
-and return are:
+And the equivalent coherence conditions expressed in terms of
+bind and return are the well known Monad laws:
 
 ```haskell
 return a >>= f == f a
@@ -246,7 +259,7 @@ do x <- m
 ***
 
 The final result is given a monad we can form a new category
-called the *Kleisli category* out the monad. The objects are
+called the *Kleisli category* from the monad. The objects are
 embedded in our original ``c`` category, but our arrows are now
 Kleisli arrows ``a -> T b``. The composition operator ``(>=>)``
 over Kleisli arrows is then precisely morphism composition for
@@ -272,8 +285,8 @@ Simply put, the monad laws are the category laws for the Kleisli
 category.
 
 ```haskell
-(>=>) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
-f >=> g = mu . fmap f . g 
+(<=<) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
+f <=< g = mu . fmap f . g 
 
 newtype Kleisli c t a b = Kleisli (c a (t b))
 
@@ -282,7 +295,7 @@ instance (Monad c t) => Category (Kleisli c t) where
   id = Kleisli eta
 
   -- (.) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
-  (Kleisli f) . (Kleisli g) = Kleisli ( f >=> g )
+  (Kleisli f) . (Kleisli g) = Kleisli ( f <=< g )
 ```
 
 The Kleisli category over *Hask* is the typical monad concept

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>From Adjunctions to Monads</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        extensions: ["tex2jax.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
+          // Needs to escaped for Pandoc
+          displayMath: [ ["\\[","\\]"] ],
+          processEscapes: true
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] },
+
+        TeX: {
+            Macros: {
+                cat : ["\\mathcal{#1}", 1],
+                ob  : ["\\mathrm{ob}(#1)", 1],
+                hom : ["\\mathrm{hom}(#1)", 1],
+                id  : ["\\text{id}_{#1}", 1],
+                C   : "\\mathcal{C}",
+                D   : "\\mathcal{D}",
+
+                iso    : "{\cong}\)",
+                Hask   : "{\cat{Hask}}\)",
+                yoneda : "{\mathcal{Y}}\)",
+
+                dom: ["{\text{dom}(#1)}\)", 1],
+                cod: ["{\text{cod}(#1)}\)", 1],
+            }
+        }
+      });
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+<div style="display:none">
+<p>Category Theory Definitions for Haskell Programmers</p>
+</div>
+
+    <!-- Primary Page Layout
+    ================================================== -->
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../pages/slides.html">Talks</a></li>
+                    <li><a href="../posts.html">Writings</a></li>
+                    <li><a href="../pages/projects.html">Projects</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="from-adjunctions-to-monads">From Adjunctions to Monads</h3>
+<p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category I think showing how it manifests in Haskell is quite lovely.</p>
+<p>In the traditional commutative diagram we draw objects as dots and morphisms as arrows. In a string diagrams we invert this and and draw morphisms as as dots and objects as lines.</p>
+<p>
+<img src="../images/string4.svg"></img>
+</p>
+
+<p>Functor composition in defined as \(F : \mathcal{A} \rightarrow \mathcal{B}\) and \(G : \mathcal{B} \rightarrow \mathcal{C}\) then \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\).</p>
+<p>Composition with the identity functor over the same category is as expected.</p>
+<p>\[
+F \circ \text{Id}_B = F \\
+\text{Id}_A \circ F = F
+\]</p>
+<p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\).</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">FComp</span> f g a <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> f (g a) }
+
+<span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">FComp</span> f g) <span class="kw">where</span>
+  <span class="fu">fmap</span> f (<span class="dt">C</span> x) <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">fmap</span> (<span class="fu">fmap</span> f) x)</code></pre>
+<p>Composition will diagramatically allow us to “collapse” segements our string diagram.</p>
+<p>
+<img src="../images/string10.svg"></img>
+</p>
+
+<p>The identity functor ( \(\text{Id}\) ) that maps each morphism and object to itself.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">Id</span> a <span class="fu">=</span> <span class="dt">Identity</span> {<span class="ot"> unId ::</span> a }
+
+<span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Id</span> <span class="kw">where</span>
+    <span class="fu">fmap</span> f x <span class="fu">=</span> <span class="dt">Identity</span> (f (unId x))</code></pre>
+<p>The convention is to omit the identity functor, it is shown below as a dotted line.</p>
+<p>
+<img src="../images/string6.svg"></img>
+</p>
+
+<p>A natural transformation in our context will be a polymorphic function associated with two Haskell functor instances <code>f</code> and <code>g</code> with type signature <code>(Functor f, Functor g) =&gt; forall a. f a -&gt; g a</code>. Which could be written with the following type synonym, though we won’t make use of it.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> f g <span class="fu">=</span> forall a<span class="fu">.</span> f a <span class="ot">-&gt;</span> g a</code></pre>
+<p>
+<img src="../images/string5.svg"></img>
+</p>
+
+<p>The identity natural transform mapping a functor \(F\) to itself is written \(1_F\) and in Haskell is just (<code>id</code>). The composition of natural transformations follows the associativity laws, shown below:</p>
+<p>
+<img src="../images/string13.svg"></img>
+</p>
+
+<p>The final <em>interchange law</em> states that we can chase the natural transformations through the functors or compose natural transformation between functors and still arrive at the same result.</p>
+<p>\[
+(\alpha \beta) \circ (\alpha' \beta') = (\alpha \alpha') \circ (\beta \beta')
+\]</p>
+<p>For example a natural transformation \(\eta : 1_\mathcal{C} \rightarrow {FG}\) between the identity functor and the composition functor of \(FG\) would be drawn as:</p>
+<p>
+<img src="../images/string7.svg"></img>
+</p>
+
+<hr></hr>
+<p>An isomorphism \(F \cong G\) implies that composition of functors is invertible in that \(F G = \text{Id}_C\) and \(G F = \text{Id}_D\). An adjoint \(F ⊣ G\) between a pair of functors \(F : D \rightarrow C\) and \(G : C \rightarrow D\) is a weaker statement that for there a pair of associated natural transformations \((F, G, \epsilon, \eta)\)</p>
+<p>\(\eta\) and \(\epsilon\) are also be referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
+<p>\[
+\epsilon : FG \rightarrow 1_\mathcal{C} \\
+\eta : 1_\mathcal{D} \rightarrow FG
+\]</p>
+<p>
+<img src="../images/string8.svg"></img>
+</p>
+
+<p>Such that the following <em>triangle identities</em> hold:</p>
+<p>\[
+(\epsilon F) \circ (F \eta) = 1_F  \\
+(G \epsilon) \circ (\eta G) = 1_G 
+\]</p>
+<p>Or equivelently in terms of functors we see that in a sense an adjoint is a “half-isomorphism” or “almost inverse” but some structure is lost in one direction.</p>
+<p>\[
+FGF = F \\
+GFG = G
+\]</p>
+<p>These are drawn below:</p>
+<p>
+<img src="../images/string9.svg"></img>
+</p>
+
+
+<p>In Haskell we have the following typeclass which unfortunately requires a functional dependency in order for type inferencer to deduce which <code>fmap</code> is to be used:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="dt">Adjoint</span> f g <span class="fu">|</span> f <span class="ot">-&gt;</span> g, g <span class="ot">-&gt;</span> f <span class="kw">where</span>
+<span class="ot">  eta     ::</span> a <span class="ot">-&gt;</span> g (f a)
+<span class="ot">  epsilon ::</span> f (g a) <span class="ot">-&gt;</span> a</code></pre>
+<hr></hr>
+<p>From the Haskell Prelude we have the canonical adjoint namely <code>curry</code> and <code>uncurry</code>:</p>
+<p>\[
+\text{curry} \quad ⊣ \quad \text{uncurry}
+\]</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="kw">Functor</span> ((,) a) <span class="kw">where</span>
+  <span class="fu">fmap</span> f (x,y) <span class="fu">=</span> (x, f y)
+
+<span class="kw">instance</span> <span class="kw">Functor</span> ((<span class="ot">-&gt;</span>) a) <span class="kw">where</span>
+  <span class="fu">fmap</span> f g <span class="fu">=</span> \x <span class="ot">-&gt;</span> f (g x)</code></pre>
+<p>Which we can construction an Adjoint instance from these two functor instances:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Adjoint</span> ((,) a) ((<span class="ot">-&gt;</span>) a) <span class="kw">where</span>
+  eta x y <span class="fu">=</span> (y, x)
+  epsilon (y, f) <span class="fu">=</span> f y</code></pre>
+<p>We can check that the triangle equalities hold for this definition by showing both \((\epsilon F) \circ (F \eta)\) and \((G \epsilon) \circ (\eta G)\) reduce to the identity natural transformation ( <code>id</code> ).</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">a0 ::</span> (a <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> c)) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> (b <span class="ot">-&gt;</span> c)
+a0 f <span class="fu">=</span> \f <span class="ot">-&gt;</span> <span class="fu">fmap</span> (epsilon <span class="fu">.</span> <span class="fu">fmap</span> f) <span class="fu">.</span> eta
+a0 f <span class="fu">=</span> <span class="fu">fmap</span> (\(y, f) <span class="ot">-&gt;</span> g f y) <span class="fu">.</span> eta
+a0 f <span class="fu">=</span> \x y <span class="ot">-&gt;</span> f x y
+
+<span class="ot">a1 ::</span> ((a, b) <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> (a,b) <span class="ot">-&gt;</span> c
+a1 f <span class="fu">=</span> epsilon <span class="fu">.</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f <span class="fu">.</span> eta)
+a1 f <span class="fu">=</span> epsilon <span class="fu">.</span> <span class="fu">fmap</span> (\x y <span class="ot">-&gt;</span> f (y, x))
+a1 f <span class="fu">=</span> \(x, y) <span class="ot">-&gt;</span> f (x, y)</code></pre>
+<hr></hr>
+<p>We know a Monad is an endofunctor \(T : C \rightarrow C\) with two natural transformations \((T, \mu, \eta)\) with the usual laws:</p>
+<p>\[
+\mu \circ T \mu = \mu \circ \mu T \\
+\mu \circ T \eta = \mu \circ \eta T = 1_T \\
+\]</p>
+<p>The geometric intution is that the monad laws as manifest as topological properties of the string diagrams. Both \(\mu\) and \(\eta\) exhibit reflection symmetry and that we topolically straighten out \(\mu\).</p>
+<p>
+<img src="../images/string3.svg"></img>
+</p>
+
+<p>In Haskell we can <a href="http://www.stephendiehl.com/posts/monads.html">normally construct</a> the Monad type class from an Endofunctor and two natural transformations (\(\mu, \eta\)) or <code>join</code> and <code>return</code>.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="kw">Functor</span> t) <span class="ot">=&gt;</span> <span class="kw">Monad</span> t <span class="kw">where</span>
+<span class="ot">  eta ::</span> a <span class="ot">-&gt;</span> (t a)
+<span class="ot">  mu  ::</span> (t (t a)) <span class="ot">-&gt;</span> (t a)
+
+<span class="ot">  (&gt;&gt;=) ::</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> t b) <span class="ot">-&gt;</span> t b
+  ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
+<p>
+<img src="../images/string1.svg"></img>
+</p>
+
+<p>
+<img src="../images/string2.svg"></img>
+</p>
+
+<p>What is not immedietley apparent though is that every adjoint pair of functors gives rise to a monad \((T, \mu, \eta)\) over a category \(C\) induced by the composition of the functors to give rise to a endofunctor and natural transformations in terms of the unit and counit of the underlying adjunction:</p>
+<p>\[
+\begin{align}
+T &amp;= G \circ F &amp; : &amp;C \rightarrow C  \\
+\mu &amp;= G \epsilon &amp; : &amp;T^2 \rightarrow T \\
+\end{align}
+\]</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Adjoint</span> f g <span class="ot">=&gt;</span> <span class="kw">Monad</span> f g <span class="kw">where</span>
+<span class="ot">  muM ::</span> g (f (g (f a))) <span class="ot">-&gt;</span> g (f a)
+  muM <span class="fu">=</span> <span class="fu">fmap</span> epsilon
+
+<span class="ot">  etaM ::</span> a <span class="ot">-&gt;</span> g (f a)
+  etaM <span class="fu">=</span> eta
+
+<span class="ot">  (&gt;&gt;=) ::</span> g (f a) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> g (f b)) <span class="ot">-&gt;</span> g (f b)
+  x <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> muM (<span class="fu">fmap</span> (<span class="fu">fmap</span> f) x)</code></pre>
+<p>The geometric intution for this is clear:</p>
+<p>
+<img src="../images/string11.svg"></img>
+</p>
+
+<p>From the Monad we can then construct the Kleisli category in the usual way.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="dt">Adjoint</span> f g, <span class="dt">Category</span> c) <span class="ot">=&gt;</span> <span class="dt">Kleisli</span> c f g <span class="kw">where</span>
+<span class="ot">  idK ::</span> c x (g (f x))
+<span class="ot">  (&lt;=&lt;) ::</span> c y (g (f z)) <span class="ot">-&gt;</span> c x (g (f y)) <span class="ot">-&gt;</span> c x (g (f z))
+
+<span class="kw">instance</span> <span class="kw">Monad</span> f g <span class="ot">=&gt;</span> <span class="dt">Kleisli</span> (<span class="ot">-&gt;</span>) f g <span class="kw">where</span>
+  idK <span class="fu">=</span> eta
+  g <span class="fu">&lt;=&lt;</span> f <span class="fu">=</span> muM <span class="fu">.</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> g) <span class="fu">.</span> f
+
+<span class="kw">instance</span> (<span class="dt">Kleisli</span> c f g) <span class="ot">=&gt;</span> <span class="dt">Monoid</span> (c a (g (f a))) <span class="kw">where</span>
+  mempty  <span class="fu">=</span> idK
+  mappend <span class="fu">=</span> (<span class="fu">&lt;=&lt;</span>)</code></pre>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>

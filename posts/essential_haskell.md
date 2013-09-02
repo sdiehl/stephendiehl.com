@@ -5,8 +5,8 @@ date: August 15, 2012
 
 #### A Haskell Reading List
 
-Here is a list of what I consider the Haskell Canon. Papers which
-and books which are the signal, not the noise.
+Here is a list of what I consider the Haskell Canon. Papers and
+posts which are the signal, not the noise.
 
 * [Typeclassopedia](http://www.haskell.org/haskellwiki/Typeclassopedia)
 * [The Algebra of Algebraic Datatypes](http://chris-taylor.github.com/blog/2013/02/10/the-algebra-of-algebraic-data-types/)
