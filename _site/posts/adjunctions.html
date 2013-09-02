@@ -104,7 +104,7 @@
 <p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category I think showing how it manifests in Haskell is quite lovely.</p>
 <p>In the commutative diagrams we draw objects as dots and morphisms as arrows. In a string diagrams we invert this and draw morphisms as dots and objects as lines.</p>
 <p>
-<img src="../images/string4.svg"></img>
+<img src="../images/string4.png"></img>
 </p>
 
 <p>Functor composition in defined as \(F : \mathcal{A} \rightarrow \mathcal{B}\) and \(G : \mathcal{B} \rightarrow \mathcal{C}\) then \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\) is drawn with parallel lines.</p>
@@ -113,7 +113,7 @@
 <span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">FComp</span> f g) <span class="kw">where</span>
   <span class="fu">fmap</span> f (<span class="dt">C</span> x) <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">fmap</span> (<span class="fu">fmap</span> f) x)</code></pre>
 <p>
-<img src="../images/string10.svg"></img>
+<img src="../images/string10.png"></img>
 </p>
 
 <p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\). Composition will diagramatically allow us to “collapse” adjacent segements in our string diagram.</p>
@@ -129,18 +129,18 @@ F \circ \text{Id}_B = F \\
 \]</p>
 <p>The convention is to omit the identity functor, it is shown below as a dotted line.</p>
 <p>
-<img src="../images/string6.svg"></img>
+<img src="../images/string6.png"></img>
 </p>
 
 <p>A natural transformation in our context will be a polymorphic function associated with two Haskell functor instances <code>f</code> and <code>g</code> with type signature <code>(Functor f, Functor g) =&gt; forall a. f a -&gt; g a</code>. Which could be written with the following type synonym, though we won’t make use of it.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> f g <span class="fu">=</span> forall a<span class="fu">.</span> f a <span class="ot">-&gt;</span> g a</code></pre>
 <p>
-<img src="../images/string5.svg"></img>
+<img src="../images/string5.png"></img>
 </p>
 
 <p>The identity natural transform mapping a functor \(F\) to itself is written \(1_F\) and in Haskell is just (<code>id</code>). The composition of natural transformations follows the associativity laws, shown below:</p>
 <p>
-<img src="../images/string13.svg"></img>
+<img src="../images/string13.png"></img>
 </p>
 
 <p>The final <em>interchange law</em> states that we can chase the natural transformations through the functors or compose natural transformation between functors and still arrive at the same result.</p>
@@ -149,7 +149,7 @@ F \circ \text{Id}_B = F \\
 \]</p>
 <p>For example a natural transformation \(\eta : 1_\mathcal{C} \rightarrow {FG}\) between the identity functor and the composition functor of \(FG\) would be drawn as:</p>
 <p>
-<img src="../images/string7.svg"></img>
+<img src="../images/string7.png"></img>
 </p>
 
 <hr></hr>
@@ -159,7 +159,7 @@ F \circ \text{Id}_B = F \\
 \eta : 1_\mathcal{D} \rightarrow FG
 \]</p>
 <p>
-<img src="../images/string8.svg"></img>
+<img src="../images/string8.png"></img>
 </p>
 
 <p>Such that the following <em>triangle identities</em> hold:</p>
@@ -174,7 +174,7 @@ G \rightarrow GFG \rightarrow G
 \]</p>
 <p>These are drawn below:</p>
 <p>
-<img src="../images/string9.svg"></img>
+<img src="../images/string9.png"></img>
 </p>
 
 <p>\(\eta\) and \(\epsilon\) are also be referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
@@ -225,26 +225,29 @@ a1 f <span class="fu">=</span> \(x, y) <span class="ot">-&gt;</span> f (x, y)</c
 \mu \circ T \mu = \mu \circ \mu T \\
 \mu \circ T \eta = \mu \circ \eta T = 1_T \\
 \]</p>
-<p>The geometric intuition is that the monad laws as manifest as topological properties of the string diagrams. Both \(\mu\) and \(\eta\) exhibit reflection symmetry and that we topologically straighten out \(\eta\).</p>
 <p>
-<img src="../images/string3.svg"></img>
+<img src="../images/string3.png"></img>
 </p>
 
-<p>In Haskell we can <a href="http://www.stephendiehl.com/posts/monads.html">normally construct</a> the Monad type class from an Endofunctor and two natural transformations (\(\mu, \eta\)) or <code>join</code> and <code>return</code>.</p>
+<p>The geometric intuition is that the monad laws are reflected as topological properties of the string diagrams. Both \(\mu\) and \(\eta\) exhibit reflection symmetry and that we topologically straighten out \(\eta\) to yield the identity functor.</p>
+<p>
+<img src="../images/string1.png"></img>
+</p>
+
+<p>
+<img src="../images/string2.png"></img>
+</p>
+
+<p>In Haskell we can <a href="http://www.stephendiehl.com/posts/monads.html">normally construct</a> the Monad type class from an Endofunctor and (\(\mu, \eta\)) or <code>join</code> and <code>return</code>.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="kw">Functor</span> t) <span class="ot">=&gt;</span> <span class="kw">Monad</span> t <span class="kw">where</span>
 <span class="ot">  eta ::</span> a <span class="ot">-&gt;</span> (t a)
 <span class="ot">  mu  ::</span> (t (t a)) <span class="ot">-&gt;</span> (t a)
 
 <span class="ot">  (&gt;&gt;=) ::</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> t b) <span class="ot">-&gt;</span> t b
-  ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
-<p>
-<img src="../images/string1.svg"></img>
-</p>
+  ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> mu <span class="fu">.</span> <span class="fu">fmap</span> f
 
-<p>
-<img src="../images/string2.svg"></img>
-</p>
-
+<span class="fu">return</span> <span class="fu">=</span> eta
+join <span class="fu">=</span> mu</code></pre>
 <p>What is not immediately apparent though is that every adjoint pair of functors gives rise to a monad \((T, \mu, \eta)\) over a category \(C\) induced by the composition of the functors to give rise to a endofunctor and natural transformations in terms of the unit and counit of the underlying adjunction:</p>
 <p>\[
 \begin{align}
@@ -263,7 +266,7 @@ T &amp;= G \circ F &amp; : &amp;C \rightarrow C  \\
   x <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> muM (<span class="fu">fmap</span> (<span class="fu">fmap</span> f) x)</code></pre>
 <p>The geometric intution for this is clear:</p>
 <p>
-<img src="../images/string11.svg"></img>
+<img src="../images/string11.png"></img>
 </p>
 
 <p>From the Monad we can then construct the Kleisli category in the usual way.</p>

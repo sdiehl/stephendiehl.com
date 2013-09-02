@@ -15,7 +15,7 @@ as arrows. In a string diagrams we invert this and draw morphisms
 as dots and objects as lines.
 
 <p>
-<img src="/images/string4.svg"/>
+<img src="/images/string4.png"/>
 </p>
 
 Functor composition in defined as 
@@ -32,7 +32,7 @@ instance (Functor f, Functor g) => Functor (FComp f g) where
 ```
 
 <p>
-<img src="/images/string10.svg"/>
+<img src="/images/string10.png"/>
 </p>
 
 Generally the composition of functors $F \circ G$ is written
@@ -60,7 +60,7 @@ The convention is to omit the identity functor, it is shown below as a dotted
 line.
 
 <p>
-<img src="/images/string6.svg"/>
+<img src="/images/string6.png"/>
 </p>
 
 A natural transformation in our context will be a polymorphic function
@@ -73,7 +73,7 @@ type Nat f g = forall a. f a -> g a
 ```
 
 <p>
-<img src="/images/string5.svg"/>
+<img src="/images/string5.png"/>
 </p>
 
 The identity natural transform mapping a functor $F$ to itself is
@@ -82,7 +82,7 @@ natural transformations follows the associativity laws, shown
 below:
 
 <p>
-<img src="/images/string13.svg"/>
+<img src="/images/string13.png"/>
 </p>
 
 The final *interchange law* states that we can chase the natural
@@ -99,7 +99,7 @@ For example a natural transformation $\eta : 1_\mathcal{C}
 composition functor of $FG$ would be drawn as:
 
 <p>
-<img src="/images/string7.svg"/>
+<img src="/images/string7.png"/>
 </p>
 
 ***
@@ -117,7 +117,7 @@ $$
 $$
 
 <p>
-<img src="/images/string8.svg"/>
+<img src="/images/string8.png"/>
 </p>
 
 Such that the following *triangle identities* hold:
@@ -140,7 +140,7 @@ $$
 These are drawn below:
 
 <p>
-<img src="/images/string9.svg"/>
+<img src="/images/string9.png"/>
 </p>
 
 $\eta$ and $\epsilon$ are also be referred to respectively as the
@@ -238,19 +238,27 @@ $$
 \mu \circ T \eta = \mu \circ \eta T = 1_T \\
 $$
 
-The geometric intuition is that the monad laws as manifest as
+<p>
+<img src="/images/string3.png"/>
+</p>
+
+The geometric intuition is that the monad laws are reflected as
 topological properties of the string diagrams. Both $\mu$ and
 $\eta$ exhibit reflection symmetry and that we topologically
-straighten out $\eta$.
+straighten out $\eta$ to yield the identity functor.
 
 <p>
-<img src="/images/string3.svg"/>
+<img src="/images/string1.png"/>
+</p>
+
+<p>
+<img src="/images/string2.png"/>
 </p>
 
 In Haskell we can [normally
 construct](http://www.stephendiehl.com/posts/monads.html) the
-Monad type class from an Endofunctor and two natural
-transformations ($\mu, \eta$) or ``join`` and ``return``.
+Monad type class from an Endofunctor and ($\mu, \eta$) or
+``join`` and ``return``.
 
 ```haskell
 class (Functor t) => Monad t where
@@ -258,16 +266,11 @@ class (Functor t) => Monad t where
   mu  :: (t (t a)) -> (t a)
 
   (>>=) :: t a -> (a -> t b) -> t b
-  ma >>= f = join . fmap f
+  ma >>= f = mu . fmap f
+
+return = eta
+join = mu
 ```
-
-<p>
-<img src="/images/string1.svg"/>
-</p>
-
-<p>
-<img src="/images/string2.svg"/>
-</p>
 
 What is not immediately apparent though is that every adjoint
 pair of functors gives rise to a monad $(T, \mu, \eta)$ over a
@@ -297,7 +300,7 @@ class Adjoint f g => Monad f g where
 The geometric intution for this is clear:
 
 <p>
-<img src="/images/string11.svg"/>
+<img src="/images/string11.png"/>
 </p>
 
 From the Monad we can then construct the Kleisli category in the
