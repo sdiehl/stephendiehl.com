@@ -224,7 +224,7 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.979899"
      inkscape:cx="122.20971"
-     inkscape:cy="142.78405"
+     inkscape:cy="137.98583"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -517,5 +517,29 @@
          x="324.44919"
          y="899.7912"
          style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;fill:#aaaaaa;font-family:cmsy10;-inkscape-font-specification:cmsy10">D</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:cmitt10;-inkscape-font-specification:cmitt10"
+       x="306.41016"
+       y="864.40839"
+       id="text5201-1-7"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5203-3-6"
+         x="306.41016"
+         y="864.40839"
+         style="font-size:21px;font-family:times;-inkscape-font-specification:times">F</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:21px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:cmitt10;-inkscape-font-specification:cmitt10"
+       x="358.41016"
+       y="864.40839"
+       id="text5201-1-7-0"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan5203-3-6-7"
+         x="358.41016"
+         y="864.40839"
+         style="font-size:21px;font-family:times;-inkscape-font-specification:times">G</tspan></text>
   </g>
 </svg>

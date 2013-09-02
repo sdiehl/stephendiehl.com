@@ -102,32 +102,31 @@
         <div class="twelve columns offset-by-one content">
             <h3 id="from-adjunctions-to-monads">From Adjunctions to Monads</h3>
 <p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category I think showing how it manifests in Haskell is quite lovely.</p>
-<p>In the traditional commutative diagram we draw objects as dots and morphisms as arrows. In a string diagrams we invert this and and draw morphisms as as dots and objects as lines.</p>
+<p>In the commutative diagrams we draw objects as dots and morphisms as arrows. In a string diagrams we invert this and draw morphisms as dots and objects as lines.</p>
 <p>
 <img src="../images/string4.svg"></img>
 </p>
 
-<p>Functor composition in defined as \(F : \mathcal{A} \rightarrow \mathcal{B}\) and \(G : \mathcal{B} \rightarrow \mathcal{C}\) then \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\).</p>
-<p>Composition with the identity functor over the same category is as expected.</p>
-<p>\[
-F \circ \text{Id}_B = F \\
-\text{Id}_A \circ F = F
-\]</p>
-<p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\).</p>
+<p>Functor composition in defined as \(F : \mathcal{A} \rightarrow \mathcal{B}\) and \(G : \mathcal{B} \rightarrow \mathcal{C}\) then \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\) is drawn with parallel lines.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">FComp</span> f g a <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> f (g a) }
 
 <span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">FComp</span> f g) <span class="kw">where</span>
   <span class="fu">fmap</span> f (<span class="dt">C</span> x) <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">fmap</span> (<span class="fu">fmap</span> f) x)</code></pre>
-<p>Composition will diagramatically allow us to “collapse” segements our string diagram.</p>
 <p>
 <img src="../images/string10.svg"></img>
 </p>
 
+<p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\). Composition will diagramatically allow us to “collapse” adjacent segements in our string diagram.</p>
 <p>The identity functor ( \(\text{Id}\) ) that maps each morphism and object to itself.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">Id</span> a <span class="fu">=</span> <span class="dt">Identity</span> {<span class="ot"> unId ::</span> a }
 
 <span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Id</span> <span class="kw">where</span>
     <span class="fu">fmap</span> f x <span class="fu">=</span> <span class="dt">Identity</span> (f (unId x))</code></pre>
+<p>Composition with the identity functor in the same category is as expected.</p>
+<p>\[
+F \circ \text{Id}_B = F \\
+\text{Id}_A \circ F = F
+\]</p>
 <p>The convention is to omit the identity functor, it is shown below as a dotted line.</p>
 <p>
 <img src="../images/string6.svg"></img>
@@ -154,8 +153,7 @@ F \circ \text{Id}_B = F \\
 </p>
 
 <hr></hr>
-<p>An isomorphism \(F \cong G\) implies that composition of functors is invertible in that \(F G = \text{Id}_C\) and \(G F = \text{Id}_D\). An adjoint \(F ⊣ G\) between a pair of functors \(F : D \rightarrow C\) and \(G : C \rightarrow D\) is a weaker statement that for there a pair of associated natural transformations \((F, G, \epsilon, \eta)\)</p>
-<p>\(\eta\) and \(\epsilon\) are also be referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
+<p>An isomorphism \(F \cong G\) implies that composition of functors is invertible in that \(F G = \text{Id}_C\) and \(G F = \text{Id}_D\). An adjoint \(F ⊣ G\) between a pair of functors \(F : D \rightarrow C\) and \(G : C \rightarrow D\) is a weaker statement that for there a pair of associated natural transformations \((F, G, \epsilon, \eta)\) with:</p>
 <p>\[
 \epsilon : FG \rightarrow 1_\mathcal{C} \\
 \eta : 1_\mathcal{D} \rightarrow FG
@@ -171,19 +169,32 @@ F \circ \text{Id}_B = F \\
 \]</p>
 <p>Or equivelently in terms of functors we see that in a sense an adjoint is a “half-isomorphism” or “almost inverse” but some structure is lost in one direction.</p>
 <p>\[
-FGF = F \\
-GFG = G
+F \rightarrow FGF \rightarrow F \\
+G \rightarrow GFG \rightarrow G
 \]</p>
 <p>These are drawn below:</p>
 <p>
 <img src="../images/string9.svg"></img>
 </p>
 
-
+<p>\(\eta\) and \(\epsilon\) are also be referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
 <p>In Haskell we have the following typeclass which unfortunately requires a functional dependency in order for type inferencer to deduce which <code>fmap</code> is to be used:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="dt">Adjoint</span> f g <span class="fu">|</span> f <span class="ot">-&gt;</span> g, g <span class="ot">-&gt;</span> f <span class="kw">where</span>
 <span class="ot">  eta     ::</span> a <span class="ot">-&gt;</span> g (f a)
 <span class="ot">  epsilon ::</span> f (g a) <span class="ot">-&gt;</span> a</code></pre>
+<p>There are also two other natural transformations \(\phi, \psi\) which together with the adjoint functor pair form an <em>adjunction</em>. The adjunction can be defined in terms of the adjoint pair and this is most convienant definition in Haskell</p>
+<p>\[
+\psi \epsilon = 1_F \\
+\phi \eta = 1_G 
+\]</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">phi ::</span> <span class="dt">Adjoint</span> f g <span class="ot">=&gt;</span> (f a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> g b
+phi f <span class="fu">=</span> <span class="fu">fmap</span> f <span class="fu">.</span> eta
+
+<span class="ot">psi ::</span> <span class="dt">Adjoint</span> f g <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> g b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> b
+psi f <span class="fu">=</span> epsilon <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
+<p>Notably \(\phi\) and \(\psi\) form an isomorphism between functions <code>(a -&gt; g b)</code> and <code>(f a -&gt; b)</code> which is the same relation as the above triangle identities. Alternatively \(\eta\) and \(\epsilon\) can be expressed in terms of \(\phi\) and \(\psi\).</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">phi eta <span class="fu">=</span> <span class="fu">id</span>
+psi epsilon <span class="fu">=</span> <span class="fu">id</span> </code></pre>
 <hr></hr>
 <p>From the Haskell Prelude we have the canonical adjoint namely <code>curry</code> and <code>uncurry</code>:</p>
 <p>\[
@@ -214,7 +225,7 @@ a1 f <span class="fu">=</span> \(x, y) <span class="ot">-&gt;</span> f (x, y)</c
 \mu \circ T \mu = \mu \circ \mu T \\
 \mu \circ T \eta = \mu \circ \eta T = 1_T \\
 \]</p>
-<p>The geometric intution is that the monad laws as manifest as topological properties of the string diagrams. Both \(\mu\) and \(\eta\) exhibit reflection symmetry and that we topolically straighten out \(\mu\).</p>
+<p>The geometric intuition is that the monad laws as manifest as topological properties of the string diagrams. Both \(\mu\) and \(\eta\) exhibit reflection symmetry and that we topologically straighten out \(\eta\).</p>
 <p>
 <img src="../images/string3.svg"></img>
 </p>
@@ -234,7 +245,7 @@ a1 f <span class="fu">=</span> \(x, y) <span class="ot">-&gt;</span> f (x, y)</c
 <img src="../images/string2.svg"></img>
 </p>
 
-<p>What is not immedietley apparent though is that every adjoint pair of functors gives rise to a monad \((T, \mu, \eta)\) over a category \(C\) induced by the composition of the functors to give rise to a endofunctor and natural transformations in terms of the unit and counit of the underlying adjunction:</p>
+<p>What is not immediately apparent though is that every adjoint pair of functors gives rise to a monad \((T, \mu, \eta)\) over a category \(C\) induced by the composition of the functors to give rise to a endofunctor and natural transformations in terms of the unit and counit of the underlying adjunction:</p>
 <p>\[
 \begin{align}
 T &amp;= G \circ F &amp; : &amp;C \rightarrow C  \\
@@ -264,9 +275,10 @@ T &amp;= G \circ F &amp; : &amp;C \rightarrow C  \\
   idK <span class="fu">=</span> eta
   g <span class="fu">&lt;=&lt;</span> f <span class="fu">=</span> muM <span class="fu">.</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> g) <span class="fu">.</span> f
 
-<span class="kw">instance</span> (<span class="dt">Kleisli</span> c f g) <span class="ot">=&gt;</span> <span class="dt">Monoid</span> (c a (g (f a))) <span class="kw">where</span>
+<span class="kw">instance</span> <span class="dt">Kleisli</span> c f g <span class="ot">=&gt;</span> <span class="dt">Monoid</span> (c a (g (f a))) <span class="kw">where</span>
   mempty  <span class="fu">=</span> idK
   mappend <span class="fu">=</span> (<span class="fu">&lt;=&lt;</span>)</code></pre>
+<p>In retrospect this is trivial, but importantly leads us to the more important question: Can we recover an adjunction from a monad. The answer is Yes…</p>
         </div>
     </div>
 
