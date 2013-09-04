@@ -101,13 +101,19 @@
 
         <div class="twelve columns offset-by-one content">
             <h3 id="from-adjunctions-to-monads">From Adjunctions to Monads</h3>
-<p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category I think showing how it manifests in Haskell is quite lovely.</p>
-<p>In the commutative diagrams we draw objects as dots and morphisms as arrows. In a string diagrams we invert this and draw morphisms as dots and objects as lines.</p>
+<p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category theory how it manifests in Haskell is quite lovely.</p>
+<p>A Functor in Haskell maps objects and morphism ( i.e. functions) in a subcategory of <em>Hask</em> to objects and morphisms of another category.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> f <span class="kw">where</span>
+<span class="ot">  fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</code></pre>
+<p>And satisfies the functor laws:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> <span class="fu">id</span> <span class="fu">=</span> <span class="fu">id</span>
+<span class="fu">fmap</span> (a <span class="fu">.</span> b) <span class="fu">=</span> (<span class="fu">fmap</span> a) <span class="fu">.</span> (<span class="fu">fmap</span> b)</code></pre>
+<p>In commutative diagrams we draw objects as points and morphisms as arrows. In a string diagrams we invert this and draw morphisms as points and objects as lines.</p>
 <p>
 <img src="../images/string4.png"></img>
 </p>
 
-<p>Functor composition in defined as \(F : \mathcal{A} \rightarrow \mathcal{B}\) and \(G : \mathcal{B} \rightarrow \mathcal{C}\) then \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\) is drawn with parallel lines.</p>
+<p>Functor composition is defined for \(F : \mathcal{A} \rightarrow \mathcal{B}\), \(G : \mathcal{B} \rightarrow \mathcal{C}\) as \(G \circ F : \mathcal{A} \rightarrow \mathcal{C}\), and is drawn with parallel lines.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">FComp</span> f g a <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> f (g a) }
 
 <span class="kw">instance</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="kw">Functor</span> (<span class="dt">FComp</span> f g) <span class="kw">where</span>
@@ -116,8 +122,8 @@
 <img src="../images/string10.png"></img>
 </p>
 
-<p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\). Composition will diagramatically allow us to “collapse” adjacent segements in our string diagram.</p>
-<p>The identity functor ( \(\text{Id}\) ) that maps each morphism and object to itself.</p>
+<p>Generally the composition of functors \(F \circ G\) is written simply as \(FG\). Composition diagrammatically allows us to collapse adjacent segements in our string diagram.</p>
+<p>The identity functor ( \(\text{Id}\) ) is the functor that maps each morphism and object to itself.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">Id</span> a <span class="fu">=</span> <span class="dt">Identity</span> {<span class="ot"> unId ::</span> a }
 
 <span class="kw">instance</span> <span class="kw">Functor</span> <span class="dt">Id</span> <span class="kw">where</span>
@@ -132,7 +138,7 @@ F \circ \text{Id}_B = F \\
 <img src="../images/string6.png"></img>
 </p>
 
-<p>A natural transformation in our context will be a polymorphic function associated with two Haskell functor instances <code>f</code> and <code>g</code> with type signature <code>(Functor f, Functor g) =&gt; forall a. f a -&gt; g a</code>. Which could be written with the following type synonym, though we won’t make use of it.</p>
+<p>A natural transformation in our context will be a polymorphic function associated with two Haskell functor instances <code>f</code> and <code>g</code> with type signature <code>(Functor f, Functor g) =&gt; forall a. f a -&gt; g a</code>. Which could be written with the following type synonym.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> f g <span class="fu">=</span> forall a<span class="fu">.</span> f a <span class="ot">-&gt;</span> g a</code></pre>
 <p>
 <img src="../images/string5.png"></img>
@@ -143,17 +149,28 @@ F \circ \text{Id}_B = F \\
 <img src="../images/string13.png"></img>
 </p>
 
-<p>The final <em>interchange law</em> states that we can chase the natural transformations through the functors or compose natural transformation between functors and still arrive at the same result.</p>
+<p>The final <em>interchange law</em> states that we can chase the natural transformations through the functors horizontally or compose natural transformation between functors vertically and still arrive at the same result.</p>
 <p>\[
 (\alpha \beta) \circ (\alpha' \beta') = (\alpha \alpha') \circ (\beta \beta')
 \]</p>
-<p>For example a natural transformation \(\eta : 1_\mathcal{C} \rightarrow {FG}\) between the identity functor and the composition functor of \(FG\) would be drawn as:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">NatComp</span> f f' g g' <span class="fu">=</span> forall a<span class="fu">.</span> f' (f a) <span class="ot">-&gt;</span> g' (g a)
+
+<span class="ot">vert ::</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> f', <span class="kw">Functor</span> g, <span class="kw">Functor</span> g') <span class="ot">=&gt;</span>
+         <span class="dt">Nat</span> f' g' <span class="ot">-&gt;</span> <span class="dt">Nat</span> f g <span class="ot">-&gt;</span> <span class="dt">NatComp</span> f f' g g'
+vert a b x <span class="fu">=</span> a (<span class="fu">fmap</span> b x)
+
+<span class="ot">horiz ::</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> f', <span class="kw">Functor</span> g, <span class="kw">Functor</span> g') <span class="ot">=&gt;</span>
+          <span class="dt">Nat</span> f' g' <span class="ot">-&gt;</span> <span class="dt">Nat</span> f g <span class="ot">-&gt;</span> <span class="dt">NatComp</span> f f' g g'
+horiz a b x <span class="fu">=</span> <span class="fu">fmap</span> b (a x)</code></pre>
+<p>By the interchange law <code>horiz</code> and <code>vert</code> must be interchangable under composition. For natural transformations <code>a, b, a', b'</code> in Haskell we have the equation:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">(a <span class="fu">.</span> b) <span class="ot">`vert`</span> (a' <span class="fu">.</span> b') <span class="fu">==</span> (a <span class="ot">`horiz`</span> a') <span class="fu">.</span> (b <span class="ot">`horiz`</span> b')</code></pre>
+<p>A diagram example for a natural transformation \(\eta : 1_\mathcal{C} \rightarrow {FG}\) between the identity functor and the composition functor of \(FG\) would be drawn as:</p>
 <p>
 <img src="../images/string7.png"></img>
 </p>
 
 <hr></hr>
-<p>An isomorphism \(F \cong G\) implies that composition of functors is invertible in that \(F G = \text{Id}_C\) and \(G F = \text{Id}_D\). An adjoint \(F ⊣ G\) between a pair of functors \(F : D \rightarrow C\) and \(G : C \rightarrow D\) is a weaker statement that for there a pair of associated natural transformations \((F, G, \epsilon, \eta)\) with:</p>
+<p>An isomorphism \(F \cong G\) implies that composition of functors is invertible in that \(F G = \text{Id}_C\) and \(G F = \text{Id}_D\). An adjoint \(F ⊣ G\) between a pair of functors \(F : D \rightarrow C\) and \(G : C \rightarrow D\) is a weaker statement that there exists a pair of associated natural transformations \((F, G, \epsilon, \eta)\) with:</p>
 <p>\[
 \epsilon : FG \rightarrow 1_\mathcal{C} \\
 \eta : 1_\mathcal{D} \rightarrow FG
@@ -167,22 +184,18 @@ F \circ \text{Id}_B = F \\
 (\epsilon F) \circ (F \eta) = 1_F  \\
 (G \epsilon) \circ (\eta G) = 1_G 
 \]</p>
-<p>Or equivelently in terms of functors we see that in a sense an adjoint is a “half-isomorphism” or “almost inverse” but some structure is lost in one direction.</p>
-<p>\[
-F \rightarrow FGF \rightarrow F \\
-G \rightarrow GFG \rightarrow G
-\]</p>
 <p>These are drawn below:</p>
 <p>
 <img src="../images/string9.png"></img>
 </p>
 
-<p>\(\eta\) and \(\epsilon\) are also be referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
+<p>In terms of the categories \(C,D\) an adjoint is in some sense a “half-isomorphism” or “almost inverse” but some structure is lost in one direction.</p>
+<p>\(\eta\) and \(\epsilon\) are also referred to respectively as the <em>unit</em> and <em>counit</em>.</p>
 <p>In Haskell we have the following typeclass which unfortunately requires a functional dependency in order for type inferencer to deduce which <code>fmap</code> is to be used:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> (<span class="kw">Functor</span> f, <span class="kw">Functor</span> g) <span class="ot">=&gt;</span> <span class="dt">Adjoint</span> f g <span class="fu">|</span> f <span class="ot">-&gt;</span> g, g <span class="ot">-&gt;</span> f <span class="kw">where</span>
 <span class="ot">  eta     ::</span> a <span class="ot">-&gt;</span> g (f a)
 <span class="ot">  epsilon ::</span> f (g a) <span class="ot">-&gt;</span> a</code></pre>
-<p>There are also two other natural transformations \(\phi, \psi\) which together with the adjoint functor pair form an <em>adjunction</em>. The adjunction can be defined in terms of the adjoint pair and this is most convienant definition in Haskell</p>
+<p>There are also two other natural transformations (\(\phi, \psi\)) which together with the adjoint functor pair form an <em>adjunction</em>. The adjunction can be defined in terms of the adjoint pair and this is most convenient definition in Haskell</p>
 <p>\[
 \psi \epsilon = 1_F \\
 \phi \eta = 1_G 
@@ -192,7 +205,7 @@ phi f <span class="fu">=</span> <span class="fu">fmap</span> f <span class="fu">
 
 <span class="ot">psi ::</span> <span class="dt">Adjoint</span> f g <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> g b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> b
 psi f <span class="fu">=</span> epsilon <span class="fu">.</span> <span class="fu">fmap</span> f</code></pre>
-<p>Notably \(\phi\) and \(\psi\) form an isomorphism between functions <code>(a -&gt; g b)</code> and <code>(f a -&gt; b)</code> which is the same relation as the above triangle identities. Alternatively \(\eta\) and \(\epsilon\) can be expressed in terms of \(\phi\) and \(\psi\).</p>
+<p>Notably \(\phi\) and \(\psi\) form an isomorphism between the set of functions <code>(a -&gt; g b)</code> and <code>(f a -&gt; b)</code> which is the same relation as the above triangle identities. Alternatively \(\eta\) and \(\epsilon\) can be expressed in terms of \(\phi\) and \(\psi\).</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">phi eta <span class="fu">=</span> <span class="fu">id</span>
 psi epsilon <span class="fu">=</span> <span class="fu">id</span> </code></pre>
 <hr></hr>

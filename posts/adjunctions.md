@@ -7,22 +7,37 @@ date: August 29, 2013
 
 I thought I would share one of my favorite constructions in
 Haskell, namely that adjoint functors give rise to monads.
-Although it's a trivial result in category I think showing how it
+Although it's a trivial result in category theory how it
 manifests in Haskell is quite lovely.
 
-In the commutative diagrams we draw objects as dots and morphisms
+A Functor in Haskell maps objects and morphism ( i.e.  functions)
+in a subcategory of *Hask* to objects and morphisms of another
+category.
+
+```haskell
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+```
+
+And satisfies the functor laws:
+
+```haskell
+fmap id = id
+fmap (a . b) = (fmap a) . (fmap b)
+```
+
+In commutative diagrams we draw objects as points and morphisms
 as arrows. In a string diagrams we invert this and draw morphisms
-as dots and objects as lines.
+as points and objects as lines.
 
 <p>
 <img src="/images/string4.png"/>
 </p>
 
-Functor composition in defined as 
-$F : \mathcal{A} \rightarrow \mathcal{B}$ and 
-$G : \mathcal{B} \rightarrow \mathcal{C}$ 
-then $G \circ F : \mathcal{A} \rightarrow \mathcal{C}$ is drawn
-with parallel lines.
+Functor composition is defined for $F : \mathcal{A} \rightarrow
+\mathcal{B}$, $G : \mathcal{B} \rightarrow \mathcal{C}$ as $G
+\circ F : \mathcal{A} \rightarrow \mathcal{C}$, and is drawn with
+parallel lines.
 
 ```haskell
 newtype FComp f g a = C { unC :: f (g a) }
@@ -36,11 +51,11 @@ instance (Functor f, Functor g) => Functor (FComp f g) where
 </p>
 
 Generally the composition of functors $F \circ G$ is written
-simply as $FG$. Composition will diagramatically allow us to
-"collapse" adjacent segements in our string diagram.
+simply as $FG$. Composition diagrammatically allows us to
+collapse adjacent segements in our string diagram.
 
-The identity functor ( $\text{Id}$ ) that maps each morphism and
-object to itself.
+The identity functor ( $\text{Id}$ ) is the functor that maps
+each morphism and object to itself.
 
 ```haskell
 newtype Id a = Identity { unId :: a }
@@ -66,7 +81,7 @@ line.
 A natural transformation in our context will be a polymorphic function
 associated with two Haskell functor instances ``f`` and ``g`` with type
 signature ``(Functor f, Functor g) => forall a. f a -> g a``. Which could be written with
-the following type synonym, though we won't make use of it.
+the following type synonym.
 
 ```haskell
 type Nat f g = forall a. f a -> g a
@@ -86,15 +101,35 @@ below:
 </p>
 
 The final *interchange law* states that we can chase the natural
-transformations through the functors or compose natural
-transformation between functors and still arrive at the same
-result.
+transformations through the functors horizontally or compose
+natural transformation between functors vertically and still
+arrive at the same result.
 
 $$
 (\alpha \beta) \circ (\alpha' \beta') = (\alpha \alpha') \circ (\beta \beta')
 $$
 
-For example a natural transformation $\eta : 1_\mathcal{C}
+```haskell
+type NatComp f f' g g' = forall a. f' (f a) -> g' (g a)
+
+vert :: (Functor f, Functor f', Functor g, Functor g') =>
+         Nat f' g' -> Nat f g -> NatComp f f' g g'
+vert a b x = a (fmap b x)
+
+horiz :: (Functor f, Functor f', Functor g, Functor g') =>
+          Nat f' g' -> Nat f g -> NatComp f f' g g'
+horiz a b x = fmap b (a x)
+```
+
+By the interchange law ``horiz`` and ``vert`` must be
+interchangable under composition. For natural transformations
+``a, b, a', b'`` in Haskell we have the equation:
+
+```haskell
+(a . b) `vert` (a' . b') == (a `horiz` a') . (b `horiz` b')
+```
+
+A diagram example for a natural transformation $\eta : 1_\mathcal{C}
 \rightarrow {FG}$ between the identity functor and the
 composition functor of $FG$ would be drawn as:
 
@@ -106,9 +141,9 @@ composition functor of $FG$ would be drawn as:
 
 An isomorphism $F \cong G$ implies that composition of functors
 is invertible in that $F G = \text{Id}_C$ and $G F =
-\text{Id}_D$. An adjoint $F ⊣ G$ between a pair of functors $F : D
-\rightarrow C$ and $G : C \rightarrow D$ is a weaker statement
-that for there a pair of associated natural transformations
+\text{Id}_D$. An adjoint $F ⊣ G$ between a pair of functors $F :
+D \rightarrow C$ and $G : C \rightarrow D$ is a weaker statement
+that there exists a pair of associated natural transformations
 $(F, G, \epsilon, \eta)$ with:
 
 $$
@@ -127,23 +162,17 @@ $$
 (G \epsilon) \circ (\eta G) = 1_G 
 $$
 
-
-Or equivelently in terms of functors we see that in a sense an
-adjoint is a "half-isomorphism" or "almost inverse" but some
-structure is lost in one direction.
-
-$$
-F \rightarrow FGF \rightarrow F \\
-G \rightarrow GFG \rightarrow G
-$$
-
 These are drawn below:
 
 <p>
 <img src="/images/string9.png"/>
 </p>
 
-$\eta$ and $\epsilon$ are also be referred to respectively as the
+In terms of the categories $C,D$ an adjoint is in some sense a
+"half-isomorphism" or "almost inverse" but some structure is lost
+in one direction.
+
+$\eta$ and $\epsilon$ are also referred to respectively as the
 *unit* and *counit*.
 
 In Haskell we have the following typeclass which unfortunately
@@ -156,10 +185,10 @@ class (Functor f, Functor g) => Adjoint f g | f -> g, g -> f where
   epsilon :: f (g a) -> a
 ```
 
-There are also two other natural transformations $\phi, \psi$
+There are also two other natural transformations ($\phi, \psi$)
 which together with the adjoint functor pair form an
 *adjunction*.  The adjunction can be defined in terms of the
-adjoint pair and this is most convienant definition in Haskell
+adjoint pair and this is most convenient definition in Haskell
 
 $$
 \psi \epsilon = 1_F \\
@@ -174,10 +203,10 @@ psi :: Adjoint f g => (a -> g b) -> f a -> b
 psi f = epsilon . fmap f
 ```
 
-Notably $\phi$ and $\psi$ form an isomorphism between functions
-``(a -> g b)`` and ``(f a -> b)`` which is the same relation as
-the above triangle identities. Alternatively $\eta$ and
-$\epsilon$ can be expressed in terms of $\phi$ and $\psi$.
+Notably $\phi$ and $\psi$ form an isomorphism between the set of
+functions ``(a -> g b)`` and ``(f a -> b)`` which is the same
+relation as the above triangle identities. Alternatively $\eta$
+and $\epsilon$ can be expressed in terms of $\phi$ and $\psi$.
 
 ```haskell
 phi eta = id
