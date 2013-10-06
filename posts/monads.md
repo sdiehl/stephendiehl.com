@@ -203,7 +203,7 @@ join m = m >>= id
 ```
 
 In this form equivalent naturality conditions for the monad's
-natural transformations give rise to regular the monad laws by
+natural transformations give rise to the regular monad laws by
 substitution with our new definitions.
 
 ```haskell
@@ -299,7 +299,7 @@ instance (Monad c t) => Category (Kleisli c t) where
 ```
 
 The Kleisli category over *Hask* is the typical monad concept
-used in day-to-day Haskell programming and is usefull for in that
+used in day-to-day Haskell programming and is usefull in that
 it models effectful "functions" which take pure inputs.
 
 In the case of Hask where ``c = (->)`` then we indeed see the
