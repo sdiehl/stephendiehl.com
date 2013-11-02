@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Agda Quickstart Guide</title>
+    <title>Agda Tutorial</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -103,21 +103,104 @@
             <h3 id="agda-quickstart-guide">Agda Quickstart Guide</h3>
 <p>There wasn’t much information on about bootstrapping an Agda installation so I figured I’d write a quick guide. I’m assuming you have the neccesary Haskell infastructure in place.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> agda agda-executable</code></pre>
-<p><br /> Then download and install the standard library.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">wget</span> http://www.cse.chalmers.se/~nad/software/lib-0.6.tar.gz
-<span class="kw">tar</span> xzf lib-0.6.tar.gz
-<span class="kw">mkdir</span> ~/.agda
-<span class="kw">cp</span> -R lib-0.6/src ~/.agda</code></pre>
-<p><br /> The Hello World program for Agda. Suprisingly printing to the screen is non-trivial, but logic is not!</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">HelloLogic</span> <span class="kw">where</span>
- 
-open <span class="kw">import</span> <span class="dt">Data.Bool</span>
-open <span class="kw">import</span> <span class="dt">Data.Product</span>
- 
-test <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">→</span> <span class="dt">Bool</span> <span class="ot">→</span> <span class="dt">Bool</span> × <span class="dt">Bool</span> × <span class="dt">Bool</span>
-test x y <span class="fu">=</span> x ∧ y , x ∨ y , <span class="fu">not</span> x</code></pre>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;.agda/&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> HelloLogic.agda</code></pre>
-<p>It then type checks. Your work here is done!</p>
+<p>For integration with Emacs run</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">agda-mode setup</code></pre>
+<p><br /> Then download and install the standard library to <code>AgdaLibrary</code> or yoru directory of choice.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">wget</span> http://www.cse.chalmers.se/~nad/software/lib-0.7.tar.gz
+$ <span class="kw">tar</span> xzf lib-0.7.tar.gz
+$ <span class="kw">mkdir</span> ~/AgdaLibrary
+$ <span class="kw">cp</span> -R lib-0.6/src ~/AgdaLibrary</code></pre>
+<p><br /> Create a file <code>Fibonacci.agda</code> with the contents:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Fibonacci</span> <span class="kw">where</span>
+
+open <span class="kw">import</span> <span class="dt">Data.Nat</span>
+
+fib <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ
+fib <span class="dv">0</span> <span class="fu">=</span> <span class="dv">0</span>
+fib <span class="dv">1</span> <span class="fu">=</span> <span class="dv">1</span>
+fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span> fib n</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/AgdaLibrary&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> Fibonacci.agda</code></pre>
+<p>It type checks.</p>
+<h3 id="interactive-editing">Interactive Editing</h3>
+<p>Create a empty File “Interactive.agda” and open it with Emacs.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ emacs Interactive.agda</code></pre>
+<p>Start by entering the following following module:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Interactive</span> <span class="kw">where</span></code></pre>
+<p>Load the code into interactive session by Pressing <code>Ctrl-c Ctrl-l</code>.</p>
+<p>Agda uses unicode prolifically and Emacs can automaticlly translate some common latex shortcuts to unicode:</p>
+<table>
+<tr>
+<td>
+<code>\to</code>
+</td>
+<td>
+→
+</td>
+</tr>
+<tr>
+<td>
+<code>\bn</code>
+</td>
+<td>
+ℕ
+</td>
+</tr>
+<tr>
+<td>
+<code>\all</code>
+</td>
+<td>
+∀
+</td>
+</tr>
+</table>
+
+
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> ℕ <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
+  zero <span class="fu">:</span> ℕ
+  suc  <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
+<p>For symbols that are not shortcut bound you can press <code>Ctrl-x 8 Return</code> and tab complete to see the available list of symbols.</p>
+<p>Now to use the interactive mode, enter the following coe.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span> <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">→</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">A</span>
+<span class="fu">id</span> a <span class="fu">=</span> <span class="fu">?</span></code></pre>
+<p>Loading this with <code>Ctrl-c Ctrl-l</code> will tell agda to replace the Hole <code>?</code> with a anonymous metavariable <code>{ }0</code>. This is the value we aim to determine. Highlighting the hole and typing <code>Ctrl-c Ctrl-,</code> will show the corresponding goals needed to finish the program.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">Goal: .A
+————————————————————————————————————————————————————————————
+a  <span class="kw">:</span> .A
+.A <span class="kw">:</span> Set</code></pre>
+<p>Of course the id function expression can only inhabited by one value, namely <code>a</code>.</p>
+<p>We can attempt to substitute a value into the hole by pressing <code>Ctrl-c Ctrl-Space</code> which will prompt you for a value. For example if we attempt to provide <code>zero</code> we will get the following type error:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">ℕ !=<span class="kw">&lt;</span> .A of <span class="kw">type</span> Set
+when checking that the expression zero has <span class="kw">type</span> .A</code></pre>
+<p>For cases this like this where the value is sufficiently constrained by the type agda can often automatically fill out the value by using the Auto tactic. Highlight the hole and fill and press <code>Ctrl-c Ctrl-a</code> to auto complete the implementation.</p>
+<p>Now we define our Bool type.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Bool</span> <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
+  false <span class="fu">:</span> <span class="dt">Bool</span>
+  true  <span class="fu">:</span> <span class="dt">Bool</span></code></pre>
+<p>To write down an <code>and</code> function there are two combinations of arguments we have to deal with, namely <code>true false</code> and <code>false true</code>. Agda knows the types of the arguments and can write most of our function for us.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+<span class="fu">and</span> a b <span class="fu">=</span> <span class="fu">?</span></code></pre>
+<p>Highlighting the hole and pressing <code>Ctrl-c Ctrl-,</code> shows us the proof we need to complete.</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">Goal: Bool
+————————————————————————————————————————————————————————————
+b <span class="kw">:</span> Bool
+a <span class="kw">:</span> Bool</code></pre>
+<p>Highlighting the hole again and pressing <code>Ctrl-c Ctrl-c</code> will let us introduce a case for the first variable on the left hand side, in this case <code>b</code> first..</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+<span class="fu">and</span> a false <span class="fu">=</span> { }<span class="dv">0</span>
+<span class="fu">and</span> a true <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
+<p>We know how two hole for the each case. Highlighting the first and doign the same procedure will the fill in the cases for a.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+<span class="fu">and</span> false false <span class="fu">=</span> { }<span class="dv">0</span>
+<span class="fu">and</span> false true <span class="fu">=</span> { }<span class="dv">1</span>
+<span class="fu">and</span> true false <span class="fu">=</span> { }<span class="dv">2</span>
+<span class="fu">and</span> true true <span class="fu">=</span> { }<span class="dv">3</span></code></pre>
+<p>We need then only fill in the right hand sides.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+<span class="fu">and</span> false false <span class="fu">=</span> false
+<span class="fu">and</span> false true <span class="fu">=</span> false
+<span class="fu">and</span> true false <span class="fu">=</span> false
+<span class="fu">and</span> true true <span class="fu">=</span> true</code></pre>
         </div>
     </div>
 

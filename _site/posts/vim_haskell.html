@@ -130,7 +130,7 @@ map &lt;Leader&gt;s :SyntasticToggleMode&lt;CR&gt;</code></pre>
 <p><strong>ghc-mod</strong></p>
 <p>ghcmod is a command line tool to analyze Haskell source. It integrates with syntastic to provide integration with GHCi.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">$ cabal install ghc-mod</code></pre>
-<p>Pressing ( <code>tu</code> ) can then be used to update the background GHC process with the file (from disk). This updates the tagbar and allows you to fill in any missing types by highlighting the toplevel function definition and pressing ( <code>tw</code> ) to infer the corresponding type signature of the highlighted toplevel function and add it to the line above. As usual the signature is the inferred by GHC is guaranteed to be the <em>most general type</em>, not neccessarily the most usefull one.</p>
+<p>Pressing ( <code>tu</code> ) can then be used to update the background GHC process with the file (from disk). This updates the tagbar and allows you to fill in any missing types by highlighting the toplevel function definition and pressing ( <code>tw</code> ) to infer the corresponding type signature of the highlighted toplevel function and add it to the line above. As usual the signature is the inferred by GHC is guaranteed to be the <em>most general type</em>, not necessarily the most usefull one.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala"><span class="st">&quot; Reload</span>
 map &lt;silent&gt; tu :call <span class="fu">GHC_BrowseAll</span>()&lt;CR&gt;
 <span class="st">&quot; Type Lookup</span>
@@ -168,7 +168,7 @@ au FileType haskell nnoremap &lt;buffer&gt; &lt;silent&gt; &lt;F3&gt; :Hdevtools
 <pre class="sourceCode scala"><code class="sourceCode scala">nmap &lt;leader&gt;= :TagbarToggle&lt;CR&gt;
 let g:tagbar_autofocus = <span class="dv">1</span></code></pre>
 <p><strong>vim-slime</strong></p>
-<p><code>vim-slime</code> is a plugin to allow one-way communication between vim and a tmux shell, allowing you to interactively send code to ghci. To integrate with tmux add the following to your <code>.vimrc</code>, then start a seperate terminal process running <code>tmux</code> and <code>ghci</code>.</p>
+<p><code>vim-slime</code> is a plugin to allow one-way communication between vim and a tmux shell, allowing you to interactively send code to ghci. To integrate with tmux add the following to your <code>.vimrc</code>, then start a separate terminal process running <code>tmux</code> and <code>ghci</code>.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">let g:slime_target = <span class="st">&quot;tmux&quot;</span>
 let g:slime_paste_file = <span class="fu">tempname</span>()</code></pre>
 <p>In visual mode you now press ( <code>Ctrl-C Ctrl-C</code> ) to send the current block to the tmux session. Upon initial load it will prompt you for the tmux session name and vim panel.</p>

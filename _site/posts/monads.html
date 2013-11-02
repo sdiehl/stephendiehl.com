@@ -219,7 +219,7 @@ G : \mathcal{A} \rightarrow \mathcal{B}
  
 <span class="fu">return</span> <span class="fu">=</span> eta
 join m <span class="fu">=</span> m <span class="fu">&gt;&gt;=</span> <span class="fu">id</span></code></pre>
-<p>In this form equivalent naturality conditions for the monad’s natural transformations give rise to regular the monad laws by substitution with our new definitions.</p>
+<p>In this form equivalent naturality conditions for the monad’s natural transformations give rise to the regular monad laws by substitution with our new definitions.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">fmap</span> f <span class="fu">.</span> <span class="fu">return</span> <span class="fu">=</span> <span class="fu">return</span> <span class="fu">.</span> f          
 <span class="fu">fmap</span> f <span class="fu">.</span> join <span class="fu">=</span> join <span class="fu">.</span> <span class="fu">fmap</span> (<span class="fu">fmap</span> f)</code></pre>
 <p>And the equivalent coherence conditions expressed in terms of bind and return are the well known Monad laws:</p>
@@ -273,7 +273,7 @@ f <span class="fu">&lt;=&lt;</span> g <span class="fu">=</span> mu <span class="
 
   <span class="co">-- (.) :: (Monad c t) =&gt; c y (t z) -&gt; c x (t y) -&gt; c x (t z)</span>
   (<span class="dt">Kleisli</span> f) <span class="fu">.</span> (<span class="dt">Kleisli</span> g) <span class="fu">=</span> <span class="dt">Kleisli</span> ( f <span class="fu">&lt;=&lt;</span> g )</code></pre>
-<p>The Kleisli category over <em>Hask</em> is the typical monad concept used in day-to-day Haskell programming and is usefull for in that it models effectful “functions” which take pure inputs.</p>
+<p>The Kleisli category over <em>Hask</em> is the typical monad concept used in day-to-day Haskell programming and is usefull in that it models effectful “functions” which take pure inputs.</p>
 <p>In the case of Hask where <code>c = (-&gt;)</code> then we indeed see the instance give rise to the Monad and Functor instances similar to the Prelude ( if the Prelude had the proper Functor/Monad hierarchy! ).</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="kw">Functor</span> t <span class="kw">where</span>
 <span class="ot">  fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> t a <span class="ot">-&gt;</span> t b
