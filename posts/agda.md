@@ -3,7 +3,7 @@ title: Agda Tutorial
 date: Jun 15, 2012
 ---
 
-### Agda Quickstart Guide
+### Agda Tutorial
 
 There wasn't much information on about bootstrapping
 an Agda installation so I figured I'd write a quick guide.
