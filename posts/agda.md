@@ -30,7 +30,7 @@ yoru directory of choice.
 $ wget http://www.cse.chalmers.se/~nad/software/lib-0.7.tar.gz
 $ tar xzf lib-0.7.tar.gz
 $ mkdir ~/AgdaLibrary
-$ cp -R lib-0.6/src ~/AgdaLibrary
+$ cp -R lib-0.7/src ~/AgdaLibrary
 ```
 
 \
