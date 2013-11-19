@@ -7,7 +7,7 @@ date: Jun 15, 2012
 
 There wasn't much information on about bootstrapping
 an Agda installation so I figured I'd write a quick guide.
-I'm assuming you have the neccesary Haskell infastructure in
+I'm assuming you have the necessary Haskell infrastructure in
 place.
 
 ```bash
@@ -35,7 +35,7 @@ $ cp -R lib-0.7/src ~/AgdaLibrary
 
 \
 
-Create a file ``Fibonacci.agda`` with the contents:
+For a simple complete example, create a file ``Fibonacci.agda`` with the contents:
 
 ```haskell
 module Fibonacci where
@@ -45,14 +45,14 @@ open import Data.Nat
 fib : ℕ → ℕ
 fib 0 = 0
 fib 1 = 1
-fib (suc (suc n)) = fib (suc n) + fib n
+fib (succ (succ n)) = fib (succ n) + fib n
 ```
 
 ```bash
 $ agda --compile --include-path="~/AgdaLibrary" --include-path="." Fibonacci.agda
 ```
 
-It type checks.
+Veriy that it type checks and compiles.
 
 ### Interactive Editing
 
@@ -93,7 +93,7 @@ translate some common latex shortcuts to unicode:
 ```haskell
 data ℕ : Set where
   zero : ℕ
-  suc  : ℕ → ℕ
+  succ : ℕ → ℕ
 ```
 
 For symbols that are not shortcut bound you can press ``Ctrl-x 8
@@ -177,7 +177,7 @@ and a true = { }1
 ```
 
 We know how two hole for the each case. Highlighting the first
-and doign the same procedure will the fill in the cases for a.
+and doing the same procedure will the fill in the cases for a.
 
 ```haskell
 and : Bool -> Bool -> Bool
@@ -195,4 +195,70 @@ and false false = false
 and false true = false
 and true false = false
 and true true = true
+```
+
+#### Inductive Definitions
+
+We have the definition of natural number
+
+```haskell
+data ℕ : Set where
+  zero : ℕ
+  succ  : ℕ → ℕ
+```
+
+We wish to define an addition over natural numbers.
+
+```haskell
+add : ℕ -> ℕ -> ℕ
+add x y = { }0
+```
+
+We can stub out our addition function for naturals and let Agda fill in
+the cases by pressing ``Ctrl-c Ctrl-c`` and specifying the pattern variable
+``x``.
+
+```haskell
+add : ℕ -> ℕ -> ℕ
+add zero y = { }0
+add (succ x) y = { }1
+```
+
+The first pattern can be inferred automatically, but the second follows the normal inductive definition of
+repeatedly applying successors.
+
+```haskell
+add : ℕ -> ℕ -> ℕ
+add zero y = y
+add (succ x) y = succ (add x y)
+```
+
+This can also be written equivalently by specifying an infix operator.
+
+```haskell
+_+_ : ℕ -> ℕ -> ℕ
+_+_ zero y = y
+_+_ (succ x) y = succ (x + y)
+```
+
+#### Implicit Arguments
+
+Agda of course allows us to specify functions which span multiple types. For example the if-then-else blocks
+can be written in Agda as the following de sugared function.
+
+```haskell
+ife : (A : Set) -> Bool -> A ->	A -> A
+ife t true x y = x
+ife t false x y = y
+```
+
+The value `(A : Set)` specifies that the type of the A to bind over the
+the variable A. This is of course trivial for the type checker to infer
+at call site so we can instead write it as an implicit parameter and let
+the type checker do just that.
+
+```haskell
+ife' : {A : Set} -> Bool -> A -> A -> A
+ife' true x y = x
+ife' false x y = y
 ```

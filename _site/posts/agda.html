@@ -101,7 +101,7 @@
 
         <div class="twelve columns offset-by-one content">
             <h3 id="agda-tutorial">Agda Tutorial</h3>
-<p>There wasn’t much information on about bootstrapping an Agda installation so I figured I’d write a quick guide. I’m assuming you have the neccesary Haskell infastructure in place.</p>
+<p>There wasn’t much information on about bootstrapping an Agda installation so I figured I’d write a quick guide. I’m assuming you have the necessary Haskell infrastructure in place.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> agda agda-executable</code></pre>
 <p>For integration with Emacs run</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">agda-mode setup</code></pre>
@@ -110,7 +110,7 @@
 $ <span class="kw">tar</span> xzf lib-0.7.tar.gz
 $ <span class="kw">mkdir</span> ~/AgdaLibrary
 $ <span class="kw">cp</span> -R lib-0.7/src ~/AgdaLibrary</code></pre>
-<p><br /> Create a file <code>Fibonacci.agda</code> with the contents:</p>
+<p><br /> For a simple complete example, create a file <code>Fibonacci.agda</code> with the contents:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Fibonacci</span> <span class="kw">where</span>
 
 open <span class="kw">import</span> <span class="dt">Data.Nat</span>
@@ -118,9 +118,9 @@ open <span class="kw">import</span> <span class="dt">Data.Nat</span>
 fib <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ
 fib <span class="dv">0</span> <span class="fu">=</span> <span class="dv">0</span>
 fib <span class="dv">1</span> <span class="fu">=</span> <span class="dv">1</span>
-fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span> fib n</code></pre>
+fib (<span class="fu">succ</span> (<span class="fu">succ</span> n)) <span class="fu">=</span> fib (<span class="fu">succ</span> n) <span class="fu">+</span> fib n</code></pre>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/AgdaLibrary&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> Fibonacci.agda</code></pre>
-<p>It type checks.</p>
+<p>Veriy that it type checks and compiles.</p>
 <h3 id="interactive-editing">Interactive Editing</h3>
 <p>Create a empty File “Interactive.agda” and open it with Emacs.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ emacs Interactive.agda</code></pre>
@@ -158,7 +158,7 @@ fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span
 
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> ℕ <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
   zero <span class="fu">:</span> ℕ
-  suc  <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
+  <span class="fu">succ</span> <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
 <p>For symbols that are not shortcut bound you can press <code>Ctrl-x 8 Return</code> and tab complete to see the available list of symbols.</p>
 <p>Now to use the interactive mode, enter the following coe.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span> <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">→</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">A</span>
@@ -189,7 +189,7 @@ a <span class="kw">:</span> Bool</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
 <span class="fu">and</span> a false <span class="fu">=</span> { }<span class="dv">0</span>
 <span class="fu">and</span> a true <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
-<p>We know how two hole for the each case. Highlighting the first and doign the same procedure will the fill in the cases for a.</p>
+<p>We know how two hole for the each case. Highlighting the first and doing the same procedure will the fill in the cases for a.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
 <span class="fu">and</span> false false <span class="fu">=</span> { }<span class="dv">0</span>
 <span class="fu">and</span> false true <span class="fu">=</span> { }<span class="dv">1</span>
@@ -201,6 +201,35 @@ a <span class="kw">:</span> Bool</code></pre>
 <span class="fu">and</span> false true <span class="fu">=</span> false
 <span class="fu">and</span> true false <span class="fu">=</span> false
 <span class="fu">and</span> true true <span class="fu">=</span> true</code></pre>
+<h4 id="inductive-definitions">Inductive Definitions</h4>
+<p>We have the definition of natural number</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> ℕ <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
+  zero <span class="fu">:</span> ℕ
+  <span class="fu">succ</span>  <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
+<p>We wish to define an addition over natural numbers.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">add <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
+add x y <span class="fu">=</span> { }<span class="dv">0</span></code></pre>
+<p>We can stub out our addition function for naturals and let Agda fill in the cases by pressing <code>Ctrl-c Ctrl-c</code> and specifying the pattern variable <code>x</code>.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">add <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
+add zero y <span class="fu">=</span> { }<span class="dv">0</span>
+add (<span class="fu">succ</span> x) y <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
+<p>The first pattern can be inferred automatically, but the second follows the normal inductive definition of repeatedly applying successors.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">add <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
+add zero y <span class="fu">=</span> y
+add (<span class="fu">succ</span> x) y <span class="fu">=</span> <span class="fu">succ</span> (add x y)</code></pre>
+<p>This can also be written equivalently by specifying an infix operator.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">_<span class="fu">+</span>_ <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
+_<span class="fu">+</span>_ zero y <span class="fu">=</span> y
+_<span class="fu">+</span>_ (<span class="fu">succ</span> x) y <span class="fu">=</span> <span class="fu">succ</span> (x <span class="fu">+</span> y)</code></pre>
+<h4 id="implicit-arguments">Implicit Arguments</h4>
+<p>Agda of course allows us to specify functions which span multiple types. For example the if-then-else blocks can be written in Agda as the following de sugared function.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">ife <span class="fu">:</span> (<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>) <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span>	<span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span>
+ife t true x y <span class="fu">=</span> x
+ife t false x y <span class="fu">=</span> y</code></pre>
+<p>The value <code>(A : Set)</code> specifies that the type of the A to bind over the the variable A. This is of course trivial for the type checker to infer at call site so we can instead write it as an implicit parameter and let the type checker do just that.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">ife' <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span>
+ife' true x y <span class="fu">=</span> x
+ife' false x y <span class="fu">=</span> y</code></pre>
         </div>
     </div>
 
