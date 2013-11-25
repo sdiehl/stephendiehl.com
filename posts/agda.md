@@ -5,14 +5,14 @@ date: Jun 15, 2012
 
 ### Agda Tutorial
 
-There wasn't much information on about bootstrapping
-an Agda installation so I figured I'd write a quick guide.
-I'm assuming you have the necessary Haskell infrastructure in
-place.
+There wasn't much information on about bootstrapping an Agda installation so I figured I'd write a quick intro
+guide to getting started hacking with Agda. Agda is a deep subject so this only scratch the surfcae.
+
+Sssuming you have the necessary Haskell and Cabal infrastructure in
+place you can run:
 
 ```bash
 $ cabal install agda agda-executable
-
 ```
 
 For integration with Emacs run
@@ -20,8 +20,6 @@ For integration with Emacs run
 ```bash
 agda-mode setup
 ```
-
-\
 
 Then download and install the standard library to ``AgdaLibrary`` or
 yoru directory of choice.
@@ -32,8 +30,6 @@ $ tar xzf lib-0.7.tar.gz
 $ mkdir ~/AgdaLibrary
 $ cp -R lib-0.7/src ~/AgdaLibrary
 ```
-
-\
 
 For a simple complete example, create a file ``Fibonacci.agda`` with the contents:
 
@@ -48,11 +44,11 @@ fib 1 = 1
 fib (succ (succ n)) = fib (succ n) + fib n
 ```
 
+Veriy that it type checks and compiles by running.
+
 ```bash
 $ agda --compile --include-path="~/AgdaLibrary" --include-path="." Fibonacci.agda
 ```
-
-Veriy that it type checks and compiles.
 
 ### Interactive Editing
 
@@ -68,11 +64,14 @@ Start by entering the following following module:
 module Interactive where
 ```
 
-Load the code into interactive session by Pressing ``Ctrl-c
-Ctrl-l``.
 
-Agda uses unicode prolifically and Emacs can automaticlly
-translate some common latex shortcuts to unicode:
+
+Load the code into Emacs session by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">l</kbd> ). Get used to this shortcut, you'll be spamming it
+  repeatedly!
+
+Agda uses unicode prolifically and Emacs can automaticlly translate some common latex shortcuts to unicode
+when a the word is prefixed with a TeX style backslahs:
 
 <table>
 <tr>
@@ -96,21 +95,27 @@ data ℕ : Set where
   succ : ℕ → ℕ
 ```
 
-For symbols that are not shortcut bound you can press ``Ctrl-x 8
-Return`` and tab complete to see the available list of symbols.
+For symbols that are not shortcut bound you can press 
+( <kbd class="light">Ctrl</kbd> <kbd class="light">x</kbd>
++ <kbd class="light">8</kbd> <kbd class="light">Return</kbd> )
+and tab complete to see the available list of symbols.
 
-Now to use the interactive mode, enter the following coe.
+Now to test the interactive mode, enter the following code into the buffer.
 
 ```haskell
 id : {A : Set} → A → A
 id a = ?
 ```
 
-Loading this with ``Ctrl-c Ctrl-l`` will tell agda to replace the
+Loading this with (
+<kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">l</kbd> )
+will tell agda to replace the
 Hole `?` with a anonymous metavariable ``{ }0``. This is the
 value we aim to determine. Highlighting the hole and typing
-``Ctrl-c Ctrl-,`` will show the corresponding goals needed to
-finish the program.
+<kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> )
+will show the corresponding goals needed to finish the program.
 
 
 ```bash
@@ -124,7 +129,9 @@ Of course the id function expression can only inhabited by one
 value, namely ``a``.
 
 We can attempt to substitute a value into the hole by pressing
-``Ctrl-c Ctrl-Space`` which will prompt you for a value. For
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">Space</kbd> )
+which will prompt you for a value. For
 example if we attempt to provide ``zero`` we will get the
 following type error:
 
@@ -136,7 +143,10 @@ when checking that the expression zero has type .A
 For cases this like this where the value is sufficiently
 constrained by the type agda can often automatically fill out the
 value by using the Auto tactic. Highlight the hole and fill and
-press ``Ctrl-c Ctrl-a`` to auto complete the implementation.
+press
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">a</kbd> )
+to attempt to auto complete the implementation.
 
 Now we define our Bool type.
 
@@ -156,8 +166,10 @@ and : Bool -> Bool -> Bool
 and a b = ?
 ```
 
-Highlighting the hole and pressing ``Ctrl-c Ctrl-,`` shows us the
-proof we need to complete.
+Highlighting the hole and pressing
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> )
+again shows us the proof we need to complete.
 
 ```bash
 Goal: Bool
@@ -166,8 +178,10 @@ b : Bool
 a : Bool
 ```
 
-Highlighting the hole again and pressing ``Ctrl-c Ctrl-c`` will
-let us introduce a case for the first variable on the left hand
+Highlighting the hole again and pressing
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> )
+will let us introduce a case for the first variable on the left hand
 side, in this case ``b`` first..
 
 ```haskell
@@ -215,8 +229,11 @@ add x y = { }0
 ```
 
 We can stub out our addition function for naturals and let Agda fill in
-the cases by pressing ``Ctrl-c Ctrl-c`` and specifying the pattern variable
-``x``.
+the cases by pressing
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> )
+and specifying the pattern variable
+( <kbd class="light">x</kbd> ).
 
 ```haskell
 add : ℕ -> ℕ -> ℕ
@@ -266,7 +283,7 @@ ife' false x y = y
 #### Records
 
 Record types make it possible to combine values together in a single structure. For instance we could define a
-2-tuple constructor (``_×_``) with the following type:
+2-tuple constructor (``_×_``) with the following type.
 
 ```haskell
 record _×_ (A B : Set) : Set where
@@ -280,6 +297,10 @@ fst = _×_.first
 snd : ∀ {A B} → A × B → B
 snd = _×_.second
 ```
+
+The product operator can be entered as "\\times".
+
+To be written...
 
 #### Universe Levels and Polymorphism
 
@@ -313,7 +334,7 @@ To be written...
 
 To be written...
 
-#### Example: Category
+#### Example: Categories
 
 To be written...
 
