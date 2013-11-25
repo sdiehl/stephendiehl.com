@@ -237,8 +237,8 @@ This can also be written equivalently by specifying an infix operator.
 
 ```haskell
 _+_ : ℕ -> ℕ -> ℕ
-_+_ zero y = y
-_+_ (succ x) y = succ (x + y)
+x + zero = x
+x + (succ y) = succ (x + y)
 ```
 
 #### Implicit Arguments
@@ -261,4 +261,95 @@ the type checker do just that.
 ife' : {A : Set} -> Bool -> A -> A -> A
 ife' true x y = x
 ife' false x y = y
+```
+
+#### Records
+
+Record types make it possible to combine values together in a single structure. For instance we could define a
+2-tuple constructor (``_×_``) with the following type:
+
+```haskell
+record _×_ (A B : Set) : Set where
+  field
+    first : A
+    second : B
+
+fst : ∀ {A B} → A × B → A
+fst = _×_.first
+
+snd : ∀ {A B} → A × B → B
+snd = _×_.second
+```
+
+#### Universe Levels and Polymorphism
+
+To be written...
+
+```haskell
+data Level : Set where
+  zero : Level
+  suc  : (i : Level) → Level
+```
+
+```haskell
+{-# BUILTIN LEVELZERO zero  #-}
+{-# BUILTIN LEVELSUC  suc   #-}
+```
+
+```haskell
+infixl 6 _⊔_
+
+_⊔_ : Level → Level → Level
+zero  ⊔ j     = j
+suc i ⊔ zero  = suc i
+suc i ⊔ suc j = suc (i ⊔ j)
+```
+
+#### Π-Types and Σ-Types
+
+To be written...
+
+#### Relations and Proofs
+
+To be written...
+
+#### Example: Category
+
+To be written...
+
+```haskell
+open import Level
+open import Relation.Binary
+open import Relation.Binary.PropositionalEquality
+
+open import Data.Product
+
+module Category .{o ℓ} {Obj : Set o}(Hom : Rel Obj ℓ) where
+
+(∘) : Set _
+(∘) = ∀ {A B C} → Hom B C → Hom A B → Hom A C
+
+(id) : Set _
+(id) = ∀ {A} → Hom A A
+```
+
+To be written...
+
+```haskell
+assoc : (∘) → Set _
+assoc _∘_ = ∀ {A B C D}(f : Hom A B)(g : Hom B C)(h : Hom C D)
+          → ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))
+```
+
+To be written...
+
+```haskell
+leftident : (id) → (∘) → Set _
+leftident id _∘_ = ∀ {A B}(f : Hom A B) → ((id ∘ f) ≡ f)
+
+rightident : (id) → (∘) → Set _
+rightident id _∘_ = ∀ {A B}(f : Hom A B) → ((f ∘ id) ≡ f)
+
+identity : (id) → (∘) → Set _
+identityt id ∘ = leftident id ∘ × rightident id ∘
 ```

@@ -219,8 +219,8 @@ add zero y <span class="fu">=</span> y
 add (<span class="fu">succ</span> x) y <span class="fu">=</span> <span class="fu">succ</span> (add x y)</code></pre>
 <p>This can also be written equivalently by specifying an infix operator.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">_<span class="fu">+</span>_ <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
-_<span class="fu">+</span>_ zero y <span class="fu">=</span> y
-_<span class="fu">+</span>_ (<span class="fu">succ</span> x) y <span class="fu">=</span> <span class="fu">succ</span> (x <span class="fu">+</span> y)</code></pre>
+x <span class="fu">+</span> zero <span class="fu">=</span> x
+x <span class="fu">+</span> (<span class="fu">succ</span> y) <span class="fu">=</span> <span class="fu">succ</span> (x <span class="fu">+</span> y)</code></pre>
 <h4 id="implicit-arguments">Implicit Arguments</h4>
 <p>Agda of course allows us to specify functions which span multiple types. For example the if-then-else blocks can be written in Agda as the following de sugared function.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">ife <span class="fu">:</span> (<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>) <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span>	<span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span>
@@ -230,6 +230,63 @@ ife t false x y <span class="fu">=</span> y</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">ife' <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">A</span>
 ife' true x y <span class="fu">=</span> x
 ife' false x y <span class="fu">=</span> y</code></pre>
+<h4 id="records">Records</h4>
+<p>Record types make it possible to combine values together in a single structure. For instance we could define a 2-tuple constructor (<code>_×_</code>) with the following type:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">record _×_ (<span class="dt">A</span> <span class="dt">B</span> <span class="fu">:</span> <span class="dt">Set</span>) <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
+  field
+    first <span class="fu">:</span> <span class="dt">A</span>
+    second <span class="fu">:</span> <span class="dt">B</span>
+
+<span class="fu">fst</span> <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">A</span>
+<span class="fu">fst</span> <span class="fu">=</span> _×_<span class="fu">.</span>first
+
+<span class="fu">snd</span> <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">B</span>
+<span class="fu">snd</span> <span class="fu">=</span> _×_<span class="fu">.</span>second</code></pre>
+<h4 id="universe-levels-and-polymorphism">Universe Levels and Polymorphism</h4>
+<p>To be written…</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Level</span> <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
+  zero <span class="fu">:</span> <span class="dt">Level</span>
+  suc  <span class="fu">:</span> (i <span class="fu">:</span> <span class="dt">Level</span>) <span class="ot">→</span> <span class="dt">Level</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# BUILTIN LEVELZERO zero  #-}</span>
+<span class="ot">{-# BUILTIN LEVELSUC  suc   #-}</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">infixl</span> <span class="dv">6</span> _⊔_
+
+_⊔_ <span class="fu">:</span> <span class="dt">Level</span> <span class="ot">→</span> <span class="dt">Level</span> <span class="ot">→</span> <span class="dt">Level</span>
+zero  ⊔ j     <span class="fu">=</span> j
+suc i ⊔ zero  <span class="fu">=</span> suc i
+suc i ⊔ suc j <span class="fu">=</span> suc (i ⊔ j)</code></pre>
+<h4 id="π-types-and-σ-types">Π-Types and Σ-Types</h4>
+<p>To be written…</p>
+<h4 id="relations-and-proofs">Relations and Proofs</h4>
+<p>To be written…</p>
+<h4 id="example-category">Example: Category</h4>
+<p>To be written…</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">open <span class="kw">import</span> <span class="dt">Level</span>
+open <span class="kw">import</span> <span class="dt">Relation.Binary</span>
+open <span class="kw">import</span> <span class="dt">Relation.Binary.PropositionalEquality</span>
+
+open <span class="kw">import</span> <span class="dt">Data.Product</span>
+
+<span class="kw">module</span> <span class="dt">Category</span> <span class="fu">.</span>{o ℓ} {<span class="dt">Obj</span> <span class="fu">:</span> <span class="dt">Set</span> o}(<span class="dt">Hom</span> <span class="fu">:</span> <span class="dt">Rel</span> <span class="dt">Obj</span> ℓ) <span class="kw">where</span>
+
+(∘) <span class="fu">:</span> <span class="dt">Set</span> _
+(∘) <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span>} <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">B</span> <span class="dt">C</span> <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span> <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">C</span>
+
+(<span class="fu">id</span>) <span class="fu">:</span> <span class="dt">Set</span> _
+(<span class="fu">id</span>) <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span>} <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">A</span></code></pre>
+<p>To be written…</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">assoc <span class="fu">:</span> (∘) <span class="ot">→</span> <span class="dt">Set</span> _
+assoc _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span> <span class="dt">D</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>)(g <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">B</span> <span class="dt">C</span>)(h <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">C</span> <span class="dt">D</span>)
+          <span class="ot">→</span> ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))</code></pre>
+<p>To be written…</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">leftident <span class="fu">:</span> (<span class="fu">id</span>) <span class="ot">→</span> (∘) <span class="ot">→</span> <span class="dt">Set</span> _
+leftident <span class="fu">id</span> _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((<span class="fu">id</span> ∘ f) ≡ f)
+
+rightident <span class="fu">:</span> (<span class="fu">id</span>) <span class="ot">→</span> (∘) <span class="ot">→</span> <span class="dt">Set</span> _
+rightident <span class="fu">id</span> _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((f ∘ <span class="fu">id</span>) ≡ f)
+
+identity <span class="fu">:</span> (<span class="fu">id</span>) <span class="ot">→</span> (∘) <span class="ot">→</span> <span class="dt">Set</span> _
+identityt <span class="fu">id</span> ∘ <span class="fu">=</span> leftident <span class="fu">id</span> ∘ × rightident <span class="fu">id</span> ∘</code></pre>
         </div>
     </div>
 
