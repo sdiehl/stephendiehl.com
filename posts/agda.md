@@ -1,14 +1,14 @@
 ---
 title: Agda Tutorial
-date: Jun 15, 2012
+date: November 25, 2013
 ---
 
 ### Agda Tutorial
 
 There wasn't much information on about bootstrapping an Agda installation so I figured I'd write a quick intro
-guide to getting started hacking with Agda. Agda is a deep subject so this only scratch the surfcae.
+guide to getting started hacking with Agda. Agda is a deep subject so this only scratch the surface.
 
-Sssuming you have the necessary Haskell and Cabal infrastructure in
+Assuming you have the necessary Haskell and Cabal infrastructure in
 place you can run:
 
 ```bash
@@ -41,10 +41,10 @@ open import Data.Nat
 fib : ℕ → ℕ
 fib 0 = 0
 fib 1 = 1
-fib (succ (succ n)) = fib (succ n) + fib n
+fib (suc (suc n)) = fib (suc n) + fib n
 ```
 
-Veriy that it type checks and compiles by running.
+Verify that it type checks and compiles by running.
 
 ```bash
 $ agda --compile --include-path="~/AgdaLibrary" --include-path="." Fibonacci.agda
@@ -52,7 +52,47 @@ $ agda --compile --include-path="~/AgdaLibrary" --include-path="." Fibonacci.agd
 
 ### Interactive Editing
 
-Create a empty File "Interactive.agda" and open it with Emacs.
+Add the following lines to your ``~/.emacs`` config.
+
+```scheme
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
+
+(setq agda2-include-dirs
+      (list "." (expand-file-name "~/AgdaLibrary/")))
+
+(require 'agda2)
+```
+
+If you're a Vim addict like and need to use vim  keybindings because they have been burned into your psyche add
+the following. to your emacs config.
+
+```scheme
+(setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+```
+
+Then start emacs and execute
+( <kbd class="light">Meta</kbd> <kbd class="light">x</kbd>
++ package-install + <kbd class="light">Return</kbd> + evil ).
+
+```scheme
+(package-initialize)
+(evil-mode 1)
+
+(add-hook 'evil-insert-state-entry-hook (lambda () (set-input-method "Agda")))
+(add-hook 'evil-insert-state-exit-hook (lambda () (set-input-method nil)))
+
+(global-set-key (kbd "C-c ,") 'agda2-goal-and-context)
+(global-set-key (kbd "C-c .") 'agda2-goal-and-context-and-inferred)
+(global-set-key (kbd "C-c C-@") 'agda2-give)
+```
+
+Evil mode will be installed and can be enabled by appending the following to your .emacs config once the
+package has been installed.
+
+Then create a empty File "Interactive.agda" and open it with Emacs.
 
 ```bash
 $ emacs Interactive.agda
@@ -64,14 +104,12 @@ Start by entering the following following module:
 module Interactive where
 ```
 
-
-
 Load the code into Emacs session by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
 + <kbd class="light">Ctrl</kbd> <kbd class="light">l</kbd> ). Get used to this shortcut, you'll be spamming it
   repeatedly!
 
-Agda uses unicode prolifically and Emacs can automaticlly translate some common latex shortcuts to unicode
-when a the word is prefixed with a TeX style backslahs:
+Agda uses unicode prolifically and Emacs can automatically translate some common latex shortcuts to unicode
+when a word is prefixed with a TeX style backslash:
 
 <table>
 <tr>
@@ -92,7 +130,7 @@ when a the word is prefixed with a TeX style backslahs:
 ```haskell
 data ℕ : Set where
   zero : ℕ
-  succ : ℕ → ℕ
+  suc : ℕ → ℕ
 ```
 
 For symbols that are not shortcut bound you can press 
@@ -115,8 +153,8 @@ Hole `?` with a anonymous metavariable ``{ }0``. This is the
 value we aim to determine. Highlighting the hole and typing
 <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
 + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> )
-will show the corresponding goals needed to finish the program.
-
+will show the corresponding goals needed to finish the program in the
+bottom buffer.
 
 ```bash
 Goal: .A
@@ -218,7 +256,7 @@ We have the definition of natural number
 ```haskell
 data ℕ : Set where
   zero : ℕ
-  succ  : ℕ → ℕ
+  suc : ℕ → ℕ
 ```
 
 We wish to define an addition over natural numbers.
@@ -238,16 +276,16 @@ and specifying the pattern variable
 ```haskell
 add : ℕ -> ℕ -> ℕ
 add zero y = { }0
-add (succ x) y = { }1
+add (suc x) y = { }1
 ```
 
 The first pattern can be inferred automatically, but the second follows the normal inductive definition of
-repeatedly applying successors.
+repeatedly applying sucessors.
 
 ```haskell
 add : ℕ -> ℕ -> ℕ
 add zero y = y
-add (succ x) y = succ (add x y)
+add (suc x) y = suc (add x y)
 ```
 
 This can also be written equivalently by specifying an infix operator.
@@ -255,10 +293,41 @@ This can also be written equivalently by specifying an infix operator.
 ```haskell
 _+_ : ℕ -> ℕ -> ℕ
 x + zero = x
-x + (succ y) = succ (x + y)
+x + (suc y) = suc (x + y)
 ```
 
-#### Implicit Arguments
+#### Builtins
+
+To be written...
+
+```haskell
+{-# BUILTIN NATURAL ℕ #-}
+{-# BUILTIN ZERO zero #-}
+{-# BUILTIN SUCC suc #-}
+```
+
+#### Type Signatures
+
+```haskell
+I : {A : Set} → A → A
+I x = x
+
+K : {A : Set} → {B : A → Set} → (x : A) → B x → A
+K x y = x
+
+S : {A : Set} → {B : A → Set} → {C : (x : A) → B x → Set}
+  → (g : (x : A) → (y : B x) → C x y)
+    → (f : (x : A) → B x)
+      → (x : A)
+        → C x (f x)
+S g f x = g x (f x)
+```
+
+#### Totality
+
+To be written...
+
+#### Metavariables and Implicit Arguments
 
 Agda of course allows us to specify functions which span multiple types. For example the if-then-else blocks
 can be written in Agda as the following de sugared function.
@@ -278,6 +347,21 @@ the type checker do just that.
 ife' : {A : Set} -> Bool -> A -> A -> A
 ife' true x y = x
 ife' false x y = y
+```
+
+Just like at the value level, we can use the underscore at the type level to let Agda deduce the type of the
+parameter.
+
+```haskell
+id2 : {A : _} (a : A) → A
+id2 a = a
+```
+
+This occurs enough in Agda that it has its own syntatic sugar (``∀``).
+
+```haskell
+id2 : ∀ {A} (a : A) -> A
+id2 a = a
 ```
 
 #### Records
@@ -301,6 +385,66 @@ snd = _×_.second
 The product operator can be entered as "\\times".
 
 To be written...
+
+#### Pattern Matching and (⊥)
+
+To be written...
+
+#### Proofs
+
+Agda can inform us of the constraints on variables in scope by pressing
+( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd>
++ <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ).
+
+To be written...
+
+```haskell
+open import Data.Nat
+open import Data.Bool
+
+even : ℕ → Bool
+even zero = true
+even (suc zero) = false
+even (suc (suc n)) = even n
+```
+
+Stuff about the Curry-Howard Isomorphism to be written...
+
+```haskell
+T : Bool → Set
+T true  = ⊤
+T false = ⊥
+
+F : Bool → Set
+F true  = ⊥
+F false = ⊤
+```
+
+To be written...
+
+```haskell
+proof : (n : ℕ) → {_ : T (even n)} → ℕ  
+proof n = n * n
+```
+
+#### Relations and Equivalences
+
+To be written...
+
+```haskell
+data _≡_ {A : Set} : A → A → Set where 
+  refl : { x : A } → x ≡ x
+```
+
+```haskell
+nequal : {n : ℕ} → n ≡ n
+nequal = refl
+```
+
+```haskell
+xequal : {x : Set} {x : A} → x ≡ x
+xequal = refl
+```
 
 #### Universe Levels and Polymorphism
 
@@ -326,38 +470,35 @@ suc i ⊔ zero  = suc i
 suc i ⊔ suc j = suc (i ⊔ j)
 ```
 
-#### Π-Types and Σ-Types
+#### Module System
 
 To be written...
 
-#### Relations and Proofs
+#### Π-Types and Σ-Types
 
 To be written...
 
 #### Example: Categories
 
+The most basic structure in category theory is a category which is an algebraic structure of objects (``Obj``)
+and morphisms (``Hom``) with the structure that morphisms compose associatively and the existence of a identity
+morphism for each object.
+
 To be written...
 
 ```haskell
 open import Level
+open import Data.Product
 open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
 
-open import Data.Product
-
 module Category .{o ℓ} {Obj : Set o}(Hom : Rel Obj ℓ) where
-
-(∘) : Set _
-(∘) = ∀ {A B C} → Hom B C → Hom A B → Hom A C
-
-(id) : Set _
-(id) = ∀ {A} → Hom A A
 ```
 
 To be written...
 
 ```haskell
-assoc : (∘) → Set _
+assoc : _∘_  → Set _
 assoc _∘_ = ∀ {A B C D}(f : Hom A B)(g : Hom B C)(h : Hom C D)
           → ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))
 ```
@@ -365,12 +506,12 @@ assoc _∘_ = ∀ {A B C D}(f : Hom A B)(g : Hom B C)(h : Hom C D)
 To be written...
 
 ```haskell
-leftident : (id) → (∘) → Set _
+leftident : id → _∘_ → Set _
 leftident id _∘_ = ∀ {A B}(f : Hom A B) → ((id ∘ f) ≡ f)
 
-rightident : (id) → (∘) → Set _
+rightident : id → _∘_ → Set _
 rightident id _∘_ = ∀ {A B}(f : Hom A B) → ((f ∘ id) ≡ f)
 
-identity : (id) → (∘) → Set _
-identityt id ∘ = leftident id ∘ × rightident id ∘
+identity : id → _∘_ → Set _
+identity id ∘ = (leftident id ∘) × (rightident id ∘)
 ```

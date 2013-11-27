@@ -5,38 +5,22 @@ date: July 18, 2013
 
 ## Haskell for Web Developers
 
-This post is follow up to the unexpectedly popular post on the
-[categorical derivation of
-monads](http://www.stephendiehl.com/posts/monads.html). I should
-clarify by saying that post was an advanced discussion and not a
-"Monad Tutorial" for beginners in any sense. In response I hope
-to shed some light on two misconceptions I saw arise about
-Haskell in the resulting discussion.
-
-<hr/>
-
 Misconception #1
 ----------------
 
-> Do I still need a graduate degree in category theory to write
-> to a file?
+> Haskell as a pure function language is not suited for web programming since web programming involves mostly
+> doing IO.
 
-The answer to this has always been a unambiguous resounding *NO*.
-It has never been necessary to learn category theory to program
-in Haskell. While there is a certain amount of enlightenment in
-studying such topics for their own merit it is certainly not a
-prerequisite for using Haskell effectively. 
+Part of this confusion stems from the prevalent misconception that managing side-effects in Haskell is a
+extremely complicated. One large difference between Haskell and other languages is that *effects in Haskell
+are explicit and unambigious.* There is a clear demarcation between logic which can have effects and logic
+which cannot.  The *pure by default* philosophy is central to Haskell and for good reasons, but purity and the
+IO monad is high-level concept that allows the programmer and compiler to better reason about their code and
+detect errors. It has little to any impact on the runtime implemention since during compilation types are
+erased and the implementation of IO in Haskell is as fast as anything you can write in imperative language
+[and often faster](http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf).
 
-Part of this confusion stems from the prevalent meme that
-managing side-effects in Haskell is a extremely complicated. One
-large difference between Haskell and other languages is that
-*effects in Haskell are explicit and unambigious.* There is a
-clear demarcation between logic which can have effects and logic
-which cannot. The *pure by default* philosophy is central to
-Haskell and for good reasons, nevertheless managing effectful
-operations in Haskell is really not difficult.
-
-So, for example the following simple code writes to a file.
+For example the following simple code writes to a file.
 
 ```haskell
 main :: IO ()
@@ -86,11 +70,6 @@ their implementation. An illustration of the two monad
 composition is illuminating:
 
 ![](/images/transformer.svg)
-
-There is however some debate whether monads are a usefull
-expression of effect encapsulation and whether or not there are
-more composable abstractions. The area of *effect systems* is an
-area of active research with other schools of thought. [^Effects]
 
 <hr/>
 
@@ -291,7 +270,7 @@ instance (ToMarkup a) => ToMarkup (List a) where
 ```
 
 It is worth noting that the Blaze builder overloads do-notation
-as many EDSLs do, but the ``Html`` type is not a monad. It is
+as some EDSLs do, but the ``Html`` type is not a monad. It is
 functionally a monoid.
 
 For non-embedded template languages along the lines of *Jinja* or
@@ -314,8 +293,9 @@ abstractions](http://hackage.haskell.org/packages/archive/jmacro-rpc/0.2/doc/htm
 and as a very convienant way to implement code generation for
 compilers targetting Javascript.
 
-As an example of we'll use JMacro to implement a simple
-translator for the untyped typed lambda calculus.
+As an example of we'll use JMacro to implement a simple translator for
+the untyped typed lambda calculus, something one might do if writing a
+language that transpiles to Javascript.
 
 
 ```haskell
@@ -409,7 +389,7 @@ addition to the core language, ther are interfaces for
 [jquery](https://github.com/faylang/fay-jquery) and [DOM
 manipulation](https://github.com/faylang/fay-dom) so that
 Fay-compiled Haskell code can effectively access the browser
-internals.[^Ring]
+internals.
 
 ```bash
 $ cabal install fay-dom fay-jquery
@@ -1059,13 +1039,5 @@ $ runhaskell cloud.hs master 5003
 
 #### Conclusion
 
-Hopefully you feel inspired and slightly more empowered to use
-Haskell in web related tasks. Now go save the software industry!
-
-[^Effects]: See: <ul>
-<li>[Effects in Idris](http://eb.host.cs.st-andrews.ac.uk/talks/idris-cph-lec3.pdf)</li>
-<li>[Effects as rows in Koka](http://research.microsoft.com/en-us/projects/koka/2012-overviewkoka.pdf)</li>
-<li>[Lawvere Theories](http://blog.sigfpe.com/2012/02/using-lawvere-theories-to-combine.html)</li>
-</ul>
-
-[^Ring]: See example integration [with the Canvas element](http://www.skybluetrades.net/blog/posts/2012/11/13/fay-ring-oscillator/index.html).
+Hopefully you feel for what exists in the ecosystem and feel slightly
+more empowered to use the amazing tools we have.

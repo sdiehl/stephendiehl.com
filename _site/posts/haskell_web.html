@@ -101,16 +101,12 @@
 
         <div class="twelve columns offset-by-one content">
             <h2 id="haskell-for-web-developers">Haskell for Web Developers</h2>
-<p>This post is follow up to the unexpectedly popular post on the <a href="http://www.stephendiehl.com/posts/monads.html">categorical derivation of monads</a>. I should clarify by saying that post was an advanced discussion and not a “Monad Tutorial” for beginners in any sense. In response I hope to shed some light on two misconceptions I saw arise about Haskell in the resulting discussion.</p>
-<hr></hr>
-
 <h2 id="misconception-1">Misconception #1</h2>
 <blockquote>
-<p>Do I still need a graduate degree in category theory to write to a file?</p>
+<p>Haskell as a pure function language is not suited for web programming since web programming involves mostly doing IO.</p>
 </blockquote>
-<p>The answer to this has always been a unambiguous resounding <em>NO</em>. It has never been necessary to learn category theory to program in Haskell. While there is a certain amount of enlightenment in studying such topics for their own merit it is certainly not a prerequisite for using Haskell effectively.</p>
-<p>Part of this confusion stems from the prevalent meme that managing side-effects in Haskell is a extremely complicated. One large difference between Haskell and other languages is that <em>effects in Haskell are explicit and unambigious.</em> There is a clear demarcation between logic which can have effects and logic which cannot. The <em>pure by default</em> philosophy is central to Haskell and for good reasons, nevertheless managing effectful operations in Haskell is really not difficult.</p>
-<p>So, for example the following simple code writes to a file.</p>
+<p>Part of this confusion stems from the prevalent misconception that managing side-effects in Haskell is a extremely complicated. One large difference between Haskell and other languages is that <em>effects in Haskell are explicit and unambigious.</em> There is a clear demarcation between logic which can have effects and logic which cannot. The <em>pure by default</em> philosophy is central to Haskell and for good reasons, but purity and the IO monad is high-level concept that allows the programmer and compiler to better reason about their code and detect errors. It has little to any impact on the runtime implemention since during compilation types are erased and the implementation of IO in Haskell is as fast as anything you can write in imperative language <a href="http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf">and often faster</a>.</p>
+<p>For example the following simple code writes to a file.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="fu">writeFile</span> <span class="st">&quot;foo.txt&quot;</span> <span class="st">&quot;my line&quot;</span></code></pre>
 <p>This reads from a file and prints the lines.</p>
@@ -138,7 +134,6 @@ main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></
 <div class="figure">
 <img src="../images/transformer.svg"></img><p class="caption"></p>
 </div>
-<p>There is however some debate whether monads are a usefull expression of effect encapsulation and whether or not there are more composable abstractions. The area of <em>effect systems</em> is an area of active research with other schools of thought. <sup><a href="#fn1" class="footnoteRef" id="fnref1">1</a></sup></p>
 <hr></hr>
 
 <h2 id="misconception-2">Misconception #2</h2>
@@ -270,12 +265,12 @@ main <span class="fu">=</span> <span class="kw">do</span>
       <span class="kw">&lt;/ul&gt;</span>
    <span class="kw">&lt;/li&gt;</span>
 <span class="kw">&lt;/ul&gt;</span></code></pre>
-<p>It is worth noting that the Blaze builder overloads do-notation as many EDSLs do, but the <code>Html</code> type is not a monad. It is functionally a monoid.</p>
+<p>It is worth noting that the Blaze builder overloads do-notation as some EDSLs do, but the <code>Html</code> type is not a monad. It is functionally a monoid.</p>
 <p>For non-embedded template languages along the lines of <em>Jinja</em> or <em>erb</em> refer to the <a href="http://www.yesodweb.com/book/shakespearean-templates">Shakespearean templates</a> or <a href="http://hackage.haskell.org/package/happstack-heist">heist</a>.</p>
 <h4 id="jmacro">JMacro</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> jmacro</code></pre>
 <p>JMacro is quasiquoter for Javascript code generation. The underlying implementation is rather clever and allows Haskell and Javascript to share functions and values across quotation boundaries. The end result is a fusion of Haskell and JavaScript that serves as a foundation to <a href="http://hackage.haskell.org/packages/archive/jmacro-rpc/0.2/doc/html/Network-JMacroRPC-Base.html">higher abstractions</a> and as a very convienant way to implement code generation for compilers targetting Javascript.</p>
-<p>As an example of we’ll use JMacro to implement a simple translator for the untyped typed lambda calculus.</p>
+<p>As an example of we’ll use JMacro to implement a simple translator for the untyped typed lambda calculus, something one might do if writing a language that transpiles to Javascript.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE QuasiQuotes, TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}</span>
 
 <span class="kw">import</span> <span class="dt">Data.String</span>
@@ -353,7 +348,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
   <span class="fu">putStrLn</span> <span class="fu">$</span> compile i1</code></pre>
 <h4 id="fay">Fay</h4>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> fay</code></pre>
-<p>Fay is a growing ecosystem of packages that can compile Haskell to Javascript. Fay works with a strict subset of Haskell that preserves Haskell semantics such as currying and laziness. In addition to the core language, ther are interfaces for <a href="https://github.com/faylang/fay-jquery">jquery</a> and <a href="https://github.com/faylang/fay-dom">DOM manipulation</a> so that Fay-compiled Haskell code can effectively access the browser internals.<sup><a href="#fn2" class="footnoteRef" id="fnref2">2</a></sup></p>
+<p>Fay is a growing ecosystem of packages that can compile Haskell to Javascript. Fay works with a strict subset of Haskell that preserves Haskell semantics such as currying and laziness. In addition to the core language, ther are interfaces for <a href="https://github.com/faylang/fay-jquery">jquery</a> and <a href="https://github.com/faylang/fay-dom">DOM manipulation</a> so that Fay-compiled Haskell code can effectively access the browser internals.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> fay-dom fay-jquery</code></pre>
 <p>The code generation is rather verbose given that it compiles quite a bit of the Haskell Prelude. The below example is very simple and only the interesting part of the outputted source is shown below. Notably the generated code is very readable.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- demo.hs</span>
@@ -819,28 +814,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
 $ runhaskell cloud.hs worker 5002
 $ runhaskell cloud.hs master 5003</code></pre>
 <h4 id="conclusion">Conclusion</h4>
-<p>Hopefully you feel inspired and slightly more empowered to use Haskell in web related tasks. Now go save the software industry!</p>
-<div class="footnotes">
-<hr></hr>
-<ol>
-<li id="fn1">See:
-<ul>
-<li>
-<a href="http://eb.host.cs.st-andrews.ac.uk/talks/idris-cph-lec3.pdf">Effects in Idris</a>
-</li>
-<li>
-<a href="http://research.microsoft.com/en-us/projects/koka/2012-overviewkoka.pdf">Effects as rows in Koka</a>
-</li>
-<li>
-<a href="http://blog.sigfpe.com/2012/02/using-lawvere-theories-to-combine.html">Lawvere Theories</a>
-</li>
-</ul>
-
-
-<a href="#fnref1">↩</a></li>
-<li id="fn2"><p>See example integration <a href="http://www.skybluetrades.net/blog/posts/2012/11/13/fay-ring-oscillator/index.html">with the Canvas element</a>.<a href="#fnref2">↩</a></p></li>
-</ol>
-</div>
+<p>Hopefully you feel for what exists in the ecosystem and feel slightly more empowered to use the amazing tools we have.</p>
         </div>
     </div>
 
