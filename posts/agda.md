@@ -303,7 +303,7 @@ To be written...
 ```haskell
 {-# BUILTIN NATURAL ℕ #-}
 {-# BUILTIN ZERO zero #-}
-{-# BUILTIN SUCC suc #-}
+{-# BUILTIN SUC suc #-}
 ```
 
 #### Type Signatures
@@ -476,6 +476,11 @@ To be written...
 
 #### Π-Types and Σ-Types
 
+```haskell
+data Σ (A : Set) (B : A -> Set) : Set where
+  _,_ : (a : A) -> B a -> Σ A B
+```
+
 To be written...
 
 #### Example: Categories
@@ -493,6 +498,20 @@ open import Relation.Binary
 open import Relation.Binary.PropositionalEquality
 
 module Category .{o ℓ} {Obj : Set o}(Hom : Rel Obj ℓ) where
+```
+
+To be written...
+
+```haskell
+_∘_ : Set _
+_∘_ = ∀ {A B C} → Hom B C → Hom A B → Hom A C
+```
+
+To be written...
+
+```haskell
+id : Set _
+id = ∀ {A} → Hom A A
 ```
 
 To be written...
