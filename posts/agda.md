@@ -483,6 +483,15 @@ data Σ (A : Set) (B : A -> Set) : Set where
 
 To be written...
 
+```haskell
+curry : ∀ {a b c} {A : Set a} {B : A → Set b} {C : Σ A B → Set c} →
+        ((p : Σ A B) → C p) →
+        ((x : A) → (y : B x) → C (x , y))
+curry f x y = f (x , y)
+```
+
+To be written...
+
 #### Example: Categories
 
 The most basic structure in category theory is a category which is an algebraic structure of objects (``Obj``)
