@@ -327,6 +327,10 @@ S g f x = g x (f x)
 
 To be written...
 
+#### Postulates
+
+To be written...
+
 #### Metavariables and Implicit Arguments
 
 Agda of course allows us to specify functions which span multiple types. For example the if-then-else blocks
@@ -386,7 +390,7 @@ The product operator can be entered as "\\times".
 
 To be written...
 
-#### Pattern Matching and (⊥)
+#### Pattern Matching and (⊥,⊤)
 
 To be written...
 
@@ -472,13 +476,42 @@ suc i ⊔ suc j = suc (i ⊔ j)
 
 #### Module System
 
-To be written...
+Unlike Haskell multiple modules can be defined in a single file
+
+```
+module MyModule where
+  -- ...
+```
+
+Module can also be parameterized by arguments which are propogated throughout the body of the module
+definition.
+
+```haskell
+module MyModule {foo : foo-type} (bar : bar-type) where
+  -- ...
+```
+
+To use a parameterized module we can open it with a given set of parameters within the current scope.
+
+```haskell
+open MyModule foo-value bar-value
+```
 
 #### Π-Types and Σ-Types
 
 ```haskell
 data Σ (A : Set) (B : A -> Set) : Set where
   _,_ : (a : A) -> B a -> Σ A B
+```
+
+Dependent sums:
+
+```haskell
+record Σ {a b} (A : Set a) (P : A → Set b) : Set (max a b) where
+  constructor _,_
+  field
+    prj₁ : A
+    prj₂ : P (prj₁)
 ```
 
 To be written...
