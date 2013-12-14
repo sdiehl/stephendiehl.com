@@ -353,8 +353,8 @@ ife' true x y = x
 ife' false x y = y
 ```
 
-Just like at the value level, we can use the underscore at the type level to let Agda deduce the type of the
-parameter.
+Just like at the value level, we can use the underscore at the type
+level to let Agda deduce the type of the parameter.
 
 ```haskell
 id2 : {A : _} (a : A) → A
@@ -370,8 +370,9 @@ id2 a = a
 
 #### Records
 
-Record types make it possible to combine values together in a single structure. For instance we could define a
-2-tuple constructor (``_×_``) with the following type.
+Record types make it possible to combine values together in a single
+structure. For instance we could define a 2-tuple constructor (``_×_``)
+with the following type.
 
 ```haskell
 record _×_ (A B : Set) : Set where
@@ -387,6 +388,9 @@ snd = _×_.second
 ```
 
 The product operator can be entered as "\\times".
+
+Unlike in Haskell the type of a field of record types can depend on the
+values of the previosly defined fields of the same record.
 
 To be written...
 
