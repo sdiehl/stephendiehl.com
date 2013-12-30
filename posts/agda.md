@@ -5,20 +5,16 @@ date: November 25, 2013
 
 ### Agda Tutorial
 
-There wasn't much information on about bootstrapping an Agda installation so I figured I'd write a quick intro
-guide to getting started hacking with Agda. Agda is a deep subject so this only scratch the surface.
+There wasn't much information on about getting started from first
+principles with Agda. So I figured I'd write a quick intro guide to
+getting started hacking with Agda. Agda is a very deep subject so this
+only scratch the surface. This is a work in progress.
 
 Assuming you have the necessary Haskell and Cabal infrastructure in
 place you can run:
 
 ```bash
 $ cabal install agda agda-executable
-```
-
-For integration with Emacs run
-
-```bash
-agda-mode setup
 ```
 
 Then download and install the standard library to ``AgdaLibrary`` or
@@ -52,7 +48,13 @@ $ agda --compile --include-path="~/AgdaLibrary" --include-path="." Fibonacci.agd
 
 ### Interactive Editing
 
-Add the following lines to your ``~/.emacs`` config.
+If you're an Emacs user then you're in luck, simply run:
+
+```bash
+agda-mode setup
+```
+
+And add the following lines to your ``~/.emacs`` config.
 
 ```scheme
 (load-file (let ((coding-system-for-read 'utf-8))
@@ -64,8 +66,8 @@ Add the following lines to your ``~/.emacs`` config.
 (require 'agda2)
 ```
 
-If you're a Vim addict like and need to use vim  keybindings because they have been burned into your psyche add
-the following. to your emacs config.
+If you're a Vim addict like me and need to use vim  keybindings because they have been burned into your
+psyche, then add the following to your emacs config.
 
 ```scheme
 (setq package-archives '(("ELPA" . "http://tromey.com/elpa/")
@@ -228,7 +230,7 @@ and a false = { }0
 and a true = { }1
 ```
 
-We know how two hole for the each case. Highlighting the first
+We know have two hole for the each case. Highlighting the first
 and doing the same procedure will the fill in the cases for a.
 
 ```haskell
@@ -251,7 +253,7 @@ and true true = true
 
 #### Inductive Definitions
 
-We have the definition of natural number
+The usual inductive definition of natural numbers has a zero and a successor function.
 
 ```haskell
 data ℕ : Set where
@@ -259,7 +261,7 @@ data ℕ : Set where
   suc : ℕ → ℕ
 ```
 
-We wish to define an addition over natural numbers.
+Now we wish to define an addition over natural numbers.
 
 ```haskell
 add : ℕ -> ℕ -> ℕ
@@ -396,6 +398,10 @@ To be written...
 
 #### Pattern Matching and (⊥,⊤)
 
+There are two special types within the Agda type system. The first (⊥) pronounced "bottom" is the type inhabited
+by no values. Conversly the type (⊤) pronounced "top" is only inhabited by one value (up to isomorphism), the
+value of which we'll call "unit".
+
 To be written...
 
 #### Proofs
@@ -454,7 +460,18 @@ xequal : {x : Set} {x : A} → x ≡ x
 xequal = refl
 ```
 
-#### Universe Levels and Polymorphism
+```haskell
+cong : {m n : ℕ} → m ≡ n → 1 + m ≡ 1 + n
+cong refl = refl
+```
+
+```haskell
++-assoc : ∀ m n o → m + n + o ≡ m + (n + o)
++-assoc zero n o    = refl
++-assoc (suc m) n o = cong suc (+-assoc m n o)
+```
+
+#### Type Levels and Universe Polymorphism
 
 To be written...
 
@@ -528,6 +545,35 @@ curry f x y = f (x , y)
 ```
 
 To be written...
+
+#### Example: Semigroups
+
+When coding abstract algebra in Agda we generally are working with a set called the *carrier* and a set of
+operations defined over the set given the structure of the laws in interactions between between operations.
+
+One of the simplest to implement is that of a *Semigroup*, which is a set equiped with an associative binary
+operation. This is particularly nice example since it looks almost like the definition found in your abstract
+algebra textbook!
+
+```haskell
+record Semigroup : Set₁ where
+  field
+    carrier : Set
+    _∙_     : carrier → carrier → carrier
+    ∙-assoc : ∀ x y z → x ∙ y ∙ z ≡ x ∙ (y ∙ z)
+```
+
+We can then instantiate an instance given our definition of natural numbers and our proof of the associativity
+of ``(+)`` over them.
+
+```haskell
+NatSemigroup : Semigroup
+NatSemigroup = record
+  { carrier = ℕ
+  ; _∙_     = _+_
+  ; ∙-assoc = +-assoc
+  }
+```
 
 #### Example: Categories
 

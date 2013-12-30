@@ -100,11 +100,9 @@
 
         <div class="twelve columns offset-by-one content">
             <h3 id="agda-tutorial">Agda Tutorial</h3>
-<p>There wasn’t much information on about bootstrapping an Agda installation so I figured I’d write a quick intro guide to getting started hacking with Agda. Agda is a deep subject so this only scratch the surface.</p>
+<p>There wasn’t much information on about getting started from first principles with Agda. So I figured I’d write a quick intro guide to getting started hacking with Agda. Agda is a very deep subject so this only scratch the surface. This is a work in progress.</p>
 <p>Assuming you have the necessary Haskell and Cabal infrastructure in place you can run:</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> agda agda-executable</code></pre>
-<p>For integration with Emacs run</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">agda-mode setup</code></pre>
 <p>Then download and install the standard library to <code>AgdaLibrary</code> or yoru directory of choice.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">wget</span> http://www.cse.chalmers.se/~nad/software/lib-0.7.tar.gz
 $ <span class="kw">tar</span> xzf lib-0.7.tar.gz
@@ -122,7 +120,9 @@ fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span
 <p>Verify that it type checks and compiles by running.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/AgdaLibrary&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> Fibonacci.agda</code></pre>
 <h3 id="interactive-editing">Interactive Editing</h3>
-<p>Add the following lines to your <code>~/.emacs</code> config.</p>
+<p>If you’re an Emacs user then you’re in luck, simply run:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">agda-mode setup</code></pre>
+<p>And add the following lines to your <code>~/.emacs</code> config.</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(load-file (<span class="kw">let</span> ((coding-system-for-read 'utf<span class="dv">-8</span>))
                 (shell-command-to-string <span class="st">&quot;agda-mode locate&quot;</span>)))
 
@@ -130,7 +130,7 @@ fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span
       (<span class="kw">list</span> <span class="st">&quot;.&quot;</span> (expand-file-name <span class="st">&quot;~/AgdaLibrary/&quot;</span>)))
 
 (require 'agda2)</code></pre>
-<p>If you’re a Vim addict like and need to use vim keybindings because they have been burned into your psyche add the following. to your emacs config.</p>
+<p>If you’re a Vim addict like me and need to use vim keybindings because they have been burned into your psyche, then add the following to your emacs config.</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(setq package-archives '((<span class="st">&quot;ELPA&quot;</span> . <span class="st">&quot;http://tromey.com/elpa/&quot;</span>)
                          (<span class="st">&quot;gnu&quot;</span> . <span class="st">&quot;http://elpa.gnu.org/packages/&quot;</span>)
                          (<span class="st">&quot;marmalade&quot;</span> . <span class="st">&quot;http://marmalade-repo.org/packages/&quot;</span>)))</code></pre>
@@ -212,7 +212,7 @@ a <span class="kw">:</span> Bool</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
 <span class="fu">and</span> a false <span class="fu">=</span> { }<span class="dv">0</span>
 <span class="fu">and</span> a true <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
-<p>We know how two hole for the each case. Highlighting the first and doing the same procedure will the fill in the cases for a.</p>
+<p>We know have two hole for the each case. Highlighting the first and doing the same procedure will the fill in the cases for a.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
 <span class="fu">and</span> false false <span class="fu">=</span> { }<span class="dv">0</span>
 <span class="fu">and</span> false true <span class="fu">=</span> { }<span class="dv">1</span>
@@ -225,11 +225,11 @@ a <span class="kw">:</span> Bool</code></pre>
 <span class="fu">and</span> true false <span class="fu">=</span> false
 <span class="fu">and</span> true true <span class="fu">=</span> true</code></pre>
 <h4 id="inductive-definitions">Inductive Definitions</h4>
-<p>We have the definition of natural number</p>
+<p>The usual inductive definition of natural numbers has a zero and a successor function.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> ℕ <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
   zero <span class="fu">:</span> ℕ
   suc <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
-<p>We wish to define an addition over natural numbers.</p>
+<p>Now we wish to define an addition over natural numbers.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">add <span class="fu">:</span> ℕ <span class="ot">-&gt;</span> ℕ <span class="ot">-&gt;</span> ℕ
 add x y <span class="fu">=</span> { }<span class="dv">0</span></code></pre>
 <p>We can stub out our addition function for naturals and let Agda fill in the cases by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ) and specifying the pattern variable ( <kbd class="light">x</kbd> ).</p>
@@ -297,6 +297,7 @@ id2 a <span class="fu">=</span> a</code></pre>
 <p>Unlike in Haskell the type of a field of record types can depend on the values of the previosly defined fields of the same record.</p>
 <p>To be written…</p>
 <h4 id="pattern-matching-and">Pattern Matching and (⊥,⊤)</h4>
+<p>There are two special types within the Agda type system. The first (⊥) pronounced “bottom” is the type inhabited by no values. Conversly the type (⊤) pronounced “top” is only inhabited by one value (up to isomorphism), the value of which we’ll call “unit”.</p>
 <p>To be written…</p>
 <h4 id="proofs">Proofs</h4>
 <p>Agda can inform us of the constraints on variables in scope by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ).</p>
@@ -327,7 +328,12 @@ proof n <span class="fu">=</span> n <span class="fu">*</span> n</code></pre>
 nequal <span class="fu">=</span> refl</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">xequal <span class="fu">:</span> {x <span class="fu">:</span> <span class="dt">Set</span>} {x <span class="fu">:</span> <span class="dt">A</span>} <span class="ot">→</span> x ≡ x
 xequal <span class="fu">=</span> refl</code></pre>
-<h4 id="universe-levels-and-polymorphism">Universe Levels and Polymorphism</h4>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">cong <span class="fu">:</span> {m n <span class="fu">:</span> ℕ} <span class="ot">→</span> m ≡ n <span class="ot">→</span> <span class="dv">1</span> <span class="fu">+</span> m ≡ <span class="dv">1</span> <span class="fu">+</span> n
+cong refl <span class="fu">=</span> refl</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">+-</span>assoc <span class="fu">:</span> <span class="ot">∀</span> m n o <span class="ot">→</span> m <span class="fu">+</span> n <span class="fu">+</span> o ≡ m <span class="fu">+</span> (n <span class="fu">+</span> o)
+<span class="fu">+-</span>assoc zero n o    <span class="fu">=</span> refl
+<span class="fu">+-</span>assoc (suc m) n o <span class="fu">=</span> cong suc (<span class="fu">+-</span>assoc m n o)</code></pre>
+<h4 id="type-levels-and-universe-polymorphism">Type Levels and Universe Polymorphism</h4>
 <p>To be written…</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Level</span> <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
   zero <span class="fu">:</span> <span class="dt">Level</span>
@@ -364,6 +370,21 @@ suc i ⊔ suc j <span class="fu">=</span> suc (i ⊔ j)</code></pre>
         ((x <span class="fu">:</span> <span class="dt">A</span>) <span class="ot">→</span> (y <span class="fu">:</span> <span class="dt">B</span> x) <span class="ot">→</span> <span class="dt">C</span> (x , y))
 <span class="fu">curry</span> f x y <span class="fu">=</span> f (x , y)</code></pre>
 <p>To be written…</p>
+<h4 id="example-semigroups">Example: Semigroups</h4>
+<p>When coding abstract algebra in Agda we generally are working with a set called the <em>carrier</em> and a set of operations defined over the set given the structure of the laws in interactions between between operations.</p>
+<p>One of the simplest to implement is that of a <em>Semigroup</em>, which is a set equiped with an associative binary operation. This is particularly nice example since it looks almost like the definition found in your abstract algebra textbook!</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">record <span class="dt">Semigroup</span> <span class="fu">:</span> <span class="dt">Set</span>₁ <span class="kw">where</span>
+  field
+    carrier <span class="fu">:</span> <span class="dt">Set</span>
+    _∙_     <span class="fu">:</span> carrier <span class="ot">→</span> carrier <span class="ot">→</span> carrier
+    ∙-assoc <span class="fu">:</span> <span class="ot">∀</span> x y z <span class="ot">→</span> x ∙ y ∙ z ≡ x ∙ (y ∙ z)</code></pre>
+<p>We can then instantiate an instance given our definition of natural numbers and our proof of the associativity of <code>(+)</code> over them.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">NatSemigroup</span> <span class="fu">:</span> <span class="dt">Semigroup</span>
+<span class="dt">NatSemigroup</span> <span class="fu">=</span> record
+  { carrier <span class="fu">=</span> ℕ
+  ; _∙_     <span class="fu">=</span> _<span class="fu">+</span>_
+  ; ∙-assoc <span class="fu">=</span> <span class="fu">+-</span>assoc
+  }</code></pre>
 <h4 id="example-categories">Example: Categories</h4>
 <p>The most basic structure in category theory is a category which is an algebraic structure of objects (<code>Obj</code>) and morphisms (<code>Hom</code>) with the structure that morphisms compose associatively and the existence of a identity morphism for each object.</p>
 <p>To be written…</p>
