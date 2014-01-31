@@ -1,86 +1,168 @@
 {-# LANGUAGE OverloadedStrings #-}
-
-import Prelude hiding (id)
-import Control.Category (id)
-import Control.Arrow ((>>>), (***), arr, (>>^))
-import Control.Applicative
-import Data.Monoid (mempty, mconcat)
+--------------------------------------------------------------------
+-- |
+-- Copyright :  (c) Stephen Diehl 2014
+-- License   :  MIT
+-- Maintainer:  stephen.m.diehl@gmail.com
+-- Stability :  experimental
+-- Portability: non-portable
+--
+--------------------------------------------------------------------
 
 import Hakyll
-import Tikz
-
 import Text.Pandoc
-import System.IO.Unsafe
+import Data.Monoid
+import qualified Data.Map as M
 
-renderPandocThrough ::(Compiler (Page Pandoc) (Page Pandoc)) -> Compiler Resource (Page String)
-renderPandocThrough p = readPageCompiler >>> addDefaultFields >>> arr applySelf 
-                        >>> pageReadPandoc >>> p >>> arr (fmap writePandoc)
+-------------------------------------------------------------------------------
+-- Contexts
+-------------------------------------------------------------------------------
 
-catTransformer = cached "Commutative Diagrams" $ renderPandocThrough $ catInplace
+postCtx :: Context String
+postCtx =
+  dateField "date" "%B %e, %Y"
+  `mappend` mathCtx
+  `mappend` defaultContext
 
-catInplace :: Compiler (Page Pandoc) (Page Pandoc)
-catInplace =  timedCompiler "Commutative diagrams" $ unsafeCompiler $ \(Page md b) -> do
-    compiled <- bottomUpM doTikz $ b
-    return $ (Page md compiled)
+mathCtx :: Context String
+mathCtx = field "mathjax" $ \item -> do
+  metadata <- getMetadata $ itemIdentifier item
+  return $ if "mathjax" `M.member` metadata
+           then "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>"
+           else ""
 
--- Python tipy preprocessor
-py_pre :: Compiler Resource String
-py_pre = getResourceString >>> unixFilter "tipy" ["--preprocess"]
+archiveCtx posts =
+  listField "posts" postCtx (return posts)
+  `mappend` constField "title" "Archives"
+  `mappend` defaultContext
 
--- MathJax as Math backend
+indexCtx =
+  constField "title" "Home"
+  `mappend` defaultContext
+
+-------------------------------------------------------------------------------
+-- Rules
+-------------------------------------------------------------------------------
+
+compiler :: Compiler (Item String)
+compiler = pandocCompilerWith defaultHakyllReaderOptions pandocOptions
+
 pandocOptions :: WriterOptions
-pandocOptions = defaultHakyllWriterOptions
-    { writerHTMLMathMethod = MathJax ""
-    }
+pandocOptions = defaultHakyllWriterOptions{ writerHTMLMathMethod = MathJax "" }
+
+cfg :: Configuration
+cfg = defaultConfiguration
+
+static :: Rules ()
+static = do
+  match "fonts/*" $ do
+    route idRoute
+    compile $ copyFileCompiler
+  match "images/*" $ do
+    route idRoute
+    compile $ copyFileCompiler
+  match "css/*" $ do
+    route idRoute
+    compile compressCssCompiler
+  match "js/*" $ do
+    route idRoute
+    compile $ copyFileCompiler
+
+index :: Rules ()
+index = do
+  match "index.md" $ do
+    route   $ setExtension "html"
+    compile $ compiler
+        >>= loadAndApplyTemplate "templates/default.html" indexCtx
+        >>= relativizeUrls
+
+posts :: Rules ()
+posts = do
+  match "posts/*" $ do
+    route $ setExtension "html"
+    compile $ compiler
+      >>= loadAndApplyTemplate "templates/default.html"    postCtx
+      >>= relativizeUrls
+
+pages :: Rules ()
+pages = do
+  match "pages/*" $ do
+    route $ setExtension "html"
+    compile $ compiler
+      >>= loadAndApplyTemplate "templates/default.html"    postCtx
+      >>= relativizeUrls
+
+archive :: Rules ()
+archive = do
+  create ["posts.html"] $ do
+    route $ setExtension "html"
+    compile $ do
+      posts <- recentFirst =<< loadAll "posts/*"
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/list.html" (archiveCtx posts)
+        >>= loadAndApplyTemplate "templates/default.html" postCtx
+        >>= relativizeUrls
+
+templates :: Rules ()
+templates = match "templates/*" $ compile templateCompiler
 
 main :: IO ()
-main = hakyll $ do
-    match "images/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+main = hakyllWith cfg $ do
+  static
+  pages
+  posts
+  archive
+  index
+  templates
 
-    match "css/*" $ do
-        route   idRoute
-        compile compressCssCompiler
+{-main :: IO ()-}
+{-main = hakyll $ do-}
+    {-match "images/*" $ do-}
+        {-route   idRoute-}
+        {-compile copyFileCompiler-}
 
-    match "files/*" $ do
-        route   idRoute
-        compile copyFileCompiler
+    {-match "css/*" $ do-}
+        {-route   idRoute-}
+        {-compile compressCssCompiler-}
 
-    match "templates/*" $ compile templateCompiler
+    {-match "files/*" $ do-}
+        {-route   idRoute-}
+        {-compile copyFileCompiler-}
 
-    match "index.md" $ do
-        route   $ setExtension "html"
-        compile $ pageCompiler
-            >>> applyTemplateCompiler "templates/default.html"
-            >>> relativizeUrlsCompiler
+    {-match "templates/*" $ compile templateCompiler-}
 
-    match "posts/*" $ do
-        route   $ setExtension "html"
-        compile $ py_pre
-            >>> arr readPage
-            >>> addDefaultFields
-            >>> pageRenderPandocWith defaultHakyllParserState pandocOptions
-            >>> applyTemplateCompiler "templates/default.html"
-            >>> relativizeUrlsCompiler
+    {-match "index.md" $ do-}
+        {-route   $ setExtension "html"-}
+        {-compile $ pageCompiler-}
+            {->>> applyTemplateCompiler "templates/default.html"-}
+            {->>> relativizeUrlsCompiler-}
 
-    match "pages/*" $ do
-        route   $ setExtension "html"
-        compile $ pageCompiler
-            >>> applyTemplateCompiler "templates/default.html"
-            >>> relativizeUrlsCompiler
+    {-match "posts/*" $ do-}
+        {-route   $ setExtension "html"-}
+        {-compile $ py_pre-}
+            {->>> arr readPage-}
+            {->>> addDefaultFields-}
+            {->>> pageRenderPandocWith defaultHakyllParserState pandocOptions-}
+            {->>> applyTemplateCompiler "templates/default.html"-}
+            {->>> relativizeUrlsCompiler-}
 
-    match "posts.html" $ route idRoute
-    create "posts.html" $ constA mempty
-        >>> arr (setField "title" "All posts")
-        >>> requireAllA "posts/*" addPostList
-        >>> applyTemplateCompiler "templates/list.html"
-        >>> applyTemplateCompiler "templates/default.html"
-        >>> relativizeUrlsCompiler
+    {-match "pages/*" $ do-}
+        {-route   $ setExtension "html"-}
+        {-compile $ pageCompiler-}
+            {->>> applyTemplateCompiler "templates/default.html"-}
+            {->>> relativizeUrlsCompiler-}
 
-addPostList :: Compiler (Page String, [Page String]) (Page String)
-addPostList = setFieldA "posts" $
-    arr chronological
-        >>> require "templates/post.html" (\p t -> map (applyTemplate t) p)
-        >>> arr mconcat
-        >>> arr pageBody
+    {-match "posts.html" $ route idRoute-}
+    {-create "posts.html" $ constA mempty-}
+        {->>> arr (setField "title" "All posts")-}
+        {->>> requireAllA "posts/*" addPostList-}
+        {->>> applyTemplateCompiler "templates/list.html"-}
+        {->>> applyTemplateCompiler "templates/default.html"-}
+        {->>> relativizeUrlsCompiler-}
+
+{-addPostList :: Compiler (Page String, [Page String]) (Page String)-}
+{-addPostList = setFieldA "posts" $-}
+    {-arr chronological-}
+        {->>> require "templates/post.html" (\p t -> map (applyTemplate t) p)-}
+        {->>> arr mconcat-}
+        {->>> arr pageBody-}

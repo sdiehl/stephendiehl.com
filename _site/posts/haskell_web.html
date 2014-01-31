@@ -29,35 +29,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -74,13 +45,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -88,9 +52,11 @@
                 <ul>
                     <li><a href="../">Index</a></li>
                     <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -107,33 +73,33 @@
 <p>Part of this confusion stems from the prevalent misconception that managing side-effects in Haskell is a extremely complicated. One large difference between Haskell and other languages is that <em>effects in Haskell are explicit and unambigious.</em> There is a clear demarcation between logic which can have effects and logic which cannot. The <em>pure by default</em> philosophy is central to Haskell and for good reasons, but purity and the IO monad is high-level concept that allows the programmer and compiler to better reason about their code and detect errors. It has little to any impact on the runtime implemention since during compilation types are erased and the implementation of IO in Haskell is as fast as anything you can write in imperative language <a href="http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf">and often faster</a>.</p>
 <p>For example the following simple code writes to a file.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
-main <span class="fu">=</span> <span class="fu">writeFile</span> <span class="st">&quot;foo.txt&quot;</span> <span class="st">&quot;my line&quot;</span></code></pre>
+main <span class="fu">=</span> writeFile <span class="st">&quot;foo.txt&quot;</span> <span class="st">&quot;my line&quot;</span></code></pre>
 <p>This reads from a file and prints the lines.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
-  content <span class="ot">&lt;-</span> <span class="fu">readFile</span> <span class="st">&quot;foo.txt&quot;</span>
-  <span class="fu">mapM_</span> <span class="fu">print</span> (<span class="fu">lines</span> content)</code></pre>
+  content <span class="ot">&lt;-</span> readFile <span class="st">&quot;foo.txt&quot;</span>
+  mapM_ print (lines content)</code></pre>
 <p>This creates a small read print loop which interacts with user input and stores internal state:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Control.Monad.State</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Control.Monad.State</span>
 
 <span class="kw">type</span> <span class="dt">Interact</span> a <span class="fu">=</span> <span class="dt">StateT</span> <span class="dt">Int</span> <span class="dt">IO</span> a
 
 <span class="ot">repl ::</span> <span class="dt">Interact</span> ()
 repl <span class="fu">=</span> forever <span class="fu">$</span> <span class="kw">do</span>
-  val   <span class="ot">&lt;-</span> lift <span class="fu">readLn</span>
+  val   <span class="ot">&lt;-</span> lift readLn
   state <span class="ot">&lt;-</span> get
-  lift <span class="fu">$</span> <span class="fu">putStr</span> <span class="st">&quot;Total: &quot;</span>
-  lift <span class="fu">$</span> <span class="fu">print</span> (val <span class="fu">+</span> state)
+  lift <span class="fu">$</span> putStr <span class="st">&quot;Total: &quot;</span>
+  lift <span class="fu">$</span> print (val <span class="fu">+</span> state)
   put val
 
 main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></pre>
 <p>This is an example of a monad transformer, namely the composition of StateT ( State Transformer ) with the IO Monad. The values from the IO monad are lifted into the State monad with the <code>lift</code> function.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">lift ::</span> (<span class="kw">Monad</span> m, <span class="dt">MonadTrans</span> t) <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> t m a</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">lift ::</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t) <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> t m a</code></pre>
 <p>While monad transformers can sometimes be unwiedly, they are straightforward and even mechanical to use after understanding their implementation. An illustration of the two monad composition is illuminating:</p>
 <div class="figure">
-<img src="../images/transformer.svg"></img><p class="caption"></p>
+<img src="../images/transformer.svg" />
 </div>
-<hr></hr>
+<hr />
 
 <h2 id="misconception-2">Misconception #2</h2>
 <blockquote>
@@ -150,12 +116,12 @@ main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></
 <p>I will not discuss these though because I really couldn’t give a better introduction than their own documentation. Instead I will focus on simple motivating examples for smaller libraries which provide a rich feature base for web development tasks while leveraging the strengths of Haskell language itself, and many of which can integrate with the larger frameworks.</p>
 <h4 id="clay">Clay</h4>
 <p>Clay is a library for programmatic generation of CSS. Is it an embedded DSL (EDSL) that exposes selectors and styles for the <a href="https://github.com/sebastiaanvisser/clay/tree/master/src/Clay">CSS3 grammmer</a>. Clay is designed to layer logic on top of the CSS as to encode variables, color mixing, complex selector logic and nested rules more easily than with base CSS. Clay can also be usefull as a lower-level combinator library to describe complex CSS layouts.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> clay</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install clay</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Clay</span>
-<span class="kw">import</span> <span class="dt">Data.Text</span>
-<span class="kw">import</span> <span class="dt">Prelude</span> <span class="kw">hiding</span> (<span class="fu">div</span>)
+<span class="kw">import </span><span class="dt">Clay</span>
+<span class="kw">import </span><span class="dt">Data.Text</span>
+<span class="kw">import </span><span class="dt">Prelude</span> <span class="kw">hiding</span> (div)
 
 <span class="ot">bodyStyle ::</span> <span class="dt">Css</span>
 bodyStyle <span class="fu">=</span> body <span class="fu">?</span> <span class="kw">do</span>
@@ -166,7 +132,7 @@ bodyStyle <span class="fu">=</span> body <span class="fu">?</span> <span class="
 codeStyle <span class="fu">=</span> code <span class="fu">?</span>
   <span class="kw">do</span> fontFamily  [<span class="st">&quot;Monaco&quot;</span>, <span class="st">&quot;Inconsolata&quot;</span>] [monospace]
      fontSize    (px <span class="dv">14</span>)
-     lineHeight  (ex <span class="fl">1.8</span>)
+     lineHeight  (ex <span class="dv">1</span><span class="fu">.</span><span class="dv">8</span>)
 
 <span class="ot">emphasis ::</span> <span class="dt">Css</span>
 emphasis <span class="fu">=</span> <span class="kw">do</span> 
@@ -175,7 +141,7 @@ emphasis <span class="fu">=</span> <span class="kw">do</span>
   textTransform  uppercase
 
 <span class="ot">container ::</span> <span class="dt">Selector</span>
-container <span class="fu">=</span> <span class="fu">div</span> <span class="fu">#</span> <span class="st">&quot;.code&quot;</span>
+container <span class="fu">=</span> div <span class="st"># &quot;.code&quot;</span>
 
 <span class="ot">containerStyle ::</span> <span class="dt">Css</span>
 containerStyle <span class="fu">=</span> container <span class="fu">?</span>
@@ -207,27 +173,27 @@ div<span class="fl">.code</span>
   <span class="kw">border-color</span> <span class="kw">:</span> <span class="dt">rgb(128</span>,<span class="dt">128</span>,<span class="dt">128)</span><span class="kw">;</span>
 <span class="kw">}</span></code></pre>
 <h4 id="blaze">Blaze</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> blaze-html</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install blaze-html</code></pre>
 <p>Blaze is the bread and butter of markup generation in Haskell. It is described as a “blazingly fast HTML combinator library” which programmtically generates HTML and several other markup languages from an embedded DSL.</p>
 <p>In this module, the language extension <code>OverloadedStrings</code> is used so that the type inferencer can infer common coercions between String-like types without having to do explicit calls to boilerplate functions (<code>pack</code>, <code>unpack</code>, <code>html</code>) for each string-like literal. This will be pretty common use for all the examples from here out that use <code>ByteString</code> or HTML.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.Monoid</span>
-<span class="kw">import</span> <span class="dt">Text.Blaze</span> (<span class="dt">ToMarkup</span>(<span class="fu">..</span>))
-<span class="kw">import</span> <span class="dt">Text.Blaze.Html5</span> <span class="kw">hiding</span> (html, param)
-<span class="kw">import</span> <span class="dt">Text.Blaze.Html.Renderer.Text</span> (renderHtml)
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Blaze.Html5</span> <span class="kw">as</span> <span class="dt">H</span>
+<span class="kw">import </span><span class="dt">Data.Monoid</span>
+<span class="kw">import </span><span class="dt">Text.Blaze</span> (<span class="dt">ToMarkup</span>(..))
+<span class="kw">import </span><span class="dt">Text.Blaze.Html5</span> <span class="kw">hiding</span> (html, param)
+<span class="kw">import </span><span class="dt">Text.Blaze.Html.Renderer.Text</span> (renderHtml)
+<span class="kw">import qualified</span> <span class="dt">Text.Blaze.Html5</span> <span class="kw">as</span> <span class="dt">H</span>
 
 <span class="ot">gen ::</span> <span class="dt">Html</span> <span class="ot">-&gt;</span> [<span class="dt">Html</span>] <span class="ot">-&gt;</span> <span class="dt">Html</span>
 gen title elts  <span class="fu">=</span> H.html <span class="fu">$</span> <span class="kw">do</span>
   H.head <span class="fu">$</span>
     H.title title
   H.body <span class="fu">$</span>
-    H.ul <span class="fu">$</span> <span class="fu">mapM_</span> H.li elts
+    H.ul <span class="fu">$</span> mapM_ H.li elts
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
-  <span class="fu">print</span> <span class="fu">$</span> renderHtml <span class="fu">$</span> gen <span class="st">&quot;My Blog&quot;</span> [<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;fizz&quot;</span>]</code></pre>
+  print <span class="fu">$</span> renderHtml <span class="fu">$</span> gen <span class="st">&quot;My Blog&quot;</span> [<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;fizz&quot;</span>]</code></pre>
 <p>This would output HTML like the following:</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
    <span class="kw">&lt;head&gt;</span>
@@ -242,11 +208,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
    <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre>
 <p>In addition to generating HTML we can also derive from it’s internal ToMarkup classes to provide HTML representations for any datatype in Haskell. A silly example might be:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">Cat</span> <span class="fu">|</span> <span class="dt">Dog</span> <span class="kw">deriving</span> (<span class="kw">Show</span>)
-<span class="kw">data</span> <span class="dt">List</span> a <span class="fu">=</span> <span class="dt">Cons</span> a <span class="fu">|</span> <span class="dt">Nil</span> <span class="kw">deriving</span> (<span class="kw">Show</span>)
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">Cat</span> <span class="fu">|</span> <span class="dt">Dog</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
+<span class="kw">data</span> <span class="dt">List</span> a <span class="fu">=</span> <span class="dt">Cons</span> a <span class="fu">|</span> <span class="dt">Nil</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="kw">instance</span> <span class="dt">ToMarkup</span> <span class="dt">Animal</span> <span class="kw">where</span>
-  toMarkup <span class="fu">=</span> toHtml <span class="fu">.</span> <span class="fu">show</span>
+  toMarkup <span class="fu">=</span> toHtml <span class="fu">.</span> show
 
 <span class="kw">instance</span> (<span class="dt">ToMarkup</span> a) <span class="ot">=&gt;</span> <span class="dt">ToMarkup</span> (<span class="dt">List</span> a) <span class="kw">where</span>
   toMarkup x <span class="fu">=</span> <span class="kw">case</span> x <span class="kw">of</span>
@@ -267,39 +233,39 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>It is worth noting that the Blaze builder overloads do-notation as some EDSLs do, but the <code>Html</code> type is not a monad. It is functionally a monoid.</p>
 <p>For non-embedded template languages along the lines of <em>Jinja</em> or <em>erb</em> refer to the <a href="http://www.yesodweb.com/book/shakespearean-templates">Shakespearean templates</a> or <a href="http://hackage.haskell.org/package/happstack-heist">heist</a>.</p>
 <h4 id="jmacro">JMacro</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> jmacro</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install jmacro</code></pre>
 <p>JMacro is quasiquoter for Javascript code generation. The underlying implementation is rather clever and allows Haskell and Javascript to share functions and values across quotation boundaries. The end result is a fusion of Haskell and JavaScript that serves as a foundation to <a href="http://hackage.haskell.org/packages/archive/jmacro-rpc/0.2/doc/html/Network-JMacroRPC-Base.html">higher abstractions</a> and as a very convienant way to implement code generation for compilers targetting Javascript.</p>
 <p>As an example of we’ll use JMacro to implement a simple translator for the untyped typed lambda calculus, something one might do if writing a language that transpiles to Javascript.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE QuasiQuotes, TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.String</span>
-<span class="kw">import</span> <span class="dt">Language.Javascript.JMacro</span>
+<span class="kw">import </span><span class="dt">Data.String</span>
+<span class="kw">import </span><span class="dt">Language.Javascript.JMacro</span>
 
 <span class="ot">jref ::</span> <span class="dt">Sym</span> <span class="ot">-&gt;</span> <span class="dt">JExpr</span>
 jref <span class="fu">=</span> <span class="dt">ValExpr</span> <span class="fu">.</span> <span class="dt">JVar</span> <span class="fu">.</span> <span class="dt">StrI</span>
 
 <span class="ot">jvar ::</span> <span class="dt">Sym</span> <span class="ot">-&gt;</span> <span class="dt">JStat</span>
-jvar sym <span class="fu">=</span> <span class="dt">DeclStat</span> (<span class="dt">StrI</span> sym) <span class="kw">Nothing</span>
+jvar sym <span class="fu">=</span> <span class="dt">DeclStat</span> (<span class="dt">StrI</span> sym) <span class="dt">Nothing</span>
 
-jprint x <span class="fu">=</span> [jmacroE<span class="fu">|</span>console<span class="fu">.log</span>(x)<span class="fu">|</span>]
+jprint x <span class="fu">=</span> [jmacroE<span class="fu">|</span>console<span class="fu">.</span>log(x)<span class="fu">|</span>]
 
 <span class="kw">instance</span> <span class="dt">IsString</span> <span class="dt">Expr</span> <span class="kw">where</span>
   fromString x <span class="fu">=</span> <span class="dt">Var</span> (<span class="dt">Sym</span> x)
 
 <span class="kw">data</span> <span class="dt">Val</span> <span class="fu">=</span> <span class="dt">Sym</span> <span class="dt">Sym</span>
          <span class="fu">|</span> <span class="dt">Lit</span> <span class="dt">Lit</span>
-         <span class="kw">deriving</span> (<span class="kw">Show</span>)
+         <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="kw">type</span> <span class="dt">Sym</span> <span class="fu">=</span> <span class="dt">String</span>
 
 <span class="kw">data</span> <span class="dt">Lit</span> <span class="fu">=</span> <span class="dt">LStr</span> <span class="dt">String</span>
          <span class="fu">|</span> <span class="dt">LInt</span> <span class="dt">Int</span>
-         <span class="kw">deriving</span> (<span class="kw">Show</span>)
+         <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="kw">data</span> <span class="dt">Expr</span> <span class="fu">=</span> <span class="dt">App</span> <span class="dt">Expr</span> <span class="dt">Expr</span>
           <span class="fu">|</span> <span class="dt">Lam</span> <span class="dt">Sym</span> <span class="dt">Expr</span>
           <span class="fu">|</span> <span class="dt">Var</span> <span class="dt">Val</span>
-          <span class="kw">deriving</span> (<span class="kw">Show</span>)
+          <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="co">-- Convert Haskell expressions to Javascript expressions</span>
 
@@ -319,7 +285,7 @@ jprint x <span class="fu">=</span> [jmacroE<span class="fu">|</span>console<span
           function(arg) {
               <span class="ot">`(jvar s)`</span>;
               <span class="ot">`(jref s)`</span> <span class="fu">=</span> <span class="ot">`(arg)`</span>;
-              <span class="fu">return</span> <span class="ot">`(ex)`</span>;
+              return <span class="ot">`(ex)`</span>;
           }
       <span class="fu">|</span>]
 
@@ -330,7 +296,7 @@ jprint x <span class="fu">=</span> [jmacroE<span class="fu">|</span>console<span
       toJExpr v
 
 <span class="ot">compile ::</span> <span class="dt">ToJExpr</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">String</span>
-compile <span class="fu">=</span> <span class="fu">show</span> <span class="fu">.</span> renderJs <span class="fu">.</span> toJExpr
+compile <span class="fu">=</span> show <span class="fu">.</span> renderJs <span class="fu">.</span> toJExpr
 
 s, k, i0,<span class="ot"> i1 ::</span> <span class="dt">Expr</span>
 s <span class="fu">=</span> <span class="dt">Lam</span> <span class="st">&quot;f&quot;</span> <span class="fu">$</span> <span class="dt">Lam</span> <span class="st">&quot;g&quot;</span> <span class="fu">$</span> <span class="dt">Lam</span> <span class="st">&quot;x&quot;</span> <span class="fu">$</span> (<span class="dt">App</span> <span class="st">&quot;f&quot;</span> <span class="st">&quot;x&quot;</span>) <span class="ot">`App`</span> (<span class="dt">App</span> <span class="st">&quot;g&quot;</span> <span class="st">&quot;x&quot;</span>)
@@ -341,24 +307,24 @@ i1 <span class="fu">=</span> <span class="dt">App</span> (<span class="dt">App</
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
-  <span class="fu">putStrLn</span> <span class="fu">$</span> compile s
-  <span class="fu">putStrLn</span> <span class="fu">$</span> compile k
-  <span class="fu">putStrLn</span> <span class="fu">$</span> compile i0
-  <span class="fu">putStrLn</span> <span class="fu">$</span> compile i1</code></pre>
+  putStrLn <span class="fu">$</span> compile s
+  putStrLn <span class="fu">$</span> compile k
+  putStrLn <span class="fu">$</span> compile i0
+  putStrLn <span class="fu">$</span> compile i1</code></pre>
 <h4 id="fay">Fay</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> fay</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay</code></pre>
 <p>Fay is a growing ecosystem of packages that can compile Haskell to Javascript. Fay works with a strict subset of Haskell that preserves Haskell semantics such as currying and laziness. In addition to the core language, ther are interfaces for <a href="https://github.com/faylang/fay-jquery">jquery</a> and <a href="https://github.com/faylang/fay-dom">DOM manipulation</a> so that Fay-compiled Haskell code can effectively access the browser internals.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> fay-dom fay-jquery</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay-dom fay-jquery</code></pre>
 <p>The code generation is rather verbose given that it compiles quite a bit of the Haskell Prelude. The below example is very simple and only the interesting part of the outputted source is shown below. Notably the generated code is very readable.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- demo.hs</span>
-<span class="kw">import</span> <span class="dt">FFI</span>
-<span class="kw">import</span> <span class="dt">Prelude</span>
-<span class="kw">import</span> <span class="dt">JQuery</span>
+<span class="kw">import </span><span class="dt">FFI</span>
+<span class="kw">import </span><span class="dt">Prelude</span>
+<span class="kw">import </span><span class="dt">JQuery</span>
 
 <span class="ot">puts ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Fay</span> ()
 puts <span class="fu">=</span> ffi <span class="st">&quot;console.log(%1)&quot;</span>
 
-example <span class="fu">=</span> <span class="fu">take</span> <span class="dv">25</span> [<span class="dv">1</span><span class="fu">..</span>]
+example <span class="fu">=</span> take <span class="dv">25</span> [<span class="dv">1</span><span class="fu">..</span>]
 
 <span class="ot">main ::</span> <span class="dt">Fay</span> ()
 main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">do</span>
@@ -366,68 +332,68 @@ main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">
     setCss <span class="st">&quot;background-color&quot;</span> <span class="st">&quot;red&quot;</span> el
 
     puts <span class="st">&quot;Hello World!&quot;</span>
-    puts (<span class="fu">show</span> [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</code></pre>
+    puts (show [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</code></pre>
 <p>To compile invoke the compiler:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ fay demo.hs --package fay-jquery</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> demo.hs --package fay-jquery</code></pre>
 <p>Some of the generated code:</p>
 <pre class="sourceCode javascript"><code class="sourceCode javascript">
 <span class="kw">var</span> Prelude$enumFrom = <span class="kw">function</span> ($p1) {
-    <span class="kw">return</span> <span class="kw">new</span> Fay$$$(<span class="kw">function</span> () {
+    <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Fay$$$</span>(<span class="kw">function</span> () {
         <span class="kw">var</span> i = $p1;
-        <span class="kw">return</span> Fay$$_(Fay$$_(
-            Fay$$cons)(i))(Fay$$_(
+        <span class="kw">return</span> <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
+            Fay$$cons)(i))(<span class="fu">Fay$$_</span>(
             Prelude$enumFrom)(
-            Fay$$_(Fay$$_(
+            <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
                 Fay$$add)(i))(<span class="dv">1</span>)
         ));
     });
 };
 
-<span class="kw">var</span> Main$example = <span class="kw">new</span> Fay$$$(
+<span class="kw">var</span> Main$example = <span class="kw">new</span> <span class="fu">Fay$$$</span>(
     <span class="kw">function</span> () {
-        <span class="kw">return</span> Fay$$_(Fay$$_(
+        <span class="kw">return</span> <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
             Prelude$take)(<span class="dv">25</span>))(
-            Prelude$enumFrom(<span class="dv">1</span>));
+            <span class="fu">Prelude$enumFrom</span>(<span class="dv">1</span>));
     });</code></pre>
 <p>To call this code from vanilla Javascript:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main = <span class="kw">new</span> Main();
-<span class="kw">main</span>._(<span class="kw">main</span>.<span class="fu">Main</span>$<span class="fu">main</span>);</code></pre>
+<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main = <span class="kw">new</span> <span class="fu">Main</span>();
+<span class="ot">main</span>.<span class="fu">_</span>(<span class="ot">main</span>.<span class="fu">Main$main</span>);</code></pre>
 <p>Fay is part of a larger community of compilers that transpile functional languages to Javascript. Another library of note is <a href="http://roy.brianmckenna.org/">Roy</a>. Although not Haskell, it has a sophisticated type system and notably an implementation of typeclasses, a feature that Fay currently does not implement.</p>
 <h4 id="aeson">Aeson</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> aeson</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install aeson</code></pre>
 <p>Aeson is the de-facto JSON parsing and generation library for Haskell. It’s usage couldn’t be simpler, we simply declare instance of <code>toJSON</code> and <code>fromJSON</code> for our types and Aeson takes care of the mappings and exception handling. By using <code>DeriveGeneric</code> we can create instances with very little code.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.Aeson</span>
+<span class="kw">import </span><span class="dt">Data.Aeson</span>
 
-<span class="kw">import</span> <span class="dt">GHC.Generics</span>
-<span class="kw">import</span> <span class="dt">Network.HTTP</span> 
-<span class="kw">import</span> <span class="dt">Control.Applicative</span>
-<span class="kw">import</span> <span class="dt">Data.ByteString</span> (<span class="dt">ByteString</span>)
+<span class="kw">import </span><span class="dt">GHC.Generics</span>
+<span class="kw">import </span><span class="dt">Network.HTTP</span> 
+<span class="kw">import </span><span class="dt">Control.Applicative</span>
+<span class="kw">import </span><span class="dt">Data.ByteString</span> (<span class="dt">ByteString</span>)
 
 <span class="kw">data</span> <span class="dt">Message</span> <span class="fu">=</span> <span class="dt">Message</span> { 
 <span class="ot">      text ::</span> <span class="dt">ByteString</span>
     ,<span class="ot"> date ::</span> <span class="dt">ByteString</span>
-    } <span class="kw">deriving</span> (<span class="kw">Show</span>, <span class="dt">Generic</span>)
+    } <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)
 
 <span class="kw">instance</span> <span class="dt">FromJSON</span> <span class="dt">Message</span>
 <span class="kw">instance</span> <span class="dt">ToJSON</span> <span class="dt">Message</span>
 
 <span class="ot">fromStdin ::</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Message</span>)
-fromStdin <span class="fu">=</span> eitherDecode <span class="fu">&lt;$&gt;</span> <span class="fu">readLn</span></code></pre>
+fromStdin <span class="fu">=</span> eitherDecode <span class="fu">&lt;$&gt;</span> readLn</code></pre>
 <h4 id="postgres-simple">postgres-simple</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> postgres-simple</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install postgres-simple</code></pre>
 <p>Postgres-simple is a library for communicating with Postgres databases and mapping data between Haskell and SQL types. Although not an ORM, <code>postgres-simple</code> lets us generate and execute SQL queries and map result sets onto our algebraic datatypes very simply by deriving instances to declare schemas.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.Text</span>
-<span class="kw">import</span> <span class="dt">Control.Applicative</span>
-<span class="kw">import</span> <span class="dt">Control.Monad</span>
-<span class="kw">import</span> <span class="dt">Database.PostgreSQL.Simple</span>
-<span class="kw">import</span> <span class="dt">Database.PostgreSQL.Simple.FromRow</span>
+<span class="kw">import </span><span class="dt">Data.Text</span>
+<span class="kw">import </span><span class="dt">Control.Applicative</span>
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+<span class="kw">import </span><span class="dt">Database.PostgreSQL.Simple</span>
+<span class="kw">import </span><span class="dt">Database.PostgreSQL.Simple.FromRow</span>
 
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">B</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Database.PostgreSQL.Simple</span> <span class="kw">as</span> <span class="dt">Pg</span>
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">B</span>
+<span class="kw">import qualified</span> <span class="dt">Database.PostgreSQL.Simple</span> <span class="kw">as</span> <span class="dt">Pg</span>
 
 <span class="kw">data</span> <span class="dt">Client</span> <span class="fu">=</span> <span class="dt">Client</span> {<span class="ot"> firstName ::</span> <span class="dt">Text</span>
                      ,<span class="ot"> lastName ::</span> <span class="dt">Text</span>
@@ -453,7 +419,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
   conn <span class="ot">&lt;-</span> connectPostgreSQL uri
   queryClients conn</code></pre>
 <h4 id="acid-state">Acid-State</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> acid-state</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install acid-state</code></pre>
 <p>We can further exploit Haskell’s algebraic datatypes to give us a storage engine simply from the specification of our types and a little bit of <code>TemplateHaskell</code> usage. For instance, a simple <code>Map</code> container from <code>Data.Map</code> can be transformed to a disk-backed disk backed key-value store which can be interacted with as if it were a normal Haksell data structure.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Key</span> <span class="fu">=</span> <span class="dt">String</span>
 <span class="kw">type</span> <span class="dt">Value</span> <span class="fu">=</span> <span class="dt">String</span>
@@ -461,19 +427,19 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>Like it’s name implies <code>acid-state</code> provides transactional guarantees for storage. Specifically that writes will be applied completely or not at all and that data will be consistent during reads.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, TypeFamilies, DeriveDataTypeable, TemplateHaskell #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.Acid</span>
-<span class="kw">import</span> <span class="dt">Data.Typeable</span>
-<span class="kw">import</span> <span class="dt">Data.SafeCopy</span>
-<span class="kw">import</span> <span class="dt">Control.Monad.Reader</span> (ask)
+<span class="kw">import </span><span class="dt">Data.Acid</span>
+<span class="kw">import </span><span class="dt">Data.Typeable</span>
+<span class="kw">import </span><span class="dt">Data.SafeCopy</span>
+<span class="kw">import </span><span class="dt">Control.Monad.Reader</span> (ask)
 
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Map</span> <span class="kw">as</span> <span class="dt">Map</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Control.Monad.State</span> <span class="kw">as</span> <span class="dt">S</span>
+<span class="kw">import qualified</span> <span class="dt">Data.Map</span> <span class="kw">as</span> <span class="dt">Map</span>
+<span class="kw">import qualified</span> <span class="dt">Control.Monad.State</span> <span class="kw">as</span> <span class="dt">S</span>
 
 <span class="kw">type</span> <span class="dt">Key</span> <span class="fu">=</span> <span class="dt">String</span>
 <span class="kw">type</span> <span class="dt">Value</span> <span class="fu">=</span> <span class="dt">String</span>
 
 <span class="kw">data</span> <span class="dt">Database</span> <span class="fu">=</span> <span class="dt">Database</span> <span class="fu">!</span>(<span class="dt">Map.Map</span> <span class="dt">Key</span> <span class="dt">Value</span>)
-    <span class="kw">deriving</span> (<span class="kw">Show</span>, <span class="kw">Ord</span>, <span class="kw">Eq</span>, <span class="dt">Typeable</span>)
+    <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Ord</span>, <span class="dt">Eq</span>, <span class="dt">Typeable</span>)
 
 <span class="fu">$</span>(deriveSafeCopy <span class="dv">0</span> <span class="ch">'base ''Database)</span>
 
@@ -485,7 +451,7 @@ insertKey key value
 <span class="ot">lookupKey ::</span> <span class="dt">Key</span> <span class="ot">-&gt;</span> <span class="dt">Query</span> <span class="dt">Database</span> (<span class="dt">Maybe</span> <span class="dt">Value</span>)
 lookupKey key
     <span class="fu">=</span> <span class="kw">do</span> <span class="dt">Database</span> m <span class="ot">&lt;-</span> ask
-         <span class="fu">return</span> (Map.lookup key m)
+         return (Map.lookup key m)
 
 <span class="ot">deleteKey ::</span> <span class="dt">Key</span> <span class="ot">-&gt;</span> <span class="dt">Update</span> <span class="dt">Database</span> ()
 deleteKey key
@@ -495,7 +461,7 @@ deleteKey key
 <span class="ot">allKeys ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Query</span> <span class="dt">Database</span> [(<span class="dt">Key</span>, <span class="dt">Value</span>)]
 allKeys limit
     <span class="fu">=</span> <span class="kw">do</span> <span class="dt">Database</span> m <span class="ot">&lt;-</span> ask
-         <span class="fu">return</span> <span class="fu">$</span> <span class="fu">take</span> limit (Map.toList m)
+         return <span class="fu">$</span> take limit (Map.toList m)
 
 <span class="fu">$</span>(makeAcidic <span class="ch">''</span><span class="dt">Database</span> [<span class="ch">'insertKey, '</span>lookupKey, <span class="ch">'allKeys, '</span>deleteKey])
 
@@ -507,44 +473,44 @@ test key val <span class="fu">=</span> <span class="kw">do</span>
     database <span class="ot">&lt;-</span> openLocalStateFrom <span class="st">&quot;db/&quot;</span> (<span class="dt">Database</span> fixtures)
     result <span class="ot">&lt;-</span> update database (<span class="dt">InsertKey</span> key val)
     result <span class="ot">&lt;-</span> query database (<span class="dt">AllKeys</span> <span class="dv">10</span>)
-    <span class="fu">print</span> result</code></pre>
+    print result</code></pre>
 <h4 id="digestive-functors">Digestive Functors</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> digestive-functors digestive-functors-blaze</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors digestive-functors-blaze</code></pre>
 <p>Digestive functors solve the very mundane but mechanical task of validating forms. The library provides a way to specify views and validation logic and handle the control flow of validation between the end-user and the server. There are several backends to render the form and handle request/response cycles depending on your choice of framework For arbitrary reasons we’ll choose Happstack for this example.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> digestive-functors-happstack</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors-happstack</code></pre>
 <p>We’ll build a simple signup page with username and email validation logic.</p>
 <div class="figure">
-<img src="../images/functorform.png"></img><p class="caption"></p>
+<img src="../images/functorform.png" />
 </div>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Data.Maybe</span>
-<span class="kw">import</span> <span class="dt">Text.Printf</span>
-<span class="kw">import</span> <span class="dt">Control.Applicative</span>
-<span class="kw">import</span> <span class="dt">Data.Text</span> (<span class="dt">Text</span>, find, splitOn)
+<span class="kw">import </span><span class="dt">Data.Maybe</span>
+<span class="kw">import </span><span class="dt">Text.Printf</span>
+<span class="kw">import </span><span class="dt">Control.Applicative</span>
+<span class="kw">import </span><span class="dt">Data.Text</span> (<span class="dt">Text</span>, find, splitOn)
 
-<span class="kw">import</span> <span class="dt">Text.Digestive</span>
-<span class="kw">import</span> <span class="dt">Text.Digestive.Happstack</span>
-<span class="kw">import</span> <span class="dt">Text.Digestive.Blaze.Html5</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Text.Blaze.Html5</span> <span class="kw">as</span> <span class="dt">H</span>
+<span class="kw">import </span><span class="dt">Text.Digestive</span>
+<span class="kw">import </span><span class="dt">Text.Digestive.Happstack</span>
+<span class="kw">import </span><span class="dt">Text.Digestive.Blaze.Html5</span>
+<span class="kw">import qualified</span> <span class="dt">Text.Blaze.Html5</span> <span class="kw">as</span> <span class="dt">H</span>
 
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Happstack.Server</span> <span class="kw">as</span> <span class="dt">HS</span>
+<span class="kw">import qualified</span> <span class="dt">Happstack.Server</span> <span class="kw">as</span> <span class="dt">HS</span>
 
 <span class="kw">data</span> <span class="dt">User</span> <span class="fu">=</span> <span class="dt">User</span>
     {<span class="ot"> userName ::</span> <span class="dt">Text</span>
     ,<span class="ot"> userMail ::</span> <span class="dt">Text</span>
-    } <span class="kw">deriving</span> (<span class="kw">Show</span>)
+    } <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
-<span class="ot">userForm ::</span> <span class="kw">Monad</span> m <span class="ot">=&gt;</span> <span class="dt">Form</span> <span class="dt">Text</span> m <span class="dt">User</span>
+<span class="ot">userForm ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> <span class="dt">Form</span> <span class="dt">Text</span> m <span class="dt">User</span>
 userForm <span class="fu">=</span> <span class="dt">User</span>
-  <span class="fu">&lt;$&gt;</span> <span class="st">&quot;name&quot;</span> <span class="fu">.:</span> check <span class="st">&quot;Name must be two words&quot;</span> checkName (text <span class="kw">Nothing</span>)
-  <span class="fu">&lt;*&gt;</span> <span class="st">&quot;email&quot;</span> <span class="fu">.:</span> check <span class="st">&quot;Not a valid email address&quot;</span> checkEmail (text <span class="kw">Nothing</span>)
+  <span class="fu">&lt;$&gt;</span> <span class="st">&quot;name&quot;</span> <span class="fu">.:</span> check <span class="st">&quot;Name must be two words&quot;</span> checkName (text <span class="dt">Nothing</span>)
+  <span class="fu">&lt;*&gt;</span> <span class="st">&quot;email&quot;</span> <span class="fu">.:</span> check <span class="st">&quot;Not a valid email address&quot;</span> checkEmail (text <span class="dt">Nothing</span>)
 
 <span class="ot">checkEmail ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
 checkEmail <span class="fu">=</span> isJust <span class="fu">.</span> find (<span class="fu">==</span> <span class="ch">'@'</span>)
 
 <span class="ot">checkName ::</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-checkName s <span class="fu">=</span> <span class="fu">length</span> (splitOn <span class="st">&quot; &quot;</span> s) <span class="fu">==</span> <span class="dv">2</span>
+checkName s <span class="fu">=</span> length (splitOn <span class="st">&quot; &quot;</span> s) <span class="fu">==</span> <span class="dv">2</span>
 
 <span class="ot">signupView ::</span> <span class="dt">View</span> <span class="dt">H.Html</span> <span class="ot">-&gt;</span> <span class="dt">H.Html</span>
 signupView view <span class="fu">=</span> form view <span class="st">&quot;/&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
@@ -574,14 +540,14 @@ page <span class="fu">=</span> <span class="kw">do</span>
   r <span class="ot">&lt;-</span> runForm <span class="st">&quot;test&quot;</span> userForm
   <span class="kw">case</span> r <span class="kw">of</span>
 
-      (view, <span class="kw">Nothing</span>) <span class="ot">-&gt;</span> <span class="kw">do</span>
-          <span class="kw">let</span> view' <span class="fu">=</span> <span class="fu">fmap</span> H.toHtml view
+      (view, <span class="dt">Nothing</span>) <span class="ot">-&gt;</span> <span class="kw">do</span>
+          <span class="kw">let</span> view' <span class="fu">=</span> fmap H.toHtml view
           reply <span class="fu">$</span> form view' <span class="st">&quot;/&quot;</span> (signupView view')
 
-      (_, <span class="kw">Just</span> response) <span class="ot">-&gt;</span>
+      (_, <span class="dt">Just</span> response) <span class="ot">-&gt;</span>
           reply <span class="fu">$</span> <span class="kw">do</span>
             H.h1 <span class="st">&quot;Form is valid.&quot;</span>
-            H.p <span class="fu">$</span> H.toHtml <span class="fu">$</span> <span class="fu">show</span> response
+            H.p <span class="fu">$</span> H.toHtml <span class="fu">$</span> show response
 
 <span class="ot">config ::</span> <span class="dt">HS.Conf</span>
 config <span class="fu">=</span> HS.nullConf { HS.port <span class="fu">=</span> <span class="dv">5000</span> }
@@ -595,9 +561,9 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>A simple single-threaded Hello World might be written like the following:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Network</span>
-<span class="kw">import</span> <span class="dt">Data.ByteString.Char8</span>
-<span class="kw">import</span> <span class="dt">System.IO</span> (hClose, hSetBuffering, <span class="dt">Handle</span>, <span class="dt">BufferMode</span>(<span class="dt">LineBuffering</span>))
+<span class="kw">import </span><span class="dt">Network</span>
+<span class="kw">import </span><span class="dt">Data.ByteString.Char8</span>
+<span class="kw">import </span><span class="dt">System.IO</span> (hClose, hSetBuffering, <span class="dt">Handle</span>, <span class="dt">BufferMode</span>(<span class="dt">LineBuffering</span>))
 
 msg <span class="fu">=</span> <span class="st">&quot;HTTP/1.0 200 OK\r\nContent-Length: 12\r\n\r\nHello World!\r\n&quot;</span>
  
@@ -621,12 +587,12 @@ main <span class="fu">=</span> withSocketsDo <span class="fu">$</span> <span cla
 <p>To make this concurrent we use the function <code>forkIO</code> which utilizes the event-driven IO manager in GHC’s runtime system to spawn lightweight user threads which are distributed across multiple system threads. When compiled with <code>-threaded</code> the Haskell standard library also will use non-blocking system calls which are scheduled by the IO manager ( with <code>epoll()</code> under the hood ) and can transparently switch to threaded scheduling for other blocking operations.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Network</span>
-<span class="kw">import</span> <span class="dt">Control.Monad</span>
-<span class="kw">import</span> <span class="dt">Control.Concurrent</span>
-<span class="kw">import</span> <span class="dt">Data.ByteString.Char8</span>
-<span class="kw">import</span> <span class="dt">GHC.Conc</span> (numCapabilities)
-<span class="kw">import</span> <span class="dt">System.IO</span> (hClose, hSetBuffering, <span class="dt">Handle</span>, <span class="dt">BufferMode</span>(<span class="dt">LineBuffering</span>))
+<span class="kw">import </span><span class="dt">Network</span>
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+<span class="kw">import </span><span class="dt">Control.Concurrent</span>
+<span class="kw">import </span><span class="dt">Data.ByteString.Char8</span>
+<span class="kw">import </span><span class="dt">GHC.Conc</span> (numCapabilities)
+<span class="kw">import </span><span class="dt">System.IO</span> (hClose, hSetBuffering, <span class="dt">Handle</span>, <span class="dt">BufferMode</span>(<span class="dt">LineBuffering</span>))
 
 numCores <span class="fu">=</span> numCapabilities <span class="fu">-</span> <span class="dv">1</span>
 
@@ -650,31 +616,31 @@ main <span class="fu">=</span> withSocketsDo <span class="fu">$</span> <span cla
   sock <span class="ot">&lt;-</span> listenOn <span class="fu">$</span> <span class="dt">PortNumber</span> <span class="dv">5000</span>
   forM_ [<span class="dv">0</span><span class="fu">..</span>numCores] <span class="fu">$</span> \n <span class="ot">-&gt;</span>
     forkOn n (listenLoop sock)
-  threadDelay <span class="fu">maxBound</span></code></pre>
+  threadDelay maxBound</code></pre>
 <p>This example is admittedly very simple but does illustrate that we can switch from serial to concurrent code in Haskell while still preserving sequential logic. Notably this server isn’t really doing anything terribly clever to get performance, it’s simply just spawning threads and all the heavy lifting is handled by the RTS. Yet with only a three line change the server can utilize all available cores.</p>
 <p>Compiling with <code>-O2</code> and running with <code>+RTS -N4 -qm -qa</code> I get the following numbers on my Intel Core i5:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">Requests per second:    12446.25 [#/sec] <span class="kw">(</span>mean<span class="kw">)</span></code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Requests</span> per second:    12446.25 [#/sec] (mean)</code></pre>
 <p>There are other Haskell servers which do <a href="http://www.yesodweb.com/blog/2012/11/warp-posa">much more clever things</a> such as the Warp server.</p>
 <h4 id="websockets">Websockets</h4>
 <p>The Warp server can utilize the async event notification system to implement asynchronous applications using <code>Control.Concurrent</code> primitives. The prime example is so called “realtime web programming” using websockets. In this example we’ll implement a chat room with a mutable MVar which synchronizes messages across all threads in the server and broadcasts messages to the clients.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> wai-websockets</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install wai-websockets</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Control.Monad</span>
-<span class="kw">import</span> <span class="dt">Text.Printf</span>
-<span class="kw">import</span> <span class="dt">Data.Text</span> (<span class="dt">Text</span>)
-<span class="kw">import</span> <span class="dt">Control.Concurrent</span>
-<span class="kw">import</span> <span class="dt">Control.Monad.IO.Class</span> (liftIO)
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+<span class="kw">import </span><span class="dt">Text.Printf</span>
+<span class="kw">import </span><span class="dt">Data.Text</span> (<span class="dt">Text</span>)
+<span class="kw">import </span><span class="dt">Control.Concurrent</span>
+<span class="kw">import </span><span class="dt">Control.Monad.IO.Class</span> (liftIO)
 
-<span class="kw">import</span> <span class="dt">Data.Aeson</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Data.Text.IO</span> <span class="kw">as</span> <span class="dt">T</span>
+<span class="kw">import </span><span class="dt">Data.Aeson</span>
+<span class="kw">import qualified</span> <span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">T</span>
+<span class="kw">import qualified</span> <span class="dt">Data.Text.IO</span> <span class="kw">as</span> <span class="dt">T</span>
 
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Network.Wai</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Network.WebSockets</span> <span class="kw">as</span> <span class="dt">WS</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Network.Wai.Handler.Warp</span> <span class="kw">as</span> <span class="dt">Warp</span>
-<span class="kw">import</span> <span class="kw">qualified</span> <span class="dt">Network.Wai.Handler.WebSockets</span> <span class="kw">as</span> <span class="dt">WaiWS</span>
-<span class="kw">import</span> <span class="dt">Network.Wai.Application.Static</span> (defaultFileServerSettings, staticApp)
+<span class="kw">import qualified</span> <span class="dt">Network.Wai</span>
+<span class="kw">import qualified</span> <span class="dt">Network.WebSockets</span> <span class="kw">as</span> <span class="dt">WS</span>
+<span class="kw">import qualified</span> <span class="dt">Network.Wai.Handler.Warp</span> <span class="kw">as</span> <span class="dt">Warp</span>
+<span class="kw">import qualified</span> <span class="dt">Network.Wai.Handler.WebSockets</span> <span class="kw">as</span> <span class="dt">WaiWS</span>
+<span class="kw">import </span><span class="dt">Network.Wai.Application.Static</span> (defaultFileServerSettings, staticApp)
 
 <span class="kw">type</span> <span class="dt">Msg</span> <span class="fu">=</span> <span class="dt">Text</span>
 <span class="kw">type</span> <span class="dt">Room</span> <span class="fu">=</span> [<span class="dt">Client</span>]
@@ -699,14 +665,14 @@ app state req <span class="fu">=</span> <span class="kw">do</span>
       liftIO <span class="fu">$</span> modifyMVar_ state <span class="fu">$</span> \s <span class="ot">-&gt;</span> <span class="kw">do</span>
           <span class="kw">let</span> s' <span class="fu">=</span> client <span class="fu">:</span> s
           WS.sendSink sock <span class="fu">$</span> WS.textData <span class="fu">$</span>
-              encode <span class="fu">$</span> <span class="fu">map</span> <span class="fu">fst</span> s
-          <span class="fu">return</span> s'
+              encode <span class="fu">$</span> map fst s
+          return s'
       userLoop state client
 
 <span class="ot">userLoop ::</span> <span class="dt">WS.Protocol</span> p <span class="ot">=&gt;</span> <span class="dt">MVar</span> <span class="dt">Room</span> <span class="ot">-&gt;</span> <span class="dt">Client</span> <span class="ot">-&gt;</span> <span class="dt">WS.WebSockets</span> p ()
 userLoop state client <span class="fu">=</span> forever <span class="fu">$</span> <span class="kw">do</span>
   msg <span class="ot">&lt;-</span> WS.receiveData
-  liftIO <span class="fu">$</span> readMVar state <span class="fu">&gt;&gt;=</span> broadcast (T.concat [<span class="fu">fst</span> client, <span class="st">&quot; : &quot;</span>, msg])
+  liftIO <span class="fu">$</span> readMVar state <span class="fu">&gt;&gt;=</span> broadcast (T.concat [fst client, <span class="st">&quot; : &quot;</span>, msg])
 
 <span class="ot">staticContent ::</span> <span class="dt">Network.Wai.Application</span>
 staticContent <span class="fu">=</span> staticApp <span class="fu">$</span> defaultFileServerSettings <span class="st">&quot;.&quot;</span>
@@ -726,13 +692,13 @@ main <span class="fu">=</span> <span class="kw">do</span>
   printf <span class="st">&quot;Starting server on port %d\n&quot;</span> port
   Warp.runSettings (config <span class="dv">5000</span> state) staticContent</code></pre>
 <p>In the browser we can connet to our server using Javascript:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">ws = <span class="kw">new</span> WebSocket(<span class="ch">'ws://localhost:5000'</span>)
+<pre class="sourceCode javascript"><code class="sourceCode javascript">ws = <span class="kw">new</span> <span class="fu">WebSocket</span>(<span class="st">'ws://localhost:5000'</span>)
 
-<span class="kw">ws</span>.<span class="fu">onmessage</span>(<span class="kw">function</span>(msg){<span class="kw">console</span>.<span class="fu">log</span>(msg)});
-<span class="kw">ws</span>.<span class="fu">send</span>(<span class="ch">'User271828'</span>)
-<span class="kw">ws</span>.<span class="fu">send</span>(<span class="ch">'My message!'</span>)</code></pre>
+<span class="ot">ws</span>.<span class="fu">onmessage</span>(<span class="kw">function</span>(msg){<span class="ot">console</span>.<span class="fu">log</span>(msg)});
+<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'User271828'</span>)
+<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'My message!'</span>)</code></pre>
 <h4 id="cloud-haskell">Cloud Haskell</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> distributed-process distributed-process-simplelocalnet</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install distributed-process distributed-process-simplelocalnet</code></pre>
 <p>One of the most exciting projects in Haskell is a collections of projects developed under the <a href="http://haskell-distributed.github.io/">Cloud Haskell</a> metaproject. Cloud haskell brings language integrated messaging passing capability to Haskell under a very simple API which provides a foundation to build all sorts of distributed computations on top of simple actor primitives.</p>
 <p>The core mechanism of action is a <code>Process</code> monad which encapsulates a actor-like computation that can exchange messages across an abstract network backend. On top of this the <code>distributed-process</code> library provides the language-integrated ability to send arbitrary Haskell functions back and forth between processes much like one can move code in Erlang, but while still persiving Haskell type-safety across the message layer. The signatures for the messaging functions are:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">send ::</span> <span class="dt">Serializable</span> a <span class="ot">=&gt;</span> <span class="dt">ProcessId</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Process</span> ()
@@ -741,50 +707,50 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>The simplest possible example is a simple ping and pong between between several <code>Process</code>. Notably we don’t encode any mechanism for binary serialization of code or data since Haskell can derive these for us.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE TemplateHaskell, DeriveDataTypeable, DeriveGeneric, GeneralizedNewtypeDeriving #-}</span>
 
-<span class="kw">import</span> <span class="dt">Text.Printf</span>
-<span class="kw">import</span> <span class="dt">Data.Binary</span>
-<span class="kw">import</span> <span class="dt">Data.Typeable</span>
-<span class="kw">import</span> <span class="dt">Control.Monad</span>
-<span class="kw">import</span> <span class="dt">System.Environment</span> (getArgs)
-<span class="kw">import</span> <span class="dt">Control.Concurrent</span> (threadDelay)
+<span class="kw">import </span><span class="dt">Text.Printf</span>
+<span class="kw">import </span><span class="dt">Data.Binary</span>
+<span class="kw">import </span><span class="dt">Data.Typeable</span>
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+<span class="kw">import </span><span class="dt">System.Environment</span> (getArgs)
+<span class="kw">import </span><span class="dt">Control.Concurrent</span> (threadDelay)
 
-<span class="kw">import</span> <span class="dt">Control.Distributed.Process</span>
-<span class="kw">import</span> <span class="dt">Control.Distributed.Process.Closure</span>
-<span class="kw">import</span> <span class="dt">Control.Distributed.Process.Backend.SimpleLocalnet</span>
-<span class="kw">import</span> <span class="dt">Control.Distributed.Process.Node</span> (initRemoteTable,)
+<span class="kw">import </span><span class="dt">Control.Distributed.Process</span>
+<span class="kw">import </span><span class="dt">Control.Distributed.Process.Closure</span>
+<span class="kw">import </span><span class="dt">Control.Distributed.Process.Backend.SimpleLocalnet</span>
+<span class="kw">import </span><span class="dt">Control.Distributed.Process.Node</span> (initRemoteTable,)
 
-<span class="kw">newtype</span> <span class="dt">Message</span> <span class="fu">=</span> <span class="dt">Ping</span> <span class="dt">ProcessId</span> <span class="kw">deriving</span> (<span class="kw">Eq</span>, <span class="kw">Ord</span>, <span class="dt">Binary</span>, <span class="dt">Typeable</span>)
+<span class="kw">newtype</span> <span class="dt">Message</span> <span class="fu">=</span> <span class="dt">Ping</span> <span class="dt">ProcessId</span> <span class="kw">deriving</span> (<span class="dt">Eq</span>, <span class="dt">Ord</span>, <span class="dt">Binary</span>, <span class="dt">Typeable</span>)
 
 <span class="ot">pingLoop ::</span> <span class="dt">Process</span> ()
 pingLoop <span class="fu">=</span> <span class="kw">do</span>
-  liftIO <span class="fu">$</span> <span class="fu">putStrLn</span> <span class="st">&quot;Connected with master node.&quot;</span>
+  liftIO <span class="fu">$</span> putStrLn <span class="st">&quot;Connected with master node.&quot;</span>
   forever <span class="fu">$</span> <span class="kw">do</span>
     (<span class="dt">Ping</span> remote_pid) <span class="ot">&lt;-</span> expect
-    say <span class="fu">$</span> printf <span class="st">&quot;Ping from %s&quot;</span> (<span class="fu">show</span> remote_pid)
+    say <span class="fu">$</span> printf <span class="st">&quot;Ping from %s&quot;</span> (show remote_pid)
 
     local_pid <span class="ot">&lt;-</span> getSelfPid
     send remote_pid (<span class="dt">Ping</span> local_pid)
 
-    liftIO <span class="fu">$</span> <span class="fu">putStrLn</span> <span class="st">&quot;Pong!&quot;</span>
+    liftIO <span class="fu">$</span> putStrLn <span class="st">&quot;Pong!&quot;</span>
 
 remotable [ <span class="ch">'pingLoop ]</span>
 
 <span class="ot">master ::</span> [<span class="dt">NodeId</span>] <span class="ot">-&gt;</span> <span class="dt">Process</span> ()
 master peers <span class="fu">=</span> <span class="kw">do</span>
   pids <span class="ot">&lt;-</span> forM peers <span class="fu">$</span> \nid <span class="ot">-&gt;</span> <span class="kw">do</span>
-      say <span class="fu">$</span> printf <span class="st">&quot;Executing remote function on %s&quot;</span> (<span class="fu">show</span> nid)
+      say <span class="fu">$</span> printf <span class="st">&quot;Executing remote function on %s&quot;</span> (show nid)
       spawn nid <span class="fu">$</span>(mkStaticClosure <span class="ch">'pingLoop)</span>
 
   local_pid <span class="ot">&lt;-</span> getSelfPid
 
   forever <span class="fu">$</span> <span class="kw">do</span>
     forM_ pids <span class="fu">$</span> \pid <span class="ot">-&gt;</span> <span class="kw">do</span>
-      say <span class="fu">$</span> printf <span class="st">&quot;Pinging remote node %s&quot;</span> (<span class="fu">show</span> pid)
+      say <span class="fu">$</span> printf <span class="st">&quot;Pinging remote node %s&quot;</span> (show pid)
       send pid (<span class="dt">Ping</span> local_pid)
 
     forM_ pids <span class="fu">$</span> \_ <span class="ot">-&gt;</span> <span class="kw">do</span>
       (<span class="dt">Ping</span> pid) <span class="ot">&lt;-</span> expect
-      say <span class="fu">$</span> printf <span class="st">&quot;Received pong from %s&quot;</span>  (<span class="fu">show</span> pid)
+      say <span class="fu">$</span> printf <span class="st">&quot;Received pong from %s&quot;</span>  (show pid)
 
     liftIO <span class="fu">$</span> threadDelay <span class="dv">1000000</span>
 
@@ -807,11 +773,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
       ctx <span class="ot">&lt;-</span> initializeBackend host port rtable
       startSlave ctx 
 
-    <span class="fu">otherwise</span> <span class="ot">-&gt;</span> <span class="fu">error</span> <span class="st">&quot;Invalid arguments: master|worker &lt;port&gt;&quot;</span></code></pre>
+    otherwise <span class="ot">-&gt;</span> error <span class="st">&quot;Invalid arguments: master|worker &lt;port&gt;&quot;</span></code></pre>
 <p>We can then spawn any number of instances from the shell:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ runhaskell cloud.hs worker 5001
-$ runhaskell cloud.hs worker 5002
-$ runhaskell cloud.hs master 5003</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">runhaskell</span> cloud.hs worker 5001
+$ <span class="kw">runhaskell</span> cloud.hs worker 5002
+$ <span class="kw">runhaskell</span> cloud.hs master 5003</code></pre>
 <h4 id="conclusion">Conclusion</h4>
 <p>Hopefully you feel for what exists in the ecosystem and feel slightly more empowered to use the amazing tools we have.</p>
         </div>

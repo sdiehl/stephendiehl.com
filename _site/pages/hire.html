@@ -29,35 +29,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -74,13 +45,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -88,9 +52,11 @@
                 <ul>
                     <li><a href="../">Index</a></li>
                     <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -105,25 +71,25 @@
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
 <span class="co">-- http://www.stephendiehl.com</span>
 
-<span class="kw">import</span> <span class="dt">Data.Char</span> (<span class="fu">ord</span>, <span class="fu">chr</span>)
-<span class="kw">import</span> <span class="dt">Data.Ix</span> (<span class="fu">inRange</span>)
+<span class="kw">import </span><span class="dt">Data.Char</span> (ord, chr)
+<span class="kw">import </span><span class="dt">Data.Ix</span> (inRange)
  
 <span class="ot">cipher ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
-cipher k <span class="fu">=</span> <span class="fu">map</span> f
+cipher k <span class="fu">=</span> map f
   <span class="kw">where</span>
     f c
-      <span class="fu">|</span> <span class="fu">inRange</span> (<span class="ch">'a'</span>,<span class="ch">'z'</span>) c <span class="fu">=</span> tr <span class="ch">'a'</span> k c
-      <span class="fu">|</span> <span class="fu">inRange</span> (<span class="ch">'A'</span>,<span class="ch">'Z'</span>) c <span class="fu">=</span> tr <span class="ch">'A'</span> k c
-      <span class="fu">|</span> <span class="fu">otherwise</span> <span class="fu">=</span> c
+      <span class="fu">|</span> inRange (<span class="ch">'a'</span>,<span class="ch">'z'</span>) c <span class="fu">=</span> tr <span class="ch">'a'</span> k c
+      <span class="fu">|</span> inRange (<span class="ch">'A'</span>,<span class="ch">'Z'</span>) c <span class="fu">=</span> tr <span class="ch">'A'</span> k c
+      <span class="fu">|</span> otherwise <span class="fu">=</span> c
  
 <span class="ot">uncipher ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">String</span>
 uncipher k <span class="fu">=</span> cipher (<span class="fu">-</span>k)
  
 <span class="ot">tr ::</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> <span class="dt">Char</span> <span class="ot">-&gt;</span> <span class="dt">Char</span>
-tr base offset char <span class="fu">=</span> <span class="fu">chr</span> <span class="fu">$</span> <span class="fu">ord</span> base <span class="fu">+</span> (<span class="fu">ord</span> char <span class="fu">-</span> <span class="fu">ord</span> base <span class="fu">+</span> offset) <span class="ot">`mod`</span> <span class="dv">26</span>
+tr base offset char <span class="fu">=</span> chr <span class="fu">$</span> ord base <span class="fu">+</span> (ord char <span class="fu">-</span> ord base <span class="fu">+</span> offset) <span class="ot">`mod`</span> <span class="dv">26</span>
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
-main <span class="fu">=</span> <span class="fu">putStrLn</span> <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre>
+main <span class="fu">=</span> putStrLn <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre>
 <p><strong>Python</strong></p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>

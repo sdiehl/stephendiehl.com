@@ -30,35 +30,6 @@
       src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -75,13 +46,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -89,9 +53,11 @@
                 <ul>
                     <li><a href="/">Index</a></li>
                     <li><a href="/posts.html">Blog</a></li>
+                    <li><a href="/pages/writings.html">Writings</a></li>
                     <li><a href="/pages/slides.html">Talks</a></li>
                     <li><a href="/pages/hire.html">Contact Me</a></li>
                     <li><a href="/pages/pgp.html">PGP Key</a></li>
+                    <li><a href="/pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>

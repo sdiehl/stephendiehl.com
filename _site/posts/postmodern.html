@@ -29,35 +29,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -74,13 +45,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -88,9 +52,11 @@
                 <ul>
                     <li><a href="../">Index</a></li>
                     <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -138,7 +104,7 @@ my[c]:
         <span class="kw">return</span> x + y;
     }
 
-<span class="kw">print</span> <span class="st">&quot;Regular Python&quot;</span></code></pre>
+<span class="dt">print</span> <span class="st">&quot;Regular Python&quot;</span></code></pre>
 <h2 id="types">Types</h2>
 <p>Python is dynamically typed language and proud of it. While I certainly don’t wish to fan the flames of the typing holy-war, there is certainly a large school of thought that building reliable applications requires stronger guarantees than unit testing alone can provide. Type systems as defined by Benjamin Pierce are:</p>
 <blockquote>
@@ -243,7 +209,7 @@ x1 = builder.add(x0, z)
 
 builder.ret(x1)
 
-<span class="kw">print</span> mod
+<span class="dt">print</span> mod
 
 tm = le.TargetMachine.new(features=<span class="st">''</span>, cm=le.CM_JITDEFAULT)
 eb = le.EngineBuilder.new(mod)
@@ -255,8 +221,8 @@ az = le.GenericValue.<span class="dt">int</span>(i32, <span class="dv">1024</spa
 
 ret = engine.run_function(madd, [ax, ay, az])
 
-<span class="kw">print</span> ret.as_int()
-<span class="kw">print</span> mod.to_native_assembly()</code></pre>
+<span class="dt">print</span> ret.as_int()
+<span class="dt">print</span> mod.to_native_assembly()</code></pre>
 <p>Which compiles generates the following LLVM IR.</p>
 <pre class="sourceCode python"><code class="sourceCode python">define i32 @multiply(i32, i32, i32) {
 L1:
@@ -324,36 +290,36 @@ L1:
     <span class="kw">def</span> eq(<span class="ot">self</span>, other):
         <span class="kw">return</span> <span class="ot">self</span>.val == other.val
 
-<span class="kw">print</span> eq(Foo(), Foo())
-<span class="kw">print</span> eq(Bar(<span class="dv">1</span>), Bar(<span class="dv">1</span>))
-<span class="kw">print</span> eq(Foo(), Bar(<span class="dv">1</span>))
-<span class="kw">print</span> eq(Foo(), Fizz())</code></pre>
+<span class="dt">print</span> eq(Foo(), Foo())
+<span class="dt">print</span> eq(Bar(<span class="dv">1</span>), Bar(<span class="dv">1</span>))
+<span class="dt">print</span> eq(Foo(), Bar(<span class="dv">1</span>))
+<span class="dt">print</span> eq(Foo(), Fizz())</code></pre>
 <p>However extending this kind of interface notion to functions of multiple arguments and becomes increasingly contingent on querying <code>__dict__</code> and is brittle under composition. The heart of the problem is attempting to decompose everything into interfaces that vary on a single type, when what we really want is to declare interfaces that span families of multiple types. This kind of shortcoming in OOP goes straight to the heart of the <a href="http://en.wikipedia.org/wiki/Expression_problem">Expression Problem</a>.</p>
 <p>Languages like Scala, Haskell and Rust provide solutions to this problem in the form of traits and typeclasses. For example Haskell can automatically derive the differentiation equations for the cross product of all types which implement Floating point and Equality interfaces.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> (<span class="kw">Floating</span> a, <span class="kw">Eq</span> a) <span class="ot">=&gt;</span> <span class="kw">Floating</span> (<span class="dt">Dif</span> a) <span class="kw">where</span>
-    <span class="fu">pi</span>               <span class="fu">=</span> <span class="dt">C</span> <span class="fu">pi</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> (<span class="dt">Floating</span> a, <span class="dt">Eq</span> a) <span class="ot">=&gt;</span> <span class="dt">Floating</span> (<span class="dt">Dif</span> a) <span class="kw">where</span>
+    pi               <span class="fu">=</span> <span class="dt">C</span> pi
 
-    <span class="fu">exp</span> (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">exp</span> x)
-    <span class="fu">exp</span> (<span class="dt">D</span> x x')     <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">exp</span> x) (x' <span class="fu">*</span> r)
+    exp (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (exp x)
+    exp (<span class="dt">D</span> x x')     <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (exp x) (x' <span class="fu">*</span> r)
 
-    <span class="fu">log</span> (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">log</span> x)
-    <span class="fu">log</span> p<span class="fu">@</span>(<span class="dt">D</span> x x')   <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">log</span> x) (x' <span class="fu">/</span> p)
+    log (<span class="dt">C</span> x)        <span class="fu">=</span> <span class="dt">C</span> (log x)
+    log p<span class="fu">@</span>(<span class="dt">D</span> x x')   <span class="fu">=</span> <span class="dt">D</span> (log x) (x' <span class="fu">/</span> p)
 
-    <span class="fu">sqrt</span> (<span class="dt">C</span> x)       <span class="fu">=</span> <span class="dt">C</span> (<span class="fu">sqrt</span> x)
-    <span class="fu">sqrt</span> (<span class="dt">D</span> x x')    <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (<span class="fu">sqrt</span> x) (x' <span class="fu">/</span> (<span class="dv">2</span> <span class="fu">*</span> r))</code></pre>
+    sqrt (<span class="dt">C</span> x)       <span class="fu">=</span> <span class="dt">C</span> (sqrt x)
+    sqrt (<span class="dt">D</span> x x')    <span class="fu">=</span> r <span class="kw">where</span> r <span class="fu">=</span> <span class="dt">D</span> (sqrt x) (x' <span class="fu">/</span> (<span class="dv">2</span> <span class="fu">*</span> r))</code></pre>
 <h2 id="asynchronous-programming">Asynchronous Programming</h2>
 <p>In this case again we have a variety of bolted-on solutions that address the problem partially but introduce a whole set of constraints and patterns which go against the grain of regular Python. Gevent in particular adds continuations to Python itself through splicing of the underlying C stack with assembly hacks. The resulting API is very elegant API but makes reasoning about control-flow and exceptions much more complex.</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> gevent
 
 <span class="kw">def</span> foo():
-    <span class="kw">print</span>(<span class="st">'Running in foo'</span>)
+    <span class="dt">print</span>(<span class="st">'Running in foo'</span>)
     gevent.sleep(<span class="dv">0</span>)
-    <span class="kw">print</span>(<span class="st">'Explicit context switch to foo again'</span>)
+    <span class="dt">print</span>(<span class="st">'Explicit context switch to foo again'</span>)
 
 <span class="kw">def</span> bar():
-    <span class="kw">print</span>(<span class="st">'Explicit context to bar'</span>)
+    <span class="dt">print</span>(<span class="st">'Explicit context to bar'</span>)
     gevent.sleep(<span class="dv">0</span>)
-    <span class="kw">print</span>(<span class="st">'Implicit context switch back to bar'</span>)
+    <span class="dt">print</span>(<span class="st">'Implicit context switch back to bar'</span>)
 
 gevent.joinall([
     gevent.spawn(foo),
@@ -361,7 +327,7 @@ gevent.joinall([
 ])</code></pre>
 <p>The control flow is show below:</p>
 <div class="figure">
-<img src="http://sdiehl.github.io/gevent-tutorial/flow.gif"></img><p class="caption"></p>
+<img src="http://sdiehl.github.io/gevent-tutorial/flow.gif" />
 </div>
 <p>Through rather ungraceful monkey-patching of the standard library we can emulate Erlang-style actor behavior with asynchronous entry points and internal state:</p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="ch">import</span> gevent
@@ -387,11 +353,11 @@ gevent.joinall([
 
     <span class="kw">def</span> poll(<span class="ot">self</span>):
         <span class="kw">while</span> <span class="ot">True</span>:
-            <span class="kw">print</span>(<span class="ot">self</span>.queue.get())
+            <span class="dt">print</span>(<span class="ot">self</span>.queue.get())
 
     <span class="kw">def</span> periodic(<span class="ot">self</span>):
         <span class="kw">while</span> <span class="ot">True</span>:
-            <span class="kw">print</span>(<span class="st">'PING'</span>)
+            <span class="dt">print</span>(<span class="st">'PING'</span>)
             gevent.sleep(<span class="dv">5</span>)
 
     <span class="kw">def</span> serve_forever(<span class="ot">self</span>):

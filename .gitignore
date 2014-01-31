@@ -1,8 +1,16 @@
+dist
+
 hakyll
-_cache
 *.hi
 *.o
 *.swp
 *.swo
 *.aux
 *.log
+
+_cache
+_site
+posts/drafts
+
+cabal.sandbox.config
+.cabal-sandbox

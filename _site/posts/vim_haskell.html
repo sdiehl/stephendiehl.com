@@ -29,35 +29,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -74,13 +45,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -88,9 +52,11 @@
                 <ul>
                     <li><a href="../">Index</a></li>
                     <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -107,17 +73,17 @@
 <pre class="sourceCode scala"><code class="sourceCode scala">:<span class="kw">def</span> hoogle \s -&gt; <span class="kw">return</span> $ <span class="st">&quot;:! hoogle --count=15 </span><span class="ch">\&quot;</span><span class="st">&quot;</span> ++ s ++ <span class="st">&quot;</span><span class="ch">\&quot;</span><span class="st">&quot;</span></code></pre>
 <p><br /> For instance if we forgot the name of the function associated with <code>(a -&gt; m b) -&gt; [a] -&gt; m b</code>) we could ask hoogle for functions matching. Indeed we see that <code>mapM_</code> is in the list.</p>
 <p>
-<img src="../images/hoogle.png"></img>
+<img src="../images/hoogle.png" />
 </p>
 
 <p><strong>syntastic</strong></p>
 <p><a href="https://github.com/scrooloose/syntastic">Syntastic</a> is a syntax checking plugin for a variety of languages, including Haskell. It integrates with a either ghcmod or hdevtools to provide type errors inline.</p>
 <p>
-<img src="../images/loclist.png"></img>
+<img src="../images/loclist.png" />
 </p>
 
 <p>
-<img src="../images/errors.png"></img>
+<img src="../images/errors.png" />
 </p>
 
 
@@ -142,25 +108,25 @@ au FileType haskell nnoremap &lt;buffer&gt; &lt;silent&gt; &lt;F2&gt; :Hdevtools
 au FileType haskell nnoremap &lt;buffer&gt; &lt;silent&gt; &lt;F3&gt; :HdevtoolsInfo&lt;CR&gt;</code></pre>
 <p>Pressing ( <code>F1</code> ) in Normal mode shows the type under the cursor. Pressing it repeatedly expands the selection to the parent expression up to the toplevel function definition.</p>
 <p>
-<img src="../images/f1.png"></img>
+<img src="../images/f1.png" />
 </p>
 
 <p>Pressing ( <code>F3</code> ) in Normal mode will show further information about type classes, data constructors or functions, including the source location of definition.</p>
 <p>
-<img src="../images/f3.png"></img>
+<img src="../images/f3.png" />
 </p>
 
 <p><strong>hlint</strong></p>
 <p>Hlint is a source linter for Haskell which can provide a selection of hints for helping improve your code stylistic and functionally. For instance if you happen to implement one of many Prelude functions it can suggest that you use the builtin instead.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">$ cabal install hlint</code></pre>
 <p>
-<img src="../images/hlint.png"></img>
+<img src="../images/hlint.png" />
 </p>
 
 <p><strong>tagbar</strong></p>
 <p><a href="http://majutsushi.github.io/tagbar/">Tagbar</a> is a plugin for browsing the toplevel definitions in a file. It integrates with ghcmod to generate the tags from</p>
 <p>
-<img src="../images/tagbar.png"></img>
+<img src="../images/tagbar.png" />
 </p>
 
 <p>The tags are updated upon write, to open the tagbar bind <code>:TagbarToggle</code> to your key of choice;</p>
@@ -172,7 +138,7 @@ let g:tagbar_autofocus = <span class="dv">1</span></code></pre>
 let g:slime_paste_file = <span class="fu">tempname</span>()</code></pre>
 <p>In visual mode you now press ( <code>Ctrl-C Ctrl-C</code> ) to send the current block to the tmux session. Upon initial load it will prompt you for the tmux session name and vim panel.</p>
 <p>
-<img src="../images/slime.png"></img>
+<img src="../images/slime.png" />
 </p>
 
 <p><strong>pointfree</strong></p>
@@ -180,10 +146,10 @@ let g:slime_paste_file = <span class="fu">tempname</span>()</code></pre>
 <pre class="sourceCode scala"><code class="sourceCode scala">$ cabal install pointfree</code></pre>
 <p><br /> Then add the following to your <code>.vimrc</code>.</p>
 <pre class="sourceCode scala"><code class="sourceCode scala">autocmd BufEnter *.<span class="fu">hs</span> set formatprg=pointfree</code></pre>
-<br />
+<p><br /></p>
 <p>In visual mode you can now press <code>gq</code> to convert a expression to it’s pointfree form. Though quite often the resulting form is more obfuscated than the original.</p>
 <p>
-<img src="../images/pointfree.png"></img>
+<img src="../images/pointfree.png" />
 </p>
 
 

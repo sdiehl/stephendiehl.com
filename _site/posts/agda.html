@@ -29,35 +29,6 @@
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
     </script>
     <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        extensions: ["tex2jax.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-          inlineMath: [ ['$','$'], ['\\(','\\)'] ],
-          // Needs to escaped for Pandoc
-          displayMath: [ ["\\[","\\]"] ],
-          processEscapes: true
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] },
-
-        TeX: {
-            Macros: {
-                cat : ["\\mathcal{#1}", 1],
-                ob  : ["\\mathrm{ob}(#1)", 1],
-                hom : ["\\mathrm{hom}(#1)", 1],
-                id  : ["\\text{id}_{#1}", 1],
-                C   : "\\mathcal{C}",
-                D   : "\\mathcal{D}",
-
-                iso    : "{\cong}\)",
-                Hask   : "{\cat{Hask}}\)",
-                yoneda : "{\mathcal{Y}}\)",
-
-                dom: ["{\text{dom}(#1)}\)", 1],
-                cod: ["{\text{cod}(#1)}\)", 1],
-            }
-        }
-      });
     </script>
 
     <!--[if lt IE 9]>
@@ -74,13 +45,6 @@
 </head>
 <body>
 
-<div style="display:none">
-<p>Category Theory Definitions for Haskell Programmers</p>
-</div>
-
-    <!-- Primary Page Layout
-    ================================================== -->
-
     <div class="container">
         <div class="three columns sidebar">
             <nav>
@@ -88,9 +52,11 @@
                 <ul>
                     <li><a href="../">Index</a></li>
                     <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
@@ -102,7 +68,7 @@
             <h3 id="agda-tutorial">Agda Tutorial</h3>
 <p>There wasn’t much information on about getting started from first principles with Agda. So I figured I’d write a quick intro guide to getting started hacking with Agda. Agda is a very deep subject so this only scratch the surface. This is a work in progress.</p>
 <p>Assuming you have the necessary Haskell and Cabal infrastructure in place you can run:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ cabal <span class="kw">install</span> agda agda-executable</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install agda agda-executable</code></pre>
 <p>Then download and install the standard library to <code>AgdaLibrary</code> or yoru directory of choice.</p>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">wget</span> http://www.cse.chalmers.se/~nad/software/lib-0.7.tar.gz
 $ <span class="kw">tar</span> xzf lib-0.7.tar.gz
@@ -111,17 +77,17 @@ $ <span class="kw">cp</span> -R lib-0.7/src ~/AgdaLibrary</code></pre>
 <p>For a simple complete example, create a file <code>Fibonacci.agda</code> with the contents:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Fibonacci</span> <span class="kw">where</span>
 
-open <span class="kw">import</span> <span class="dt">Data.Nat</span>
+open <span class="kw">import </span><span class="dt">Data.Nat</span>
 
 fib <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ
 fib <span class="dv">0</span> <span class="fu">=</span> <span class="dv">0</span>
 fib <span class="dv">1</span> <span class="fu">=</span> <span class="dv">1</span>
 fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span> fib n</code></pre>
 <p>Verify that it type checks and compiles by running.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ agda --compile --include-path=<span class="st">&quot;~/AgdaLibrary&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> Fibonacci.agda</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">agda</span> --compile --include-path=<span class="st">&quot;~/AgdaLibrary&quot;</span> --include-path=<span class="st">&quot;.&quot;</span> Fibonacci.agda</code></pre>
 <h3 id="interactive-editing">Interactive Editing</h3>
 <p>If you’re an Emacs user then you’re in luck, simply run:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">agda-mode setup</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">agda-mode</span> setup</code></pre>
 <p>And add the following lines to your <code>~/.emacs</code> config.</p>
 <pre class="sourceCode scheme"><code class="sourceCode scheme">(load-file (<span class="kw">let</span> ((coding-system-for-read 'utf<span class="dv">-8</span>))
                 (shell-command-to-string <span class="st">&quot;agda-mode locate&quot;</span>)))
@@ -146,7 +112,7 @@ fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span
 (global-set-key (kbd <span class="st">&quot;C-c C-@&quot;</span>) 'agda2-give)</code></pre>
 <p>Evil mode will be installed and can be enabled by appending the following to your .emacs config once the package has been installed.</p>
 <p>Then create a empty File “Interactive.agda” and open it with Emacs.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ emacs Interactive.agda</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">emacs</span> Interactive.agda</code></pre>
 <p>Start by entering the following following module:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Interactive</span> <span class="kw">where</span></code></pre>
 <p>Load the code into Emacs session by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">l</kbd> ). Get used to this shortcut, you’ll be spamming it repeatedly!</p>
@@ -184,46 +150,46 @@ fib (suc (suc n)) <span class="fu">=</span> fib (suc n) <span class="fu">+</span
   suc <span class="fu">:</span> ℕ <span class="ot">→</span> ℕ</code></pre>
 <p>For symbols that are not shortcut bound you can press ( <kbd class="light">Ctrl</kbd> <kbd class="light">x</kbd> + <kbd class="light">8</kbd> <kbd class="light">Return</kbd> ) and tab complete to see the available list of symbols.</p>
 <p>Now to test the interactive mode, enter the following code into the buffer.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span> <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">→</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">A</span>
-<span class="fu">id</span> a <span class="fu">=</span> <span class="fu">?</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">id <span class="fu">:</span> {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>} <span class="ot">→</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">A</span>
+id a <span class="fu">=</span> <span class="fu">?</span></code></pre>
 <p>Loading this with ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">l</kbd> ) will tell agda to replace the Hole <code>?</code> with a anonymous metavariable <code>{ }0</code>. This is the value we aim to determine. Highlighting the hole and typing <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ) will show the corresponding goals needed to finish the program in the bottom buffer.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">Goal: .A
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Goal</span>: .A
 ————————————————————————————————————————————————————————————
-a  <span class="kw">:</span> .A
-.A <span class="kw">:</span> Set</code></pre>
+<span class="kw">a</span>  : .A
+<span class="kw">.A</span> : Set</code></pre>
 <p>Of course the id function expression can only inhabited by one value, namely <code>a</code>.</p>
 <p>We can attempt to substitute a value into the hole by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">Space</kbd> ) which will prompt you for a value. For example if we attempt to provide <code>zero</code> we will get the following type error:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">ℕ !=<span class="kw">&lt;</span> .A of <span class="kw">type</span> Set
-when checking that the expression zero has <span class="kw">type</span> .A</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash">ℕ !=<span class="kw">&lt;</span> <span class="kw">.A</span> of type Set
+<span class="kw">when</span> checking that the expression zero has type .A</code></pre>
 <p>For cases this like this where the value is sufficiently constrained by the type agda can often automatically fill out the value by using the Auto tactic. Highlight the hole and fill and press ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">a</kbd> ) to attempt to auto complete the implementation.</p>
 <p>Now we define our Bool type.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Bool</span> <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
   false <span class="fu">:</span> <span class="dt">Bool</span>
   true  <span class="fu">:</span> <span class="dt">Bool</span></code></pre>
 <p>To write down an <code>and</code> function there are two combinations of arguments we have to deal with, namely <code>true false</code> and <code>false true</code>. Agda knows the types of the arguments and can write most of our function for us.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-<span class="fu">and</span> a b <span class="fu">=</span> <span class="fu">?</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">and <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+and a b <span class="fu">=</span> <span class="fu">?</span></code></pre>
 <p>Highlighting the hole and pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ) again shows us the proof we need to complete.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">Goal: Bool
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Goal</span>: Bool
 ————————————————————————————————————————————————————————————
-b <span class="kw">:</span> Bool
-a <span class="kw">:</span> Bool</code></pre>
+<span class="kw">b</span> : Bool
+<span class="kw">a</span> : Bool</code></pre>
 <p>Highlighting the hole again and pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> ) will let us introduce a case for the first variable on the left hand side, in this case <code>b</code> first..</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-<span class="fu">and</span> a false <span class="fu">=</span> { }<span class="dv">0</span>
-<span class="fu">and</span> a true <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">and <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+and a false <span class="fu">=</span> { }<span class="dv">0</span>
+and a true <span class="fu">=</span> { }<span class="dv">1</span></code></pre>
 <p>We know have two hole for the each case. Highlighting the first and doing the same procedure will the fill in the cases for a.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-<span class="fu">and</span> false false <span class="fu">=</span> { }<span class="dv">0</span>
-<span class="fu">and</span> false true <span class="fu">=</span> { }<span class="dv">1</span>
-<span class="fu">and</span> true false <span class="fu">=</span> { }<span class="dv">2</span>
-<span class="fu">and</span> true true <span class="fu">=</span> { }<span class="dv">3</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">and <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+and false false <span class="fu">=</span> { }<span class="dv">0</span>
+and false true <span class="fu">=</span> { }<span class="dv">1</span>
+and true false <span class="fu">=</span> { }<span class="dv">2</span>
+and true true <span class="fu">=</span> { }<span class="dv">3</span></code></pre>
 <p>We need then only fill in the right hand sides.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">and</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
-<span class="fu">and</span> false false <span class="fu">=</span> false
-<span class="fu">and</span> false true <span class="fu">=</span> false
-<span class="fu">and</span> true false <span class="fu">=</span> false
-<span class="fu">and</span> true true <span class="fu">=</span> true</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">and <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+and false false <span class="fu">=</span> false
+and false true <span class="fu">=</span> false
+and true false <span class="fu">=</span> false
+and true true <span class="fu">=</span> true</code></pre>
 <h4 id="inductive-definitions">Inductive Definitions</h4>
 <p>The usual inductive definition of natural numbers has a zero and a successor function.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> ℕ <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
@@ -288,11 +254,11 @@ id2 a <span class="fu">=</span> a</code></pre>
     first <span class="fu">:</span> <span class="dt">A</span>
     second <span class="fu">:</span> <span class="dt">B</span>
 
-<span class="fu">fst</span> <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">A</span>
-<span class="fu">fst</span> <span class="fu">=</span> _×_<span class="fu">.</span>first
+fst <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">A</span>
+fst <span class="fu">=</span> _×_<span class="fu">.</span>first
 
-<span class="fu">snd</span> <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">B</span>
-<span class="fu">snd</span> <span class="fu">=</span> _×_<span class="fu">.</span>second</code></pre>
+snd <span class="fu">:</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>} <span class="ot">→</span> <span class="dt">A</span> × <span class="dt">B</span> <span class="ot">→</span> <span class="dt">B</span>
+snd <span class="fu">=</span> _×_<span class="fu">.</span>second</code></pre>
 <p>The product operator can be entered as “\times”.</p>
 <p>Unlike in Haskell the type of a field of record types can depend on the values of the previosly defined fields of the same record.</p>
 <p>To be written…</p>
@@ -302,13 +268,13 @@ id2 a <span class="fu">=</span> a</code></pre>
 <h4 id="proofs">Proofs</h4>
 <p>Agda can inform us of the constraints on variables in scope by pressing ( <kbd class="light">Ctrl</kbd> <kbd class="light">c</kbd> + <kbd class="light">Ctrl</kbd> <kbd class="light">,</kbd> ).</p>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">open <span class="kw">import</span> <span class="dt">Data.Nat</span>
-open <span class="kw">import</span> <span class="dt">Data.Bool</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">open <span class="kw">import </span><span class="dt">Data.Nat</span>
+open <span class="kw">import </span><span class="dt">Data.Bool</span>
 
-<span class="fu">even</span> <span class="fu">:</span> ℕ <span class="ot">→</span> <span class="dt">Bool</span>
-<span class="fu">even</span> zero <span class="fu">=</span> true
-<span class="fu">even</span> (suc zero) <span class="fu">=</span> false
-<span class="fu">even</span> (suc (suc n)) <span class="fu">=</span> <span class="fu">even</span> n</code></pre>
+even <span class="fu">:</span> ℕ <span class="ot">→</span> <span class="dt">Bool</span>
+even zero <span class="fu">=</span> true
+even (suc zero) <span class="fu">=</span> false
+even (suc (suc n)) <span class="fu">=</span> even n</code></pre>
 <p>Stuff about the Curry-Howard Isomorphism to be written…</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">T</span> <span class="fu">:</span> <span class="dt">Bool</span> <span class="ot">→</span> <span class="dt">Set</span>
 <span class="dt">T</span> true  <span class="fu">=</span> ⊤
@@ -318,7 +284,7 @@ open <span class="kw">import</span> <span class="dt">Data.Bool</span>
 <span class="dt">F</span> true  <span class="fu">=</span> ⊥
 <span class="dt">F</span> false <span class="fu">=</span> ⊤</code></pre>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">proof <span class="fu">:</span> (n <span class="fu">:</span> ℕ) <span class="ot">→</span> {_ <span class="fu">:</span> <span class="dt">T</span> (<span class="fu">even</span> n)} <span class="ot">→</span> ℕ  
+<pre class="sourceCode haskell"><code class="sourceCode haskell">proof <span class="fu">:</span> (n <span class="fu">:</span> ℕ) <span class="ot">→</span> {_ <span class="fu">:</span> <span class="dt">T</span> (even n)} <span class="ot">→</span> ℕ  
 proof n <span class="fu">=</span> n <span class="fu">*</span> n</code></pre>
 <h4 id="relations-and-equivalences">Relations and Equivalences</h4>
 <p>To be written…</p>
@@ -359,16 +325,16 @@ suc i ⊔ suc j <span class="fu">=</span> suc (i ⊔ j)</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> Σ (<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span>) (<span class="dt">B</span> <span class="fu">:</span> <span class="dt">A</span> <span class="ot">-&gt;</span> <span class="dt">Set</span>) <span class="fu">:</span> <span class="dt">Set</span> <span class="kw">where</span>
   _,_ <span class="fu">:</span> (a <span class="fu">:</span> <span class="dt">A</span>) <span class="ot">-&gt;</span> <span class="dt">B</span> a <span class="ot">-&gt;</span> Σ <span class="dt">A</span> <span class="dt">B</span></code></pre>
 <p>Dependent sums:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">record Σ {a b} (<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span> a) (<span class="dt">P</span> <span class="fu">:</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">Set</span> b) <span class="fu">:</span> <span class="dt">Set</span> (<span class="fu">max</span> a b) <span class="kw">where</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">record Σ {a b} (<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span> a) (<span class="dt">P</span> <span class="fu">:</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">Set</span> b) <span class="fu">:</span> <span class="dt">Set</span> (max a b) <span class="kw">where</span>
   constructor _,_
   field
     prj₁ <span class="fu">:</span> <span class="dt">A</span>
     prj₂ <span class="fu">:</span> <span class="dt">P</span> (prj₁)</code></pre>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">curry</span> <span class="fu">:</span> <span class="ot">∀</span> {a b c} {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span> a} {<span class="dt">B</span> <span class="fu">:</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">Set</span> b} {<span class="dt">C</span> <span class="fu">:</span> Σ <span class="dt">A</span> <span class="dt">B</span> <span class="ot">→</span> <span class="dt">Set</span> c} <span class="ot">→</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">curry <span class="fu">:</span> <span class="ot">∀</span> {a b c} {<span class="dt">A</span> <span class="fu">:</span> <span class="dt">Set</span> a} {<span class="dt">B</span> <span class="fu">:</span> <span class="dt">A</span> <span class="ot">→</span> <span class="dt">Set</span> b} {<span class="dt">C</span> <span class="fu">:</span> Σ <span class="dt">A</span> <span class="dt">B</span> <span class="ot">→</span> <span class="dt">Set</span> c} <span class="ot">→</span>
         ((p <span class="fu">:</span> Σ <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> <span class="dt">C</span> p) <span class="ot">→</span>
         ((x <span class="fu">:</span> <span class="dt">A</span>) <span class="ot">→</span> (y <span class="fu">:</span> <span class="dt">B</span> x) <span class="ot">→</span> <span class="dt">C</span> (x , y))
-<span class="fu">curry</span> f x y <span class="fu">=</span> f (x , y)</code></pre>
+curry f x y <span class="fu">=</span> f (x , y)</code></pre>
 <p>To be written…</p>
 <h4 id="example-semigroups">Example: Semigroups</h4>
 <p>When coding abstract algebra in Agda we generally are working with a set called the <em>carrier</em> and a set of operations defined over the set given the structure of the laws in interactions between between operations.</p>
@@ -388,31 +354,31 @@ suc i ⊔ suc j <span class="fu">=</span> suc (i ⊔ j)</code></pre>
 <h4 id="example-categories">Example: Categories</h4>
 <p>The most basic structure in category theory is a category which is an algebraic structure of objects (<code>Obj</code>) and morphisms (<code>Hom</code>) with the structure that morphisms compose associatively and the existence of a identity morphism for each object.</p>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">open <span class="kw">import</span> <span class="dt">Level</span>
-open <span class="kw">import</span> <span class="dt">Data.Product</span>
-open <span class="kw">import</span> <span class="dt">Relation.Binary</span>
-open <span class="kw">import</span> <span class="dt">Relation.Binary.PropositionalEquality</span>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">open <span class="kw">import </span><span class="dt">Level</span>
+open <span class="kw">import </span><span class="dt">Data.Product</span>
+open <span class="kw">import </span><span class="dt">Relation.Binary</span>
+open <span class="kw">import </span><span class="dt">Relation.Binary.PropositionalEquality</span>
 
 <span class="kw">module</span> <span class="dt">Category</span> <span class="fu">.</span>{o ℓ} {<span class="dt">Obj</span> <span class="fu">:</span> <span class="dt">Set</span> o}(<span class="dt">Hom</span> <span class="fu">:</span> <span class="dt">Rel</span> <span class="dt">Obj</span> ℓ) <span class="kw">where</span></code></pre>
 <p>To be written…</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">_∘_ <span class="fu">:</span> <span class="dt">Set</span> _
 _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span>} <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">B</span> <span class="dt">C</span> <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span> <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">C</span></code></pre>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">id</span> <span class="fu">:</span> <span class="dt">Set</span> _
-<span class="fu">id</span> <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span>} <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">A</span></code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">id <span class="fu">:</span> <span class="dt">Set</span> _
+id <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span>} <span class="ot">→</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">A</span></code></pre>
 <p>To be written…</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">assoc <span class="fu">:</span> _∘_  <span class="ot">→</span> <span class="dt">Set</span> _
 assoc _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span> <span class="dt">C</span> <span class="dt">D</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>)(g <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">B</span> <span class="dt">C</span>)(h <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">C</span> <span class="dt">D</span>)
           <span class="ot">→</span> ((h ∘ g) ∘ f) ≡ (h ∘ (g ∘ f))</code></pre>
 <p>To be written…</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">leftident <span class="fu">:</span> <span class="fu">id</span> <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
-leftident <span class="fu">id</span> _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((<span class="fu">id</span> ∘ f) ≡ f)
+<pre class="sourceCode haskell"><code class="sourceCode haskell">leftident <span class="fu">:</span> id <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
+leftident id _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((id ∘ f) ≡ f)
 
-rightident <span class="fu">:</span> <span class="fu">id</span> <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
-rightident <span class="fu">id</span> _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((f ∘ <span class="fu">id</span>) ≡ f)
+rightident <span class="fu">:</span> id <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
+rightident id _∘_ <span class="fu">=</span> <span class="ot">∀</span> {<span class="dt">A</span> <span class="dt">B</span>}(f <span class="fu">:</span> <span class="dt">Hom</span> <span class="dt">A</span> <span class="dt">B</span>) <span class="ot">→</span> ((f ∘ id) ≡ f)
 
-identity <span class="fu">:</span> <span class="fu">id</span> <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
-identity <span class="fu">id</span> ∘ <span class="fu">=</span> (leftident <span class="fu">id</span> ∘) × (rightident <span class="fu">id</span> ∘)</code></pre>
+identity <span class="fu">:</span> id <span class="ot">→</span> _∘_ <span class="ot">→</span> <span class="dt">Set</span> _
+identity id ∘ <span class="fu">=</span> (leftident id ∘) × (rightident id ∘)</code></pre>
         </div>
     </div>
 
