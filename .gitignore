@@ -9,7 +9,6 @@ hakyll
 *.log
 
 _cache
-_site
 posts/drafts
 
 cabal.sandbox.config
