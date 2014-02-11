@@ -212,19 +212,32 @@ safeHead (fmap f (x<span class="fu">:</span>xs))
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&gt;&gt;=) ::</span> (<span class="dt">Monad</span> c t) <span class="ot">=&gt;</span> c a (t b) <span class="ot">-&gt;</span> c (t a) (t b)
 (<span class="fu">&gt;&gt;=</span>) f <span class="fu">=</span> mu <span class="fu">.</span> fmap f
  
-return <span class="fu">=</span> eta
-join m <span class="fu">=</span> m <span class="fu">&gt;&gt;=</span> id</code></pre>
+return <span class="fu">=</span> eta</code></pre>
 <p>In this form equivalent naturality conditions for the monad’s natural transformations give rise to the regular monad laws by substitution with our new definitions.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f <span class="fu">.</span> return <span class="fu">=</span> return <span class="fu">.</span> f          
-fmap f <span class="fu">.</span> join <span class="fu">=</span> join <span class="fu">.</span> fmap (fmap f)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f <span class="fu">.</span> return  ≡  return <span class="fu">.</span> f          
+fmap f <span class="fu">.</span> join    ≡  join <span class="fu">.</span> fmap (fmap f)</code></pre>
 <p>And the equivalent coherence conditions expressed in terms of bind and return are the well known Monad laws:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">return a <span class="fu">&gt;&gt;=</span> f   ≡  f a
 m <span class="fu">&gt;&gt;=</span> return     ≡  m
 (m <span class="fu">&gt;&gt;=</span> f) <span class="fu">&gt;&gt;=</span> g  ≡  m <span class="fu">&gt;&gt;=</span> (\x <span class="ot">-&gt;</span> f x <span class="fu">&gt;&gt;=</span> g)</code></pre>
-<p>Haskell defines the following do-notation sugar for binds:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span>  pattern <span class="ot">&lt;-</span> expression
-    morelines</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">expression <span class="fu">&gt;&gt;=</span> (\ pattern <span class="ot">-&gt;</span> <span class="kw">do</span> morelines)</code></pre>
+<p>Haskell defines the following do-notation sugar for the bind operator:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> { a <span class="fu">&lt;</span> <span class="fu">-</span> f ; m }  ≡ f <span class="fu">&gt;&gt;=</span> \a <span class="ot">-&gt;</span> m
+<span class="kw">do</span> { <span class="fu">...</span> ; a }      ≡ return a</code></pre>
+<p>So the follow are equivalent:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> {
+  a <span class="ot">&lt;-</span> f ; 
+  b <span class="ot">&lt;-</span> g ;
+  c <span class="ot">&lt;-</span> h ;
+  return (a, b, c)
+}
+
+(f <span class="fu">&gt;&gt;=</span> (\a <span class="ot">-&gt;</span> 
+  (g <span class="fu">&gt;&gt;=</span> (\b <span class="ot">-&gt;</span> 
+    (h <span class="fu">&gt;&gt;=</span> (\c <span class="ot">-&gt;</span> 
+      return (a, b, c)
+    ))
+  ))
+))</code></pre>
 <p>In this form the laws can equivalently be written as block expressions:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">m ::</span> t a
 <span class="ot">f ::</span> a <span class="ot">-&gt;</span> t b
@@ -232,20 +245,20 @@ m <span class="fu">&gt;&gt;=</span> return     ≡  m
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> y <span class="ot">&lt;-</span> return x
    f y
 
-<span class="fu">=</span> <span class="kw">do</span> f x</code></pre>
+≡ <span class="kw">do</span> f x</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> x <span class="ot">&lt;-</span> m
    return x
 
-<span class="fu">=</span> <span class="kw">do</span> m</code></pre>
+≡  <span class="kw">do</span> m</code></pre>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">do</span> b <span class="ot">&lt;-</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
              f a
      g b
 
-<span class="fu">=</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
+≡ <span class="kw">do</span> a <span class="ot">&lt;-</span> m
      b <span class="ot">&lt;-</span> f a
      g b
 
-<span class="fu">=</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
+≡ <span class="kw">do</span> a <span class="ot">&lt;-</span> m
      <span class="kw">do</span> b <span class="ot">&lt;-</span> f a
         g b</code></pre>
 <h5 id="kleisli-category">Kleisli Category</h5>

@@ -244,15 +244,14 @@ terms of ``mu`` and ``eta``.
 (>>=) f = mu . fmap f
  
 return = eta
-join m = m >>= id
 ```
 
 In this form equivalent naturality conditions for the monad's natural transformations give rise to the regular
 monad laws by substitution with our new definitions.
 
 ```haskell
-fmap f . return = return . f          
-fmap f . join = join . fmap (fmap f)
+fmap f . return  ≡  return . f          
+fmap f . join    ≡  join . fmap (fmap f)
 ```
 
 And the equivalent coherence conditions expressed in terms of
@@ -264,15 +263,30 @@ m >>= return     ≡  m
 (m >>= f) >>= g  ≡  m >>= (\x -> f x >>= g)
 ```
 
-Haskell defines the following do-notation sugar for binds:
+Haskell defines the following do-notation sugar for the bind operator:
 
 ```haskell
-do  pattern <- expression
-    morelines
+do { a < - f ; m }  ≡ f >>= \a -> m
+do { ... ; a }      ≡ return a
 ```
 
+So the follow are equivalent:
+
 ```haskell
-expression >>= (\ pattern -> do morelines)
+do {
+  a <- f ; 
+  b <- g ;
+  c <- h ;
+  return (a, b, c)
+}
+
+(f >>= (\a -> 
+  (g >>= (\b -> 
+    (h >>= (\c -> 
+      return (a, b, c)
+    ))
+  ))
+))
 ```
 
 In this form the laws can equivalently be written as block expressions:
@@ -287,14 +301,14 @@ g :: b -> t c
 do y <- return x
    f y
 
-= do f x
+≡ do f x
 ```
 
 ```haskell
 do x <- m
    return x
 
-= do m
+≡  do m
 ```
 
 ```haskell
@@ -302,11 +316,11 @@ do x <- m
              f a
      g b
 
-= do a <- m
+≡ do a <- m
      b <- f a
      g b
 
-= do a <- m
+≡ do a <- m
      do b <- f a
         g b
 ```
