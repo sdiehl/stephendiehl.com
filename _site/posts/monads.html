@@ -31,6 +31,17 @@
     <script type="text/x-mathjax-config">
     </script>
 
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -155,15 +166,14 @@ safeHead (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="d
 
 safeHead (fmap f [])
 <span class="fu">=</span> safeHead []
-<span class="fu">=</span> <span class="dt">Nothing</span>
+<span class="fu">=</span> <span class="dt">Nothing</span></code></pre>
+<pre><code>fmap f (safeHead (x:xs))
+= fmap f (Just x)
+= Just (f x)
 
-fmap f (safeHead (x<span class="fu">:</span>xs))
-<span class="fu">=</span> fmap f x
-<span class="fu">=</span> f x
-
-safeHead (fmap f (x<span class="fu">:</span>xs))
-<span class="fu">=</span> safeHead [f x]
-<span class="fu">=</span> f x</code></pre>
+safeHead (fmap f (x:xs))
+= safeHead [f x]
+= Just (f x)</code></pre>
 <h5 id="monads">Monads</h5>
 <hr />
 <p>We can finally define a <em>monad</em> over a category <span class="math">\(\mathcal{C}\)</span> to be a triple <span class="math">\((T, \eta, \mu)\)</span> of:</p>
@@ -220,47 +230,6 @@ fmap f <span class="fu">.</span> join    ≡  join <span class="fu">.</span> fma
 <pre class="sourceCode haskell"><code class="sourceCode haskell">return a <span class="fu">&gt;&gt;=</span> f   ≡  f a
 m <span class="fu">&gt;&gt;=</span> return     ≡  m
 (m <span class="fu">&gt;&gt;=</span> f) <span class="fu">&gt;&gt;=</span> g  ≡  m <span class="fu">&gt;&gt;=</span> (\x <span class="ot">-&gt;</span> f x <span class="fu">&gt;&gt;=</span> g)</code></pre>
-<p>Haskell defines the following do-notation sugar for the bind operator:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> { a <span class="fu">&lt;</span> <span class="fu">-</span> f ; m }  ≡ f <span class="fu">&gt;&gt;=</span> \a <span class="ot">-&gt;</span> m
-<span class="kw">do</span> { <span class="fu">...</span> ; a }      ≡ return a</code></pre>
-<p>So the follow are equivalent:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> {
-  a <span class="ot">&lt;-</span> f ; 
-  b <span class="ot">&lt;-</span> g ;
-  c <span class="ot">&lt;-</span> h ;
-  return (a, b, c)
-}
-
-(f <span class="fu">&gt;&gt;=</span> (\a <span class="ot">-&gt;</span> 
-  (g <span class="fu">&gt;&gt;=</span> (\b <span class="ot">-&gt;</span> 
-    (h <span class="fu">&gt;&gt;=</span> (\c <span class="ot">-&gt;</span> 
-      return (a, b, c)
-    ))
-  ))
-))</code></pre>
-<p>In this form the laws can equivalently be written as block expressions:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">m ::</span> t a
-<span class="ot">f ::</span> a <span class="ot">-&gt;</span> t b
-<span class="ot">g ::</span> b <span class="ot">-&gt;</span> t c</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> y <span class="ot">&lt;-</span> return x
-   f y
-
-≡ <span class="kw">do</span> f x</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">do</span> x <span class="ot">&lt;-</span> m
-   return x
-
-≡  <span class="kw">do</span> m</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">  <span class="kw">do</span> b <span class="ot">&lt;-</span> <span class="kw">do</span> a <span class="ot">&lt;-</span> m
-             f a
-     g b
-
-≡ <span class="kw">do</span> a <span class="ot">&lt;-</span> m
-     b <span class="ot">&lt;-</span> f a
-     g b
-
-≡ <span class="kw">do</span> a <span class="ot">&lt;-</span> m
-     <span class="kw">do</span> b <span class="ot">&lt;-</span> f a
-        g b</code></pre>
 <h5 id="kleisli-category">Kleisli Category</h5>
 <hr />
 <p>The final result is given a monad we can form a new category called the <em>Kleisli category</em> from the monad. The objects are embedded in our original <code>c</code> category, but our arrows are now Kleisli arrows <code>a -&gt; T b</code>. Given this class of “actions” we’d like to write an operator which combined these morphisms: <code>(b -&gt; T c) -&gt; (a -&gt; T b) -&gt; (a -&gt; T c)</code> just like we combine functions <code>( b -&gt; c ) -&gt; ( a -&gt; b ) -&gt; ( a - &gt; c)</code> in our host category.</p>

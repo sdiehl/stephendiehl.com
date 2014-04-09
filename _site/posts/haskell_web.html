@@ -31,6 +31,17 @@
     <script type="text/x-mathjax-config">
     </script>
 
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
     <!--[if lt IE 9]>
         <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
@@ -66,46 +77,7 @@
 
         <div class="twelve columns offset-by-one content">
             <h2 id="haskell-for-web-developers">Haskell for Web Developers</h2>
-<h2 id="misconception-1">Misconception #1</h2>
-<blockquote>
-<p>Haskell as a pure function language is not suited for web programming since web programming involves mostly doing IO.</p>
-</blockquote>
-<p>Part of this confusion stems from the prevalent misconception that managing side-effects in Haskell is a extremely complicated. One large difference between Haskell and other languages is that <em>effects in Haskell are explicit and unambigious.</em> There is a clear demarcation between logic which can have effects and logic which cannot. The <em>pure by default</em> philosophy is central to Haskell and for good reasons, but purity and the IO monad is high-level concept that allows the programmer and compiler to better reason about their code and detect errors. It has little to any impact on the runtime implemention since during compilation types are erased and the implementation of IO in Haskell is as fast as anything you can write in imperative language <a href="http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf">and often faster</a>.</p>
-<p>For example the following simple code writes to a file.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
-main <span class="fu">=</span> writeFile <span class="st">&quot;foo.txt&quot;</span> <span class="st">&quot;my line&quot;</span></code></pre>
-<p>This reads from a file and prints the lines.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main ::</span> <span class="dt">IO</span> ()
-main <span class="fu">=</span> <span class="kw">do</span>
-  content <span class="ot">&lt;-</span> readFile <span class="st">&quot;foo.txt&quot;</span>
-  mapM_ print (lines content)</code></pre>
-<p>This creates a small read print loop which interacts with user input and stores internal state:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Control.Monad.State</span>
-
-<span class="kw">type</span> <span class="dt">Interact</span> a <span class="fu">=</span> <span class="dt">StateT</span> <span class="dt">Int</span> <span class="dt">IO</span> a
-
-<span class="ot">repl ::</span> <span class="dt">Interact</span> ()
-repl <span class="fu">=</span> forever <span class="fu">$</span> <span class="kw">do</span>
-  val   <span class="ot">&lt;-</span> lift readLn
-  state <span class="ot">&lt;-</span> get
-  lift <span class="fu">$</span> putStr <span class="st">&quot;Total: &quot;</span>
-  lift <span class="fu">$</span> print (val <span class="fu">+</span> state)
-  put val
-
-main <span class="fu">=</span> runStateT repl <span class="dv">0</span></code></pre>
-<p>This is an example of a monad transformer, namely the composition of StateT ( State Transformer ) with the IO Monad. The values from the IO monad are lifted into the State monad with the <code>lift</code> function.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">lift ::</span> (<span class="dt">Monad</span> m, <span class="dt">MonadTrans</span> t) <span class="ot">=&gt;</span> m a <span class="ot">-&gt;</span> t m a</code></pre>
-<p>While monad transformers can sometimes be unwiedly, they are straightforward and even mechanical to use after understanding their implementation. An illustration of the two monad composition is illuminating:</p>
-<div class="figure">
-<img src="../images/transformer.svg" />
-</div>
-<hr />
-
-<h2 id="misconception-2">Misconception #2</h2>
-<blockquote>
-<p>I can’t use Haskell in my web application.</p>
-</blockquote>
-<p>The second perpetual myth is that Haskell cannot be used for “real world applications”. Normally real world is usually left undefined in such a discussion, but can often be taken to mean that Haskell is not suited for database and web development work.</p>
+<p>The perpetual myth persists that Haskell cannot be used for “real world applications”. Normally real world is usually left undefined in such a discussion, but can often be taken to mean that Haskell is not suited for database and web development work.</p>
 <p>Haskell has a rich library ecosystem and is well-suited for these tasks but I concede that there might be a systemic lack of introductory material for many domain specific tasks. Something that many <a href="http://www.haskell.org/platform">projects</a> and <a href="https://www.fpcomplete.com">companies</a> are trying to remedy.</p>
 <p>Haskell does indeed have several great web frameworks along the lines of RoR, Django, Flask, Pyramid etc.</p>
 <ol style="list-style-type: decimal">

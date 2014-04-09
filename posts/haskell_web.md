@@ -5,83 +5,10 @@ date: July 18, 2013
 
 ## Haskell for Web Developers
 
-Misconception #1
-----------------
-
-> Haskell as a pure function language is not suited for web programming since web programming involves mostly
-> doing IO.
-
-Part of this confusion stems from the prevalent misconception that managing side-effects in Haskell is a
-extremely complicated. One large difference between Haskell and other languages is that *effects in Haskell
-are explicit and unambigious.* There is a clear demarcation between logic which can have effects and logic
-which cannot.  The *pure by default* philosophy is central to Haskell and for good reasons, but purity and the
-IO monad is high-level concept that allows the programmer and compiler to better reason about their code and
-detect errors. It has little to any impact on the runtime implemention since during compilation types are
-erased and the implementation of IO in Haskell is as fast as anything you can write in imperative language
-[and often faster](http://haskell.cs.yale.edu/wp-content/uploads/2013/08/hask035-voellmy.pdf).
-
-For example the following simple code writes to a file.
-
-```haskell
-main :: IO ()
-main = writeFile "foo.txt" "my line"
-```
-
-This reads from a file and prints the lines.
-
-```haskell
-main :: IO ()
-main = do
-  content <- readFile "foo.txt"
-  mapM_ print (lines content)
-```
-
-This creates a small read print loop which interacts with user
-input and stores internal state:
-
-```haskell
-import Control.Monad.State
-
-type Interact a = StateT Int IO a
-
-repl :: Interact ()
-repl = forever $ do
-  val   <- lift readLn
-  state <- get
-  lift $ putStr "Total: "
-  lift $ print (val + state)
-  put val
-
-main = runStateT repl 0
-```
-
-This is an example of a monad transformer, namely the composition
-of StateT ( State Transformer ) with the IO Monad.  The values
-from the IO monad are lifted into the State monad with the
-``lift`` function.
-
-```haskell
-lift :: (Monad m, MonadTrans t) => m a -> t m a
-```
-
-While monad transformers can sometimes be unwiedly, they are
-straightforward and even mechanical to use after understanding
-their implementation. An illustration of the two monad
-composition is illuminating:
-
-![](/images/transformer.svg)
-
-<hr/>
-
-Misconception #2
-----------------
-
-> I can't use Haskell in my web application.
-
-The second perpetual myth is that Haskell cannot be used for
-"real world applications". Normally real world is usually left
-undefined in such a discussion, but can often be taken to mean
-that Haskell is not suited for database and web development work.
+The perpetual myth persists that Haskell cannot be used for "real world
+applications". Normally real world is usually left undefined in such a
+discussion, but can often be taken to mean that Haskell is not suited
+for database and web development work.
 
 Haskell has a rich library ecosystem and is well-suited for these
 tasks but I concede that there might be a systemic lack of

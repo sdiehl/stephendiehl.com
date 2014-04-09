@@ -165,14 +165,16 @@ fmap f (safeHead [])
 safeHead (fmap f [])
 = safeHead []
 = Nothing
+```
 
+```
 fmap f (safeHead (x:xs))
-= fmap f x
-= f x
+= fmap f (Just x)
+= Just (f x)
 
 safeHead (fmap f (x:xs))
 = safeHead [f x]
-= f x
+= Just (f x)
 ```
 
 ##### Monads
@@ -261,68 +263,6 @@ bind and return are the well known Monad laws:
 return a >>= f   ≡  f a
 m >>= return     ≡  m
 (m >>= f) >>= g  ≡  m >>= (\x -> f x >>= g)
-```
-
-Haskell defines the following do-notation sugar for the bind operator:
-
-```haskell
-do { a < - f ; m }  ≡ f >>= \a -> m
-do { ... ; a }      ≡ return a
-```
-
-So the follow are equivalent:
-
-```haskell
-do {
-  a <- f ; 
-  b <- g ;
-  c <- h ;
-  return (a, b, c)
-}
-
-(f >>= (\a -> 
-  (g >>= (\b -> 
-    (h >>= (\c -> 
-      return (a, b, c)
-    ))
-  ))
-))
-```
-
-In this form the laws can equivalently be written as block expressions:
-
-```haskell
-m :: t a
-f :: a -> t b
-g :: b -> t c
-```
-
-```haskell
-do y <- return x
-   f y
-
-≡ do f x
-```
-
-```haskell
-do x <- m
-   return x
-
-≡  do m
-```
-
-```haskell
-  do b <- do a <- m
-             f a
-     g b
-
-≡ do a <- m
-     b <- f a
-     g b
-
-≡ do a <- m
-     do b <- f a
-        g b
 ```
 
 ##### Kleisli Category
