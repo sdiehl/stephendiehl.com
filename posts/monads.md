@@ -14,7 +14,7 @@ intution even more.*
 ##### Categories
 ***
 
-Suppose we have a abstract category $\mathcal{C}$ with objects and morphisms.
+We have a abstract category $\mathcal{C}$ which consists of objects and morphisms.
 
 * Objects   : $●$
 * Morphisms : $● \rightarrow ●$
@@ -41,7 +41,7 @@ instance Category Hask where
 The constructor ``(->)`` is sometimes confusing, for example the following are equivalent.
 
 ```haskell
-(->) ((->) a b) -> ((->) a c)
+(->) ((->) a b) ((->) a c)
 (a -> b) -> (a -> c)
 ```
 
@@ -115,12 +115,6 @@ $$
 \eta_X : F(X) \rightarrow G(X)
 $$
 
-Show diagrammaticlly as:
-
-<p>
-<img src="/images/nat.svg" width="150px"/>
-</p>
-
 Such that the following *naturality condition* holds for any
 moprhism $f : X \rightarrow Y$:
 
@@ -130,6 +124,12 @@ $$
 
 <p>
 <img src="/images/naturality.svg" width="200px"/>
+</p>
+
+Show diagrammaticlly as:
+
+<p>
+<img src="/images/nat.svg" width="150px"/>
 </p>
 
 This is expressible in our general category class as the
@@ -144,36 +144,36 @@ canoical example is the natural transformation between the the List functor and 
 ``List``, g = ``Maybe`` ).
 
 ```haskell
-safeHead :: forall a. [a] -> Maybe a
-safeHead []     = Nothing
-safeHead (x:xs) = Just x
+headMay :: forall a. [a] -> Maybe a
+headMay []     = Nothing
+headMay (x:xs) = Just x
 ```
 
 Either way we chase the diagram we end up at the same place.
 
 ```haskell
-fmap f (safeHead xs) ≡ safeHead (fmap g xs)
+fmap f (headMay xs) ≡ headMay (fmap f xs)
 ```
 
 Run through each of the cases if you need to convince yourself of this fact.
 
 ```haskell
-fmap f (safeHead [])
+fmap f (headMay [])
 = fmap f Nothing
 = Nothing
 
-safeHead (fmap f [])
-= safeHead []
+headMay (fmap f [])
+= headMay []
 = Nothing
 ```
 
-```
-fmap f (safeHead (x:xs))
+```haskell
+fmap f (headMay (x:xs))
 = fmap f (Just x)
 = Just (f x)
 
-safeHead (fmap f (x:xs))
-= safeHead [f x]
+headMay (fmap f (x:xs))
+= headMay [f x]
 = Just (f x)
 ```
 
@@ -293,8 +293,6 @@ $$
 f \circ g = \mu ( T f ) g
 $$
 
-Simply put, the monad laws are the equivalent category laws for the Kleisli category.
-
 ```haskell
 (<=<) :: (Monad c t) => c y (t z) -> c x (t y) -> c x (t z)
 f <=< g = mu . fmap f . g 
@@ -324,6 +322,22 @@ class Functor t => Monad t where
 ma >>= f = join . fmap f
 ```
 
+Stated simply that the monad laws above are just the category laws in the Kleisli category, specifcally ithe
+monad laws in terms of the Kleisli category of a monad ``m`` are:
+
+```haskell
+(f >=> g) >=> h ≡ f >=> (g >=> h)
+return >=> f ≡ f
+f >=> return ≡  f
+```
+
+For example, ``Just`` is just an identity morphism in the Kleisli category of the ``Maybe`` monad.
+
+```haskell
+Just >=> a ≡ a
+a >=> Just ≡ a
+```
+
 ##### Haskell Monads
 ***
 
@@ -336,6 +350,7 @@ For instance the **List monad** would have have:
 
 ```haskell
 instance Functor [] where
+  -- fmap :: (a -> b) -> [a] -> [b]
   fmap f (x:xs) = f x : fmap f xs
 
 instance Monad [] where
@@ -346,6 +361,27 @@ instance Monad [] where
   mu = concat
 ```
 
+The **Maybe monad** would have:
+
+1. $\eta$ is the Just constructor.
+1. $\eta$ combines two levels of Just constructors yielding the inner value or Nothing.
+1. $\mathtt{fmap}$ applies a function under the Just constructor or nothing for Nothing. 
+
+```haskell
+instance Functor [] where
+  -- fmap :: (a -> b) -> Maybe a -> Maybe b
+  fmap f (Just x) = Just (f x)
+  fmap f Nothing = Nothing
+
+instance Monad Maybe where
+  -- eta :: a -> Maybe a
+  eta x = Just x
+
+  -- mu :: (Maybe (Maybe a)) -> Maybe a
+  mu (Just (Just x)) = Just x
+  mu (Just Nothing) = Nothing
+```
+
 The **IO monad** would intuitively have the implementation:
 
 1. $\eta$ returns a pure value to a value within the context of
@@ -354,3 +390,12 @@ The **IO monad** would intuitively have the implementation:
    IO operation.
 1. $\mathtt{fmap}$ applies a function over the result
    of the computation.
+
+```haskell
+instance Functor IO where
+  -- fmap :: (a -> b) -> IO a -> IO b
+
+instance Monad Maybe where
+  -- eta :: a -> IO a
+  -- mu :: (IO (IO a)) -> IO a
+```

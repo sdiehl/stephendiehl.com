@@ -81,7 +81,7 @@
 <p><em>If you aren’t already comfortable with monads in Haskell, please don’t read this. It will confuse your intution even more.</em></p>
 <h5 id="categories">Categories</h5>
 <hr />
-<p>Suppose we have a abstract category <span class="math">\(\mathcal{C}\)</span> with objects and morphisms.</p>
+<p>We have a abstract category <span class="math">\(\mathcal{C}\)</span> which consists of objects and morphisms.</p>
 <ul>
 <li>Objects : <span class="math">\(●\)</span></li>
 <li>Morphisms : <span class="math">\(● \rightarrow ●\)</span></li>
@@ -97,7 +97,7 @@
   id x <span class="fu">=</span> x
   (g <span class="fu">.</span> f) x <span class="fu">=</span> g (f x)</code></pre>
 <p>The constructor <code>(-&gt;)</code> is sometimes confusing, for example the following are equivalent.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">(<span class="ot">-&gt;</span>) ((<span class="ot">-&gt;</span>) a b) <span class="ot">-&gt;</span> ((<span class="ot">-&gt;</span>) a c)
+<pre class="sourceCode haskell"><code class="sourceCode haskell">(<span class="ot">-&gt;</span>) ((<span class="ot">-&gt;</span>) a b) ((<span class="ot">-&gt;</span>) a c)
 (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> c)</code></pre>
 <h5 id="functors">Functors</h5>
 <hr />
@@ -138,11 +138,6 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <p><span class="math">\[
 \eta_X : F(X) \rightarrow G(X)
 \]</span></p>
-<p>Show diagrammaticlly as:</p>
-<p>
-<img src="../images/nat.svg" width="150px" />
-</p>
-
 <p>Such that the following <em>naturality condition</em> holds for any moprhism <span class="math">\(f : X \rightarrow Y\)</span>:</p>
 <p><span class="math">\[
 \eta_Y \circ F(f) = G(f) \circ \eta_X
@@ -151,29 +146,34 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <img src="../images/naturality.svg" width="200px" />
 </p>
 
+<p>Show diagrammaticlly as:</p>
+<p>
+<img src="../images/nat.svg" width="150px" />
+</p>
+
 <p>This is expressible in our general category class as the following existential type:</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Nat</span> c f g <span class="fu">=</span> forall a<span class="fu">.</span> c (f a) (g a)</code></pre>
 <p>In the case of <em>Hask</em> we a family of polymorphic functions with signature: <code>forall a. f a -&gt; g a</code>. The canoical example is the natural transformation between the the List functor and the Maybe functor ( where f = <code>List</code>, g = <code>Maybe</code> ).</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">safeHead ::</span> forall a<span class="fu">.</span> [a] <span class="ot">-&gt;</span> <span class="dt">Maybe</span> a
-safeHead []     <span class="fu">=</span> <span class="dt">Nothing</span>
-safeHead (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dt">Just</span> x</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">headMay ::</span> forall a<span class="fu">.</span> [a] <span class="ot">-&gt;</span> <span class="dt">Maybe</span> a
+headMay []     <span class="fu">=</span> <span class="dt">Nothing</span>
+headMay (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dt">Just</span> x</code></pre>
 <p>Either way we chase the diagram we end up at the same place.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (safeHead xs) ≡ safeHead (fmap g xs)</code></pre>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (headMay xs) ≡ headMay (fmap f xs)</code></pre>
 <p>Run through each of the cases if you need to convince yourself of this fact.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (safeHead [])
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (headMay [])
 <span class="fu">=</span> fmap f <span class="dt">Nothing</span>
 <span class="fu">=</span> <span class="dt">Nothing</span>
 
-safeHead (fmap f [])
-<span class="fu">=</span> safeHead []
+headMay (fmap f [])
+<span class="fu">=</span> headMay []
 <span class="fu">=</span> <span class="dt">Nothing</span></code></pre>
-<pre><code>fmap f (safeHead (x:xs))
-= fmap f (Just x)
-= Just (f x)
+<pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (headMay (x<span class="fu">:</span>xs))
+<span class="fu">=</span> fmap f (<span class="dt">Just</span> x)
+<span class="fu">=</span> <span class="dt">Just</span> (f x)
 
-safeHead (fmap f (x:xs))
-= safeHead [f x]
-= Just (f x)</code></pre>
+headMay (fmap f (x<span class="fu">:</span>xs))
+<span class="fu">=</span> headMay [f x]
+<span class="fu">=</span> <span class="dt">Just</span> (f x)</code></pre>
 <h5 id="monads">Monads</h5>
 <hr />
 <p>We can finally define a <em>monad</em> over a category <span class="math">\(\mathcal{C}\)</span> to be a triple <span class="math">\((T, \eta, \mu)\)</span> of:</p>
@@ -244,7 +244,6 @@ m <span class="fu">&gt;&gt;=</span> return     ≡  m
 <p><span class="math">\[
 f \circ g = \mu ( T f ) g
 \]</span></p>
-<p>Simply put, the monad laws are the equivalent category laws for the Kleisli category.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&lt;=&lt;) ::</span> (<span class="dt">Monad</span> c t) <span class="ot">=&gt;</span> c y (t z) <span class="ot">-&gt;</span> c x (t y) <span class="ot">-&gt;</span> c x (t z)
 f <span class="fu">&lt;=&lt;</span> g <span class="fu">=</span> mu <span class="fu">.</span> fmap f <span class="fu">.</span> g 
 
@@ -266,6 +265,13 @@ f <span class="fu">&lt;=&lt;</span> g <span class="fu">=</span> mu <span class="
 
 <span class="ot">(&gt;&gt;=) ::</span> <span class="dt">Monad</span> t <span class="ot">=&gt;</span> t a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> t b) <span class="ot">-&gt;</span> t b
 ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span class="fu">.</span> fmap f</code></pre>
+<p>Stated simply that the monad laws above are just the category laws in the Kleisli category, specifcally ithe monad laws in terms of the Kleisli category of a monad <code>m</code> are:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">(f <span class="fu">&gt;=&gt;</span> g) <span class="fu">&gt;=&gt;</span> h ≡ f <span class="fu">&gt;=&gt;</span> (g <span class="fu">&gt;=&gt;</span> h)
+return <span class="fu">&gt;=&gt;</span> f ≡ f
+f <span class="fu">&gt;=&gt;</span> return ≡  f</code></pre>
+<p>For example, <code>Just</code> is just an identity morphism in the Kleisli category of the <code>Maybe</code> monad.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Just</span> <span class="fu">&gt;=&gt;</span> a ≡ a
+a <span class="fu">&gt;=&gt;</span> <span class="dt">Just</span> ≡ a</code></pre>
 <h5 id="haskell-monads">Haskell Monads</h5>
 <hr />
 <p>For instance the <strong>List monad</strong> would have have:</p>
@@ -275,6 +281,7 @@ ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span clas
 <li><span class="math">\(\mathtt{fmap}\)</span> applies a function over the elements of a list.</li>
 </ol>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Functor</span> [] <span class="kw">where</span>
+  <span class="co">-- fmap :: (a -&gt; b) -&gt; [a] -&gt; [b]</span>
   fmap f (x<span class="fu">:</span>xs) <span class="fu">=</span> f x <span class="fu">:</span> fmap f xs
 
 <span class="kw">instance</span> <span class="dt">Monad</span> [] <span class="kw">where</span>
@@ -283,12 +290,36 @@ ma <span class="fu">&gt;&gt;=</span> f <span class="fu">=</span> join <span clas
 
   <span class="co">-- mu :: [[a]] -&gt; [a]</span>
   mu <span class="fu">=</span> concat</code></pre>
+<p>The <strong>Maybe monad</strong> would have:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math">\(\eta\)</span> is the Just constructor.</li>
+<li><span class="math">\(\eta\)</span> combines two levels of Just constructors yielding the inner value or Nothing.</li>
+<li><span class="math">\(\mathtt{fmap}\)</span> applies a function under the Just constructor or nothing for Nothing.</li>
+</ol>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Functor</span> [] <span class="kw">where</span>
+  <span class="co">-- fmap :: (a -&gt; b) -&gt; Maybe a -&gt; Maybe b</span>
+  fmap f (<span class="dt">Just</span> x) <span class="fu">=</span> <span class="dt">Just</span> (f x)
+  fmap f <span class="dt">Nothing</span> <span class="fu">=</span> <span class="dt">Nothing</span>
+
+<span class="kw">instance</span> <span class="dt">Monad</span> <span class="dt">Maybe</span> <span class="kw">where</span>
+  <span class="co">-- eta :: a -&gt; Maybe a</span>
+  eta x <span class="fu">=</span> <span class="dt">Just</span> x
+
+  <span class="co">-- mu :: (Maybe (Maybe a)) -&gt; Maybe a</span>
+  mu (<span class="dt">Just</span> (<span class="dt">Just</span> x)) <span class="fu">=</span> <span class="dt">Just</span> x
+  mu (<span class="dt">Just</span> <span class="dt">Nothing</span>) <span class="fu">=</span> <span class="dt">Nothing</span></code></pre>
 <p>The <strong>IO monad</strong> would intuitively have the implementation:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math">\(\eta\)</span> returns a pure value to a value within the context of the computation.</li>
 <li><span class="math">\(\mu\)</span> turns a sequence of IO operation into a single IO operation.</li>
 <li><span class="math">\(\mathtt{fmap}\)</span> applies a function over the result of the computation.</li>
 </ol>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Functor</span> <span class="dt">IO</span> <span class="kw">where</span>
+  <span class="co">-- fmap :: (a -&gt; b) -&gt; IO a -&gt; IO b</span>
+
+<span class="kw">instance</span> <span class="dt">Monad</span> <span class="dt">Maybe</span> <span class="kw">where</span>
+  <span class="co">-- eta :: a -&gt; IO a</span>
+  <span class="co">-- mu :: (IO (IO a)) -&gt; IO a</span></code></pre>
         </div>
     </div>
 
