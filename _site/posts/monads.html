@@ -138,7 +138,7 @@ G : \mathcal{A} \rightarrow \mathcal{B}
 <p><span class="math">\[
 \eta_X : F(X) \rightarrow G(X)
 \]</span></p>
-<p>Such that the following <em>naturality condition</em> holds for any moprhism <span class="math">\(f : X \rightarrow Y\)</span>:</p>
+<p>Such that the following <em>naturality condition</em> holds for any moprhism <span class="math">\(f : X \rightarrow Y\)</span>. Shown as a <em>naturality square</em> diagram:</p>
 <p><span class="math">\[
 \eta_Y \circ F(f) = G(f) \circ \eta_X
 \]</span></p>
@@ -159,7 +159,7 @@ headMay []     <span class="fu">=</span> <span class="dt">Nothing</span>
 headMay (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dt">Just</span> x</code></pre>
 <p>Either way we chase the diagram we end up at the same place.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (headMay xs) ≡ headMay (fmap f xs)</code></pre>
-<p>Run through each of the cases if you need to convince yourself of this fact.</p>
+<p>Run through each of the cases of the naturality square for <code>headMay</code> if you need to convince yourself of this.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">fmap f (headMay [])
 <span class="fu">=</span> fmap f <span class="dt">Nothing</span>
 <span class="fu">=</span> <span class="dt">Nothing</span>

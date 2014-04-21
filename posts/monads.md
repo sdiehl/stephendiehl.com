@@ -115,8 +115,8 @@ $$
 \eta_X : F(X) \rightarrow G(X)
 $$
 
-Such that the following *naturality condition* holds for any
-moprhism $f : X \rightarrow Y$:
+Such that the following *naturality condition* holds for any moprhism $f : X \rightarrow Y$. Shown as a
+*naturality square* diagram:
 
 $$
 \eta_Y \circ F(f) = G(f) \circ \eta_X
@@ -132,8 +132,7 @@ Show diagrammaticlly as:
 <img src="/images/nat.svg" width="150px"/>
 </p>
 
-This is expressible in our general category class as the
-following existential type:
+This is expressible in our general category class as the following existential type:
 
 ```haskell
 type Nat c f g = forall a. c (f a) (g a)
@@ -155,7 +154,8 @@ Either way we chase the diagram we end up at the same place.
 fmap f (headMay xs) ≡ headMay (fmap f xs)
 ```
 
-Run through each of the cases if you need to convince yourself of this fact.
+Run through each of the cases of the naturality square for ``headMay`` if you need to convince yourself of
+this.
 
 ```haskell
 fmap f (headMay [])
