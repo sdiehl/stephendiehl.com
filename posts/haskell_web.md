@@ -169,7 +169,7 @@ internal ToMarkup classes to provide HTML representations for any
 datatype in Haskell. A silly example might be:
 
 ```haskell
-data Animal = Cat | Dog deriving (Show)
+data Example = A | B deriving (Show)
 data List a = Cons a | Nil deriving (Show)
 
 instance ToMarkup Animal where
@@ -182,13 +182,13 @@ instance (ToMarkup a) => ToMarkup (List a) where
 ```
 
 ```html
-<!-- Cons (Cons (Cons Dog)) -->
+<!-- Cons (Cons (Cons A)) -->
 <ul>
    <li>
       <ul>
          <li>
             <ul>
-               <li>Dog</li>
+               <li>A</li>
             </ul>
          </li>
       </ul>
