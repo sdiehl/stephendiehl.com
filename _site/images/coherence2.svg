@@ -43,13 +43,13 @@
      fit-margin-left="10"
      fit-margin-right="10"
      fit-margin-bottom="10"
-     inkscape:zoom="0.64280453"
-     inkscape:cx="88.072814"
-     inkscape:cy="55.291251"
-     inkscape:window-x="0"
-     inkscape:window-y="14"
+     inkscape:zoom="5.1424362"
+     inkscape:cx="75.205952"
+     inkscape:cy="41.949838"
+     inkscape:window-x="1460"
+     inkscape:window-y="190"
      inkscape:window-maximized="0"
-     inkscape:current-layer="svg2" />
+     inkscape:current-layer="surface1" />
   <defs
      id="defs4">
     <g
@@ -355,17 +355,28 @@
          width="389.543"
          height="79.444" />
     </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g105">
-      <use
-         xlink:href="#glyph5-0"
-         x="156.067"
-         y="52.558998"
-         id="use107"
-         width="389.543"
-         height="79.444" />
-    </g>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3138"
+       y="52.685772"
+       x="157.16075"
+       style="font-size:6.4000001px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman;-inkscape-font-specification:'Times New Roman, Italic'"
+       xml:space="preserve"><tspan
+         y="52.685772"
+         x="157.16075"
+         id="tspan3140"
+         sodipodi:role="line">C</tspan></text>
+    <text
+       sodipodi:linespacing="125%"
+       id="text3138-3"
+       y="52.685772"
+       x="232.36104"
+       style="font-size:6.4000001px;font-style:italic;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Times New Roman;-inkscape-font-specification:'Times New Roman, Italic'"
+       xml:space="preserve"><tspan
+         y="52.685772"
+         x="232.36104"
+         id="tspan3140-8"
+         sodipodi:role="line">C</tspan></text>
     <g
        style="fill:#000000;fill-opacity:1"
        id="g109">
@@ -718,17 +729,6 @@
          x="227.636"
          y="51.216"
          id="use235"
-         width="389.543"
-         height="79.444" />
-    </g>
-    <g
-       style="fill:#000000;fill-opacity:1"
-       id="g237">
-      <use
-         xlink:href="#glyph5-0"
-         x="231.87"
-         y="52.555"
-         id="use239"
          width="389.543"
          height="79.444" />
     </g>
