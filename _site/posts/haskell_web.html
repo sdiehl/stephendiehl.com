@@ -180,7 +180,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
    <span class="kw">&lt;/body&gt;</span>
 <span class="kw">&lt;/html&gt;</span></code></pre>
 <p>In addition to generating HTML we can also derive from it’s internal ToMarkup classes to provide HTML representations for any datatype in Haskell. A silly example might be:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">Cat</span> <span class="fu">|</span> <span class="dt">Dog</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Example</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">|</span> <span class="dt">B</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
 <span class="kw">data</span> <span class="dt">List</span> a <span class="fu">=</span> <span class="dt">Cons</span> a <span class="fu">|</span> <span class="dt">Nil</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="kw">instance</span> <span class="dt">ToMarkup</span> <span class="dt">Animal</span> <span class="kw">where</span>
@@ -190,13 +190,13 @@ main <span class="fu">=</span> <span class="kw">do</span>
   toMarkup x <span class="fu">=</span> <span class="kw">case</span> x <span class="kw">of</span>
       <span class="dt">Cons</span> a <span class="ot">-&gt;</span> H.ul <span class="fu">$</span> H.li <span class="fu">$</span> toHtml a
       <span class="dt">Nil</span> <span class="ot">-&gt;</span> <span class="st">&quot;&quot;</span></code></pre>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Cons (Cons (Cons Dog)) --&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Cons (Cons (Cons A)) --&gt;</span>
 <span class="kw">&lt;ul&gt;</span>
    <span class="kw">&lt;li&gt;</span>
       <span class="kw">&lt;ul&gt;</span>
          <span class="kw">&lt;li&gt;</span>
             <span class="kw">&lt;ul&gt;</span>
-               <span class="kw">&lt;li&gt;</span>Dog<span class="kw">&lt;/li&gt;</span>
+               <span class="kw">&lt;li&gt;</span>A<span class="kw">&lt;/li&gt;</span>
             <span class="kw">&lt;/ul&gt;</span>
          <span class="kw">&lt;/li&gt;</span>
       <span class="kw">&lt;/ul&gt;</span>

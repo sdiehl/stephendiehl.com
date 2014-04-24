@@ -77,7 +77,7 @@
 
         <div class="twelve columns offset-by-one content">
             <h3 id="monads-made-difficult">Monads Made Difficult</h3>
-<p>This is a short, fast and analogy-free introduction to Haskell monads derived from a categorical perspective. While most monad articles will try to explain monads to beginners using hand waving and bad metaphors, this will instead attempt to explain them to experienced Haskellers using more difficult concepts from mathematics! This assumes you are familiar with Haskell and basic category theory.</p>
+<p>This is a short, fast and analogy-free introduction to Haskell monads derived from a categorical perspective. This assumes you are familiar with Haskell and basic category theory.</p>
 <p><em>If you aren’t already comfortable with monads in Haskell, please don’t read this. It will confuse your intuition even more.</em></p>
 <h5 id="categories">Categories</h5>
 <hr />
@@ -138,10 +138,7 @@ fmap (a <span class="fu">.</span> b) ≡ (fmap a) <span class="fu">.</span> (fma
   fmap f <span class="fu">=</span> (<span class="dt">Hom</span> <span class="dt">C</span>) <span class="fu">.</span> (fmapg (fmapf f) <span class="fu">.</span> (<span class="dt">Hom</span> unC))
     <span class="kw">where</span>
       fmapf <span class="fu">=</span><span class="ot"> fmap ::</span> a x y <span class="ot">-&gt;</span> b (f x) (f y)
-      fmapg <span class="fu">=</span><span class="ot"> fmap ::</span> b s t <span class="ot">-&gt;</span> c (g s) (g t)
-
-<span class="ot">example ::</span> <span class="dt">FComp</span> [] [] ()
-example <span class="fu">=</span> <span class="dt">C</span> [[()]]</code></pre>
+      fmapg <span class="fu">=</span><span class="ot"> fmap ::</span> b s t <span class="ot">-&gt;</span> c (g s) (g t)</code></pre>
 <p>The repeated composition of an endofunctor over a category is written with exponential notation:</p>
 <p><span class="math">\[
 \begin{align*}

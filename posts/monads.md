@@ -6,8 +6,6 @@ date: July 7, 2013
 ### Monads Made Difficult
 
 This is a short, fast and analogy-free introduction to Haskell monads derived from a categorical perspective.
-While most monad articles will try to explain monads to beginners using hand waving and bad metaphors, this
-will instead attempt to explain them to experienced Haskellers using more difficult concepts from mathematics!
 This assumes you are familiar with Haskell and basic category theory.
 
 *If you aren't already comfortable with monads in Haskell, please don't read this. It will confuse your
@@ -115,9 +113,6 @@ instance (Functor a b f, Functor b c g, c ~ Hom k) => Functor a c (FComp g f) wh
     where
       fmapf = fmap :: a x y -> b (f x) (f y)
       fmapg = fmap :: b s t -> c (g s) (g t)
-
-example :: FComp [] [] ()
-example = C [[()]]
 ```
 
 The repeated composition of an endofunctor over a category is written with exponential notation:
