@@ -3,7 +3,7 @@ stephendiehl.com
 
 ```bash
 $ cabal sandbox init
-$ cabal install --only-depenencies
+$ cabal install --only-dependencies
 $ cabal run
 ```
 
