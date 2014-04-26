@@ -130,15 +130,10 @@ fmap (a <span class="fu">.</span> b) ≡ (fmap a) <span class="fu">.</span> (fma
   fmap f (<span class="dt">Just</span> x) <span class="fu">=</span> <span class="dt">Just</span> (f x)</code></pre>
 <p>An <strong>endofunctor</strong> is a functor from a category to itself, i.e. (<span class="math">\(T : \mathcal{C} \to \mathcal{C}\)</span>).</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Endofunctor</span> c t <span class="fu">=</span> <span class="dt">Functor</span> c c t</code></pre>
-<p>The composition of two functors is itself a functor as well. Convincing Haskell of this fact requires some trickery with constraint kinds and scoped type variables.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">FComp</span> g f x <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> g (f x) }
-<span class="kw">newtype</span> <span class="dt">Hom</span> (<span class="ot">c ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="dt">Constraint</span>) a b <span class="fu">=</span> <span class="dt">Hom</span> (a <span class="ot">-&gt;</span> b)
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">FComp</span> f g a <span class="fu">=</span> <span class="dt">C</span> {<span class="ot"> unC ::</span> f (g a) }
 
-<span class="kw">instance</span> (<span class="dt">Functor</span> a b f, <span class="dt">Functor</span> b c g, c <span class="fu">~</span> <span class="dt">Hom</span> k) <span class="ot">=&gt;</span> <span class="dt">Functor</span> a c (<span class="dt">FComp</span> g f) <span class="kw">where</span>
-  fmap f <span class="fu">=</span> (<span class="dt">Hom</span> <span class="dt">C</span>) <span class="fu">.</span> (fmapg (fmapf f) <span class="fu">.</span> (<span class="dt">Hom</span> unC))
-    <span class="kw">where</span>
-      fmapf <span class="fu">=</span><span class="ot"> fmap ::</span> a x y <span class="ot">-&gt;</span> b (f x) (f y)
-      fmapg <span class="fu">=</span><span class="ot"> fmap ::</span> b s t <span class="ot">-&gt;</span> c (g s) (g t)</code></pre>
+<span class="kw">instance</span> (<span class="dt">Functor</span> f, <span class="dt">Functor</span> g) <span class="ot">=&gt;</span> <span class="dt">Functor</span> (<span class="dt">FComp</span> f g) <span class="kw">where</span>
+  fmap h (<span class="dt">C</span> x) <span class="fu">=</span> <span class="dt">C</span> (fmap (fmap h) x)</code></pre>
 <p>The repeated composition of an endofunctor over a category is written with exponential notation:</p>
 <p><span class="math">\[
 \begin{align*}

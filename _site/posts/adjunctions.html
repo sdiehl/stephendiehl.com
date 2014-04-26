@@ -104,12 +104,18 @@ fmap (a <span class="fu">.</span> b) <span class="fu">=</span> (fmap a) <span cl
 
 <span class="kw">instance</span> <span class="dt">Functor</span> <span class="dt">Id</span> <span class="kw">where</span>
     fmap f x <span class="fu">=</span> <span class="dt">Identity</span> (f (unId x))</code></pre>
-<p>Composition with the identity functor in the same category is as expected.</p>
+<p>Composition with the identity functor forms an identity relation:</p>
 <p><span class="math">\[
 F \circ \text{Id}_B = F \\
 \text{Id}_A \circ F = F
 \]</span></p>
-<p>The convention is to omit the identity functor, it is shown below as a dotted line.</p>
+<p>As witnessed by the expressions:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">left ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> <span class="dt">FComp</span> f <span class="dt">Id</span> a <span class="ot">-&gt;</span> f a
+left (<span class="dt">C</span> a) <span class="fu">=</span> fmap unId a
+
+<span class="ot">right ::</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> f a <span class="ot">-&gt;</span> <span class="dt">FComp</span> f <span class="dt">Id</span> a
+right a <span class="fu">=</span> <span class="dt">C</span> <span class="fu">$</span> fmap <span class="dt">Identity</span> a</code></pre>
+<p>We’ll follow the convention to omit the identity functor, and it is shown as a dotted line in subsequent string diagrams.</p>
 <p>
 <img src="../images/string6.png" />
 </p>

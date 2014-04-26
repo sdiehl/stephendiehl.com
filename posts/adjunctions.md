@@ -64,15 +64,25 @@ instance Functor Id where
     fmap f x = Identity (f (unId x))
 ```
 
-Composition with the identity functor in the same category is as expected.
+Composition with the identity functor forms an identity relation:
 
 $$
 F \circ \text{Id}_B = F \\
 \text{Id}_A \circ F = F
 $$
 
-The convention is to omit the identity functor, it is shown below as a dotted
-line.
+As witnessed by the expressions:
+
+```haskell
+left :: Functor f => FComp f Id a -> f a
+left (C a) = fmap unId a
+
+right :: Functor f => f a -> FComp f Id a
+right a = C $ fmap Identity a
+```
+
+We'll follow the convention to omit the identity functor, and it is shown as a dotted line in subsequent
+string diagrams.
 
 <p>
 <img src="/images/string6.png"/>
