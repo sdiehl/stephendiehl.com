@@ -101,11 +101,18 @@ An **endofunctor** is a functor from a category to itself, i.e. ($T : \mathcal{C
 type Endofunctor c t = Functor c c t
 ```
 
-```haskell
-newtype FComp f g a = C { unC :: f (g a) }
+The composition of two functors is itself a functor as well. Convincing Haskell of this fact requires some
+trickery with constraint kinds and scoped type variables.
 
-instance (Functor f, Functor g) => Functor (FComp f g) where
-  fmap h (C x) = C (fmap (fmap h) x)
+```haskell
+newtype FComp g f x = C { unC :: g (f x) }
+newtype Hom (c :: * -> Constraint) a b = Hom (a -> b)
+
+instance (Functor a b f, Functor b c g, c ~ Hom k) => Functor a c (FComp g f) where
+  fmap f = (Hom C) . (fmapg (fmapf f) . (Hom unC))
+    where
+      fmapf = fmap :: a x y -> b (f x) (f y)
+      fmapg = fmap :: b s t -> c (g s) (g t)
 ```
 
 The repeated composition of an endofunctor over a category is written with exponential notation:
