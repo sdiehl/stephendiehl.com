@@ -3,7 +3,7 @@ title: A Haskell Reading List
 date: August 15, 2012
 ---
 
-#### A Haskell Reading List
+### A Haskell Reading List
 
 Here is a list of papers and writings of what I consider are essential Haskell reading.
 
@@ -20,7 +20,6 @@ Here is a list of papers and writings of what I consider are essential Haskell r
 * [Kleisli Arrows of Outrageous Fortune](http://personal.cis.strath.ac.uk/~conor/Kleisli.pdf)
 * [Theorems for free!](http://homepages.inf.ed.ac.uk/wadler/papers/free/free.ps.gz)
 * [Beautiful Concurrency](http://research.microsoft.com/pubs/74063/beautiful.pdf)
-* [Typed Tagless Interpretations](http://okmij.org/ftp/tagless-final/)
 * [Imperative Functional Programming](http://research.microsoft.com/pubs/67066/imperative.ps.z)
 * [Reverse Engineering Machines with the Yoneda Lemma](http://blog.sigfpe.com/2006/11/yoneda-lemma.html)
 * [From Monoids to Monads](http://blog.sigfpe.com/2008/11/from-monoids-to-monads.html)

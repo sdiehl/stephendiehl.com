@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>The Missing Unboxed Vector Library</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
+                    <li><a href="../pages/slides.html">Talks</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+             
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="the-missing-unboxed-array-library">The Missing Unboxed Array Library</h3>
+<p>Reflecting on the current state of numeric Python ecosystem and discussing this problem space with other practitioners it has become more evident to me that there is a need for a currently missing library which provides not a full array and dense linear algebra functionality but something much more basic, simply an unboxed vector library with efficient indexing, traversal and creation as well as a mapping between the storage layer C types and regular PyObjects per some small schema language. A superset of this functionality is provided by the popular NumPy library although the ubiquity of NumPy being cast into a role for a subset of it’s use-cases is problematic for several reasons.</p>
+<p>Quite a few libraries like Pandas, various ETL frameworks, or data visualization libraries end up pulling in a full NumPy dependency simply to access a subset of the functionality provided by it and as the most accessible space efficient way of storing data. While NumPy is well-suited for scientific practitioners, the dependency on linking against Fortran libraries to access linear algebra routines introduces an unnecessary complication for downstream libraries that are simply pulling it in to access the unboxed vector structure to build higher level structures like dataframes which are effectively just heterogeneously-typed same-length vectors with row and index information attached.</p>
+<p>The functionality needed on top of these vectors is simply logic pertaining to basic arithmetic, statistical aggregations and operations like joins in a way that doesn’t need to round trip between the C layer and the Python interpreter for every operation. This in itself hints the need for a robust way of building domain specific query languages that we’ve danced around with metaprogramming hacks for years. But I feel that a foundational array representation that is the least-common denominator for a wide variety of use-cases is needed to even begin work on the next level of abstraction of an expression compiler.</p>
+<p>I write this blog post as sort of a litmus test to see if other people feel the same about this missing abstraction and feel that it would be worth devoting time to developing a small Python C extension to this end.</p>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
