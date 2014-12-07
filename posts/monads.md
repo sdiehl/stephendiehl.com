@@ -439,7 +439,7 @@ right f = f . just
 ##### Haskell Monads
 ***
 
-For instance the **List monad** would have have:
+For instance the **List monad** would have:
 
 1. $\eta$ returns a singleton list from a single element.
 1. $\mu$ turns a nested list into a flat list.
@@ -462,7 +462,7 @@ instance Monad [] where
 The **Maybe monad** would have:
 
 1. $\eta$ is the Just constructor.
-1. $\eta$ combines two levels of Just constructors yielding the inner value or Nothing.
+1. $\mu$ combines two levels of Just constructors yielding the inner value or Nothing.
 1. $\mathtt{fmap}$ applies a function under the Just constructor or nothing for Nothing. 
 
 ```haskell
