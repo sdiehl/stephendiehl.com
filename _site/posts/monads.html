@@ -342,7 +342,7 @@ left f <span class="fu">=</span> just <span class="fu">.</span> f
 right f <span class="fu">=</span> f <span class="fu">.</span> just</code></pre>
 <h5 id="haskell-monads">Haskell Monads</h5>
 <hr />
-<p>For instance the <strong>List monad</strong> would have have:</p>
+<p>For instance the <strong>List monad</strong> would have:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math">\(\eta\)</span> returns a singleton list from a single element.</li>
 <li><span class="math">\(\mu\)</span> turns a nested list into a flat list.</li>
@@ -361,7 +361,7 @@ right f <span class="fu">=</span> f <span class="fu">.</span> just</code></pre>
 <p>The <strong>Maybe monad</strong> would have:</p>
 <ol style="list-style-type: decimal">
 <li><span class="math">\(\eta\)</span> is the Just constructor.</li>
-<li><span class="math">\(\eta\)</span> combines two levels of Just constructors yielding the inner value or Nothing.</li>
+<li><span class="math">\(\mu\)</span> combines two levels of Just constructors yielding the inner value or Nothing.</li>
 <li><span class="math">\(\mathtt{fmap}\)</span> applies a function under the Just constructor or nothing for Nothing.</li>
 </ol>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Functor</span> [] <span class="kw">where</span>
