@@ -2,9 +2,10 @@
 title: Stephen Diehl Contact
 ---
 
-To contact me via email run one of the following scripts to
-generate my contact information. I find this is an effective
-filter against the deluge of emails from recruiters.
+To contact me via email run one of the following scripts to generate my contact
+information. I find this is an effective filter against the deluge of emails
+from recruiters. I prefer to correspond via encrypted email, my PGP key is
+[available here](http://www.stephendiehl.com/pages/pgp.html).
 
 I am currently available for hire.
 
