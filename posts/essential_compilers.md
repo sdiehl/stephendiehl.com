@@ -6,7 +6,9 @@ date: December 14, 2014
 ### A Haskell Implementation Reading List
 
 A reading list for those interested in the implementation internals of Haskell
-compilers.
+compilers.  The GHC Reading list is [more
+exhaustive](https://ghc.haskell.org/trac/ghc/wiki/ReadingList), these are simply
+the papers I think give a good high-level overview of the topics.
 
 * [A Theory Of Qualified Types](http://ipaper.googlecode.com/git-history/969fbd798753dc0b10ea9efe5af7773ff10f728a/Mark-Jones/A-theory-of-qualified-types.pdf)
 * [How to Make Ad-Hoc Polymorphism Less Ad-Hoc](http://202.3.77.10/users/karkare/courses/2010/cs653/Papers/ad-hoc-polymorphism.pdf)
@@ -24,5 +26,8 @@ compilers.
 * [Multi-paradigm Just-In-Time Compilation](http://www.cse.unsw.edu.au/~pls/thesis/dons-thesis.ps.gz)
 * [Low Level Virtual Machine For Glasgow Haskell Compiler](https://www.cse.unsw.edu.au/~pls/thesis/davidt-thesis.pdf)
 * [The Grin Project: A Highly Optimising Back End for Lazy Functional Languages](http://mirror.seize.it/papers/The%20GRIN%20Project.pdf)
+* [Implementing functional languages: a tutorial](http://research.microsoft.com/en-us/um/people/simonpj/papers/pj-lester-book/student.djvu)
+* [Secrets of the GHC Inliner](http://research.microsoft.com/en-us/um/people/simonpj/Papers/inlining/inline.pdf)
+* [An External Representation for the GHC Core Language](https://downloads.haskell.org/~ghc/6.10.4/docs/html/ext-core/core.pdf)
 
 A copy of all of the PDF papers is available in this [Git repo](https://github.com/sdiehl/papers).
