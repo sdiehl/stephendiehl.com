@@ -35,6 +35,61 @@ main :: IO ()
 main = putStrLn $ uncipher 1 "tufqifo.n.ejfim@hnbjm.dpn"
 ```
 
+**x86 Assembly**
+
+```perl
+# Generate contact information for Stephen Diehl
+# http://www.stephendiehl.com
+# x86-64 only
+
+main:
+    subq	$8, %rsp
+    movl	$email, %esi
+    movl	$fmt, %edi
+    xorl	%eax, %eax
+    call	printf
+    xorl	%eax, %eax
+    addq	$8, %rsp
+    ret
+
+fmt:
+    .string	"%s"
+    .globl	main
+    .type	main, @function
+
+metadata:
+    .data
+    .align 16
+
+email:
+    .byte	115
+    .byte	116
+    .byte	101
+    .byte	112
+    .byte	104
+    .byte	101
+    .byte	110
+    .byte	46
+    .byte	109
+    .byte	46
+    .byte	100
+    .byte	105
+    .byte	101
+    .byte	104
+    .byte	108
+    .byte	64
+    .byte	103
+    .byte	109
+    .byte	97
+    .byte	105
+    .byte	108
+    .byte	46
+    .byte	99
+    .byte	111
+    .byte	109
+    .byte	10
+```
+
 **Python**
 
 ```python

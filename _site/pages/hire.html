@@ -101,6 +101,57 @@ tr base offset char <span class="fu">=</span> chr <span class="fu">$</span> ord 
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> putStrLn <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre>
+<p><strong>x86 Assembly</strong></p>
+<pre class="sourceCode perl"><code class="sourceCode perl"><span class="co"># Generate contact information for Stephen Diehl</span>
+<span class="co"># http://www.stephendiehl.com</span>
+<span class="co"># x86-64 only</span>
+
+main:
+    subq	<span class="dt">$8</span>, <span class="dt">%rsp</span>
+    movl	<span class="dt">$email</span>, <span class="dt">%esi</span>
+    movl	<span class="dt">$fmt</span>, <span class="dt">%edi</span>
+    xorl	<span class="dt">%eax</span>, <span class="dt">%eax</span>
+    call	<span class="fu">printf</span>
+    xorl	<span class="dt">%eax</span>, <span class="dt">%eax</span>
+    addq	<span class="dt">$8</span>, <span class="dt">%rsp</span>
+    ret
+
+fmt:
+    .string	<span class="kw">&quot;</span><span class="dt">%s</span><span class="kw">&quot;</span>
+    .globl	main
+    .type	main, <span class="dt">@function</span>
+
+metadata:
+    .data
+    .align <span class="dv">16</span>
+
+email:
+    .byte	<span class="dv">115</span>
+    .byte	<span class="dv">116</span>
+    .byte	<span class="dv">101</span>
+    .byte	<span class="dv">112</span>
+    .byte	<span class="dv">104</span>
+    .byte	<span class="dv">101</span>
+    .byte	<span class="dv">110</span>
+    .byte	<span class="dv">46</span>
+    .byte	<span class="dv">109</span>
+    .byte	<span class="dv">46</span>
+    .byte	<span class="dv">100</span>
+    .byte	<span class="dv">105</span>
+    .byte	<span class="dv">101</span>
+    .byte	<span class="dv">104</span>
+    .byte	<span class="dv">108</span>
+    .byte	<span class="dv">64</span>
+    .byte	<span class="dv">103</span>
+    .byte	<span class="dv">109</span>
+    .byte	<span class="dv">97</span>
+    .byte	<span class="dv">105</span>
+    .byte	<span class="dv">108</span>
+    .byte	<span class="dv">46</span>
+    .byte	<span class="dv">99</span>
+    .byte	<span class="dv">111</span>
+    .byte	<span class="dv">109</span>
+    .byte	<span class="dv">10</span></code></pre>
 <p><strong>Python</strong></p>
 <pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>
@@ -121,15 +172,14 @@ EMAIL = <span class="st">&quot;&quot;&quot;</span>
 
 y = string.ascii_letters
 n = <span class="dt">len</span>(y)
-M = numpy.identity(n, dtype=numpy.int16)
+M = numpy.identity(n, dtype=numpy.int32)
 M[:n, n<span class="dv">-1</span>] = <span class="dv">1</span>
 
 a = numpy.array(<span class="dt">list</span>(<span class="dt">map</span>(<span class="dt">ord</span>, y)), dtype=numpy.int32)
 x = <span class="st">''</span>.join(<span class="dt">map</span>(<span class="dt">chr</span>, numpy.dot(M, a)))
 uncipher = strl.maketrans(x,y)
 
-CONTACT = strl.translate(EMAIL, uncipher)
-sys.stdout.write(CONTACT)</code></pre>
+<span class="dt">print</span>( strl.translate(EMAIL, uncipher) )</code></pre>
         </div>
     </div>
 
