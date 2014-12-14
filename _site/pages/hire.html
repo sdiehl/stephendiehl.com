@@ -110,9 +110,7 @@ main:
     subq	<span class="dt">$8</span>, <span class="dt">%rsp</span>
     movl	<span class="dt">$email</span>, <span class="dt">%esi</span>
     movl	<span class="dt">$fmt</span>, <span class="dt">%edi</span>
-    xorl	<span class="dt">%eax</span>, <span class="dt">%eax</span>
     call	<span class="fu">printf</span>
-    xorl	<span class="dt">%eax</span>, <span class="dt">%eax</span>
     addq	<span class="dt">$8</span>, <span class="dt">%rsp</span>
     ret
 
