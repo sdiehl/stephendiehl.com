@@ -15,7 +15,7 @@ compilers.
 * [Implementing Type Classes](http://pdf.aminer.org/000/542/781/implementing_type_classes.pdf)
 * [Making A Fast Curry](http://research.microsoft.com/en-us/um/people/simonpj/papers/eval-apply/)
 * [Practical Type Inference For Arbitrary Rank Types](http://repository.upenn.edu/cgi/viewcontent.cgi?article=1336&context=cis_papers)
-* [Stack Traces In Haskell](http://arashrouhani.com/presentations/master-presentation.pdf)
+* [Stack Traces In Haskell](http://arashrouhani.com/papers/master-thesis.pdf)
 * [Type Inference For Parametric Type Classes](http://cpsc.yale.edu/sites/default/files/files/tr900.pdf)
 * [Type Reconstruction For Type Classes](https://www4.in.tum.de/publ/papers/NipkowPrehofer_TRfT1995.pdf)
 * [Typeclasses In Haskell](http://ropas.snu.ac.kr/lib/dock/HaHaJoWa1996.pdf)
