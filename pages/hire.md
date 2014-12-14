@@ -47,9 +47,7 @@ main:
     subq	$8, %rsp
     movl	$email, %esi
     movl	$fmt, %edi
-    xorl	%eax, %eax
     call	printf
-    xorl	%eax, %eax
     addq	$8, %rsp
     ret
 
