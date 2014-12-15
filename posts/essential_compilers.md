@@ -10,14 +10,14 @@ compilers.  The GHC Reading list is [more
 exhaustive](https://ghc.haskell.org/trac/ghc/wiki/ReadingList), these are simply
 the papers I think give a good high-level overview of the topics.
 
-**Typeclass Inference**:
+**Typeclass Inference**
 
 * [A Theory Of Qualified Types](http://ipaper.googlecode.com/git-history/969fbd798753dc0b10ea9efe5af7773ff10f728a/Mark-Jones/A-theory-of-qualified-types.pdf)
 * [Type Inference For Parametric Type Classes](http://cpsc.yale.edu/sites/default/files/files/tr900.pdf)
 * [Type Reconstruction For Type Classes](https://www4.in.tum.de/publ/papers/NipkowPrehofer_TRfT1995.pdf)
 * [Constraints For Type Class Extensions](http://www.computerscience.nl/wiki/pub/Ehc/GvdGeest/geest07cnstr-tycls-ext.pdf)
 
-**Typeclass Elaboration**:
+**Typeclass Elaboration**
 
 * [How to Make Ad-Hoc Polymorphism Less Ad-Hoc](http://202.3.77.10/users/karkare/courses/2010/cs653/Papers/ad-hoc-polymorphism.pdf)
 * [Implementing Haskell Overloading](http://pdf.aminer.org/000/214/096/implementing_haskell_overloading.pdf)
