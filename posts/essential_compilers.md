@@ -21,7 +21,6 @@ the papers I think give a good high-level overview of the topics.
 
 * [How to Make Ad-Hoc Polymorphism Less Ad-Hoc](http://202.3.77.10/users/karkare/courses/2010/cs653/Papers/ad-hoc-polymorphism.pdf)
 * [Implementing Haskell Overloading](http://pdf.aminer.org/000/214/096/implementing_haskell_overloading.pdf)
-* [Implementing Lazy Functional Languages On Stock Hardware](http://research.microsoft.com/en-us/um/people/simonpj/papers/spineless-tagless-gmachine.ps.gz#26pub=34)
 * [Implementing Type Classes](http://pdf.aminer.org/000/542/781/implementing_type_classes.pdf)
 * [Typeclasses In Haskell](http://ropas.snu.ac.kr/lib/dock/HaHaJoWa1996.pdf)
 
@@ -36,6 +35,7 @@ the papers I think give a good high-level overview of the topics.
 **STG**
 
 * [Making A Fast Curry](http://research.microsoft.com/en-us/um/people/simonpj/papers/eval-apply/)
+* [Implementing Lazy Functional Languages On Stock Hardware](http://research.microsoft.com/en-us/um/people/simonpj/papers/spineless-tagless-gmachine.ps.gz#26pub=34)
 * [Implementing functional languages: a tutorial](http://research.microsoft.com/en-us/um/people/simonpj/papers/pj-lester-book/student.djvu)
 
 **Operational Details and Implementation**
