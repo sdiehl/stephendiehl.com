@@ -53,4 +53,9 @@ the papers I think give a good high-level overview of the topics.
 
 * [Secrets of the GHC Inliner](http://research.microsoft.com/en-us/um/people/simonpj/Papers/inlining/inline.pdf)
 
+**Garbage Collection**
+
+* [Parallel Generational-Copying Garbage Collection with a Block-Structured Heap](http://community.haskell.org/~simonmar/papers/parallel-gc.pdf)
+* [Soft Real-time Garbage Collection for Dynamic Dispatch Languages](http://www.doc.ic.ac.uk/~amc4/Papers/thesis.pdf)
+
 A copy of all of the PDF papers is available in this [Git repo](https://github.com/sdiehl/papers).
