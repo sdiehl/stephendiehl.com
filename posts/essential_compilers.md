@@ -38,9 +38,9 @@ the papers I think give a good high-level overview of the topics.
 * [Implementing Lazy Functional Languages On Stock Hardware](http://research.microsoft.com/en-us/um/people/simonpj/papers/spineless-tagless-gmachine.ps.gz#26pub=34)
 * [Implementing functional languages: a tutorial](http://research.microsoft.com/en-us/um/people/simonpj/papers/pj-lester-book/student.djvu)
 
-**Operational Details and Implementation**
+**Cmm**
 
-* [Stack Traces In Haskell](http://arashrouhani.com/papers/master-thesis.pdf)
+* [C--: a portable assembly language that supports garbage collection](http://www.cs.tufts.edu/~nr/pubs/c--gc.pdf)
 
 **Compilation**
 
@@ -48,6 +48,10 @@ the papers I think give a good high-level overview of the topics.
 * [Multi-paradigm Just-In-Time Compilation](http://www.cse.unsw.edu.au/~pls/thesis/dons-thesis.ps.gz)
 * [Low Level Virtual Machine For Glasgow Haskell Compiler](https://www.cse.unsw.edu.au/~pls/thesis/davidt-thesis.pdf)
 * [The Grin Project: A Highly Optimising Back End for Lazy Functional Languages](http://mirror.seize.it/papers/The%20GRIN%20Project.pdf)
+
+**Operational Details and Implementation**
+
+* [Stack Traces In Haskell](http://arashrouhani.com/papers/master-thesis.pdf)
 
 **Transformations**
 
