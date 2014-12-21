@@ -332,6 +332,7 @@ of the following subjects:
 1. Types: **Singletons**
 1. Language: **Profiling Memory**
 1. Language: **Rewrite Rules / Fusion**
+1. Language: **Cross Compilation**
 1. Library: **repa**
 1. Library: **uniplate**
 1. Library: **mmorph**
@@ -339,3 +340,4 @@ of the following subjects:
 1. Library: **lens-family**
 1. Pattern: **F-Algebras**
 1. Pattern: **Cont Monad**
+1. Pattern: **GHC.Generics**
