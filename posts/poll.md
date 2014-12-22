@@ -49,8 +49,9 @@ binning on the various factors and only included in the total count.
 
 The self-rated skill level turned out to be a fairly typical distribution with a
 median of 5, mode of 5, and mean of 5.3. Curiously most Haskellers in the poll
-rated themselves below average, the mean was shifted right due to the large
-number of people rating themselves a 9 or 10.
+rated themselves below 5.
+
+This result is probably not meaningful or accurate.
 
 #### Type System
 
