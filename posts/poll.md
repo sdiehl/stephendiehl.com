@@ -64,19 +64,20 @@ The six most mentioned type systems features surprised me a bit, they were:
 6. **GADTs**
 7. **Type Families**
 
-**Impredicative Types** is a curious answer. I'm puzzled why it seems so
-dominant. My only guess is that it relates to it showing up so frequently in GHC
-error reporting that many people are curious about what it means having never
-actually used it.
+**Impredicative Types** is a curious answer. I'm baffled why it seems so
+dominant. The extension is widely considered to be broken or a misfeature, and I
+don't think I've never seen it used in the wild. My only guess is that it
+relates to it showing up so frequently in GHC error reporting that many people
+are curious about it having never actually used it.
 
 **Kind Polymorphism** is understandable since it's a fairly recent addition to
 GHC and already there seems to a need for many poly-kinded versions of existing
-structures in Base.
+structures in Base. Kind promotion itself is still a very under-used feature.
 
 **Singletons** is also a rather fruitful modern area of research in bringing
 some semblance of dependent types to Haskell. The
 [singletons](http://hackage.haskell.org/package/singletons) library has been the
-subject of several ICFP talks and recent meetup talks.
+subject of several ICFP and meetup talks.
 
 **Rank N-Types** invariably seems to always be a point of confusion in some
 discussions. I would indeed say that higher-ranked polymorphism is not widely
@@ -132,11 +133,12 @@ The pattern results were also somewhat surprising as well, they were:
 **F-Algebras** is also a puzzling response, but was overwhelming the most
 mentioned response from the total count. There are some [great
 articles](https://www.fpcomplete.com/user/bartosz/understanding-algebras) about
-the relations between F-Algebras and catamorphisms, and although they are used
-somewhat rarely and I'm genuinely surprised about this result.
+the relations between F-Algebras and catamorphisms. They are used somewhat
+rarely and I'm genuinely surprised about why this answer is the most popular in
+the total count.
 
 **Continuation passing** and CPS conversion seems to be one of those thuddingly
-concrete topics, that seems to confuse more than it should. Continuations do
+concrete topics that seems to confuse more than it should. Continuations do
 invert the way we normally think about control flow which can be confusing.
 
 **GHC.Generics** are another topic which is indeed rather under represented, at
@@ -150,11 +152,10 @@ dependency of a large number of libraries on Hackage while the library itself
 has limited documentation.
 
 **Arrows** is also very understandable. They seem to have been a very active
-area of research 10 or so years ago, leaving us with a lot of half-baked
-libraries around seemingly beautiful ideas that died out leaving us only with
-hints of the possibilities of arrows. That and ArrowSyntax extensions which are
-very odd and seem to be understood by shockingly few people even amongst the
-ghc-dev crowd.
+area of research 10 or so years ago. Leaving us with a lot of half-baked
+libraries around seemingly beautiful ideas, that then died out leaving us only
+with hints of the possibilities of arrows. That and ``ArrowSyntax`` extensions
+which are very odd and seem to be understood or used by shockingly few people.
 
 Binned amongst the **Web Development** user group, the most mentioned topics
 are:
@@ -193,11 +194,15 @@ There were no write-ins for this category.
 #### Libraries
 
 The libraries section was admittedly a bit of a grab bag, there is no way to
-poll on all of Hackage so inevitably I have to chose an arbitrary sample of
-cross-domain library. I chose not to include web libraries since they often tend
-to fall under an umbrella project ( yesod, snap, happstack ) and exhibit some
-odd clustering behavior that makes them somewhat unique amongst other packages.
-The top 20 packages are listed below:
+poll on all of Hackage so inevitably I had to chose an arbitrary sample of
+cross-domain libraries. A more exhaustive poll of all of Hackage libraries
+people are interested in is something I would be interested in doing, but I'm
+not sure how to do it in a methodological way.
+
+I chose not to include web libraries since they often
+tend to fall under an umbrella project ( yesod, snap, happstack ) and exhibit
+some odd clustering behavior that makes them somewhat unique amongst other
+packages. The top 20 packages are listed below:
 
 1. **repa** - A numerical library for high performance, regular,
    multi-dimensional, shape polymorphic parallel arrays. 
@@ -364,9 +369,9 @@ This is of course an unscientific poll and please don't read too much into the
 data. The goal was to generate a rough list of the topics that people are
 interested in and feel need some more context.
 
-On that note, if you are looking for topics for you next blog to post to
+On that note, if you are looking for topics for your next blog and want to
 maximize the coverage of misunderstood topics and advance the state of Haskell
-knowledge, consider one of the following subjects:
+knowledge; consider one of the following subjects:
 
 1. Types: **Impredicative Types**
 1. Types: **Kind Polymorphism**

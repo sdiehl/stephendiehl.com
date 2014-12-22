@@ -106,9 +106,9 @@
 <li><strong>GADTs</strong></li>
 <li><strong>Type Families</strong></li>
 </ol>
-<p><strong>Impredicative Types</strong> is a curious answer. I’m puzzled why it seems so dominant. My only guess is that it relates to it showing up so frequently in GHC error reporting that many people are curious about what it means having never actually used it.</p>
-<p><strong>Kind Polymorphism</strong> is understandable since it’s a fairly recent addition to GHC and already there seems to a need for many poly-kinded versions of existing structures in Base.</p>
-<p><strong>Singletons</strong> is also a rather fruitful modern area of research in bringing some semblance of dependent types to Haskell. The <a href="http://hackage.haskell.org/package/singletons">singletons</a> library has been the subject of several ICFP talks and recent meetup talks.</p>
+<p><strong>Impredicative Types</strong> is a curious answer. I’m baffled why it seems so dominant. The extension is widely considered to be broken or a misfeature, and I don’t think I’ve never seen it used in the wild. My only guess is that it relates to it showing up so frequently in GHC error reporting that many people are curious about it having never actually used it.</p>
+<p><strong>Kind Polymorphism</strong> is understandable since it’s a fairly recent addition to GHC and already there seems to a need for many poly-kinded versions of existing structures in Base. Kind promotion itself is still a very under-used feature.</p>
+<p><strong>Singletons</strong> is also a rather fruitful modern area of research in bringing some semblance of dependent types to Haskell. The <a href="http://hackage.haskell.org/package/singletons">singletons</a> library has been the subject of several ICFP and meetup talks.</p>
 <p><strong>Rank N-Types</strong> invariably seems to always be a point of confusion in some discussions. I would indeed say that higher-ranked polymorphism is not widely understood and can be very subtle.</p>
 <p><strong>Type Families</strong> is also a fairly new feature in GHC, and the subject of much active exploration. Only a few months ago did GHC 7.8 get closed type families, giving us the ability to encode much more <a href="http://dev.stephendiehl.com/hask/#closed-type-families">complex logic</a> at the type level</p>
 <p>Binned amongst the <strong>Web Development</strong> user group, the most mentioned topics are:</p>
@@ -149,11 +149,11 @@
 <li>Final Interpreters</li>
 <li>Arrows</li>
 </ol>
-<p><strong>F-Algebras</strong> is also a puzzling response, but was overwhelming the most mentioned response from the total count. There are some <a href="https://www.fpcomplete.com/user/bartosz/understanding-algebras">great articles</a> about the relations between F-Algebras and catamorphisms, and although they are used somewhat rarely and I’m genuinely surprised about this result.</p>
-<p><strong>Continuation passing</strong> and CPS conversion seems to be one of those thuddingly concrete topics, that seems to confuse more than it should. Continuations do invert the way we normally think about control flow which can be confusing.</p>
+<p><strong>F-Algebras</strong> is also a puzzling response, but was overwhelming the most mentioned response from the total count. There are some <a href="https://www.fpcomplete.com/user/bartosz/understanding-algebras">great articles</a> about the relations between F-Algebras and catamorphisms. They are used somewhat rarely and I’m genuinely surprised about why this answer is the most popular in the total count.</p>
+<p><strong>Continuation passing</strong> and CPS conversion seems to be one of those thuddingly concrete topics that seems to confuse more than it should. Continuations do invert the way we normally think about control flow which can be confusing.</p>
 <p><strong>GHC.Generics</strong> are another topic which is indeed rather under represented, at the time of writing this I cannot actually think of a resource to point anyone at that explains how to use Generics beyond what the <a href="https://downloads.haskell.org/~ghc/7.6.1/docs/html/users_guide/generic-programming.html">GHC manual</a> explains. At the same time Generics are incredibly powerful and useful.</p>
 <p><strong>Profunctors</strong> is understandably confusing, and puzzlingly it seems to be a dependency of a large number of libraries on Hackage while the library itself has limited documentation.</p>
-<p><strong>Arrows</strong> is also very understandable. They seem to have been a very active area of research 10 or so years ago, leaving us with a lot of half-baked libraries around seemingly beautiful ideas that died out leaving us only with hints of the possibilities of arrows. That and ArrowSyntax extensions which are very odd and seem to be understood by shockingly few people even amongst the ghc-dev crowd.</p>
+<p><strong>Arrows</strong> is also very understandable. They seem to have been a very active area of research 10 or so years ago. Leaving us with a lot of half-baked libraries around seemingly beautiful ideas, that then died out leaving us only with hints of the possibilities of arrows. That and <code>ArrowSyntax</code> extensions which are very odd and seem to be understood or used by shockingly few people.</p>
 <p>Binned amongst the <strong>Web Development</strong> user group, the most mentioned topics are:</p>
 <ol style="list-style-type: decimal">
 <li>van Laarhoven Lenses</li>
@@ -184,7 +184,8 @@
 </p>
 
 <h4 id="libraries">Libraries</h4>
-<p>The libraries section was admittedly a bit of a grab bag, there is no way to poll on all of Hackage so inevitably I have to chose an arbitrary sample of cross-domain library. I chose not to include web libraries since they often tend to fall under an umbrella project ( yesod, snap, happstack ) and exhibit some odd clustering behavior that makes them somewhat unique amongst other packages. The top 20 packages are listed below:</p>
+<p>The libraries section was admittedly a bit of a grab bag, there is no way to poll on all of Hackage so inevitably I had to chose an arbitrary sample of cross-domain libraries. A more exhaustive poll of all of Hackage libraries people are interested in is something I would be interested in doing, but I’m not sure how to do it in a methodological way.</p>
+<p>I chose not to include web libraries since they often tend to fall under an umbrella project ( yesod, snap, happstack ) and exhibit some odd clustering behavior that makes them somewhat unique amongst other packages. The top 20 packages are listed below:</p>
 <ol style="list-style-type: decimal">
 <li><strong>repa</strong> - A numerical library for high performance, regular, multi-dimensional, shape polymorphic parallel arrays.</li>
 <li><strong>uniplate</strong> - A generics library for traversals and rewrites.</li>
@@ -327,7 +328,7 @@
 </blockquote>
 <h4 id="takeaway">Takeaway</h4>
 <p>This is of course an unscientific poll and please don’t read too much into the data. The goal was to generate a rough list of the topics that people are interested in and feel need some more context.</p>
-<p>On that note, if you are looking for topics for you next blog to post to maximize the coverage of misunderstood topics and advance the state of Haskell knowledge, consider one of the following subjects:</p>
+<p>On that note, if you are looking for topics for your next blog and want to maximize the coverage of misunderstood topics and advance the state of Haskell knowledge; consider one of the following subjects:</p>
 <ol style="list-style-type: decimal">
 <li>Types: <strong>Impredicative Types</strong></li>
 <li>Types: <strong>Kind Polymorphism</strong></li>
