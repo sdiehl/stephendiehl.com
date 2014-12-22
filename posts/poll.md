@@ -185,10 +185,6 @@ are:
 
 There were no write-ins for this category.
 
-> A lot of people don't understand the difference between `mtl` and `transformers` and think `mtl` is the only way to do monad transformers
-
-> hsc3, the supercollider library, could really use some documentation IMO.  One can rely on the supercollider docs, but that's an extra layer of lookup, and you have to infer the meaning of arguments that don't always correspond exactly.  Seems to me sound is one area where new programmers might be interested in playing with haskell, unfortunately its not too noob friendly.  
-
 <p>
 <img src="/images/Patterns_poll.png">
 </p>
@@ -286,6 +282,10 @@ tutorial](http://www.stephendiehl.com/llvm/) on the subject.
 <p>
 <img src="/images/Libraries_poll.png">
 </p>
+
+> A lot of people don't understand the difference between `mtl` and `transformers` and think `mtl` is the only way to do monad transformers
+
+> hsc3, the supercollider library, could really use some documentation IMO.  One can rely on the supercollider docs, but that's an extra layer of lookup, and you have to infer the meaning of arguments that don't always correspond exactly.  Seems to me sound is one area where new programmers might be interested in playing with haskell, unfortunately its not too noob friendly.  
 
 #### Language Features
 
