@@ -148,11 +148,12 @@ explains. At the same time Generics are incredibly powerful and useful.
 dependency of a large number of libraries on Hackage while the library itself
 has limited documentation.
 
-**Arrows** is also very understanble. They seem to have been a very active area
-of research 10 or so years ago, leaving us with a lot of half-baked libraries
-around seemingly beautiful ideas that died out leaving us only with hints of the
-possibilities of arrows. That and ArrowSyntax extensions which are very odd and
-seem to be understood by shockingly few people even amongst the ghc-dev crowd.
+**Arrows** is also very understandable. They seem to have been a very active
+area of research 10 or so years ago, leaving us with a lot of half-baked
+libraries around seemingly beautiful ideas that died out leaving us only with
+hints of the possibilities of arrows. That and ArrowSyntax extensions which are
+very odd and seem to be understood by shockingly few people even amongst the
+ghc-dev crowd.
 
 Binned amongst the **Web Development** user group, the most mentioned topics
 are:
