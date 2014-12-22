@@ -48,10 +48,11 @@ binning on the various factors and only included in the total count.
 #### Skill Level
 
 The self-rated skill level turned out to be a fairly typical distribution with a
-median of 5, mode of 5, and mean of 5.3. Curiously most Haskellers in the poll
-rated themselves below 5.
+median of 5, mode of 5, and mean of 5.3. 53% of Haskellers in the poll rated
+themselves 5 or lower while 32% rated themselves as 7 or higher.
 
-This result is probably not meaningful or accurate.
+Given the self-selecting nature of this question, this result is probably not
+meaningful or accurate.
 
 #### Type System
 
@@ -114,6 +115,13 @@ Binned amongst the **Data Analysis** user group, the most mentioned topics are:
 1. Kind Polymorphism
 2. Type Families
 2. Rank-N Types
+
+Binned against individuals who self-rated themselves as **7 or higher skill**
+the most mentioned topics are:
+
+1. Singletons
+1. Impredicative Types
+1. Kind Polymorphism
 
 <p>
 <img src="/images/TypeSystem_poll.png">
@@ -178,12 +186,18 @@ mentioned topics are:
 1. Cont
 2. Profunctors
 
-Binned amongst the **Data Analysis** user group, the most mentioned libraries
-are:
+Binned amongst the **Data Analysis** user group, the most mentioned topics are:
 
 1. Free Monads
 2. van Laarhoven Lenses
 3. Heterogeneous Lists
+
+Binned against individuals who self-rated themselves as **7 or higher skill**
+the most mentioned topics are:
+
+1. GHC.Generics
+2. F-Algebras
+3. Cont
 
 There were no write-ins for this category.
 
@@ -264,6 +278,16 @@ are:
 2. accelerate
 3. lens-family
 
+Binned against individuals who self-rated themselves as **7 or higher skill**
+the most mentioned libraries are:
+
+1. mmorph
+2. repa
+3. uniplate
+4. free
+5. alex/happy
+6. criterion
+
 The most popular write-ins were:
 
 1. reactive
@@ -332,6 +356,13 @@ Binned amongst the **Data Analysis** user group, the most mentioned topics are:
 1. Profiling Memory
 3. Laziness ( Strictness Annotations )
 3. Inlining 
+
+Binned against individuals who self-rated themselves as **7 or higher skill**
+the most mentioned topics are:
+
+1. Profiling Memory
+2. Cross-Compilation
+3. Inlining
 
 The most mentioned write-ins were:
 
