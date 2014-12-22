@@ -8,7 +8,22 @@ date: December 21, 2014
 I put out a call for data and comments about topics that Haskell people felt
 were under represented. I'm sure I'll take some flak for the informal poll and
 methodology, but I feel that having at least some concrete data about the
-Haskell zeitgeist is better than trying to guess.
+Haskell zeitgeist is better than nothing.
+
+As my [wise friends](https://twitter.com/a_cowley/status/546820870329860096)
+have noted, baked into the poll is a hypothesis that people will give different
+responses based on which domain they use Haskell for ( i.e. compiler developers
+have different focus than web developers). This seems to be confirmed by the
+data, but at the same time also self-selects for people who have a narrow focus.
+Also given the nature of the collection, we're only going to select people who
+are willing to respond and active on Haskell forums.
+
+The total counts include all individuals, even those who gave a "None of the
+above" or write-in for their domain. These are some of the most bizarre results,
+but when these points are excluded and then factored on domain the results seem
+much more sensible.
+
+Thanks again for all those who volunteered their opinions.
 
 #### Domains
 
@@ -27,14 +42,15 @@ doing statistics later. The most popular domains in order are:
 The number of people involved in compiler development was somewhat surprising
 result to say the least. The other domains seemed to fall out fairly natural.
 There were also quite a few write-ins in various forms, and many comments
-indicating multidisciplinary fields.
+indicating multidisciplinary fields. The write-ins were excluded from the later
+binning on the various factors and only included in the total count.
 
 #### Skill Level
 
 The self-rated skill level turned out to be a fairly typical distribution with a
-median of 5 and mean of 5.3. Although most Haskellers in the poll rated
-themselves below average, the mean was shifted right due to the large number of
-people rating themselves a 9 or 10.
+median of 5, mode of 5, and mean of 5.3. Curiously most Haskellers in the poll
+rated themselves below average, the mean was shifted right due to the large
+number of people rating themselves a 9 or 10.
 
 #### Type System
 
@@ -53,20 +69,22 @@ error reporting that many people are curious about what it means having never
 actually used it.
 
 **Kind Polymorphism** is understandable since it's a fairly recent addition to
-GHC and already seems to a need for many poly-kinded versions of existing data
+GHC and already there seems to a need for many poly-kinded versions of existing
 structures in Base.
 
 **Singletons** is also a rather fruitful modern area of research in bringing
-some semblance of dependent types to Haskell.
+some semblance of dependent types to Haskell. The
+[singletons](http://hackage.haskell.org/package/singletons) library has been the
+subject of several ICFP talks and recent meetup talks.
 
 **Rank N-Types** invariably seems to always be a point of confusion in some
 discussions. I would indeed say that higher-ranked polymorphism is not widely
 understood and can be very subtle.
 
 **Type Families** is also a fairly new feature in GHC, and the subject of much
-active exploration. Only a few months ago did GHC 7.8 get closed type families.
-
-The most understood topics ( by virtue of receiving the fewest votes ) were:
+active exploration. Only a few months ago did GHC 7.8 get closed type families,
+giving us the ability to encode much more [complex
+logic](http://dev.stephendiehl.com/hask/#closed-type-families) at the type level
 
 Binned amongst the **Web Development** user group, the most mentioned topics
 are:
@@ -101,7 +119,7 @@ Binned amongst the **Data Analysis** user group, the most mentioned topics are:
 
 #### Patterns
 
-The pattern results were also somewhat surprising, they were:
+The pattern results were also somewhat surprising as well, they were:
 
 1. F-Algebras
 2. Cont
@@ -110,18 +128,17 @@ The pattern results were also somewhat surprising, they were:
 5. Final Interpreters
 6. Arrows
 
-**F-Algebras** is also a seemingly puzzling response, but was overwhelming the
-most mentioned response. There are some [great
+**F-Algebras** is also a puzzling response, but was overwhelming the most
+mentioned response from the total count. There are some [great
 articles](https://www.fpcomplete.com/user/bartosz/understanding-algebras) about
 the relations between F-Algebras and catamorphisms, and although they are used
-somewhat I'm genuinely surprised about this result.
+somewhat rarely and I'm genuinely surprised about this result.
 
 **Continuation passing** and CPS conversion seems to be one of those thuddingly
 concrete topics, that seems to confuse more than it should. Continuations do
-kind of invert the way we normally think about control flow which can be
-confusing.
+invert the way we normally think about control flow which can be confusing.
 
-**GHC.Generics** are another topic which is indeed rather poorly explained, at
+**GHC.Generics** are another topic which is indeed rather under represented, at
 the time of writing this I cannot actually think of a resource to point anyone
 at that explains how to use Generics beyond what the [GHC
 manual](https://downloads.haskell.org/~ghc/7.6.1/docs/html/users_guide/generic-programming.html)
@@ -129,13 +146,19 @@ explains. At the same time Generics are incredibly powerful and useful.
 
 **Profunctors** is understandably confusing, and puzzlingly it seems to be a
 dependency of a large number of libraries on Hackage while the library itself
-has no documentation.
+has limited documentation.
+
+**Arrows** is also very understanble. They seem to have been a very active area
+of research 10 or so years ago, leaving us with a lot of half-baked libraries
+around seemingly beautiful ideas that died out leaving us only with hints of the
+possibilities of arrows. That and ArrowSyntax extensions which are very odd and
+seem to be understood by shockingly few people even amongst the ghc-dev crowd.
 
 Binned amongst the **Web Development** user group, the most mentioned topics
 are:
 
-1. Cont
-2. Final Interpreters
+1. van Laarhoven Lenses
+2. Exception Handling
 3. Template Haskell
 
 Binned amongst the **Compiler Design** user group, the most mentioned topics
@@ -155,11 +178,15 @@ mentioned topics are:
 Binned amongst the **Data Analysis** user group, the most mentioned libraries
 are:
 
-1. F-Algebras
 1. Free Monads
-2. GHC.Generics
+2. van Laarhoven Lenses
+3. Heterogeneous Lists
+
+There were no write-ins for this category.
 
 > A lot of people don't understand the difference between `mtl` and `transformers` and think `mtl` is the only way to do monad transformers
+
+> hsc3, the supercollider library, could really use some documentation IMO.  One can rely on the supercollider docs, but that's an extra layer of lookup, and you have to infer the meaning of arguments that don't always correspond exactly.  Seems to me sound is one area where new programmers might be interested in playing with haskell, unfortunately its not too noob friendly.  
 
 <p>
 <img src="/images/Patterns_poll.png">
@@ -243,6 +270,18 @@ The most popular write-ins were:
 1. machines
 1. recursion-schemes
 
+Most of these results are self explanatory and reflect my intuition about
+Hackage as well. There are some weird anomalies though:
+
+**Repa** seemingly has a large amount of
+[tutorials](https://www.haskell.org/haskellwiki/Numeric_Haskell:_A_Repa_Tutorial)
+and [worked examples](https://hackage.haskell.org/package/repa-examples) so this
+result has me scratching my head a little bit.
+
+On a personal note, I'm somewhat saddened by how often **llvm-general** shows up
+given how much time I spent on, what I thought, was a [very extensive
+tutorial](http://www.stephendiehl.com/llvm/) on the subject.
+
 <p>
 <img src="/images/Libraries_poll.png">
 </p>
@@ -250,7 +289,7 @@ The most popular write-ins were:
 #### Language Features
 
 For language features I tried to poll on topics specific to GHC's implementation
-details. The results were overwhelming about performance and profiling:
+details. The results were overwhelmingly about performance and profiling:
 
 1. Profiling Memory
 2. Rewrite Rules / Fusion
@@ -270,9 +309,9 @@ are:
 Binned amongst the **Compiler Design** user group, the most mentioned topics
 are:
 
-1. Profiling Memory
+1. Cmm
+2. STG
 2. Memory Representation
-3. Cross Compilation
 
 Binned amongst the **Pure Mathematics or CS Theory** user group, the most
 mentioned topics are:
@@ -301,6 +340,8 @@ The most mentioned write-ins were:
 
 > Quality overviews on term rewriting and optimization steps on Haskell Core(System FC) in the GHC. I can tell it's out there, but information seems fragmented and a good quality article on the wiki would be very appreciated.
 
+> Language interop, the C FFI is just the start of the story. How to play nice with the GC with foreign data? How to play nice with Haskell data from the other side?
+
 #### Critical Comments
 
 > The "reactive" library seems to be very useful, but it is still very abstract. It would be nice to see more focus on this, providing more examples for how it can be used.
@@ -323,9 +364,13 @@ The most mentioned write-ins were:
 
 #### Takeaway
 
-If you are looking for topics for you next blog to post to maximize the coverage
-of misunderstood topics and advance the state of Haskell knowledge, consider one
-of the following subjects:
+This is of course an unscientific poll and please don't read too much into the
+data. The goal was to generate a rough list of the topics that people are
+interested in and feel need some more context.
+
+On that note, if you are looking for topics for you next blog to post to
+maximize the coverage of misunderstood topics and advance the state of Haskell
+knowledge, consider one of the following subjects:
 
 1. Types: **Impredicative Types**
 1. Types: **Kind Polymorphism**
