@@ -346,23 +346,17 @@ The most mentioned write-ins were:
 
 #### Critical Comments
 
-> The "reactive" library seems to be very useful, but it is still very abstract. It would be nice to see more focus on this, providing more examples for how it can be used.
-
 > In my work, arrows and categories are most useful in constructing lenses. I think lenses are actually a pretty simple idea but the most popular lens library is bloated and defines a multitude of esoteric infix operators.
-
-> code that depends on edward kmett's libraries makes haskell harder than it has to be, they need more docs + examples if haskell is going to practical and accessible
 
 > There doesn't seem to be any areas in any of the categories above which wouldn't benefit from more documentation. Almost all areas suffer from a lack of explained examples. The more I use almost any library, the more it seems to be lacking in good extensive documentation and examples.
 
-
 > Conventions in web API client design and trade offs fr different choices. E.g. Typeclasses, free monads, etc. for example, suppose you want to make a web client gnostic of te underlying HTTP client, what's the best approach? Most people use typeclasses for this, but Haskell has many tools to tackle this problem.
 
-#### Positive Comments
+> The "reactive" library seems to be very useful, but it is still very abstract. It would be nice to see more focus on this, providing more examples for how it can be used.
 
 > I think the biggest use to myself and the community would be more articles like Gabriel Gonzalez has done that show how to use important Haskell constructs, like monoids or free monads, to structure help program design.
 
 > There's some exciting developments in this area--see the Haste presentation by StrageLoop and others). And the efforts to bring React bindings to Haskell. All of the pieces exists in some form currently, but we have a ways to go before they mature.
-
 
 #### Takeaway
 
