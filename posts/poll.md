@@ -25,7 +25,10 @@ much more sensible.
 
 Thanks again for all those who volunteered their opinions.
 
+
 #### Domains
+
+> What category best classifies the domain of problems you use Haskell for?
 
 The first question concerned which domain of programming the questionee is
 involved in. This field was exclusive choice so that we could bin on it when
@@ -45,7 +48,13 @@ There were also quite a few write-ins in various forms, and many comments
 indicating multidisciplinary fields. The write-ins were excluded from the later
 binning on the various factors and only included in the total count.
 
+<p>
+<img src="/images/poll_domain.png">
+</p>
+
 #### Skill Level
+
+> How would you subjectively rate your Haskell skill level?
 
 The self-rated skill level turned out to be a fairly typical distribution with a
 median of 5, mode of 5, and mean of 5.3. 53% of Haskellers in the poll rated
@@ -55,6 +64,8 @@ Given the self-selecting nature of this question, this result is probably not
 meaningful or accurate.
 
 #### Type System
+
+> What Haskell type system features do you feel are under represented or often misunderstood?
 
 The six most mentioned type systems features surprised me a bit, they were:
 
@@ -128,6 +139,8 @@ the most mentioned topics are:
 </p>
 
 #### Patterns
+
+> Which common language patterns do you feel are under represented or misunderstood?
 
 The pattern results were also somewhat surprising as well, they were:
 
@@ -206,6 +219,8 @@ There were no write-ins for this category.
 </p>
 
 #### Libraries
+
+> Which common ( non-web ) libraries do you feel are under represented or misunderstood? Be generous in your responses!
 
 The libraries section was admittedly a bit of a grab bag, there is no way to
 poll on all of Hackage so inevitably I had to chose an arbitrary sample of
@@ -318,6 +333,8 @@ tutorial](http://www.stephendiehl.com/llvm/) on the subject.
 > hsc3, the supercollider library, could really use some documentation IMO.  One can rely on the supercollider docs, but that's an extra layer of lookup, and you have to infer the meaning of arguments that don't always correspond exactly.  Seems to me sound is one area where new programmers might be interested in playing with haskell, unfortunately its not too noob friendly.  
 
 #### Language Features
+
+> Which aspects of GHC do you feel are under represented or misunderstood?
 
 For language features I tried to poll on topics specific to GHC's implementation
 details. The results were overwhelmingly about performance and profiling:
