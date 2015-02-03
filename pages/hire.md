@@ -11,8 +11,6 @@ I prefer to correspond via encrypted email, my PGP key is
 [available here](http://www.stephendiehl.com/pages/pgp.html).
 -->
 
-I am currently available for hire as of January 1, 2015.
-
 **Haskell**
 
 ```haskell
