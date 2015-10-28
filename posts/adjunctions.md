@@ -10,7 +10,7 @@ Haskell, namely that adjoint functors give rise to monads.
 Although it's a trivial result in category theory how it
 manifests in Haskell is quite lovely.
 
-A Functor in Haskell maps objects and morphism ( i.e.  functions)
+A Functor in Haskell maps objects and morphism (i.e. functions)
 in a subcategory of *Hask* to objects and morphisms of another
 category.
 
@@ -52,7 +52,7 @@ instance (Functor f, Functor g) => Functor (FComp f g) where
 
 Generally the composition of functors $F \circ G$ is written
 simply as $FG$. Composition diagrammatically allows us to
-collapse adjacent segements in our string diagram.
+collapse adjacent segments in our string diagram.
 
 The identity functor ( $\text{Id}$ ) is the functor that maps
 each morphism and object to itself.
