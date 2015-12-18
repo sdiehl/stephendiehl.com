@@ -299,7 +299,7 @@ intermediate languages. The
 [llvm-general](https://hackage.haskell.org/package/llvm-general) provides a
 phenomenal interface to generating machine code from Haskell but the underlying
 C++ library itself is rather brittle under the ingestion of invalid LLVM IR.
-Trevor McDonald et al. provided a new approach by which many semantic guarantees
+Trevor McDonell et al. provided a new approach by which many semantic guarantees
 of the IR can be represented in the Haskell type system.
 
 *[Call-By-Push-Value](http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.129.8945&rep=rep1&type=pdf)*
