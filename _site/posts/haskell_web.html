@@ -67,12 +67,11 @@
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
-                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
             </nav>
-             
+            &nbsp;
         </div>
 
         <div class="twelve columns offset-by-one content">
@@ -88,8 +87,8 @@
 <p>I will not discuss these though because I really couldn’t give a better introduction than their own documentation. Instead I will focus on simple motivating examples for smaller libraries which provide a rich feature base for web development tasks while leveraging the strengths of Haskell language itself, and many of which can integrate with the larger frameworks.</p>
 <h4 id="clay">Clay</h4>
 <p>Clay is a library for programmatic generation of CSS. Is it an embedded DSL (EDSL) that exposes selectors and styles for the <a href="https://github.com/sebastiaanvisser/clay/tree/master/src/Clay">CSS3 grammmer</a>. Clay is designed to layer logic on top of the CSS as to encode variables, color mixing, complex selector logic and nested rules more easily than with base CSS. Clay can also be usefull as a lower-level combinator library to describe complex CSS layouts.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install clay</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install clay</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Clay</span>
 <span class="kw">import </span><span class="dt">Data.Text</span>
@@ -104,7 +103,7 @@ bodyStyle <span class="fu">=</span> body <span class="fu">?</span> <span class="
 codeStyle <span class="fu">=</span> code <span class="fu">?</span>
   <span class="kw">do</span> fontFamily  [<span class="st">&quot;Monaco&quot;</span>, <span class="st">&quot;Inconsolata&quot;</span>] [monospace]
      fontSize    (px <span class="dv">14</span>)
-     lineHeight  (ex <span class="dv">1</span><span class="fu">.</span><span class="dv">8</span>)
+     lineHeight  (ex <span class="fl">1.8</span>)
 
 <span class="ot">emphasis ::</span> <span class="dt">Css</span>
 emphasis <span class="fu">=</span> <span class="kw">do</span> 
@@ -124,9 +123,9 @@ containerStyle <span class="fu">=</span> container <span class="fu">?</span>
 main <span class="fu">=</span> putCss <span class="fu">$</span> <span class="kw">do</span>
   bodyStyle
   codeStyle
-  containerStyle</code></pre>
+  containerStyle</code></pre></div>
 <p>The above will generate the following stylesheet:</p>
-<pre class="sourceCode css"><code class="sourceCode css">body
+<div class="sourceCode"><pre class="sourceCode css"><code class="sourceCode css">body
 <span class="kw">{</span>
   <span class="kw">background</span>  <span class="kw">:</span> <span class="dt">rgb(127</span>,<span class="dt">255</span>,<span class="dt">212)</span><span class="kw">;</span>
   <span class="kw">font-family</span> <span class="kw">:</span> <span class="st">&quot;Helvetica Neue&quot;</span>, <span class="dt">sans-serif</span><span class="kw">;</span>
@@ -143,12 +142,12 @@ div<span class="fl">.code</span>
 <span class="kw">{</span>
   <span class="kw">width</span>        <span class="kw">:</span> <span class="dt">800px</span><span class="kw">;</span>
   <span class="kw">border-color</span> <span class="kw">:</span> <span class="dt">rgb(128</span>,<span class="dt">128</span>,<span class="dt">128)</span><span class="kw">;</span>
-<span class="kw">}</span></code></pre>
+<span class="kw">}</span></code></pre></div>
 <h4 id="blaze">Blaze</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install blaze-html</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install blaze-html</code></pre></div>
 <p>Blaze is the bread and butter of markup generation in Haskell. It is described as a “blazingly fast HTML combinator library” which programmtically generates HTML and several other markup languages from an embedded DSL.</p>
 <p>In this module, the language extension <code>OverloadedStrings</code> is used so that the type inferencer can infer common coercions between String-like types without having to do explicit calls to boilerplate functions (<code>pack</code>, <code>unpack</code>, <code>html</code>) for each string-like literal. This will be pretty common use for all the examples from here out that use <code>ByteString</code> or HTML.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.Monoid</span>
 <span class="kw">import </span><span class="dt">Text.Blaze</span> (<span class="dt">ToMarkup</span>(..))
@@ -165,9 +164,9 @@ gen title elts  <span class="fu">=</span> H.html <span class="fu">$</span> <span
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
-  print <span class="fu">$</span> renderHtml <span class="fu">$</span> gen <span class="st">&quot;My Blog&quot;</span> [<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;fizz&quot;</span>]</code></pre>
+  print <span class="fu">$</span> renderHtml <span class="fu">$</span> gen <span class="st">&quot;My Blog&quot;</span> [<span class="st">&quot;foo&quot;</span>, <span class="st">&quot;bar&quot;</span>, <span class="st">&quot;fizz&quot;</span>]</code></pre></div>
 <p>This would output HTML like the following:</p>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;html&gt;</span>
    <span class="kw">&lt;head&gt;</span>
       <span class="kw">&lt;title&gt;</span>My Blog<span class="kw">&lt;/title&gt;</span>
    <span class="kw">&lt;/head&gt;</span>
@@ -178,9 +177,9 @@ main <span class="fu">=</span> <span class="kw">do</span>
           <span class="kw">&lt;li&gt;</span>fizz<span class="kw">&lt;/li&gt;</span>
       <span class="kw">&lt;/ul&gt;</span>
    <span class="kw">&lt;/body&gt;</span>
-<span class="kw">&lt;/html&gt;</span></code></pre>
+<span class="kw">&lt;/html&gt;</span></code></pre></div>
 <p>In addition to generating HTML we can also derive from it’s internal ToMarkup classes to provide HTML representations for any datatype in Haskell. A silly example might be:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Example</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">|</span> <span class="dt">B</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Example</span> <span class="fu">=</span> <span class="dt">A</span> <span class="fu">|</span> <span class="dt">B</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
 <span class="kw">data</span> <span class="dt">List</span> a <span class="fu">=</span> <span class="dt">Cons</span> a <span class="fu">|</span> <span class="dt">Nil</span> <span class="kw">deriving</span> (<span class="dt">Show</span>)
 
 <span class="kw">instance</span> <span class="dt">ToMarkup</span> <span class="dt">Animal</span> <span class="kw">where</span>
@@ -189,8 +188,8 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <span class="kw">instance</span> (<span class="dt">ToMarkup</span> a) <span class="ot">=&gt;</span> <span class="dt">ToMarkup</span> (<span class="dt">List</span> a) <span class="kw">where</span>
   toMarkup x <span class="fu">=</span> <span class="kw">case</span> x <span class="kw">of</span>
       <span class="dt">Cons</span> a <span class="ot">-&gt;</span> H.ul <span class="fu">$</span> H.li <span class="fu">$</span> toHtml a
-      <span class="dt">Nil</span> <span class="ot">-&gt;</span> <span class="st">&quot;&quot;</span></code></pre>
-<pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Cons (Cons (Cons A)) --&gt;</span>
+      <span class="dt">Nil</span> <span class="ot">-&gt;</span> <span class="st">&quot;&quot;</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode html"><code class="sourceCode html"><span class="co">&lt;!-- Cons (Cons (Cons A)) --&gt;</span>
 <span class="kw">&lt;ul&gt;</span>
    <span class="kw">&lt;li&gt;</span>
       <span class="kw">&lt;ul&gt;</span>
@@ -201,14 +200,14 @@ main <span class="fu">=</span> <span class="kw">do</span>
          <span class="kw">&lt;/li&gt;</span>
       <span class="kw">&lt;/ul&gt;</span>
    <span class="kw">&lt;/li&gt;</span>
-<span class="kw">&lt;/ul&gt;</span></code></pre>
+<span class="kw">&lt;/ul&gt;</span></code></pre></div>
 <p>It is worth noting that the Blaze builder overloads do-notation as some EDSLs do, but the <code>Html</code> type is not a monad. It is functionally a monoid.</p>
 <p>For non-embedded template languages along the lines of <em>Jinja</em> or <em>erb</em> refer to the <a href="http://www.yesodweb.com/book/shakespearean-templates">Shakespearean templates</a> or <a href="http://hackage.haskell.org/package/happstack-heist">heist</a>.</p>
 <h4 id="jmacro">JMacro</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install jmacro</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install jmacro</code></pre></div>
 <p>JMacro is quasiquoter for Javascript code generation. The underlying implementation is rather clever and allows Haskell and Javascript to share functions and values across quotation boundaries. The end result is a fusion of Haskell and JavaScript that serves as a foundation to <a href="http://hackage.haskell.org/packages/archive/jmacro-rpc/0.2/doc/html/Network-JMacroRPC-Base.html">higher abstractions</a> and as a very convienant way to implement code generation for compilers targetting Javascript.</p>
 <p>As an example of we’ll use JMacro to implement a simple translator for the untyped typed lambda calculus, something one might do if writing a language that transpiles to Javascript.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE QuasiQuotes, TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE QuasiQuotes, TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.String</span>
 <span class="kw">import </span><span class="dt">Language.Javascript.JMacro</span>
@@ -282,13 +281,13 @@ main <span class="fu">=</span> <span class="kw">do</span>
   putStrLn <span class="fu">$</span> compile s
   putStrLn <span class="fu">$</span> compile k
   putStrLn <span class="fu">$</span> compile i0
-  putStrLn <span class="fu">$</span> compile i1</code></pre>
+  putStrLn <span class="fu">$</span> compile i1</code></pre></div>
 <h4 id="fay">Fay</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay</code></pre></div>
 <p>Fay is a growing ecosystem of packages that can compile Haskell to Javascript. Fay works with a strict subset of Haskell that preserves Haskell semantics such as currying and laziness. In addition to the core language, ther are interfaces for <a href="https://github.com/faylang/fay-jquery">jquery</a> and <a href="https://github.com/faylang/fay-dom">DOM manipulation</a> so that Fay-compiled Haskell code can effectively access the browser internals.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay-dom fay-jquery</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install fay-dom fay-jquery</code></pre></div>
 <p>The code generation is rather verbose given that it compiles quite a bit of the Haskell Prelude. The below example is very simple and only the interesting part of the outputted source is shown below. Notably the generated code is very readable.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- demo.hs</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- demo.hs</span>
 <span class="kw">import </span><span class="dt">FFI</span>
 <span class="kw">import </span><span class="dt">Prelude</span>
 <span class="kw">import </span><span class="dt">JQuery</span>
@@ -304,11 +303,11 @@ main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">
     setCss <span class="st">&quot;background-color&quot;</span> <span class="st">&quot;red&quot;</span> el
 
     puts <span class="st">&quot;Hello World!&quot;</span>
-    puts (show [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</code></pre>
+    puts (show [<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>])</code></pre></div>
 <p>To compile invoke the compiler:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> demo.hs --package fay-jquery</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> demo.hs --package fay-jquery</code></pre></div>
 <p>Some of the generated code:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">
 <span class="kw">var</span> Prelude$enumFrom = <span class="kw">function</span> ($p1) {
     <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Fay$$$</span>(<span class="kw">function</span> () {
         <span class="kw">var</span> i = $p1;
@@ -326,15 +325,15 @@ main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">
         <span class="kw">return</span> <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
             Prelude$take)(<span class="dv">25</span>))(
             <span class="fu">Prelude$enumFrom</span>(<span class="dv">1</span>));
-    });</code></pre>
+    });</code></pre></div>
 <p>To call this code from vanilla Javascript:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main = <span class="kw">new</span> <span class="fu">Main</span>();
-<span class="ot">main</span>.<span class="fu">_</span>(<span class="ot">main</span>.<span class="fu">Main$main</span>);</code></pre>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main = <span class="kw">new</span> <span class="fu">Main</span>();
+<span class="ot">main</span>.<span class="fu">_</span>(<span class="ot">main</span>.<span class="fu">Main$main</span>);</code></pre></div>
 <p>Fay is part of a larger community of compilers that transpile functional languages to Javascript. Another library of note is <a href="http://roy.brianmckenna.org/">Roy</a>. Although not Haskell, it has a sophisticated type system and notably an implementation of typeclasses, a feature that Fay currently does not implement.</p>
 <h4 id="aeson">Aeson</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install aeson</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install aeson</code></pre></div>
 <p>Aeson is the de-facto JSON parsing and generation library for Haskell. It’s usage couldn’t be simpler, we simply declare instance of <code>toJSON</code> and <code>fromJSON</code> for our types and Aeson takes care of the mappings and exception handling. By using <code>DeriveGeneric</code> we can create instances with very little code.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, DeriveGeneric #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.Aeson</span>
 
@@ -352,11 +351,11 @@ main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">
 <span class="kw">instance</span> <span class="dt">ToJSON</span> <span class="dt">Message</span>
 
 <span class="ot">fromStdin ::</span> <span class="dt">IO</span> (<span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Message</span>)
-fromStdin <span class="fu">=</span> eitherDecode <span class="fu">&lt;$&gt;</span> readLn</code></pre>
+fromStdin <span class="fu">=</span> eitherDecode <span class="fu">&lt;$&gt;</span> readLn</code></pre></div>
 <h4 id="postgres-simple">postgres-simple</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install postgres-simple</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install postgres-simple</code></pre></div>
 <p>Postgres-simple is a library for communicating with Postgres databases and mapping data between Haskell and SQL types. Although not an ORM, <code>postgres-simple</code> lets us generate and execute SQL queries and map result sets onto our algebraic datatypes very simply by deriving instances to declare schemas.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.Text</span>
 <span class="kw">import </span><span class="dt">Control.Applicative</span>
@@ -389,15 +388,15 @@ queryClients c <span class="fu">=</span> query_ c <span class="st">&quot;SELECT 
 main <span class="fu">=</span> <span class="kw">do</span>
   uri <span class="ot">&lt;-</span> B.getLine
   conn <span class="ot">&lt;-</span> connectPostgreSQL uri
-  queryClients conn</code></pre>
+  queryClients conn</code></pre></div>
 <h4 id="acid-state">Acid-State</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install acid-state</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install acid-state</code></pre></div>
 <p>We can further exploit Haskell’s algebraic datatypes to give us a storage engine simply from the specification of our types and a little bit of <code>TemplateHaskell</code> usage. For instance, a simple <code>Map</code> container from <code>Data.Map</code> can be transformed to a disk-backed disk backed key-value store which can be interacted with as if it were a normal Haksell data structure.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Key</span> <span class="fu">=</span> <span class="dt">String</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Key</span> <span class="fu">=</span> <span class="dt">String</span>
 <span class="kw">type</span> <span class="dt">Value</span> <span class="fu">=</span> <span class="dt">String</span>
-<span class="kw">data</span> <span class="dt">Database</span> <span class="fu">=</span> <span class="dt">Database</span> <span class="fu">!</span>(<span class="dt">Map.Map</span> <span class="dt">Key</span> <span class="dt">Value</span>)</code></pre>
+<span class="kw">data</span> <span class="dt">Database</span> <span class="fu">=</span> <span class="dt">Database</span> <span class="fu">!</span>(<span class="dt">Map.Map</span> <span class="dt">Key</span> <span class="dt">Value</span>)</code></pre></div>
 <p>Like it’s name implies <code>acid-state</code> provides transactional guarantees for storage. Specifically that writes will be applied completely or not at all and that data will be consistent during reads.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, TypeFamilies, DeriveDataTypeable, TemplateHaskell #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings, TypeFamilies, DeriveDataTypeable, TemplateHaskell #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.Acid</span>
 <span class="kw">import </span><span class="dt">Data.Typeable</span>
@@ -445,16 +444,16 @@ test key val <span class="fu">=</span> <span class="kw">do</span>
     database <span class="ot">&lt;-</span> openLocalStateFrom <span class="st">&quot;db/&quot;</span> (<span class="dt">Database</span> fixtures)
     result <span class="ot">&lt;-</span> update database (<span class="dt">InsertKey</span> key val)
     result <span class="ot">&lt;-</span> query database (<span class="dt">AllKeys</span> <span class="dv">10</span>)
-    print result</code></pre>
+    print result</code></pre></div>
 <h4 id="digestive-functors">Digestive Functors</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors digestive-functors-blaze</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors digestive-functors-blaze</code></pre></div>
 <p>Digestive functors solve the very mundane but mechanical task of validating forms. The library provides a way to specify views and validation logic and handle the control flow of validation between the end-user and the server. There are several backends to render the form and handle request/response cycles depending on your choice of framework For arbitrary reasons we’ll choose Happstack for this example.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors-happstack</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors-happstack</code></pre></div>
 <p>We’ll build a simple signup page with username and email validation logic.</p>
 <div class="figure">
 <img src="../images/functorform.png" />
 </div>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Data.Maybe</span>
 <span class="kw">import </span><span class="dt">Text.Printf</span>
@@ -527,11 +526,11 @@ config <span class="fu">=</span> HS.nullConf { HS.port <span class="fu">=</span>
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
 main <span class="fu">=</span> <span class="kw">do</span>
   printf <span class="st">&quot;Listening on port %d\n&quot;</span> (HS.port config)
-  HS.simpleHTTP config page</code></pre>
+  HS.simpleHTTP config page</code></pre></div>
 <h4 id="servers">Servers</h4>
 <p>A great deal of effort has been put into making the <a href="http://static.googleusercontent.com/external_content/untrusted_dlcp/research.google.com/en/us/pubs/archive/36841.pdf">Haskell runtime</a> implement efficient event driven programming such that applications can take advantage of the Haskell threading support.</p>
 <p>A simple single-threaded Hello World might be written like the following:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Network</span>
 <span class="kw">import </span><span class="dt">Data.ByteString.Char8</span>
@@ -555,9 +554,9 @@ listenLoop asock <span class="fu">=</span> <span class="kw">do</span>
 <span class="ot">main ::</span>  <span class="dt">IO</span> ()
 main <span class="fu">=</span> withSocketsDo <span class="fu">$</span> <span class="kw">do</span>
   sock <span class="ot">&lt;-</span> listenOn <span class="fu">$</span> <span class="dt">PortNumber</span> <span class="dv">5000</span>
-  listenLoop sock</code></pre>
+  listenLoop sock</code></pre></div>
 <p>To make this concurrent we use the function <code>forkIO</code> which utilizes the event-driven IO manager in GHC’s runtime system to spawn lightweight user threads which are distributed across multiple system threads. When compiled with <code>-threaded</code> the Haskell standard library also will use non-blocking system calls which are scheduled by the IO manager ( with <code>epoll()</code> under the hood ) and can transparently switch to threaded scheduling for other blocking operations.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Network</span>
 <span class="kw">import </span><span class="dt">Control.Monad</span>
@@ -588,15 +587,15 @@ main <span class="fu">=</span> withSocketsDo <span class="fu">$</span> <span cla
   sock <span class="ot">&lt;-</span> listenOn <span class="fu">$</span> <span class="dt">PortNumber</span> <span class="dv">5000</span>
   forM_ [<span class="dv">0</span><span class="fu">..</span>numCores] <span class="fu">$</span> \n <span class="ot">-&gt;</span>
     forkOn n (listenLoop sock)
-  threadDelay maxBound</code></pre>
+  threadDelay maxBound</code></pre></div>
 <p>This example is admittedly very simple but does illustrate that we can switch from serial to concurrent code in Haskell while still preserving sequential logic. Notably this server isn’t really doing anything terribly clever to get performance, it’s simply just spawning threads and all the heavy lifting is handled by the RTS. Yet with only a three line change the server can utilize all available cores.</p>
 <p>Compiling with <code>-O2</code> and running with <code>+RTS -N4 -qm -qa</code> I get the following numbers on my Intel Core i5:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Requests</span> per second:    12446.25 [#/sec] (mean)</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">Requests</span> per second:    12446.25 [#/sec] (mean)</code></pre></div>
 <p>There are other Haskell servers which do <a href="http://www.yesodweb.com/blog/2012/11/warp-posa">much more clever things</a> such as the Warp server.</p>
 <h4 id="websockets">Websockets</h4>
 <p>The Warp server can utilize the async event notification system to implement asynchronous applications using <code>Control.Concurrent</code> primitives. The prime example is so called “realtime web programming” using websockets. In this example we’ll implement a chat room with a mutable MVar which synchronizes messages across all threads in the server and broadcasts messages to the clients.</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install wai-websockets</code></pre>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install wai-websockets</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
 <span class="kw">import </span><span class="dt">Control.Monad</span>
 <span class="kw">import </span><span class="dt">Text.Printf</span>
@@ -662,22 +661,22 @@ port <span class="fu">=</span> <span class="dv">5000</span>
 main <span class="fu">=</span> <span class="kw">do</span>
   state <span class="ot">&lt;-</span> newMVar []
   printf <span class="st">&quot;Starting server on port %d\n&quot;</span> port
-  Warp.runSettings (config <span class="dv">5000</span> state) staticContent</code></pre>
+  Warp.runSettings (config <span class="dv">5000</span> state) staticContent</code></pre></div>
 <p>In the browser we can connet to our server using Javascript:</p>
-<pre class="sourceCode javascript"><code class="sourceCode javascript">ws = <span class="kw">new</span> <span class="fu">WebSocket</span>(<span class="st">'ws://localhost:5000'</span>)
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">ws = <span class="kw">new</span> <span class="fu">WebSocket</span>(<span class="st">'ws://localhost:5000'</span>)
 
 <span class="ot">ws</span>.<span class="fu">onmessage</span>(<span class="kw">function</span>(msg){<span class="ot">console</span>.<span class="fu">log</span>(msg)});
 <span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'User271828'</span>)
-<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'My message!'</span>)</code></pre>
+<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'My message!'</span>)</code></pre></div>
 <h4 id="cloud-haskell">Cloud Haskell</h4>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install distributed-process distributed-process-simplelocalnet</code></pre>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install distributed-process distributed-process-simplelocalnet</code></pre></div>
 <p>One of the most exciting projects in Haskell is a collections of projects developed under the <a href="http://haskell-distributed.github.io/">Cloud Haskell</a> metaproject. Cloud haskell brings language integrated messaging passing capability to Haskell under a very simple API which provides a foundation to build all sorts of distributed computations on top of simple actor primitives.</p>
 <p>The core mechanism of action is a <code>Process</code> monad which encapsulates a actor-like computation that can exchange messages across an abstract network backend. On top of this the <code>distributed-process</code> library provides the language-integrated ability to send arbitrary Haskell functions back and forth between processes much like one can move code in Erlang, but while still persiving Haskell type-safety across the message layer. The signatures for the messaging functions are:</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">send ::</span> <span class="dt">Serializable</span> a <span class="ot">=&gt;</span> <span class="dt">ProcessId</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Process</span> ()
-<span class="ot">expect ::</span> forall a<span class="fu">.</span> <span class="dt">Serializable</span> a <span class="ot">=&gt;</span> <span class="dt">Process</span> a</code></pre>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">send ::</span> <span class="dt">Serializable</span> a <span class="ot">=&gt;</span> <span class="dt">ProcessId</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Process</span> ()
+<span class="ot">expect ::</span> forall a<span class="fu">.</span> <span class="dt">Serializable</span> a <span class="ot">=&gt;</span> <span class="dt">Process</span> a</code></pre></div>
 <p>The network backend is an abstract protocol that specific libraries ( i.e. <code>distributed-process-simplelocalnet</code>) can implement to provide the transport layer indepenent of the rest of the stack. Many other protocols like TCP, IPC, and ZeroMQ can be used for the network transport.</p>
 <p>The simplest possible example is a simple ping and pong between between several <code>Process</code>. Notably we don’t encode any mechanism for binary serialization of code or data since Haskell can derive these for us.</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE TemplateHaskell, DeriveDataTypeable, DeriveGeneric, GeneralizedNewtypeDeriving #-}</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE TemplateHaskell, DeriveDataTypeable, DeriveGeneric, GeneralizedNewtypeDeriving #-}</span>
 
 <span class="kw">import </span><span class="dt">Text.Printf</span>
 <span class="kw">import </span><span class="dt">Data.Binary</span>
@@ -745,11 +744,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
       ctx <span class="ot">&lt;-</span> initializeBackend host port rtable
       startSlave ctx 
 
-    otherwise <span class="ot">-&gt;</span> error <span class="st">&quot;Invalid arguments: master|worker &lt;port&gt;&quot;</span></code></pre>
+    otherwise <span class="ot">-&gt;</span> error <span class="st">&quot;Invalid arguments: master|worker &lt;port&gt;&quot;</span></code></pre></div>
 <p>We can then spawn any number of instances from the shell:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">runhaskell</span> cloud.hs worker 5001
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">runhaskell</span> cloud.hs worker 5001
 $ <span class="kw">runhaskell</span> cloud.hs worker 5002
-$ <span class="kw">runhaskell</span> cloud.hs master 5003</code></pre>
+$ <span class="kw">runhaskell</span> cloud.hs master 5003</code></pre></div>
 <h4 id="conclusion">Conclusion</h4>
 <p>Hopefully you feel for what exists in the ecosystem and feel slightly more empowered to use the amazing tools we have.</p>
         </div>

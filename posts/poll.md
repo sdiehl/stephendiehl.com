@@ -10,13 +10,12 @@ were under represented. I'm sure I'll take some flak for the informal poll and
 methodology, but I feel that having at least some concrete data about the
 Haskell zeitgeist is better than nothing.
 
-As my [wise friends](https://twitter.com/a_cowley/status/546820870329860096)
-have noted, baked into the poll is a hypothesis that people will give different
-responses based on which domain they use Haskell for ( i.e. compiler developers
-have different focus than web developers). This seems to be confirmed by the
-data, but at the same time also self-selects for people who have a narrow focus.
-Also given the nature of the collection, we're only going to select people who
-are willing to respond and active on Haskell forums.
+As my friends have noted, baked into the poll is a hypothesis that people will
+give different responses based on which domain they use Haskell for ( i.e.
+compiler developers have different focus than web developers). This seems to be
+confirmed by the data, but at the same time also self-selects for people who
+have a narrow focus.  Also given the nature of the collection, we're only going
+to select people who are willing to respond and active on Haskell forums.
 
 The total counts include all individuals, even those who gave a "None of the
 above" or write-in for their domain. These are some of the most bizarre results,

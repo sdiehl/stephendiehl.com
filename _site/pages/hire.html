@@ -67,12 +67,11 @@
                     <li><a href="../pages/slides.html">Talks</a></li>
                     <li><a href="../pages/hire.html">Contact Me</a></li>
                     <li><a href="../pages/pgp.html">PGP Key</a></li>
-                    <li><a href="../pages/bitcoin.html">Bitcoin</a></li>
                     <li><a href="https://github.com/sdiehl">Github</a></li>
                     <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
                 </ul>
             </nav>
-             
+            &nbsp;
         </div>
 
         <div class="twelve columns offset-by-one content">
@@ -83,7 +82,7 @@ I prefer to correspond via encrypted email, my PGP key is
 -->
 
 <p><strong>Haskell</strong></p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
 <span class="co">-- http://www.stephendiehl.com</span>
 
 <span class="kw">import </span><span class="dt">Data.Char</span> (ord, chr)
@@ -104,9 +103,9 @@ uncipher k <span class="fu">=</span> cipher (<span class="fu">-</span>k)
 tr base offset char <span class="fu">=</span> chr <span class="fu">$</span> ord base <span class="fu">+</span> (ord char <span class="fu">-</span> ord base <span class="fu">+</span> offset) <span class="ot">`mod`</span> <span class="dv">26</span>
 
 <span class="ot">main ::</span> <span class="dt">IO</span> ()
-main <span class="fu">=</span> putStrLn <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre>
+main <span class="fu">=</span> putStrLn <span class="fu">$</span> uncipher <span class="dv">1</span> <span class="st">&quot;tufqifo.n.ejfim@hnbjm.dpn&quot;</span></code></pre></div>
 <p><strong>x86 Assembly</strong></p>
-<pre class="sourceCode perl"><code class="sourceCode perl"><span class="co"># Generate contact information for Stephen Diehl</span>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>
 <span class="co"># x86-64 only</span>
 
@@ -153,9 +152,9 @@ email:
     .byte	<span class="dv">99</span>
     .byte	<span class="dv">111</span>
     .byte	<span class="dv">109</span>
-    .byte	<span class="dv">10</span></code></pre>
+    .byte	<span class="dv">10</span></code></pre></div>
 <p><strong>Python</strong></p>
-<pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
+<div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>
 
 <span class="ch">import</span> os
@@ -181,7 +180,7 @@ a = numpy.array(<span class="dt">list</span>(<span class="dt">map</span>(<span c
 x = <span class="st">''</span>.join(<span class="dt">map</span>(<span class="dt">chr</span>, numpy.dot(M, a)))
 uncipher = strl.maketrans(x,y)
 
-<span class="dt">print</span>( strl.translate(EMAIL, uncipher) )</code></pre>
+<span class="dt">print</span>( strl.translate(EMAIL, uncipher) )</code></pre></div>
         </div>
     </div>
 
