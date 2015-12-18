@@ -81,7 +81,7 @@
 <h4 id="ghc">GHC</h4>
 <p>The Glorious Haskell Compiler 7.10 arrived in March and brought with it several major new features, as well as an abundance of bug fixes, changes to the backend compiler, code generation, and linker.</p>
 <p>The <em>The Applicative Monad Proposal</em> landed finally making Applicative a superclass of Monad.</p>
-<p>The <em>Burning Bridges Proposal</em> landed which reexported many of the meromorphic traversal functions found in the Prelude in favor of their polymorphic Traversable equivalents. There was much debate.</p>
+<p>The <em>Burning Bridges Proposal</em> landed which reexported many of the monomorphic traversal functions found in the Prelude in favor of their polymorphic Traversable equivalents. There was much debate.</p>
 <p>GHC 8.0 has several large changes that are in the works:</p>
 <p><em><a href="http://www.well-typed.com/blog/2015/03/overloadedrecordfields-revived/">-XOverloadedRecordFields</a></em></p>
 <p>The long awaited Overload Recored Fields extension will likely land and address some of the issues found in the old record system with overloaded selector names.</p>
@@ -224,7 +224,7 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <hr />
 <h4 id="code-generation">Code Generation</h4>
 <p><em><a href="https://www.cse.unsw.edu.au/~chak/papers/acc-llvm.pdf">Type-safe Runtime Code Generation</a></em></p>
-<p>A topic of great interest to me is the Haskell interface to the LLVM code generation system, which is quickly the de-facto standard for backend intermediate languages. The <a href="https://hackage.haskell.org/package/llvm-general">llvm-general</a> provides a phenomenal interface to generating machine code from Haskell but the underlying C++ library itself is rather brittle under the ingestion of invalid LLVM IR. Trevor McDonald et. all provided a new approach by which many semantic guarantees of the IR can be represented in the Haskell type system.</p>
+<p>A topic of great interest to me is the Haskell interface to the LLVM code generation system, which is quickly the de-facto standard for backend intermediate languages. The <a href="https://hackage.haskell.org/package/llvm-general">llvm-general</a> provides a phenomenal interface to generating machine code from Haskell but the underlying C++ library itself is rather brittle under the ingestion of invalid LLVM IR. Trevor McDonald et al. provided a new approach by which many semantic guarantees of the IR can be represented in the Haskell type system.</p>
 <p><em><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.129.8945&amp;rep=rep1&amp;type=pdf">Call-By-Push-Value</a></em></p>
 <p>On the topic of evaluation methods there is interesting research opportunity into exploring an alternative evaluation methods for the lambda calculus under the so-called “Call-By-Push-Value” method. Surprisingly this technique has been around for 11 years but lacks an equivalent of SPJ’s seminal “stock hardware implementation” paper describing an end to end translation from CBPV to x86. This would be an interesting student project.</p>
 <hr />
@@ -267,6 +267,7 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 </ul>
 <p>On this topic, I’m a bit more pessimistic. I don’t forsee a complete story to the NumPy/Pandas story in Haskell anytime soon. I strongly suspect that it’s simply not possible to create a library in Haskell that would draw the same kind of man-hours from scientific practitioners to see the library to fruition. Progress in the numerical Python space was hard-won and usually built on the graves of academic careers of people who become community organizers around projects like NumPy and SciPy.</p>
 <p>There are very few solutions for which I suggest dynamic typing is a good solution, but I’m coming more and more to believe that in the domain of ad-hoc data analysis, dynamic typing hits the local maxima of usability given our current understanding of languages.</p>
+<p>My views on this topic are unconventional within the Haskell community. In 2015 Anthony Cowley has done a great deal of groundbreaking work on exploring <a href="https://acowley.github.io/Frames/">type framed structures</a> using an extensible record approach that is the farthest along and shows the most promise.</p>
 <hr />
 <h4 id="javascript">Javascript</h4>
 <blockquote>
