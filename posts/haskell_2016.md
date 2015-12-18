@@ -26,7 +26,7 @@ compiler, code generation, and linker.
 The *The Applicative Monad Proposal* landed finally making Applicative a
 superclass of Monad.
 
-The *Burning Bridges Proposal* landed which reexported many of the meromorphic
+The *Burning Bridges Proposal* landed which reexported many of the monomorphic
 traversal functions found in the Prelude in favor of their polymorphic
 Traversable equivalents. There was much debate.
 
