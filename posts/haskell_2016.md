@@ -396,6 +396,11 @@ solution, but I'm coming more and more to believe that in the domain of ad-hoc
 data analysis, dynamic typing hits the local maxima of usability given our
 current understanding of languages.
 
+My views on this topic are unconventional within the Haskell community. In 2015
+Anthony Cowley has done a great deal of groundbreaking work on exploring [type
+framed structures](https://acowley.github.io/Frames/) using an extensible record
+approach that is the farthest along and shows the most promise.
+
 <hr/>
 
 #### Javascript
