@@ -31,7 +31,7 @@ class Category (c :: k -> k -> *) where
   (.) :: (y ~> z) c -> (x ~> y) c -> (x ~> z) c
 ```
 
-In Haskell we call this cateogry *Hask*, over the type constructor ``(->)`` of function types between Haskell
+In Haskell we call this category *Hask*, over the type constructor ``(->)`` of function types between Haskell
 types.
 
 ```haskell

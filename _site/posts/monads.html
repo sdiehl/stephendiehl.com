@@ -92,7 +92,7 @@
 <span class="kw">class</span> <span class="dt">Category</span> (<span class="ot">c ::</span> k <span class="ot">-&gt;</span> k <span class="ot">-&gt;</span> <span class="fu">*</span>) <span class="kw">where</span>
 <span class="ot">  id ::</span> (a <span class="fu">~&gt;</span> a) c
 <span class="ot">  (.) ::</span> (y <span class="fu">~&gt;</span> z) c <span class="ot">-&gt;</span> (x <span class="fu">~&gt;</span> y) c <span class="ot">-&gt;</span> (x <span class="fu">~&gt;</span> z) c</code></pre></div>
-<p>In Haskell we call this cateogry <em>Hask</em>, over the type constructor <code>(-&gt;)</code> of function types between Haskell types.</p>
+<p>In Haskell we call this category <em>Hask</em>, over the type constructor <code>(-&gt;)</code> of function types between Haskell types.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Hask</span> <span class="fu">=</span> (<span class="ot">-&gt;</span>)
  
 <span class="kw">instance</span> <span class="dt">Category</span> <span class="dt">Hask</span> <span class="kw">where</span>
