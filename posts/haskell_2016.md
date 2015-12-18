@@ -12,7 +12,7 @@ changed my perspective quite a bit on the state of our profession.
 
 For the language and community side there's been quite a bit of technical
 progress; probably not as much as some of us hope for, but Haskell is not a
-language of rapid hype, it's a multi-decade long engineering program.  Avoiding
+language of rapid hype, it's a multi-decade engineering program.  Avoiding
 success at all costs takes time and learning to accept the "long game" has been
 something I've come to accept with Haskell. Nevertheless I like to reflect on
 what's changed and what I think will matter in 2016.
@@ -285,6 +285,8 @@ The platform is commercial software available on the Apple Store but is well
 worth the low cost for such a nicely integrated and polished introduction to the
 Haskell language.
 
+<hr/>
+
 #### Code Generation
 
 *[Type-safe Runtime Code Generation](https://www.cse.unsw.edu.au/~chak/papers/acc-llvm.pdf)*
@@ -552,6 +554,8 @@ fruition in Haskell. There is much work in this space on both the engineering
 and research side; yet I'm quite confident with some changes that are coming in
 GHC 8.0 that this will converge on a nice tight solution.
 
+<hr/>
+
 #### Programming Languages
 
 Several new experimental languages have emerged that are looking into some
@@ -602,14 +606,16 @@ It was good year for the community. There were at least 3 more books written,
 thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000
 users.
 
-There is still some active debate interplay of types, laws, and documentation.
-Although the overall state of library documentation has gotten uniformly better
-over the last year. It certainly is lot better than seven years ago when
-understanding any bit of Haskell code was more a test of one's academic library
-skills than programming.
+There is still some active debate concerning the interplay of types, laws, and
+documentation.  Although the overall state of library documentation has gotten
+uniformly better over the last year. It certainly is much better than seven
+years ago when understanding any bit of Haskell code was more a test of one's
+academic library skills than programming.
 
 The [Haskell Exchange 2015 Park
 Bench](https://skillsmatter.com/skillscasts/6739-park-bench-discussion)
 discussion is a very good representation of many of the concerns around the
 growing community and the debates around "Haskell as stable industrial language"
 and "Haskell as vehicle for compiler research" that often occur.
+
+
