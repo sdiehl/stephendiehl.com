@@ -276,7 +276,7 @@ Left "Error in $: The key \"y\" was not found"
 
 *[Haskell for Mac](https://itunes.apple.com/au/app/haskell/id841285201)*
 
-Manuel M T Chakravarty et all, have released a new Playground environment aimed
+Manuel M T Chakravarty et al. have released a new Playground environment aimed
 at lowering the barrier to entry in Haskell.
 
 <!--
