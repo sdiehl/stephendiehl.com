@@ -266,7 +266,7 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <li><em>Mythical Haskell Array Library</em></li>
 </ul>
 <p>On this topic, I’m a bit more pessimistic. I don’t forsee a complete story to the NumPy/Pandas story in Haskell anytime soon. I strongly suspect that it’s simply not possible to create a library in Haskell that would draw the same kind of man-hours from scientific practitioners to see the library to fruition. Progress in the numerical Python space was hard-won and usually built on the graves of academic careers of people who become community organizers around projects like NumPy and SciPy.</p>
-<p>There are <a href="%5Bhttps://acowley.github.io/Frames/">several novel approaches</a> which moved the state of things forward, but the use of TemplateHaskell and PolyKinded datatype programming some these solutions a tough sell at say, at the front desk of an investment bank. There are very few solutions for which I suggest dynamic typing is a good solution, but I’m coming more and more to believe that in the domain of ad-hoc data analysis, dynamic typing hits the local maxima of usability given our current understanding of languages.</p>
+<p>There are very few solutions for which I suggest dynamic typing is a good solution, but I’m coming more and more to believe that in the domain of ad-hoc data analysis, dynamic typing hits the local maxima of usability given our current understanding of languages.</p>
 <hr />
 <h4 id="javascript">Javascript</h4>
 <blockquote>
@@ -274,7 +274,7 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 </blockquote>
 <p>The entire Javascript “phenomenon” is well described in <a href="https://www.youtube.com/watch?v=YyIQKBzIuBY">Alan Kay’s talk</a> on the results of <a href="http://cube-drone.com/comics/c/relentless-persistence">“incremental problem solving”</a> and the programming pop culture. Nevertheless JS exists, has universal browser support and is at least retargetable from more sensible languages.</p>
 <p><em><a href="http://elm-lang.org/">Elm</a></em></p>
-<p>Elm is another purely functional Javascript tranpiler, it uses Haskell like syntax but is semantically is closer to early ML dialects. As of yet, there is rich polymorphism or higher-kinded types, so a whole family of the usual functional constructions (monoids, functors, applicatives, monads) are inexpressible. In 2016 when the languages evolves a modern type system I will give it another look. At the moment it is hard to say much about Elm.</p>
+<p>Elm is another purely functional Javascript tranpiler, it uses Haskell like syntax but is semantically is closer to early ML dialects. As of yet, there is no rich polymorphism or higher-kinded types. As such a whole family of the usual functional constructions (monoids, functors, applicatives, monads) are inexpressible. In 2016 when the languages evolves a modern type system I will give it another look. At the moment it is hard to say much about Elm.</p>
 <p><em><a href="http://www.purescript.org/">Purescript</a></em></p>
 <p>Purescript has evolved into a very sensible transpiling solution in 2015, with a robust compiler and well structured set of base packages. The type system is superset of Haskell 2010 and expressive enough that the full set of common functional programming idioms are expressible.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Functor</span> f <span class="kw">where</span>
@@ -360,7 +360,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <hr />
 <h4 id="education-community">Education &amp; Community</h4>
 <p>It was good year for the community. There were at least 3 more books written, thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000 users.</p>
-<p>There is still some active debate interplay of types, laws, and documentation. Although the overall state of library documentation has gotten uniformly better over the last year. It is certainly a lot better than many years ago when understanding any bit of Haskell code was more a test of one’s academic library skills than programming.</p>
+<p>There is still some active debate interplay of types, laws, and documentation. Although the overall state of library documentation has gotten uniformly better over the last year. It certainly is lot better than seven years ago when understanding any bit of Haskell code was more a test of one’s academic library skills than programming.</p>
 <p>The <a href="https://skillsmatter.com/skillscasts/6739-park-bench-discussion">Haskell Exchange 2015 Park Bench</a> discussion is a very good representation of many of the concerns around the growing community and the debates around “Haskell as stable industrial language” and “Haskell as vehicle for compiler research” that often occur.</p>
         </div>
     </div>
