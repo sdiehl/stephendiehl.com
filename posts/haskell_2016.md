@@ -387,13 +387,10 @@ Progress in the numerical Python space was hard-won and usually built on the
 graves of academic careers of people who become community organizers around
 projects like NumPy and SciPy. 
 
-There are [several novel approaches]([https://acowley.github.io/Frames/) which
-moved the state of things forward, but the use of TemplateHaskell and PolyKinded
-datatype programming some these solutions a tough sell at say, at the front desk
-of an investment bank. There are very few solutions for which I suggest dynamic
-typing is a good solution, but I'm coming more and more to believe that in the
-domain of ad-hoc data analysis, dynamic typing hits the local maxima of
-usability given our current understanding of languages.
+There are very few solutions for which I suggest dynamic typing is a good
+solution, but I'm coming more and more to believe that in the domain of ad-hoc
+data analysis, dynamic typing hits the local maxima of usability given our
+current understanding of languages.
 
 <hr/>
 
@@ -413,7 +410,7 @@ and is at least retargetable from more sensible languages.
 
 Elm is another purely functional Javascript tranpiler, it uses Haskell like
 syntax but is semantically is closer to early ML dialects. As of yet, there is
-rich polymorphism or higher-kinded types, so a whole family of the usual
+no rich polymorphism or higher-kinded types. As such a whole family of the usual
 functional constructions (monoids, functors, applicatives, monads) are
 inexpressible. In 2016 when the languages evolves a modern type system I will
 give it another look. At the moment it is hard to say much about Elm.
@@ -607,7 +604,7 @@ users.
 
 There is still some active debate interplay of types, laws, and documentation.
 Although the overall state of library documentation has gotten uniformly better
-over the last year. It is certainly a lot better than many years ago when
+over the last year. It certainly is lot better than seven years ago when
 understanding any bit of Haskell code was more a test of one's academic library
 skills than programming.
 
