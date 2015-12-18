@@ -148,12 +148,13 @@ instance C Type where
 
 Stack is an supplement to the Cabal build system, released by FPComplete, which
 greatly simplifies package installation and dependency resolution. I was
-particularly skeptical about yet another solution to package, but it has since
-become a regular part of my Haskell workflow and the cost to migrating and
-existing codebase to it is often a single command (``stack init``).
+particularly skeptical about yet another solution to packaging, but it has since
+become a regular part of my Haskell workflow. 
 
-The one additional file that is required is a ``stack.yaml`` file in addition to
-cabal file.
+
+The cost to migrating and existing codebase to it is often a single command
+(``stack init``). The one additional file that is required is a ``stack.yaml``
+file in addition to cabal file.
 
 ```yaml
 resolver: lts-3.16
@@ -170,7 +171,8 @@ For new projects the setup process is very streamlined.
 $ stack new scotty-hello-world
 ```
 
-The appropriate project directory is automatically.
+The appropriate project directory is then automatically created according to the
+template.
 
 ```bash
 ├── app
@@ -235,12 +237,12 @@ $ stack image container
 $ sudo docker run -t -i example hello 
 ```
 
-```haskell
-> eitherDecode "[]" :: Either String Int
-Left "Error in $: expected Int, encountered Array"
-```
+My skeleton [project template is available
+here](https://github.com/sdiehl/skeleton).
 
-My skeleton [project template is available here](https://github.com/sdiehl/skeleton).
+A particularly good blog post by Tim Dysinger outlines the
+[Haskell/Stack/Kubernetes](https://www.fpcomplete.com/blog/2015/11/kubernetes)
+workflow that's used to run Stackage.
 
 <hr/>
 
@@ -539,8 +541,10 @@ tooling. *The Haskell tooling dream is near!*
 In the past SQL has been a particularly sore spot in the Haskell ecosystem,
 although typically the low-level bindings are present the problem of building a
 easy to use, type-safe, database-agnostic, language-integrated query system that
-maps to Haskell data structures has been ongoing. Opaleye does not fall back on
-TemplateHaskell, and although not database agnostic, is closest to what I
+maps to Haskell data structures has been ongoing. As of 2015 there are several
+new offerings for high level bindings, most of which offer an interesting new
+perspective on type-safe query generation. Uniquely Opaleye does not fall back
+on TemplateHaskell, and although not database agnostic, is closest to what I
 imagine the ideal solution would be.
 
 * *[esqueleto](https://hackage.haskell.org/package/esqueleto)*
@@ -618,4 +622,4 @@ discussion is a very good representation of many of the concerns around the
 growing community and the debates around "Haskell as stable industrial language"
 and "Haskell as vehicle for compiler research" that often occur.
 
-
+It was a good year for Haskell! :-)

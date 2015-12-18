@@ -143,8 +143,8 @@ zero1 <span class="dt">TyBool1</span> <span class="fu">=</span> <span class="dt"
 <ul>
 <li><em><a href="https://github.com/commercialhaskell/stack">Stack</a></em></li>
 </ul>
-<p>Stack is an supplement to the Cabal build system, released by FPComplete, which greatly simplifies package installation and dependency resolution. I was particularly skeptical about yet another solution to package, but it has since become a regular part of my Haskell workflow and the cost to migrating and existing codebase to it is often a single command (<code>stack init</code>).</p>
-<p>The one additional file that is required is a <code>stack.yaml</code> file in addition to cabal file.</p>
+<p>Stack is an supplement to the Cabal build system, released by FPComplete, which greatly simplifies package installation and dependency resolution. I was particularly skeptical about yet another solution to packaging, but it has since become a regular part of my Haskell workflow.</p>
+<p>The cost to migrating and existing codebase to it is often a single command (<code>stack init</code>). The one additional file that is required is a <code>stack.yaml</code> file in addition to cabal file.</p>
 <div class="sourceCode"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span class="fu">resolver:</span> lts-3.16
 <span class="fu">packages:</span>
 <span class="kw">-</span> <span class="st">'.'</span>
@@ -153,7 +153,7 @@ zero1 <span class="dt">TyBool1</span> <span class="fu">=</span> <span class="dt"
 <span class="fu">extra-package-dbs:</span> <span class="kw">[]</span></code></pre></div>
 <p>For new projects the setup process is very streamlined.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stack</span> new scotty-hello-world</code></pre></div>
-<p>The appropriate project directory is automatically.</p>
+<p>The appropriate project directory is then automatically created according to the template.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">├── <span class="kw">app</span>
 │   └── <span class="kw">Main.hs</span>
 ├── <span class="kw">LICENSE</span>
@@ -197,9 +197,8 @@ $ <span class="kw">stack</span> install
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">docker</span> build -t hello .
 $ <span class="kw">stack</span> image container
 $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">&gt;</span> eitherDecode <span class="st">&quot;[]&quot;</span><span class="ot"> ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Int</span>
-<span class="dt">Left</span> <span class="st">&quot;Error in $: expected Int, encountered Array&quot;</span></code></pre></div>
 <p>My skeleton <a href="https://github.com/sdiehl/skeleton">project template is available here</a>.</p>
+<p>A particularly good blog post by Tim Dysinger outlines the <a href="https://www.fpcomplete.com/blog/2015/11/kubernetes">Haskell/Stack/Kubernetes</a> workflow that’s used to run Stackage.</p>
 <hr />
 <h4 id="aeson">Aeson</h4>
 <p><em><a href="https://hackage.haskell.org/package/aeson">Aeson</a></em></p>
@@ -335,7 +334,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>The Haskell IDE Engine is a community effort to provide a universal IDE interface that abstracts over the common functionality needed to build future tooling. <em>The Haskell tooling dream is near!</em></p>
 <hr />
 <h4 id="sql">SQL</h4>
-<p>In the past SQL has been a particularly sore spot in the Haskell ecosystem, although typically the low-level bindings are present the problem of building a easy to use, type-safe, database-agnostic, language-integrated query system that maps to Haskell data structures has been ongoing. Opaleye does not fall back on TemplateHaskell, and although not database agnostic, is closest to what I imagine the ideal solution would be.</p>
+<p>In the past SQL has been a particularly sore spot in the Haskell ecosystem, although typically the low-level bindings are present the problem of building a easy to use, type-safe, database-agnostic, language-integrated query system that maps to Haskell data structures has been ongoing. As of 2015 there are several new offerings for high level bindings, most of which offer an interesting new perspective on type-safe query generation. Uniquely Opaleye does not fall back on TemplateHaskell, and although not database agnostic, is closest to what I imagine the ideal solution would be.</p>
 <ul>
 <li><em><a href="https://hackage.haskell.org/package/esqueleto">esqueleto</a></em></li>
 <li><em><a href="https://hackage.haskell.org/package/opaleye">opaleye</a></em></li>
@@ -364,6 +363,7 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p>It was good year for the community. There were at least 3 more books written, thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000 users.</p>
 <p>There is still some active debate concerning the interplay of types, laws, and documentation. Although the overall state of library documentation has gotten uniformly better over the last year. It certainly is much better than seven years ago when understanding any bit of Haskell code was more a test of one’s academic library skills than programming.</p>
 <p>The <a href="https://skillsmatter.com/skillscasts/6739-park-bench-discussion">Haskell Exchange 2015 Park Bench</a> discussion is a very good representation of many of the concerns around the growing community and the debates around “Haskell as stable industrial language” and “Haskell as vehicle for compiler research” that often occur.</p>
+<p>It was a good year for Haskell! :-)</p>
         </div>
     </div>
 
