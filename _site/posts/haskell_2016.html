@@ -139,7 +139,6 @@ zero1 <span class="dt">TyBool1</span> <span class="fu">=</span> <span class="dt"
 <span class="kw">instance</span> <span class="dt">C</span> <span class="dt">Type</span> <span class="kw">where</span> 
   f <span class="fu">=</span> undefined</code></pre></div>
 <hr />
-
 <h4 id="stack">Stack</h4>
 <ul>
 <li><em><a href="https://github.com/commercialhaskell/stack">Stack</a></em></li>
@@ -202,7 +201,6 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <span class="dt">Left</span> <span class="st">&quot;Error in $: expected Int, encountered Array&quot;</span></code></pre></div>
 <p>My skeleton <a href="https://github.com/sdiehl/skeleton">project template is available here</a>.</p>
 <hr />
-
 <h4 id="aeson">Aeson</h4>
 <p><em><a href="https://hackage.haskell.org/package/aeson">Aeson</a></em></p>
 <p>The bread and butter (and debatably alternative base) library Aeson got much better error reporting as of <code>aeson==0.10</code>. Before we would often get cryptic messages concerning attoparsec internals <code>Failed reading: satisfy</code>.</p>
@@ -217,14 +215,12 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <span class="fu">&gt;</span> eitherDecode <span class="st">&quot;{\&quot;x\&quot;: 1}&quot;</span><span class="ot"> ::</span> <span class="dt">Either</span> <span class="dt">String</span> <span class="dt">Point</span>
 <span class="dt">Left</span> <span class="st">&quot;Error in $: The key \&quot;y\&quot; was not found&quot;</span></code></pre></div>
 <hr />
-
 <h4 id="haskell-for-mac">Haskell for Mac</h4>
 <p><em><a href="https://itunes.apple.com/au/app/haskell/id841285201">Haskell for Mac</a></em></p>
 <p>Manuel M T Chakravarty et all, have released a new Playground environment aimed at lowering the barrier to entry in Haskell.</p>
 <!--
 <img src="https://images.typed.com/9df5078d-fbf8-4c17-8ef2-d19d47365f46/Haskell_Window_Anatomy.jpg" width=600></img>
 -->
-
 <p>The platform is commercial software available on the Apple Store but is well worth the low cost for such a nicely integrated and polished introduction to the Haskell language.</p>
 <h4 id="code-generation">Code Generation</h4>
 <p><em><a href="https://www.cse.unsw.edu.au/~chak/papers/acc-llvm.pdf">Type-safe Runtime Code Generation</a></em></p>
@@ -232,7 +228,6 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <p><em><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.129.8945&amp;rep=rep1&amp;type=pdf">Call-By-Push-Value</a></em></p>
 <p>On the topic of evaluation methods there is interesting research opportunity into exploring an alternative evaluation methods for the lambda calculus under the so-called “Call-By-Push-Value” method. Surprisingly this technique has been around for 11 years but lacks an equivalent of SPJ’s seminal “stock hardware implementation” paper describing an end to end translation from CBPV to x86. This would be an interesting student project.</p>
 <hr />
-
 <h4 id="web-programming">Web Programming</h4>
 <ul>
 <li><em><a href="https://github.com/haskell-servant/servant">Servant</a></em></li>
@@ -252,17 +247,16 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <span class="ot">{-# LANGUAGE TypeFamilies          #-}</span>
 <span class="ot">{-# LANGUAGE TypeOperators         #-}</span></code></pre></div>
 <p>The “Hello Web App” programs of unsafe Javascript definitely has a psychological appeal to current generation of developers over a wall of impenetrable type system extensions.</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> http = <span class="fu">require</span>(<span class="st">'http'</span>);
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> http <span class="op">=</span> <span class="at">require</span>(<span class="st">'http'</span>)<span class="op">;</span>
 
-<span class="kw">var</span> server = <span class="ot">http</span>.<span class="fu">createServer</span>(<span class="kw">function</span> (request, response) {
-  <span class="ot">response</span>.<span class="fu">writeHead</span>(<span class="dv">200</span>, {<span class="st">&quot;Content-Type&quot;</span>: <span class="st">&quot;text/plain&quot;</span>});
-  <span class="ot">response</span>.<span class="fu">end</span>(<span class="st">&quot;Hello World</span><span class="ch">\n</span><span class="st">&quot;</span>);
-});
+<span class="kw">var</span> server <span class="op">=</span> <span class="va">http</span>.<span class="at">createServer</span>(<span class="kw">function</span> (request<span class="op">,</span> response) <span class="op">{</span>
+  <span class="va">response</span>.<span class="at">writeHead</span>(<span class="dv">200</span><span class="op">,</span> <span class="op">{</span><span class="st">&quot;Content-Type&quot;</span><span class="op">:</span> <span class="st">&quot;text/plain&quot;</span><span class="op">}</span>)<span class="op">;</span>
+  <span class="va">response</span>.<span class="at">end</span>(<span class="st">&quot;Hello World</span><span class="sc">\n</span><span class="st">&quot;</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span>
 
-<span class="ot">server</span>.<span class="fu">listen</span>(<span class="dv">8000</span>);</code></pre></div>
+<span class="va">server</span>.<span class="at">listen</span>(<span class="dv">8000</span>)<span class="op">;</span></code></pre></div>
 <p>This is not a critique of Servant, merely a retrospective about how far the gap between the Javascript and Haskell worlds is becoming and how much activation energy is required to cross the schism.</p>
 <hr />
-
 <h4 id="numerical-programming">Numerical Programming</h4>
 <ul>
 <li><em><a href="https://hackage.haskell.org/package/dimensional-1.0.1.0/docs/Numeric-Units-Dimensional.html">Dimensional</a></em></li>
@@ -272,9 +266,8 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <li><em>Mythical Haskell Array Library</em></li>
 </ul>
 <p>On this topic, I’m a bit more pessimistic. I don’t forsee a complete story to the NumPy/Pandas story in Haskell anytime soon. I strongly suspect that it’s simply not possible to create a library in Haskell that would draw the same kind of man-hours from scientific practitioners to see the library to fruition. Progress in the numerical Python space was hard-won and usually built on the graves of academic careers of people who become community organizers around projects like NumPy and SciPy.</p>
-<p>There are <a href="[https://acowley.github.io/Frames/">several novel approaches</a> which moved the state of things forward, but the use of TemplateHaskell and PolyKinded datatype programming some these solutions a tough sell at say, at the front desk of an investment bank. There are very few solutions for which I suggest dynamic typing is a good solution, but I’m coming more and more to believe that in the domain of ad-hoc data analysis, dynamic typing hits the local maxima of usability given our current understanding of languages.</p>
+<p>There are <a href="%5Bhttps://acowley.github.io/Frames/">several novel approaches</a> which moved the state of things forward, but the use of TemplateHaskell and PolyKinded datatype programming some these solutions a tough sell at say, at the front desk of an investment bank. There are very few solutions for which I suggest dynamic typing is a good solution, but I’m coming more and more to believe that in the domain of ad-hoc data analysis, dynamic typing hits the local maxima of usability given our current understanding of languages.</p>
 <hr />
-
 <h4 id="javascript">Javascript</h4>
 <blockquote>
 <p>JavaScript, the language, has some issues that make working with it inconvenient and make developing software harder.</p>
@@ -310,29 +303,28 @@ main <span class="fu">=</span> <span class="kw">do</span>
   n <span class="ot">&lt;-</span> random
   print n</code></pre></div>
 <p>The code generation is fairly natural mapping of Haskell lambda to Javascript functions, delegation to underlying Javascript builtins for primitive operations, and the usual dictionary passing translation for typeclasses.</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> $dollar = <span class="kw">function</span> (f) {
-    <span class="kw">return</span> <span class="kw">function</span> (x) {
-        <span class="kw">return</span> <span class="fu">f</span>(x);
-    };
-};</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> show = <span class="kw">function</span> (dict) {
-    <span class="kw">return</span> <span class="ot">dict</span>.<span class="fu">show</span>;
-};
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> $dollar <span class="op">=</span> <span class="kw">function</span> (f) <span class="op">{</span>
+    <span class="cf">return</span> <span class="kw">function</span> (x) <span class="op">{</span>
+        <span class="cf">return</span> <span class="at">f</span>(x)<span class="op">;</span>
+    <span class="op">};</span>
+<span class="op">};</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> show <span class="op">=</span> <span class="kw">function</span> (dict) <span class="op">{</span>
+    <span class="cf">return</span> <span class="va">dict</span>.<span class="at">show</span><span class="op">;</span>
+<span class="op">};</span>
 
-<span class="kw">var</span> showNumber = <span class="kw">new</span> <span class="fu">Show</span>(<span class="ot">$foreign</span>.<span class="fu">showNumberImpl</span>);
+<span class="kw">var</span> showNumber <span class="op">=</span> <span class="kw">new</span> <span class="at">Show</span>(<span class="va">$foreign</span>.<span class="at">showNumberImpl</span>)<span class="op">;</span>
 
-<span class="kw">var</span> showBoolean = <span class="kw">new</span> <span class="fu">Show</span>(<span class="kw">function</span> (_35) {
-    <span class="kw">if</span> (_35) {
-        <span class="kw">return</span> <span class="st">&quot;true&quot;</span>;
-    };
-    <span class="kw">if</span> (!_35) {
-        <span class="kw">return</span> <span class="st">&quot;false&quot;</span>;
-    };
-    <span class="kw">throw</span> <span class="kw">new</span> <span class="fu">Error</span>(<span class="st">&quot;...&quot;</span>);
-});</code></pre></div>
+<span class="kw">var</span> showBoolean <span class="op">=</span> <span class="kw">new</span> <span class="at">Show</span>(<span class="kw">function</span> (_35) <span class="op">{</span>
+    <span class="cf">if</span> (_35) <span class="op">{</span>
+        <span class="cf">return</span> <span class="st">&quot;true&quot;</span><span class="op">;</span>
+    <span class="op">};</span>
+    <span class="cf">if</span> (<span class="op">!</span>_35) <span class="op">{</span>
+        <span class="cf">return</span> <span class="st">&quot;false&quot;</span><span class="op">;</span>
+    <span class="op">};</span>
+    <span class="cf">throw</span> <span class="kw">new</span> <span class="at">Error</span>(<span class="st">&quot;...&quot;</span>)<span class="op">;</span>
+<span class="op">}</span>)<span class="op">;</span></code></pre></div>
 <p>There are a variety of bindings to external Javascript DOM libraries including <a href="https://github.com/purescript-contrib/purescript-react">React</a>. Until the browser becomes targetable in a way that <a href="https://hacks.mozilla.org/2015/12/compiling-to-webassembly-its-happening/">doesn’t involve</a> transpiling source code, Purescript is as state of the art as it gets.</p>
 <hr />
-
 <h4 id="editor-integration">Editor Integration</h4>
 <p><em><a href="https://github.com/begriffs/haskell-vim-now">haskel-vim-now</a></em></p>
 <p>Vim integration with Haskell has never been easier and a lot of the problems around ghc-mod and syntax highlighting have been packaged up and managed by stack now by the <code>haskell-vim-now</code> package. This is markedly improved from when I last wrote about vim and Haskell in 2013.</p>
@@ -341,7 +333,6 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p><em><a href="https://github.com/haskell/haskell-ide-engine">haskell-ide-engine</a></em></p>
 <p>The Haskell IDE Engine is a community effort to provide a universal IDE interface that abstracts over the common functionality needed to build future tooling. <em>The Haskell tooling dream is near!</em></p>
 <hr />
-
 <h4 id="sql">SQL</h4>
 <p>In the past SQL has been a particularly sore spot in the Haskell ecosystem, although typically the low-level bindings are present the problem of building a easy to use, type-safe, database-agnostic, language-integrated query system that maps to Haskell data structures has been ongoing. Opaleye does not fall back on TemplateHaskell, and although not database agnostic, is closest to what I imagine the ideal solution would be.</p>
 <ul>
@@ -358,16 +349,15 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <li><em><a href="https://github.com/xixixao/Shem">Shem</a></em></li>
 <li><em><a href="http://www.rise4fun.com/koka/tutorial">Koka</a></em></li>
 <li><em><a href="https://hackage.haskell.org/package/egison">Egison</a></em></li>
+<li><em><a href="https://github.com/mthom/shentong">Shentong</a></em></li>
 </ul>
 <p>For those who are <a href="https://www.reddit.com/r/haskell/comments/3qgsx1/whats_the_equivalent_of_modern_compiler/cwf3fhg">asking</a>, I am continuing to write the <a href="http://dev.stephendiehl.com/fun/">proto functional compiler tutorial</a> and will continue to do so in 2016. Technical writing is just a very thankless and time-consuming process.</p>
 <hr />
-
 <h4 id="dependent-types">Dependent Types</h4>
 <p><em><a href="https://github.com/idris-lang/Idris-dev">Idris</a></em></p>
 <p>Although technically not a recent development, Idris has seen a lot of work in 2015. Idris is very promising foray into the next generation of dependently typed languages that actually aims for a full end-to-end compiler. Here is the clearest preview of what functional programming will look like in 2025.</p>
 <p>That said, for the work that I do on a daily basis I’m a bit reserved about the offerings of dependently typed languages; having spent a fair bit of time investigating possible use cases for dependently typed numerical programming. This year may be the one that changes my mind on this, but for the moment dependent types don’t quite yet offer the same power to weight ratio as my usual System-F and ML derivative languages do. The primary criterion I would use for considering the next generation of dependently typed languages is when the first self-hosting optimizing compiler emerges. Until then I remain skeptical but optimistic about the advances in dependent types.</p>
 <hr />
-
 <h4 id="education-community">Education &amp; Community</h4>
 <p>It was good year for the community. There were at least 3 more books written, thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000 users.</p>
 <p>There is still some active debate interplay of types, laws, and documentation. Although the overall state of library documentation has gotten uniformly better over the last year. It is certainly a lot better than many years ago when understanding any bit of Haskell code was more a test of one’s academic library skills than programming.</p>

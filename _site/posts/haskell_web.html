@@ -112,7 +112,7 @@ emphasis <span class="fu">=</span> <span class="kw">do</span>
   textTransform  uppercase
 
 <span class="ot">container ::</span> <span class="dt">Selector</span>
-container <span class="fu">=</span> div <span class="st"># &quot;.code&quot;</span>
+container <span class="fu">=</span> div <span class="fu">#</span> <span class="st">&quot;.code&quot;</span>
 
 <span class="ot">containerStyle ::</span> <span class="dt">Css</span>
 containerStyle <span class="fu">=</span> container <span class="fu">?</span>
@@ -308,27 +308,27 @@ main <span class="fu">=</span> ready <span class="fu">$</span> <span class="kw">
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">fay</span> demo.hs --package fay-jquery</code></pre></div>
 <p>Some of the generated code:</p>
 <div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">
-<span class="kw">var</span> Prelude$enumFrom = <span class="kw">function</span> ($p1) {
-    <span class="kw">return</span> <span class="kw">new</span> <span class="fu">Fay$$$</span>(<span class="kw">function</span> () {
-        <span class="kw">var</span> i = $p1;
-        <span class="kw">return</span> <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
-            Fay$$cons)(i))(<span class="fu">Fay$$_</span>(
+<span class="kw">var</span> Prelude$enumFrom <span class="op">=</span> <span class="kw">function</span> ($p1) <span class="op">{</span>
+    <span class="cf">return</span> <span class="kw">new</span> <span class="at">Fay$$$</span>(<span class="kw">function</span> () <span class="op">{</span>
+        <span class="kw">var</span> i <span class="op">=</span> $p1<span class="op">;</span>
+        <span class="cf">return</span> <span class="at">Fay$$_</span>(<span class="at">Fay$$_</span>(
+            Fay$$cons)(i))(<span class="at">Fay$$_</span>(
             Prelude$enumFrom)(
-            <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
+            <span class="at">Fay$$_</span>(<span class="at">Fay$$_</span>(
                 Fay$$add)(i))(<span class="dv">1</span>)
-        ));
-    });
-};
+        ))<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span>
+<span class="op">};</span>
 
-<span class="kw">var</span> Main$example = <span class="kw">new</span> <span class="fu">Fay$$$</span>(
-    <span class="kw">function</span> () {
-        <span class="kw">return</span> <span class="fu">Fay$$_</span>(<span class="fu">Fay$$_</span>(
+<span class="kw">var</span> Main$example <span class="op">=</span> <span class="kw">new</span> <span class="at">Fay$$$</span>(
+    <span class="kw">function</span> () <span class="op">{</span>
+        <span class="cf">return</span> <span class="at">Fay$$_</span>(<span class="at">Fay$$_</span>(
             Prelude$take)(<span class="dv">25</span>))(
-            <span class="fu">Prelude$enumFrom</span>(<span class="dv">1</span>));
-    });</code></pre></div>
+            <span class="at">Prelude$enumFrom</span>(<span class="dv">1</span>))<span class="op">;</span>
+    <span class="op">}</span>)<span class="op">;</span></code></pre></div>
 <p>To call this code from vanilla Javascript:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main = <span class="kw">new</span> <span class="fu">Main</span>();
-<span class="ot">main</span>.<span class="fu">_</span>(<span class="ot">main</span>.<span class="fu">Main$main</span>);</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript"><span class="kw">var</span> main <span class="op">=</span> <span class="kw">new</span> <span class="at">Main</span>()<span class="op">;</span>
+<span class="va">main</span>.<span class="at">_</span>(<span class="va">main</span>.<span class="at">Main$main</span>)<span class="op">;</span></code></pre></div>
 <p>Fay is part of a larger community of compilers that transpile functional languages to Javascript. Another library of note is <a href="http://roy.brianmckenna.org/">Roy</a>. Although not Haskell, it has a sophisticated type system and notably an implementation of typeclasses, a feature that Fay currently does not implement.</p>
 <h4 id="aeson">Aeson</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install aeson</code></pre></div>
@@ -451,7 +451,8 @@ test key val <span class="fu">=</span> <span class="kw">do</span>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install digestive-functors-happstack</code></pre></div>
 <p>We’ll build a simple signup page with username and email validation logic.</p>
 <div class="figure">
-<img src="../images/functorform.png" />
+<img src="../images/functorform.png" alt />
+
 </div>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
@@ -663,11 +664,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
   printf <span class="st">&quot;Starting server on port %d\n&quot;</span> port
   Warp.runSettings (config <span class="dv">5000</span> state) staticContent</code></pre></div>
 <p>In the browser we can connet to our server using Javascript:</p>
-<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">ws = <span class="kw">new</span> <span class="fu">WebSocket</span>(<span class="st">'ws://localhost:5000'</span>)
+<div class="sourceCode"><pre class="sourceCode javascript"><code class="sourceCode javascript">ws <span class="op">=</span> <span class="kw">new</span> <span class="at">WebSocket</span>(<span class="st">'ws://localhost:5000'</span>)
 
-<span class="ot">ws</span>.<span class="fu">onmessage</span>(<span class="kw">function</span>(msg){<span class="ot">console</span>.<span class="fu">log</span>(msg)});
-<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'User271828'</span>)
-<span class="ot">ws</span>.<span class="fu">send</span>(<span class="st">'My message!'</span>)</code></pre></div>
+<span class="va">ws</span>.<span class="at">onmessage</span>(<span class="kw">function</span>(msg)<span class="op">{</span><span class="va">console</span>.<span class="at">log</span>(msg)<span class="op">}</span>)<span class="op">;</span>
+<span class="va">ws</span>.<span class="at">send</span>(<span class="st">'User271828'</span>)
+<span class="va">ws</span>.<span class="at">send</span>(<span class="st">'My message!'</span>)</code></pre></div>
 <h4 id="cloud-haskell">Cloud Haskell</h4>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cabal</span> install distributed-process distributed-process-simplelocalnet</code></pre></div>
 <p>One of the most exciting projects in Haskell is a collections of projects developed under the <a href="http://haskell-distributed.github.io/">Cloud Haskell</a> metaproject. Cloud haskell brings language integrated messaging passing capability to Haskell under a very simple API which provides a foundation to build all sorts of distributed computations on top of simple actor primitives.</p>

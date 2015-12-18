@@ -80,7 +80,6 @@
 I prefer to correspond via encrypted email, my PGP key is
 [available here](http://www.stephendiehl.com/pages/pgp.html).
 -->
-
 <p><strong>Haskell</strong></p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generate contact information for Stephen Diehl</span>
 <span class="co">-- http://www.stephendiehl.com</span>
@@ -157,30 +156,30 @@ email:
 <div class="sourceCode"><pre class="sourceCode python"><code class="sourceCode python"><span class="co"># Generate contact information for Stephen Diehl</span>
 <span class="co"># http://www.stephendiehl.com</span>
 
-<span class="ch">import</span> os
-<span class="ch">import</span> sys
-<span class="ch">import</span> numpy
-<span class="ch">import</span> string
+<span class="im">import</span> os
+<span class="im">import</span> sys
+<span class="im">import</span> numpy
+<span class="im">import</span> string
 
-<span class="kw">if</span> sys.version &gt; <span class="st">'3'</span>:
-    strl = <span class="dt">str</span>
-<span class="kw">else</span>:
-    strl = string
+<span class="cf">if</span> sys.version <span class="op">&gt;</span> <span class="st">'3'</span>:
+    strl <span class="op">=</span> <span class="bu">str</span>
+<span class="cf">else</span>:
+    strl <span class="op">=</span> string
 
-EMAIL = <span class="st">&quot;&quot;&quot;</span>
+EMAIL <span class="op">=</span> <span class="st">&quot;&quot;&quot;</span>
 <span class="ch">\xcd\xce\xbf\xca\xc2\xbf\xc8</span><span class="st">.</span><span class="ch">\xc7</span><span class="st">.</span><span class="ch">\xbe\xc3\xbf\xc2\xc6</span><span class="st">@</span><span class="ch">\xc1\xc7\xbb\xc3\xc6</span><span class="st">.</span><span class="ch">\xbd\xc9\xc7</span>
 <span class="st">&quot;&quot;&quot;</span>
 
-y = string.ascii_letters
-n = <span class="dt">len</span>(y)
-M = numpy.identity(n, dtype=numpy.int32)
-M[:n, n<span class="dv">-1</span>] = <span class="dv">1</span>
+y <span class="op">=</span> string.ascii_letters
+n <span class="op">=</span> <span class="bu">len</span>(y)
+M <span class="op">=</span> numpy.identity(n, dtype<span class="op">=</span>numpy.int32)
+M[:n, n<span class="dv">-1</span>] <span class="op">=</span> <span class="dv">1</span>
 
-a = numpy.array(<span class="dt">list</span>(<span class="dt">map</span>(<span class="dt">ord</span>, y)), dtype=numpy.int32)
-x = <span class="st">''</span>.join(<span class="dt">map</span>(<span class="dt">chr</span>, numpy.dot(M, a)))
-uncipher = strl.maketrans(x,y)
+a <span class="op">=</span> numpy.array(<span class="bu">list</span>(<span class="bu">map</span>(<span class="bu">ord</span>, y)), dtype<span class="op">=</span>numpy.int32)
+x <span class="op">=</span> <span class="st">''</span>.join(<span class="bu">map</span>(<span class="bu">chr</span>, numpy.dot(M, a)))
+uncipher <span class="op">=</span> strl.maketrans(x,y)
 
-<span class="dt">print</span>( strl.translate(EMAIL, uncipher) )</code></pre></div>
+<span class="bu">print</span>( strl.translate(EMAIL, uncipher) )</code></pre></div>
         </div>
     </div>
 
