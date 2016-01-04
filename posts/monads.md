@@ -409,8 +409,9 @@ class Functor t => Monad t where
 ma >>= f = join . fmap f
 ```
 
-*Stated simply that the monad laws above are just the category laws in the Kleisli category*, specifically the
-monad laws in terms of the Kleisli category of a monad ``m`` are:
+*Stated simply that the monad laws above are just the category laws in the
+Kleisli category*, specifically the monad laws in terms of the Kleisli category
+of a monad ``m`` are:
 
 ```haskell
 (f >=> g) >=> h ≡ f >=> (g >=> h)
@@ -418,7 +419,8 @@ return >=> f ≡ f
 f >=> return ≡  f
 ```
 
-For example, ``Just`` is just an identity morphism in the Kleisli category of the ``Maybe`` monad.
+For example, ``Just`` is just an identity morphism in the Kleisli category of
+the ``Maybe`` monad.
 
 ```haskell
 Just >=> f = f
@@ -497,12 +499,3 @@ instance Monad Maybe where
   -- eta :: a -> IO a
   -- mu :: (IO (IO a)) -> IO a
 ```
-
-##### References
-***
-
-* [functor](http://ncatlab.org/nlab/show/functor)
-* [natural transformation](http://ncatlab.org/nlab/show/natural+transformation)
-* [monad](http://ncatlab.org/nlab/show/monad)
-* [kleisli category](http://ncatlab.org/nlab/show/Kleisli+category)
-* [computational trinitarianism](http://ncatlab.org/nlab/show/computational+trinitarianism)

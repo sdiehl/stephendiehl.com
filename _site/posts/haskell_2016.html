@@ -217,9 +217,7 @@ $ <span class="kw">sudo</span> docker run -t -i example hello </code></pre></div
 <h4 id="haskell-for-mac">Haskell for Mac</h4>
 <p><em><a href="https://itunes.apple.com/au/app/haskell/id841285201">Haskell for Mac</a></em></p>
 <p>Manuel M T Chakravarty et al. have released a new Playground environment aimed at lowering the barrier to entry in Haskell.</p>
-<!--
-<img src="https://images.typed.com/9df5078d-fbf8-4c17-8ef2-d19d47365f46/Haskell_Window_Anatomy.jpg" width=600></img>
--->
+<p><img src="https://images.typed.com/9df5078d-fbf8-4c17-8ef2-d19d47365f46/Haskell_Window_Anatomy.jpg" width="600" /></p>
 <p>The platform is commercial software available on the Apple Store but is well worth the low cost for such a nicely integrated and polished introduction to the Haskell language.</p>
 <hr />
 <h4 id="code-generation">Code Generation</h4>
@@ -332,7 +330,8 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <p><em><a href="https://github.com/imeckler/mote">mote</a></em></p>
 <p>With the advent of type holes (at both the value and type level now) there exists are an interesting set of opportunities for providing Agda-like editor integration that is syntax and type aware. Specifically case expansion is a much loved feature that is still missing from our current ghc-mod tooling. Mote is an exploration of such ideas.</p>
 <p><em><a href="https://github.com/haskell/haskell-ide-engine">haskell-ide-engine</a></em></p>
-<p>The Haskell IDE Engine is a community effort to provide a universal IDE interface that abstracts over the common functionality needed to build future tooling. <em>The Haskell tooling dream is near!</em></p>
+<p>The Haskell IDE Engine is a community effort to provide a universal IDE interface that abstracts over the common functionality needed to build future tooling.</p>
+<p>While this project is exciting, is a bit concerning to me how large this project has grown an enormous number <a href="https://github.com/haskell/haskell-ide-engine/blob/master/haskell-ide-engine.cabal#L27">of dependencies</a> including and is probably going to end up as a very heavy library and not a lightweight ghc-mod abstraction anytime soon.</p>
 <hr />
 <h4 id="sql">SQL</h4>
 <p>In the past SQL has been a particularly sore spot in the Haskell ecosystem, although typically the low-level bindings are present the problem of building a easy to use, type-safe, database-agnostic, language-integrated query system that maps to Haskell data structures has been ongoing. As of 2015 there are several new offerings for high level bindings, most of which offer an interesting new perspective on type-safe query generation. Uniquely Opaleye does not fall back on TemplateHaskell, and although not database agnostic, is closest to what I imagine the ideal solution would be.</p>
@@ -362,6 +361,11 @@ main <span class="fu">=</span> <span class="kw">do</span>
 <hr />
 <h4 id="education-community">Education &amp; Community</h4>
 <p>It was good year for the community. There were at least 3 more books written, thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000 users.</p>
+<p>Real World Haskell and What I Wish I Knew were translated into Chinese.</p>
+<ul>
+<li>https://github.com/huangz1990/real-world-haskell-cn</li>
+<li>http://www.haskellcn.org/hask/</li>
+</ul>
 <p>There is still some active debate concerning the interplay of types, laws, and documentation. Although the overall state of library documentation has gotten uniformly better over the last year. It certainly is much better than seven years ago when understanding any bit of Haskell code was more a test of one’s academic library skills than programming.</p>
 <p>The <a href="https://skillsmatter.com/skillscasts/6739-park-bench-discussion">Haskell Exchange 2015 Park Bench</a> discussion is a very good representation of many of the concerns around the growing community and the debates around “Haskell as stable industrial language” and “Haskell as vehicle for compiler research” that often occur.</p>
 <p>It was a good year for Haskell! :-)</p>

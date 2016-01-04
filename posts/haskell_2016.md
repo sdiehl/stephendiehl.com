@@ -1,6 +1,6 @@
 ---
 title: Reflecting on Haskell in 2015
-date: December 23, 2016
+date: December 23, 2015
 ---
 
 ### Reflecting on Haskell in 2015
@@ -279,9 +279,7 @@ Left "Error in $: The key \"y\" was not found"
 Manuel M T Chakravarty et al. have released a new Playground environment aimed
 at lowering the barrier to entry in Haskell.
 
-<!--
 <img src="https://images.typed.com/9df5078d-fbf8-4c17-8ef2-d19d47365f46/Haskell_Window_Anatomy.jpg" width=600></img>
--->
 
 The platform is commercial software available on the Apple Store but is well
 worth the low cost for such a nicely integrated and polished introduction to the
@@ -537,7 +535,13 @@ exploration of such ideas.
 
 The Haskell IDE Engine is a community effort to provide a universal IDE
 interface that abstracts over the common functionality needed to build future
-tooling. *The Haskell tooling dream is near!*
+tooling. 
+
+While this project is exciting, is a bit concerning to me how large this project
+has grown an enormous number [of
+dependencies](https://github.com/haskell/haskell-ide-engine/blob/master/haskell-ide-engine.cabal#L27)
+including and is probably going to end up as a very heavy library and not a
+lightweight ghc-mod abstraction anytime soon.
 
 <hr/>
 
@@ -614,6 +618,11 @@ optimistic about the advances in dependent types.
 It was good year for the community. There were at least 3 more books written,
 thousands of StackOveflow answers added, and the Haskell subreddit grew by 4,000
 users.
+
+Real World Haskell and What I Wish I Knew were translated into Chinese. 
+
+* https://github.com/huangz1990/real-world-haskell-cn
+* http://www.haskellcn.org/hask/
 
 There is still some active debate concerning the interplay of types, laws, and
 documentation.  Although the overall state of library documentation has gotten
