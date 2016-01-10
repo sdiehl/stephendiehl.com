@@ -46,7 +46,7 @@ A whimsical book on number theory that I remember distinctively from my
 childhood. Probably the only children's book that touches on complex analysis
 and hypersurreal numbers.
 
-**Structure and Interpretation of Computer Programs** by Sussmann
+**Structure and Interpretation of Computer Programs** by Gerald Jay Sussman
 
 The classical introductory computer science book in scheme. Widely considered a
 classic for good reasons, it really conveys the core ideas that underlying
@@ -60,6 +60,13 @@ The beautiful introductory text that really conveys the elegance of the core
 ideas of typed functional programming.
 
 **Types and Programming Languages** by Benjamin Pierce
+
+Pierce's book on type theory (TAPL) was revolutionary and has become the "bible"
+of programming language theory. Although some chapters are a little dated, the
+core ideas and algorithms are foundational to modern programming language
+design.  Although this book is great at explaining the implementation of
+type-checkers there is not yet that covers the full end-to-end implementation of
+modern functional compilers.
 
 **Software Foundations** by Benjamin Pierce
 
@@ -120,7 +127,7 @@ My favorite real analysis text that I read in conjunction to a course using
 Rudin. Has a much more casual presentation and motivates the core ideas much
 better than the usual lemma/proof chug of the canonical texts. 
 
-**Functional Differential Geometry** by Sussmann
+**Functional Differential Geometry** by Gerald Jay Sussman
 
 A implementation of the core ideas of differential geometry implemented in a
 computable form as a Scheme program.
@@ -131,6 +138,10 @@ The book everyone learns C from, although a bit dated it still has a certain
 elegance to it's minimalist approach to a minimalist language.
 
 **The Little MLer** by Matthias Felleisen
+
+A whimsical set of discussions around a set of small Standard ML projects.
+Convey's the large ideas in typed functional programming, concerning
+polymorphism, higher order functions and algebraic datatypes.
 
 **Coders at Work** by Peter Siebel
 
@@ -197,6 +208,16 @@ Probably the greatest graphical novel ever written
 
 **Anathem** by Neal Stephenson
 
+In a fictional world a series of technological catastrophes force the planet's
+scientists, scholars and philosophers - known as the avout — to live apart from
+the ‘Sæcular world’ of society at large and are not permitted access to modern
+technology. The avout spend their days engaged in theoretical research until
+another plant-wide catastrophe forces them to emerge from their cloisted
+existence.
+
+> And it happened all the time that the compromise between two perfectly
+> rational alternatives was something that made no sense at all.
+
 **The Man Who Loved Only Numbers** by Paul Hoffman
 
 > As a joke I said, "What is the purpose of Life?" "Proof and conjecture, and keep the Supreme Fascist's score low."
@@ -209,6 +230,12 @@ the Annus Mirabilis years. In particular his accounts of the war and the details
 of his personal life are much more sad than one might expect.
 
 **Men of Mathematics** by Eric Bell
+
+Men of mathematics is Bell's classic biography of the great mathematicians of
+the 20th century. I put this in the fiction category because while highly
+entraining a lot of it is embellished. Nevertheless it shines light onto the
+lives of a curious group of people who history often forgets but have shaped
+modernity in profound ways.
 
 **Contact** by Carl Sagan
 
