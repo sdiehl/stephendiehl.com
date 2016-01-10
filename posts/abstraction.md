@@ -51,27 +51,29 @@ and hand waving wildly at blackboard, the student then asked me:
 
 At this point, I didn't have much else to say. There really is nothing I can
 say, other than that a group *is the set of equations*, I can't point at
-something in the classroom say that this object fully embodies "groupiness", nor
-can I pull out a dictionary and find a synonym for group that would convey an
-the essence of what a group is. Common English simply lacks a word for "set with
-operation satisfying closure, associativity, identity and invertibility".
+something in the classroom and  say that this object fully embodies
+"groupiness", nor can I pull out a dictionary and find a synonym for group that
+would in any way convey an the essence of what a group is. Common English simply
+lacks a word for "set with operation satisfying closure, associativity, identity
+and invertibility".
 
 The concept is not particularly hard in retrospect, and indeed after a bit of
 quiet contemplation the topic eventually clicked for the student and she
-eventually went on to take other classes in higher mathematics ([Galois
-theory](http://www.math3ma.com/mathema/2015/8/31/what-is-galois-theory-anyway))
-which build on the group theoretic foundations.
+eventually went on to take other classes in higher mathematics, in particular
+[Galois
+theory](http://www.math3ma.com/mathema/2015/8/31/what-is-galois-theory-anyway)
+which builds on these foundations. Since then I've left teaching math behind me
+and gone on to programming in industry. 
 
-So why do I bring this up? Groups, like many concepts in Haskell or functional
-programming, are often some of the first concepts that we encounter that defy a
-reduction down to our everyday experience; and are a constant point of confusion
-because of it. Yet, for as long as I've been involved with Haskell it has been a
-constant point of contention that the names used in describing concepts like
-*Monad, Functor*, and *Category* are problematic because they don't convey
+So why do I bring this up? Groups, like many concepts in functional programming,
+are often some of the first concepts that we encounter that defy a reduction
+down to our everyday experience; and are a constant point of confusion because
+of it. Yet, for as long as I've been involved with industrial programmers it has
+been a constant point of contention that the names used in describing concepts
+like *Monad, Functor*, and *Category* are problematic because they don't convey
 immediate (partial) understanding by reducing them down to concepts from our
 everyday experience. This thinking is not all that dissimilar from the mental
-gap that the student studying group for the first time had to make from common
-experience to abstract algebraic structures. 
+gap that the student studying group for the first time had to overcome.
 
 > I understand the functions and laws, but what's a monad actually?
 
