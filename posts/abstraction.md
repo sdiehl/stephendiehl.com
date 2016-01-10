@@ -116,3 +116,9 @@ but to create a new semantic level in which one can be absolutely precise."
 Programming with precise algebraic names and equational reasoning is here to
 stay, and the edifice of abstraction is only going to grow as programming
 becomes more precise and refined.
+
+<p>
+<a href="https://wiki.haskell.org/Typeclassopedia">
+<img src="/images/Typeclassopedia-diagram.png" width="100%">
+</a>
+</p>
