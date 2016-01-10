@@ -53,7 +53,7 @@ At this point, I didn't have much else to say. There really is nothing I can
 say, other than that a group *is the set of equations*, I can't point at
 something in the classroom and  say that this object fully embodies
 "groupiness", nor can I pull out a dictionary and find a synonym for group that
-would in any way convey an the essence of what a group is. Common English simply
+would in any way convey the essence of what a group is. Common English simply
 lacks a word for "set with operation satisfying closure, associativity, identity
 and invertibility".
 
@@ -79,10 +79,10 @@ gap that the student studying group for the first time had to overcome.
 
 A monoid (or pick any of your favorite Haskell abstractions) is typically a
 small interface defined over a set of types that satisfies certain laws. This
-kind of reasoning about programs is often quite foreign in programming as a
-whole, and other schools of thought (see [Gang of
+style of designing abstractions is often quite foreign in programming in the
+large, and other schools of thought (see [Gang of
 Four](https://en.wikipedia.org/wiki/Design_Patterns)) actively encourage weaving
-cryptic complex metaphors as a means to convey structure.
+cryptic metaphors and anthropomorphising code as a means to convey structure.
 
 Law               Description
 ---------         ----------------
@@ -91,14 +91,14 @@ Law               Description
 *Associativity*   ``(x <> y) <> z = x <> (y <> z)``
 
 The argument that Monoid should be called something else (Appendable) is about
-as convincing as the proposition that a Group should be Clock. A clock in a
+as convincing as the proposition that a group should be clock. A clock in a
 contrived sense can be considered a group and perhaps helps with some initial
-intuition, but the term is ultimately misleading. Indeed, if one insists that
+intuition, but the term is ultimately misleading. Similarly, if one expects that
 *all* constructs in programming be modeled on everyday concepts one will
 eventually hit up against the limitations of everyday experience to model higher
-abstractions. One will never arrive at complex numbers by counting scratches on
-a clay tablet, nor will one come up with Galois theory or elliptic curve
-cryptography by thinking purely in terms of clocks.
+abstractions. We would never arrive at complex numbers by counting scratches on
+a clay tablet, nor will would come up with Galois theory or elliptic curve
+cryptography by considering groups purely in terms of clocks.
 
 The algebraic terminology was invented often hundred of years ago and is
 effectively arbitrary. Therein lies the strength though, it's intentionally
