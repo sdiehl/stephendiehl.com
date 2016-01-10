@@ -26,9 +26,9 @@ time, it remains at the same position. And regardless of what time you're at
 there's always some interval of time you can add to get to any other point in
 time.
 
-This is a metaphor-heavily description of what a group is. In practice it's
-defined in most textbooks to be a combination of a set $\text{G}$ and an
-operation $\star$ written as $(\text{G}, \star)$ with four laws:
+This is a vague metaphor-heavily description of what a group is. More precisely
+it's defined to be a combination of a set $\text{G}$ and an operation $\star$
+written as $(\text{G}, \star)$ with four laws:
 
 Law              Description
 ---------        ----------------
@@ -78,31 +78,38 @@ experience to abstract algebraic structures.
 A monoid (or pick any of your favorite Haskell abstractions) is typically a
 small interface defined over a set of types that satisfies certain laws. This
 kind of reasoning about programs is often quite foreign in programming as a
-whole, and other schools of though (see [Gang of
+whole, and other schools of thought (see [Gang of
 Four](https://en.wikipedia.org/wiki/Design_Patterns)) actively encourage weaving
-complex metaphors as a means to convey structure.
+cryptic complex metaphors as a means to convey structure.
+
+Law               Description
+---------         ----------------
+*Left Identity*   ``mempty <> x = x``
+*Right Identity*  ``x <> mempty = x``
+*Associativity*   ``(x <> y) <> z = x <> (y <> z)``
 
 The argument that Monoid should be called something else (Appendable) is about
 as convincing as the proposition that a Group should be Clock. A clock in a
 contrived sense can be considered a group and perhaps helps with some initial
 intuition, but the term is ultimately misleading. Indeed, if one insists that
-*all* constructs in programming be modeled on one will eventually hit up against
-the limitations of everyday experience to model higher abstractions. One will
-never arrive at complex numbers by counting scratches on a clay tablet, nor will
-one come up with Galois theory or elliptic curve cryptography by thinking purely
-in terms of clocks.
+*all* constructs in programming be modeled on everyday concepts one will
+eventually hit up against the limitations of everyday experience to model higher
+abstractions. One will never arrive at complex numbers by counting scratches on
+a clay tablet, nor will one come up with Galois theory or elliptic curve
+cryptography by thinking purely in terms of clocks.
 
 The algebraic terminology was invented often hundred of years ago and is
 effectively arbitrary. Therein lies the strength though, it's intentionally
 precise because it doesn't come muddled in the baggage of everyday experience,
 which can confuse and mislead (i.e only special monoids have an append-like
 operation in their definition). Using the terminology of mathematics opens up
-hundreds of years of human progress in this domains, and this approach often
-opens up [surprising
+hundreds of years of progress done by thousands of people discovering results we
+would  never think of on our own. And on a larger scale often opens up
+[surprising
 results](https://en.wikipedia.org/wiki/Curry%E2%80%93Howard_correspondence)
 mapping between different disciplines and computer science.
 
-Dijkstra's quotes is quite apt: "The purpose of abstraction is not to be vague,
+Dijkstra's quote is quite apt: "The purpose of abstraction is not to be vague,
 but to create a new semantic level in which one can be absolutely precise."
 Programming with precise algebraic names and equational reasoning is here to
 stay, and the edifice of abstraction is only going to grow as programming
