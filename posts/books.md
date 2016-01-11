@@ -5,6 +5,10 @@ date: November 24, 2015
 
 ### Books that Influenced by thinking (2007-2016)
 
+Every couple of years
+
+<hr/>
+
 #### Hard
 
 Non-fiction and textbooks
@@ -125,7 +129,8 @@ compilers.
 
 My favorite real analysis text that I read in conjunction to a course using
 Rudin. Has a much more casual presentation and motivates the core ideas much
-better than the usual lemma/proof chug of the canonical texts. 
+better than the usual lemma/proof chug of the canonical texts. This book has
+been out of print for 20 years, so good luck finding it.
 
 **Functional Differential Geometry** by Gerald Jay Sussman
 
@@ -198,6 +203,10 @@ Asimov's seminal work about the collapse and rebirth of a advanced
 galactic-spanning civilization and the mathematical cult that architects the
 future course of human history to a new golden age.
 
+> We've been blinded by Seldon's psychohistory, one of the first propositions of
+> which is that the individual does not count, does not make history, and that
+> complex social and economic factors override him, make a puppet out of him.
+
 **Watchmen** by Alan Moore
 
 Probably the greatest graphical novel ever written
@@ -219,6 +228,11 @@ existence.
 > rational alternatives was something that made no sense at all.
 
 **The Man Who Loved Only Numbers** by Paul Hoffman
+
+Paul Erdős was one of the most prolific mathematicians of the 20th century, and
+simultaneously one of the most eccentric people who ever lived. He's
+particularly known for monumental contributions to Ramsey theory and
+combinatorics.
 
 > As a joke I said, "What is the purpose of Life?" "Proof and conjecture, and keep the Supreme Fascist's score low."
 
