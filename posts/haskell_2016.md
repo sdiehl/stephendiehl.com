@@ -621,8 +621,8 @@ users.
 
 Real World Haskell and What I Wish I Knew were translated into Chinese. 
 
-* https://github.com/huangz1990/real-world-haskell-cn
-* http://www.haskellcn.org/hask/
+* [Real World Haskell-cn](https://github.com/huangz1990/real-world-haskell-cn0)
+* [WIWIK-cn](http://www.haskellcn.org/hask/)
 
 There is still some active debate concerning the interplay of types, laws, and
 documentation.  Although the overall state of library documentation has gotten

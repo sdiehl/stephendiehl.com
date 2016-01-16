@@ -34,8 +34,8 @@ Law              Description
 ---------        ----------------
 *Closure*        For all $a$, $b$ in $G$, the result of the operation, $a \star b$, is also in $G$.
 *Associativity*  For all $a$, $b$ and $c$ in $G$, $(a \star b) \star c = a \star (b \star c)$.
-*Identity*       For any element $e$ in $G$ there is an element $a$ where $e \star a = a \star e = a$.
-*Invertibility*  For any element $a$ in $G$ there is an element $b$ where $a \star b = b \star a = e$, where $e$ is the identity .
+*Identity*       For any element $a$ in $G$ there is an element $e$ where $e \star a = a \star e = a$.
+*Invertibility*  For each element $a$ in $G$ there is an element $b$ where $a \star b = b \star a = e$, where $e$ is the identity.
 
 Groups are an extremely important concept that are integral to next generation
 of [elliptic curve
@@ -73,7 +73,7 @@ been a constant point of contention that the names used in describing concepts
 like *Monad, Functor*, and *Category* are problematic because they don't convey
 immediate (partial) understanding by reducing them down to concepts from our
 everyday experience. This thinking is not all that dissimilar from the mental
-gap that the student studying group for the first time had to overcome.
+gap that the student studying groups for the first time had to overcome.
 
 > I understand the functions and laws, but what's a monad actually?
 
@@ -90,8 +90,8 @@ Law               Description
 *Right Identity*  ``x <> mempty = x``
 *Associativity*   ``(x <> y) <> z = x <> (y <> z)``
 
-The argument that Monoid should be called something else (Appendable) is about
-as convincing as the proposition that a group should be clock. A clock in a
+The argument that **Monoid** should be called something else (maybe **Appendable**) is about
+as convincing as the proposition that a **Group** should be **Clock**. A clock in a
 contrived sense can be considered a group and perhaps helps with some initial
 intuition, but the term is ultimately misleading. Similarly, if one expects that
 *all* constructs in programming be modeled on everyday concepts one will

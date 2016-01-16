@@ -1,17 +1,25 @@
 ---
-title: Books that Influenced 
+title: Influential Books
 date: November 24, 2015
 ---
 
-### Books that Influenced by thinking (2007-2016)
+### Books
 
-Every couple of years
+Every couple of years I reflect on the most influential books that I've read.
+Going back several years these are the books that I most remember from my
+university days and time working in industry that have influenced how I think.
 
 <hr/>
 
 #### Hard
 
 Non-fiction and textbooks
+
+**The Little MLer** by Matthias Felleisen
+
+A whimsical set of discussions around a set of small Standard ML projects.
+Convey's the large ideas in typed functional programming, concerning
+polymorphism, higher order functions and algebraic datatypes.
 
 **Gödel, Escher, Bach** by Douglas Hofstadter
 
@@ -61,7 +69,9 @@ cross-language mental dexterity.
 **Introduction to Functional Programming (1st Edition)** by Richard Bird and Philip Wadler
 
 The beautiful introductory text that really conveys the elegance of the core
-ideas of typed functional programming.
+ideas of typed functional programming. Every core idea is precisely motivated by
+the most perfect example of usage. This was the book that really turned me on to
+programming in Haskell.
 
 **Types and Programming Languages** by Benjamin Pierce
 
@@ -74,7 +84,17 @@ modern functional compilers.
 
 **Software Foundations** by Benjamin Pierce
 
+Software is the ground-breaking book about the methods of constructing machine
+verifiably correct software using the Coq proof assistant. On top of this it's
+also one of the only thorough introductions to the progress and preservation
+proofs that underlying the core verification of language semantics.
+
 **Artificial Intelligence** by Russell and Norvig
+
+A great book on the many of the core ideas of Artificial Intelligence that
+emerged before the first AI winter. The chapter on knowledge representation is a
+bit dated and doesn't yet cover some modern ideas like fluent calculus or
+advances in temporal logic.
 
 **The Quest for Omega** by Gregory Chaitin
 
@@ -100,6 +120,11 @@ watched by everyone regardless of involvement in science.
 
 **Category Theory** by Steve Awodey
 
+Category theory is a outgrowth branch of abstract algebra with incredibly
+diverse applications. The most modern textbook on category, although the
+original MacLane texts are still excellent this tracks many of the more recent
+notational conventions and ideas.
+
 **Visual Complex Analysis** by Tristan Needham
 
 Tristan's groundbreaking book on complex analysis was one of the first texts on
@@ -107,17 +132,28 @@ this subject written in the age of modern computer graphing tools and sheds an
 amazing amount of geometric insight into an otherwise very abstract field of
 analysis.
 
-**Abstract Algebra** by David Dummit
-
 **Geometric Algebra for Physicists** by Chris Doran
 
-**The Feynman Lectures on Physics** by Richard Feynman,
+Doran's book is the most thorough derivation of the core physical laws
+(Classical mechanics, Maxwell's equations, Noether's theorem, Dirac equation,
+Einstein field equation) from the geometric algebra perspective. There's no new
+information per se, but the alternative formalism is often much more concise as
+in the case of the Maxwell's equations.
 
-**Classical Mechanics** by John R. Taylor
+**Tensor Calculus for Physics** by Dwight Neuenschwander
 
-**Tensor Calculus for Physics** by Dwight E. Neuenschwander
+I spent several months studying the formalism for tensor calculus from the
+traditional texts and it was terrible. Many years later I discovered this book
+which distills all the core ideas needed for general relativity down into a book
+1/6th the size. 
 
 **Term Rewriting and all That** by Franz Baader
+
+A rather old book about a very niche topic: term rewriting. Term rewriting is a
+very general framework for building sets of transformations over symbols and
+their synthesis. It's a very broad subject that finds applications compilers,
+type theory, knowledge representation and machine learning. It's a shame it's
+not studied more often.
 
 **The Implementation of Functional Programming Languages** by Simon Peyton Jones
 
@@ -142,12 +178,6 @@ computable form as a Scheme program.
 The book everyone learns C from, although a bit dated it still has a certain
 elegance to it's minimalist approach to a minimalist language.
 
-**The Little MLer** by Matthias Felleisen
-
-A whimsical set of discussions around a set of small Standard ML projects.
-Convey's the large ideas in typed functional programming, concerning
-polymorphism, higher order functions and algebraic datatypes.
-
 **Coders at Work** by Peter Siebel
 
 A collection of interviews with some of he greatest programmers of our
@@ -155,7 +185,12 @@ generation, and their perspectives on the state of the craft of programming.
 Particularly the interviews with Simon Peyton Jones and Joe Armstrong are
 particularly good.
 
-**Essentials of Programming Languages** by Daniel Friedman
+**Essentials of Programming Languages** by Daniel Friedman and Mitchell Wand
+
+Friedman's and Wand's text is the best introduction to the operational
+interpretation of programming languages. It work its way up from simple register
+machines to the lambda calculus and discusses how various higher-order language
+features can be constructed on top of this foundation.
 
 **The Demon-Haunted World** Carl Sagan
 
@@ -207,14 +242,6 @@ future course of human history to a new golden age.
 > which is that the individual does not count, does not make history, and that
 > complex social and economic factors override him, make a puppet out of him.
 
-**Watchmen** by Alan Moore
-
-Probably the greatest graphical novel ever written
-
-> Veidt: I did the right thing, didn't I? It all worked out in the end.
->
-> Manhattan: 'In the end'? Nothing ends, Adrian. Nothing ever ends.
-
 **Anathem** by Neal Stephenson
 
 In a fictional world a series of technological catastrophes force the planet's
@@ -243,14 +270,15 @@ Einstein's life and the humanity of one of the greatest physicists beyond just
 the Annus Mirabilis years. In particular his accounts of the war and the details
 of his personal life are much more sad than one might expect.
 
-**Men of Mathematics** by Eric Bell
-
-Men of mathematics is Bell's classic biography of the great mathematicians of
-the 20th century. I put this in the fiction category because while highly
-entraining a lot of it is embellished. Nevertheless it shines light onto the
-lives of a curious group of people who history often forgets but have shaped
-modernity in profound ways.
-
-**Contact** by Carl Sagan
+> When you write biographies, whether it's about Ben Franklin or Einstein, you
+> discover something amazing: They are human.
 
 **The Culture Series** by Iain Banks
+
+The culture series is one of the few modern scifi that posit a post-scarcity
+interstellar utopia. In the far future the galaxy is largely dominated by an
+alliance of advanced races called The Culture. The civilization is grapples with
+the moral and systematic issues present with artificial super-intelligence,
+trans-humanism, and dealings with both less advanced and transcendent species.
+
+> Reason shapes the future, but superstition infects the present.
