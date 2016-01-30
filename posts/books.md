@@ -185,13 +185,6 @@ generation, and their perspectives on the state of the craft of programming.
 Particularly the interviews with Simon Peyton Jones and Joe Armstrong are
 particularly good.
 
-**Essentials of Programming Languages** by Daniel Friedman and Mitchell Wand
-
-Friedman's and Wand's text is the best introduction to the operational
-interpretation of programming languages. It work its way up from simple register
-machines to the lambda calculus and discusses how various higher-order language
-features can be constructed on top of this foundation.
-
 **The Demon-Haunted World** Carl Sagan
 
 Carl Sagan's strangely prescient discussion about the role of science and

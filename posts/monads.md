@@ -1,15 +1,21 @@
 ---
-title: Monads made difficult
+title: Monads Made Difficult
 date: July 7, 2013
 ---
 
 ### Monads Made Difficult
 
+<em style="color:green">
+Caveat: This is not a monad tutorial, you should not read
+this to understand monads initially. If you aren't already comfortable with
+monads and have used them in production code, please don't read this. It will
+not impart any intution.
+</em>
+
+<hr/>
+
 This is a short, fast and analogy-free introduction to Haskell monads derived from a categorical perspective.
 This assumes you are familiar with Haskell and basic category theory.
-
-*If you aren't already comfortable with monads in Haskell, please don't read this. It will confuse your
-intuition even more.*
 
 ##### Categories
 ***

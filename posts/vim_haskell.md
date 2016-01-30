@@ -5,6 +5,10 @@ date: October 18, 2013
 
 ### A Vim + Haskell Workflow
 
+<b style="color:red">This post is out of date and has been <a href="/posts/vim_2016.html">updated</a> for modern workflow.This page is left for posterity.</b> 
+
+<hr/>
+
 **Hoogle**
 
 [Hoogle](http://www.haskell.org/hoogle/) is a Haskell type search
