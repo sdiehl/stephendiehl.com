@@ -138,7 +138,8 @@ $ <span class="kw">git</span> clone https://github.com/ervandew/supertab.git
 $ <span class="kw">git</span> clone https://github.com/Shougo/neocomplete.vim.git</code></pre></div>
 <p>The one project that’s slightly special is vimproc which contains a C module which needs to be compiled. It can be installed with:</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/Shougo/vimproc.vim.git
-$ <span class="kw">cd</span> vimproc.vim</code></pre></div>
+$ <span class="kw">cd</span> vimproc.vim
+$ <span class="kw">make</span></code></pre></div>
 <hr />
 <h4 id="ghc-mod">ghc-mod</h4>
 <p>The preferred tool for background checking of Haskell syntax is still <code>ghc-mod</code>. Over the years it has become more featureful and more efficient. The hlint tool is also used to supplement and provide helpful hints about ways to refactor common code smells. We will integrate with ghc-mod in several ways, but the first step is to command-line tool <code>ghc-mod</code> which vim will send program changes to query information. To install it we use stack.</p>

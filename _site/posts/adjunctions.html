@@ -76,7 +76,7 @@
         <div class="twelve columns offset-by-one content">
             <h3 id="from-adjunctions-to-monads">From Adjunctions to Monads</h3>
 <p>I thought I would share one of my favorite constructions in Haskell, namely that adjoint functors give rise to monads. Although it’s a trivial result in category theory how it manifests in Haskell is quite lovely.</p>
-<p>A Functor in Haskell maps objects and morphism ( i.e. functions) in a subcategory of <em>Hask</em> to objects and morphisms of another category.</p>
+<p>A Functor in Haskell maps objects and morphism (i.e. functions) in a subcategory of <em>Hask</em> to objects and morphisms of another category.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Functor</span> f <span class="kw">where</span>
 <span class="ot">  fmap ::</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f b</code></pre></div>
 <p>And satisfies the functor laws:</p>
@@ -94,7 +94,7 @@ fmap (a <span class="fu">.</span> b) <span class="fu">=</span> (fmap a) <span cl
 <p>
 <img src="../images/string10.png" />
 </p>
-<p>Generally the composition of functors <span class="math inline">\(F \circ G\)</span> is written simply as <span class="math inline">\(FG\)</span>. Composition diagrammatically allows us to collapse adjacent segements in our string diagram.</p>
+<p>Generally the composition of functors <span class="math inline">\(F \circ G\)</span> is written simply as <span class="math inline">\(FG\)</span>. Composition diagrammatically allows us to collapse adjacent segments in our string diagram.</p>
 <p>The identity functor ( <span class="math inline">\(\text{Id}\)</span> ) is the functor that maps each morphism and object to itself.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">newtype</span> <span class="dt">Id</span> a <span class="fu">=</span> <span class="dt">Identity</span> {<span class="ot"> unId ::</span> a }
 
