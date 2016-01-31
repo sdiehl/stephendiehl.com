@@ -34,7 +34,7 @@ GHC 8.0 has several large changes that are in the works:
 
 *[-XOverloadedRecordFields](http://www.well-typed.com/blog/2015/03/overloadedrecordfields-revived/)*
 
-The long awaited Overload Recored Fields extension will likely land and address
+The long awaited Overload Record Fields extension will likely land and address
 some of the issues found in the old record system with overloaded selector
 names.
 
