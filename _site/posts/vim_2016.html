@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Vim and Haskell in 2016</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+            &nbsp;
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="vim-and-haskell-in-2016">Vim and Haskell in 2016</h3>
+<p>A couple of years I wrote about Haskell editor tooling and figured this deserved a bit of an update now that the tooling has become mature. So let’s walk through how we install an minimalist Haskell dev environment on Linux.</p>
+<p>If you don’t want to build the individual components youself, you can just download <a href="https://github.com/sdiehl/haskell-vim-proto">the source code</a>.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone --recursive https://github.com/sdiehl/haskell-vim-proto.git 
+$ <span class="kw">cd</span> haskell-vim-proto
+$ <span class="kw">cp</span> -n vimrc ~/.vimrc 
+$ <span class="kw">cp</span> -rn vim ~/.vim</code></pre></div>
+<hr />
+<h4 id="dev-environment">Dev Environment</h4>
+<p>We’ll presume Ubuntu 14.04 as the lowest common denominator, although nothing here is specific to any particular Linux. Obviously first we need to install the world’s greatest text editor, we’ll presume no base vim configuration and build everything from a clean slate.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-get install vim</code></pre></div>
+<p>Times have changed quite a bit, and the new preferred way of install GHC in 2016 is to forgo using the system package manager for installing ghc and use <a href="http://docs.haskellstack.org/en/stable/README.html">Stack</a> to manage the path to the compiler executable and sandboxes. To do this we pull in the FP Complete key and start the build. This will take a few minutes.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">sudo</span> apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 575159689BEFB442
+$ <span class="kw">echo</span> <span class="st">'deb http://download.fpcomplete.com/ubuntu trusty main'</span><span class="kw">|sudo</span> tee /etc/apt/sources.list.d/fpco.list
+$ <span class="kw">sudo</span> apt-get update <span class="kw">&amp;&amp;</span> <span class="kw">sudo</span> apt-get install stack -y
+$ <span class="kw">stack</span> setup</code></pre></div>
+<p>After all is said and done you should have the latest Haskell compiler installed in your home folder. Stack is all self-contained within the <code>~/.stack</code> and places its executables in <code>~/.local/bin</code>. For instance:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stack</span> path
+<span class="kw">Run</span> from outside a project, using implicit global project config
+<span class="kw">Using</span> resolver: lts-3.14
+<span class="kw">global-stack-root</span>: /home/user/.stack
+<span class="kw">project-root</span>: /home/user/.stack/global-project
+<span class="kw">config-location</span>: /home/user/.stack/global-project/stack.yaml
+<span class="kw">local-bin-path</span>: /home/user/.local/bin</code></pre></div>
+<p>All is well and we can launch the interactive shell with the latest GHC 7.10 compiler.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">stack</span> ghci
+<span class="kw">Configuring</span> GHCi with the following packages: 
+<span class="kw">GHCi</span>, version 7.10.3: http://www.haskell.org/ghc/  :? for help
+<span class="kw">Ok</span>, modules loaded: none.
+<span class="kw">Prelude&gt;</span> </code></pre></div>
+<h4 id="pathogen">pathogen</h4>
+<p>Pathogen is a bundling system for vim that will allow us to pull directly from Git repos to manage and update our vim packages off of the <code>bundles</code> directory.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> -p ~/.vim/autoload ~/.vim/bundle <span class="kw">&amp;&amp;</span> <span class="kw">\</span>
+$ <span class="kw">curl</span> -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim</code></pre></div>
+<p>Using pathogen we’ll install the following libraries.</p>
+<ol style="list-style-type: decimal">
+<li><code>ghcmod-vim</code></li>
+<li><code>neco-ghc</code></li>
+<li><code>vim-snipmate</code></li>
+<li><code>syntastic</code></li>
+<li><code>neocompletee.vim</code></li>
+<li><code>ctrlp.vim</code></li>
+<li><code>nerdtree</code></li>
+<li><code>nerdcommenter</code></li>
+<li><code>tabular</code></li>
+<li><code>supertab</code></li>
+<li><code>neocomplete</code></li>
+</ol>
+<p>To do this we simply mmove to our bundles directory and pull the repos.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">cd</span> ~/.vim/bundle
+$ <span class="kw">git</span> clone https://github.com/eagletmt/ghcmod-vim.git
+$ <span class="kw">git</span> clone https://github.com/eagletmt/neco-ghc
+$ <span class="kw">git</span> clone https://github.com/ctrlpvim/ctrlp.vim.git
+$ <span class="kw">git</span> clone https://github.com/scrooloose/syntastic.git
+$ <span class="kw">git</span> clone https://github.com/tomtom/tlib_vim.git
+$ <span class="kw">git</span> clone https://github.com/MarcWeber/vim-addon-mw-utils.git
+$ <span class="kw">git</span> clone https://github.com/garbas/vim-snipmate.git
+$ <span class="kw">git</span> clone https://github.com/scrooloose/nerdtree.git
+$ <span class="kw">git</span> clone https://github.com/scrooloose/nerdcommenter.git
+$ <span class="kw">git</span> clone https://github.com/godlygeek/tabular.git
+$ <span class="kw">git</span> clone https://github.com/ervandew/supertab.git
+$ <span class="kw">git</span> clone https://github.com/Shougo/neocomplete.vim.git</code></pre></div>
+<p>The one project that’s slightly special is vimproc which contains a C module which needs to be compiled. It can be installed with:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/Shougo/vimproc.vim.git
+$ <span class="kw">cd</span> vimproc.vim</code></pre></div>
+<hr />
+<h4 id="ghc-mod">ghc-mod</h4>
+<p>The preferred tool for background checking of Haskell syntax is still <code>ghc-mod</code>. Over the years it has become more featureful and more efficient. The hlint tool is also used to supplement and provide helpful hints about ways to refactor common code smells. We will integrate with ghc-mod in several ways, but the first step is to command-line tool <code>ghc-mod</code> which vim will send program changes to query information. To install it we use stack.</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">stack</span> install hlint ghc-mod</code></pre></div>
+<pre class="shell"><code>Copied executables to /home/user/.local/bin:
+- ghc-mod
+- ghc-modi
+- hlint</code></pre>
+<hr />
+<h4 id="vim-defaults">vim defaults</h4>
+<p>Ok, now to the fun stuff. We’ll set up our basic vim configuration with some pretty sensible defaults that should work nicely in either terminal vim or gvim. Fairly standard stuff here to enable syntax highlighting, line numbers, tab completion and two space indentation. The last line enables the pathogen manager which pulls all the bundles into the environment.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl">syntax on
+filetype plugin indent on
+
+set nocompatible
+set number
+set nowrap
+set showmode
+set tw=<span class="dv">80</span>
+set smartcase
+set smarttab
+set smartindent
+set autoindent
+set softtabstop=<span class="dv">2</span>
+set shiftwidth=<span class="dv">2</span>
+set expandtab
+set incsearch
+set mouse=a
+set history=<span class="dv">1000</span>
+set clipboard=unnamedplus,autoselect
+
+set completeopt=menuone,menu,longest
+
+set wildignore+=<span class="dt">*\</span>\tmp\\<span class="dt">*,*.</span>swp,<span class="dt">*.</span>swo,<span class="dt">*.</span>zip,.git,.cabal-sandbox
+set wildmode=longest,list,full
+set wildmenu
+set completeopt+=longest
+
+set t_Co=<span class="dv">256</span>
+
+set cmdheight=<span class="dv">1</span>
+
+execute pathogen<span class="co">#infect()</span></code></pre></div>
+<hr />
+<h4 id="syntax-highlighting">syntax highlighting</h4>
+<p>The best syntax highlighting that I know of is maintaind under the vim-scripts project on Github. We’ll download it and place them into <code>~/.vim/syntax/</code>.</p>
+<ul>
+<li><a href="https://github.com/sdiehl/haskell-vim-proto/blob/master/vim/syntax/haskell.vim">syntax/haskell.vim</a></li>
+<li><a href="https://github.com/sdiehl/haskell-vim-proto/blob/master/vim/syntax/cabal.vim">syntax/cabal.vim</a></li>
+</ul>
+<hr />
+<h4 id="syntastic">syntastic</h4>
+<p>Syntactic provides background syntax checking with line-by-line error reporting. It integrates with ghc-mod and hlint to provide semantic hinting about type errors and possible code corrections. To enable it we add the following lines to our <code>.vimrc</code>.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl"><span class="fu">map</span> &lt;Leader&gt;<span class="kw">s</span> <span class="kw">:</span><span class="ot">SyntasticToggleMode&lt;CR&gt;</span>
+
+<span class="ot">set statusline</span><span class="ch">+</span><span class="ot">=%#warningmsg#</span>
+<span class="ot">set statusline</span><span class="ch">+</span><span class="ot">=%{SyntasticStatuslineFlag</span><span class="ch">()</span><span class="ot">}</span>
+<span class="ot">set statusline</span><span class="ch">+</span><span class="ot">=%</span><span class="ch">*</span>
+
+<span class="ot">let g</span><span class="kw">:</span><span class="st">syntastic_always_populate_loc_list = 1</span>
+<span class="st">let g</span><span class="kw">:s</span>yntastic_auto_loc_list = <span class="dv">0</span>
+let g:syntastic_check_on_open = <span class="dv">0</span>
+let g:syntastic_check_on_wq = <span class="dv">0</span></code></pre></div>
+<p>Now when a syntax error, type error, or code smell is introduced the left gutter will highlight the line and show the error message from GHC in the status line.</p>
+<p>For example a syntax error.</p>
+<p>
+<img src="../images/vim_err.png">
+</p>
+<p>Or a hlint error.</p>
+<p>
+<img src="../images/vim_hlint.png">
+</p>
+<hr />
+<h4 id="ghc-mod-1">ghc-mod</h4>
+<p>To hook into GHC’s code competion capabilities we map several keyboard commands to ghc-mod functions.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl"><span class="fu">map</span> &lt;silent&gt; tw :GhcModTypeInsert<span class="kw">&lt;CR&gt;</span>
+<span class="fu">map</span> &lt;silent&gt; ts :GhcModSplitFunCase<span class="kw">&lt;CR&gt;</span>
+<span class="fu">map</span> &lt;silent&gt; tq :GhcModType<span class="kw">&lt;CR&gt;</span>
+<span class="fu">map</span> &lt;silent&gt; te :GhcModTypeClear<span class="kw">&lt;CR&gt;</span></code></pre></div>
+<p>Now to use ghc-mod’s case expand feature we simply highlight the scrutinized variable of case expression and type <kbd>t</kbd> + <kbd>s</kbd> to expand out the cases. For example:</p>
+<p>
+<img src="../images/vim_case_expand.png">
+</p>
+<p>To autofill in the type of an expression we simply highlight the name of toplevel expression and type <kbd>t</kbd> + <kbd>w</kbd> which will insert the signature on the line above. For example:</p>
+<p>
+<img src="../images/vim_sig.png">
+</p>
+<p>To query the type of a subexpression we highlight any term and type <kbd>t</kbd> + <kbd>q</kbd> to get the type of value under the cursor.</p>
+<hr />
+<h4 id="supertab">supertab</h4>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl">let g:SuperTabDefaultCompletionType = <span class="kw">'</span><span class="st">&lt;c-x&gt;&lt;c-o&gt;</span><span class="kw">'</span>
+
+<span class="kw">if</span> has(<span class="kw">&quot;</span><span class="st">gui_running</span><span class="kw">&quot;</span>)
+  imap &lt;c-space&gt; &lt;c<span class="kw">-r</span>&gt;=SuperTabAlternateCompletion(<span class="kw">&quot;</span><span class="st">\&lt;lt&gt;c-x&gt;\&lt;lt&gt;c-o&gt;</span><span class="kw">&quot;</span>)&lt;cr&gt;
+<span class="kw">else</span> <span class="kw">&quot;</span><span class="st"> no gui</span>
+<span class="st">  if has(</span><span class="kw">&quot;</span>unix<span class="kw">&quot;</span><span class="st">)</span>
+<span class="st">    inoremap &lt;Nul&gt; &lt;c-r&gt;=SuperTabAlternateCompletion(</span><span class="kw">&quot;</span>\&lt;<span class="kw">lt</span>&gt;c<span class="kw">-x</span>&gt;\&lt;<span class="kw">lt</span>&gt;c<span class="kw">-o</span>&gt;<span class="kw">&quot;</span><span class="st">)&lt;cr&gt;</span>
+<span class="st">  endif</span>
+<span class="st">endif</span></code></pre></div>
+<p>To enable familiar tab completion we configure supertab to dispatch to neco-ghc’s tab completion routines instead of the usual local variable completion. After that we configure necoghc to be the default tab completion method.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl">let g:haskellmode_completion_ghc = <span class="dv">1</span>
+autocmd FileType haskell setlocal omnifunc=necoghc<span class="co">#omnifunc</span></code></pre></div>
+<p>So now pressing tab while in a LANGUAGE pragma, import statement, or anywhere in a subexpression will use neco-ghc’s tab completion routines to find the context appropriate statement that matches the partial expression under the cursor.</p>
+<p>For example completing language extensions:</p>
+<p>
+<img src="../images/vim_ext.png">
+</p>
+<p>Or module import declarations:</p>
+<p>
+<img src="../images/vim_import.png">
+</p>
+<p>Or import name management:</p>
+<p>
+<img src="../images/vim_imports.png">
+</p>
+<h4 id="nerdtree">nerdtree</h4>
+<p>Nerdtree is the standard file management plugin which replaces vim’s default left-hand file pile. It allows recursive directory traversal with folds and slew of other convenient features. It’s usually one of the first things installed in any respectable vim installation.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl"><span class="fu">map</span> &lt;Leader&gt;n :NERDTreeToggle<span class="kw">&lt;CR&gt;</span></code></pre></div>
+<p>
+<img src="../images/vim_nerdtree.png">
+</p>
+<h4 id="tabularize">tabularize</h4>
+<p>Tabularize allows uniform aligned code formatting based on any textual regex pagttern. For Haskell there are several common identifiers that we typically align on; and we can map specific keys to these common patterns.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl">let g:haskell_tabular = <span class="dv">1</span>
+
+vmap a= :Tabularize /=<span class="kw">&lt;CR&gt;</span>
+vmap a; :Tabularize /::<span class="kw">&lt;CR&gt;</span>
+vmap a- :Tabularize /-&gt;<span class="kw">&lt;CR&gt;</span></code></pre></div>
+<p>For example typing <kbd>a</kbd> + <kbd>-</kbd> on the case arm branches will align on the right arrow.</p>
+<p>
+<img src="../images/vim_align.png">
+</p>
+<h4 id="vim-snipmate">vim-snipmate</h4>
+<p>The best Haskell snippet collection that I know of is one I’ve curated over the years, that automates the insertion of many common insert statements, language extensions and instance declarations. This is placed in the <code>~/.vim/snippets</code> folder.</p>
+<ul>
+<li><a href="https://github.com/sdiehl/haskell-vim-proto/blob/master/vim/snippets/haskell.snippets">haskell.snippet</a></li>
+</ul>
+<p>The usage is simple, simply define a keyword in the <code>haskell.snippets</code> file of the form:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">snippet derive
+	<span class="ot">{-# LANGUAGE DeriveDataTypeable #-}</span>
+	<span class="ot">{-# LANGUAGE DeriveGeneric #-}</span>
+	<span class="ot">{-# LANGUAGE DeriveFunctor #-}</span>
+	<span class="ot">{-# LANGUAGE DeriveTraversable #-}</span>
+	<span class="ot">{-# LANGUAGE DeriveFoldable #-}</span></code></pre></div>
+<p>Then tab completing on the this phrase in Insert Mode will expand out the code block.</p>
+<p>
+<img src="../images/vim_snippet.png">
+</p>
+<hr />
+<h4 id="ctrl-p">ctrl-p</h4>
+<p>Ctrl-p is a fuzzy file search plugin which allows quick browsing of a project based on a fuzzy text search of the filename or it’s contents. We’ll bind the ctrl-p panel launch to <kbd>\</kbd> + <kbd>t</kbd>.</p>
+<div class="sourceCode"><pre class="sourceCode perl"><code class="sourceCode perl"><span class="fu">map</span> &lt;silent&gt; &lt;Leader&gt;t :CtrlP()<span class="kw">&lt;CR&gt;</span>
+noremap &lt;leader&gt;b&lt;space&gt; :CtrlPBuffer&lt;cr&gt;
+let g:ctrlp_custom_ignore = <span class="kw">'</span><span class="st">\v[\/]dist$</span><span class="kw">'</span></code></pre></div>
+<p>
+<img src="../images/vim_fuzzy.png">
+</p>
+<hr />
+<h4 id="summary">Summary</h4>
+<p>In summary adding these plugins and lines to the <code>.vimrc</code> will introduce several Haskell specific commands which are bound to these keyboard shortcuts:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="left">Command</th>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left"><kbd>t</kbd> + <kbd>w</kbd></td>
+<td align="left">Insert type for toplevel declaration</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>t</kbd> + <kbd>q</kbd></td>
+<td align="left">Query type of expression under cursor</td>
+</tr>
+<tr class="odd">
+<td align="left"><kbd>t</kbd> + <kbd>s</kbd></td>
+<td align="left">Case split expression under cursor</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>t</kbd> + <kbd>e</kbd></td>
+<td align="left">Erase type query</td>
+</tr>
+<tr class="odd">
+<td align="left"><kbd>a</kbd> + <kbd>=</kbd></td>
+<td align="left">Align on equal sign</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>a</kbd> + <kbd>-</kbd></td>
+<td align="left">Align on case match</td>
+</tr>
+<tr class="odd">
+<td align="left"><kbd>Ctrl</kbd> + <kbd>x</kbd> + <kbd>o</kbd></td>
+<td align="left">Tab complete under cursor</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>\</kbd> + <kbd>t</kbd></td>
+<td align="left">Open fuzzy file finder</td>
+</tr>
+<tr class="odd">
+<td align="left"><kbd>\</kbd> + <kbd>n</kbd></td>
+<td align="left">Open file explorer</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>\</kbd> + <kbd>t</kbd></td>
+<td align="left">Open fuzzy file finder</td>
+</tr>
+<tr class="odd">
+<td align="left"><kbd>\</kbd> + <kbd>c</kbd> + <kbd>Space</kbd></td>
+<td align="left">Toggle comment of text under cursor</td>
+</tr>
+<tr class="even">
+<td align="left"><kbd>\</kbd> + <kbd>c</kbd> + <kbd>s</kbd></td>
+<td align="left">Toggle “sexy” comment of text</td>
+</tr>
+</tbody>
+</table>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
