@@ -31,16 +31,17 @@ enough to import unqualified and how to handle symbols. This ranges the full
 spectrum from fully qualifying ``(Control.Monad.>>=)`` to common things like
 ``(Data.Maybe.maybe)`` or just disambiguating names like ``(Map.lookup)``.
 
-**Consider rolling an internal prelude**. The community historically has favored
-the "Small Prelude Assumption" which presupposes that tools get pushed out into
-third party modules, even the core tools that are necessary to do anything
-(text, bytestring, vector, etc).  This makes life easier for library authors,
-and harder for downstream users who have to internalize all of the libraries
-before becoming productive.
+**Consider rolling an internal prelude**. As we've all learned the hard way, the
+Prelude is not your friend. The consensus historically has favored the "Small
+Prelude Assumption" which presupposes that tools get pushed out into third party
+modules, even the core tools that are necessary to do anything (text,
+bytestring, vector, etc).  This makes life easier for library authors at the
+cost of some struggle for downstream users.
 
-Any non-trivial business logic module can very easily have 100+ lines just of
-imports, and frankly it gets tiring. One common way of organizing this is by
-rolling a custom prelude. Consider a minimal use case like the following:
+In practice any non-trivial business logic module can very easily have 100+
+lines just of imports, and frankly it gets tiring. One common way of abstracting
+this is by rolling a custom prelude using module reexports. Consider a minimal
+use case like the following:
 
 ```haskell
 module MegaCorpPrelude ( 
@@ -69,9 +70,8 @@ dependencies and then is used in our downstream module.
 import MegaCorpPrelude
 ```
 
-If use cases are common enough, there custom preludes that are available on
-Hackage in the [Prelude](https://hackage.haskell.org/packages/#cat:Prelude)
-category.
+There are several custom preludes that are available on Hackage in the
+[Prelude](https://hackage.haskell.org/packages/#cat:Prelude) category.
 
 **Haskell has world class libraries**. There is an abundance of riches on
 Hackage in libraries like quickcheck, mtl, pipes, conduit, tasty, attoparsec,
@@ -146,7 +146,7 @@ newtype ConfigM a = ConfigM (ReaderT ConnectInfo a)
   deriving (Monad, MonadReader ConnectInfo)
 
 handleConfig :: FilePath -> IO ConnectInfo
-handleConfig 
+handleConfig config_filename = do
     config <- Config.load [ Config.Required config_filename ]
 
     hostname <- Config.require config "database.hostname"
@@ -249,7 +249,7 @@ quickly devolve to become unmanageably slow to compile, usually the problem is
 avoidable with some care. Deriving instances of Read/Show/Data/Generic for
 largely recursive ADTs can sometimes lead to quadratic memory behavior when the
 nesting gets deep. The somewhat ugly hack to speed up compile time here is to
-run ``ghc -ddump-splices Module.hs`` and then manually insert the resulting code
+run ``ghc -ddump-deriv Module.hs`` and then manually insert the resulting code
 instead of deriving it everytime. Not a great solution, but I've seen it
 drastically improve compilation footprint and time. Also be tactical with uses
 of ``INLINE`` and ``SPECIALIZE`` as inlining at many call sites has a
@@ -276,8 +276,8 @@ that will make life easier.
 
 When using Generics to derive ToJSON and FromJSON instances there is
 ``fieldLabelModifier`` field that can be used to modify the derived field so the
-serializer does not have to match the Haskell record accessor. In this we'll
-``drop`` the first three characters.
+serialize does not have to match the Haskell record accessors. For example we'll
+``drop`` the first three characters:
 
 ```haskell
 data Login = Login
@@ -298,12 +298,14 @@ This will serialize out to.
 }
 ```
 
-**Performance and Monitoring** A bit of a stumbling point for performance is
-that memory movement for lots of small updates to large records can have a
-noticeable impact on GC pressure. If you notice runaway memory performance, one
-of the first places to look (after the usual suspects) is look for overgrown
-records and possibly inside of StateT with use of lots of ``modify`` in
-sequence.
+**Performance and Monitoring** A common performance problem is that of many
+small updates updates to records with large numbers of fields. Records of
+hundreds of fields are somewhat pathological but in practice they show up in a
+lot of business logic that needs to interact with large database rows.  Too much
+of this can very noticeable impact on GC pressure by doing allocations on each
+update. If you notice runaway memory performance, one of the first places to
+look (after the usual suspects) is look for overgrown records and possibly
+inside of StateT with use of lots of modify`` in sequence.
 
 The other very common library for live performance monitoring is ``ekg`` which
 simply forks off a thread that manages the state of the GHC runtime internals
