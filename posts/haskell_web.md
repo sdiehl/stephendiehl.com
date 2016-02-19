@@ -5,6 +5,10 @@ date: July 18, 2013
 
 ## Haskell for Web Developers
 
+<b style="color:red">This blog post is somewhat dated and may not reflect
+changes to the ecosystem since 2013.</b> 
+
+
 The perpetual myth persists that Haskell cannot be used for "real world
 applications". Normally real world is usually left undefined in such a
 discussion, but can often be taken to mean that Haskell is not suited
