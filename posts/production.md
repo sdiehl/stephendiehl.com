@@ -24,11 +24,12 @@ the language actively encourage thoughtful consideration of abstractions and a
 "brutal" (as John Carmack noted) level of discipline that high quality code in
 other languages would require, but are enforced in Haskell.
 
-**Import libraries as qualified.** Typically this is just considered good
-practice for business logic libraries. The only point of ambiguity I've seen is
-amongst disagreement amongst developers on which core libraries are common
-enough to import unqualified and how to handle symbols. This ranges the full
-spectrum from fully qualifying ``(Control.Monad.>>=)`` to common things like
+**Prefer to import libraries as qualified.** Typically this is just considered
+good practice for business logic libraries, it makes it easier to locate the
+source of symbol definitions. The only point of ambiguity I've seen is
+disagreement amongst developers on which core libraries are common enough to
+import unqualified and how to handle symbols. This ranges the full spectrum from
+fully qualifying everything ``(Control.Monad.>>=)`` to common things like
 ``(Data.Maybe.maybe)`` or just disambiguating names like ``(Map.lookup)``.
 
 **Consider rolling an internal prelude**. As we've all learned the hard way, the
@@ -105,13 +106,13 @@ something like the following ``build-depends`` in our cabal file:
 ```
 
 **For many problem domains the libraries simply aren't written yet.** There are
-many domains that Haskell is used in, and I've seen it used for tasks as diverse
-as trading systems, spam filtering, to web services. Chances are there are a
-plethora of libraries available some tasks. Yet it goes without saying that
-Haskell is not Java or Python and there simply isn't the mindshare for certain
-tasks. If we need to connect to Microsoft SQL Server or a SOAP service, we're
-probably going to have more trouble. The primitives are probably there to do it,
-but often there is no off-the-shelf solution.
+many domains that Haskell is used in, for tasks as diverse as trading systems,
+spam filtering, to web services. Chances are there are a plethora of libraries
+available some tasks. Yet it goes without saying that Haskell is not Java or
+Python and there simply isn't an equivalent mindshare for certain tasks. If we
+need to connect to Microsoft SQL Server or a SOAP service, we're probably going
+to have more trouble. The primitives are probably there to do it, but often
+there is no off-the-shelf solution.
 
 Usually it boils down to: If you don't write that library, no one else will.
 
@@ -136,10 +137,10 @@ of Haskell in the C++ community, another language where no two developers (that
 I've met) agree on which subset of the language to use.
 
 **Configuration** For configuration Bryan's ``configurator`` library is
-invaluable. It species an external configuration file which can hold
-credentials, connections and cluster topology information. A typical pattern is
-to embed this in a ``ReaderT`` and then ``asks`` for any field necessary in
-business logic.
+invaluable. The library specifies an external configuration flat file which can
+hold credentials, connections and cluster topology information. A typical
+pattern is to embed this in a ``ReaderT`` and then ``asks`` for any field
+necessary in downstream logic.
 
 ```haskell
 newtype ConfigM a = ConfigM (ReaderT ConnectInfo a)
@@ -200,7 +201,7 @@ would want to bet the livelihood of a company on.
 **Testing and building**. For development builds using cabal sandboxes it's
 usually essential to be able to pull in internal libraries that are not on
 Hackage. To do with cabal sandboxes this can be achieved with either a script to
-provision 
+provision the dependencies.
 
 ```bash
 $ git clone https://github.com/bscarlet/llvm-general
@@ -261,10 +262,10 @@ mileage may also vary with ghc-mod support for Vim and Emacs which allows
 in-editor type introspection.
 
 Pulling from cabal to provision our test server can take minutes to hours
-depending on the size of your dependency tree. Fortunately it's easy to set up a
+depending on the size of our dependency tree. Fortunately it's easy to set up a
 [Hackage server mirror](https://github.com/haskell/hackage-server#mirroring)
 that contains all of our internal dependencies that can be served quickly from
-your local servers or an [S3
+our local servers or an [S3
 bucket](https://hackage.haskell.org/package/hackage-mirror). We can then simply
 alter our ``~/.cabal/config`` to change the ``remote-repo`` to our custom
 mirror. 
@@ -343,10 +344,10 @@ build-depends:
 ```
 
 **Strings** The strings types are mature, but unwieldy to work with in practice.
-Make peace with the fact that in literally every module you'll have boilerplate
-just to do simple manipulation and IO. ``OverloadedStrings`` overcomes some of
-the issues, but it's still annoying that you'll end up playing string
-type-tetris a lot.
+It's best to just make peace with the fact that in literally every module we'll
+have boilerplate just to do simple manipulation and IO. ``OverloadedStrings``
+overcomes some of the issues, but it's still annoying that you'll end up playing
+string type-tetris a lot.
 
 If you end up rolling a custom prelude it's worth just correcting ``putStrLn``
 and ``print`` to what they should be in a just world:
@@ -409,7 +410,7 @@ community-provided documentation for the library and you depend on it for your
 product, you've just added technical debt to your company. The person you have
 to hand the code off to will have to read through your code and all it's
 transitive dependencies, and while the undocumented upstream libs might make
-sense they may utterly confound your predecessor.
+sense they may utterly confound your successor.
 
 If you're depending on your Haskell code being stable and supportable it's worth
 being conservative in what dependencies you pull into your tree.
@@ -444,6 +445,9 @@ with Dan it most certainly did.
 
 **Network with other industrial users.** There is no shortage of hobbyist
 Haskell programmers to consult with about problems. Though by my estimates in
-the United States there are probably only around 30-40 people working on Haskell
+the United States there are probably only around 70-100 people working on Haskell
 fulltime and a good deal more working part-time or anticipating using it. It's
 worth networking with other industrial users to share best practices.
+
+Eventually with enough use, many of these rough corners in the language will get
+polished over, best practices become absorbed, and libraries will get built.
