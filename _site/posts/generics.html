@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Cooking Classes for Datatype Generic Programming</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+            &nbsp;
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="cooking-classes-for-datatype-generic-programming">Cooking Classes for Datatype Generic Programming</h3>
+<p>Haskell Generics are a somewhat misunderstood topic but are an extremely powerful technique for writing reusable and comparable interfaces across an enormous universe of types with very little effort. They are probably my favorite example of the advantages of an expressive type system endows us with.</p>
+<p>Source for examples code is <a href="https://github.com/sdiehl/cooking-generics">available here</a>.</p>
+<p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. It’s also a fairly new technique arising out of a paper by Lammel and SPJ in 2003. Generics fall out of the observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
+<p>A <strong>sum type</strong>, is a data structure used to hold a value that could take on several different, but fixed, types. For example:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">PlatonicSolid</span>
+  <span class="fu">=</span> <span class="dt">Tetrahedron</span>
+  <span class="fu">|</span> <span class="dt">Cube</span>
+  <span class="fu">|</span> <span class="dt">Octahedron</span>
+  <span class="fu">|</span> <span class="dt">Dodecahedron</span>
+  <span class="fu">|</span> <span class="dt">Icosahedron</span></code></pre></div>
+<p>A <strong>product type</strong>, is a data structure used to hold a fixed ordered set of several types.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Person</span> <span class="fu">=</span> <span class="dt">Person</span>
+  {<span class="ot"> firstName       ::</span> <span class="dt">String</span>
+  ,<span class="ot"> lastName        ::</span> <span class="dt">String</span>
+  ,<span class="ot"> age             ::</span> <span class="dt">Int</span>
+  ,<span class="ot"> height          ::</span> <span class="dt">Float</span>
+  ,<span class="ot"> phoneNumber     ::</span> <span class="dt">String</span>
+  ,<span class="ot"> flavor          ::</span> <span class="dt">String</span>
+  }</code></pre></div>
+<!--
+In C the approximation of these concepts is in *struct* and *union* types.
+
+<img src="/images/memory_layout.png"></img>
+-->
+<p>In Haskell all datatypes can be expressed as sums of products:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Expr</span>
+  <span class="fu">=</span> <span class="dt">Add</span> {<span class="ot"> l ::</span> <span class="dt">Expr</span>,<span class="ot"> r ::</span> <span class="dt">Expr</span> }
+  <span class="fu">|</span> <span class="dt">Mul</span> {<span class="ot"> l ::</span> <span class="dt">Expr</span>,<span class="ot"> r ::</span> <span class="dt">Expr</span> }
+  <span class="fu">|</span> <span class="dt">Sub</span> {<span class="ot"> l ::</span> <span class="dt">Expr</span>,<span class="ot"> r ::</span> <span class="dt">Expr</span> }
+  <span class="fu">|</span> <span class="dt">Div</span> {<span class="ot"> l ::</span> <span class="dt">Expr</span>,<span class="ot"> r ::</span> <span class="dt">Expr</span> }
+  <span class="fu">|</span> <span class="dt">Number</span> {<span class="ot"> val ::</span> <span class="dt">Int</span> }</code></pre></div>
+<p>During compilation most of the information about the structure of the datatypes is thrown out, by design Haskell erases all type information. Prior to type-checking a phase known as <strong>elaboration</strong> expands out all record selectors into toplevel functions which extract the named fields of a product.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Point</span> a b <span class="fu">=</span> <span class="dt">Point</span> {<span class="ot"> x ::</span> a,<span class="ot"> y ::</span> b }</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">x ::</span> <span class="dt">Point</span> a <span class="ot">-&gt;</span> a
+x (<span class="dt">Point</span> a _) <span class="fu">=</span> a
+
+<span class="ot">y ::</span> <span class="dt">Point</span> b <span class="ot">-&gt;</span> b
+y (<span class="dt">Point</span> _ b) <span class="fu">=</span> b</code></pre></div>
+<p>The rest of the information about products largely gets thrown out after compilation, and the product just get expanded into pattern matching code. For sum types the only information that is kept around is the tag for each constructor of the sum type. For instance <code>Add</code> is assigned the tag 1, <code>Mul</code> is assigned 2 etc. In a case statement the only information that is available at runtime is which branch we’re scrutinizing.</p>
+<p>What if we didn’t toss out all this information and instead exposed it to our program so that we could write generic logic that can introspect the “structure” of our datatypes.</p>
+<!--
+For instance if we were to translate the above expression language into a rough
+approximation of how it's evaluated by the GHC runtime it would look like the
+following C code:
+
+```cpp
+typedef struct T {
+    enum { ADD, MUL, DIV, SUB, NUM } tag;
+    union {
+        struct {
+            struct T *left, *right;
+        } node;
+        int value;
+    };
+} Expr;
+
+int eval(Expr t)
+{
+    switch (t.tag) {
+        case ADD:
+            return eval(*t.node.left) + eval(*t.node.right);
+            break;
+        case MUL:
+            return eval(*t.node.left) * eval(*t.node.right);
+            break;
+        case DIV:
+            return eval(*t.node.left) / eval(*t.node.right);
+            break;
+        case SUB:
+            return eval(*t.node.left) - eval(*t.node.right);
+            break;
+        case NUM:
+            return t.value;
+            break;
+    }
+}
+```
+-->
+<h4 id="compiler-hooks">Compiler Hooks</h4>
+<p>Since GHC 6.10 we’ve had type families which, among other things, allow us to associate data type with typeclass. So the structure of our Generic class can have <code>Rep</code> object which carries the structure of our datatype.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Generic</span> a <span class="kw">where</span>
+  <span class="kw">type</span> <span class="dt">Rep</span><span class="ot"> a ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>
+<span class="ot">  from ::</span> a <span class="ot">-&gt;</span> (<span class="dt">Rep</span> a) x
+<span class="ot">  to ::</span> (<span class="dt">Rep</span> a) x <span class="ot">-&gt;</span> a</code></pre></div>
+<p>To represent the structure of our datatype we need to set up several datatypes to encode, sums, products, empty branches and various metadata about the names of fields, constructors and their types. All of which have a free parameter <code>p</code> which is bound to the head of typeclass instance when used in the associated datatype <code>Rep a</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span>    <span class="dt">V1</span>        p                       <span class="co">-- Empty</span>
+<span class="kw">data</span>    <span class="dt">U1</span>        p <span class="fu">=</span> <span class="dt">U1</span>                  <span class="co">-- ()</span>
+<span class="kw">data</span>    (<span class="fu">:+:</span>) f g p <span class="fu">=</span> <span class="dt">L1</span> (f p) <span class="fu">|</span> <span class="dt">R1</span> (g p) <span class="co">-- Sum</span>
+<span class="kw">data</span>    (<span class="fu">:*:</span>) f g p <span class="fu">=</span> (f p) <span class="fu">:*:</span> (g p)     <span class="co">-- Product</span>
+<span class="kw">newtype</span> <span class="dt">K1</span>    i c p <span class="fu">=</span> <span class="dt">K1</span> {<span class="ot"> unK1 ::</span> c }    <span class="co">-- a container for a c</span>
+<span class="kw">newtype</span> <span class="dt">M1</span>  i t f p <span class="fu">=</span> <span class="dt">M1</span> {<span class="ot"> unM1 ::</span> f p }  <span class="co">-- a wrapper</span></code></pre></div>
+<p>Now we could write this instance by hand for all of our datatypes, and for a simple enumeration it would look like the following:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Animal</span>
+  <span class="fu">=</span> <span class="dt">Dog</span>
+  <span class="fu">|</span> <span class="dt">Cat</span>
+
+<span class="kw">instance</span> <span class="dt">Generic</span> <span class="dt">Animal</span> <span class="kw">where</span>
+  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">D1</span> <span class="dt">T_Animal</span> ((<span class="dt">C1</span> <span class="dt">C_Dog</span> <span class="dt">U1</span>) <span class="fu">:+:</span> (<span class="dt">C1</span> <span class="dt">C_Cat</span> <span class="dt">U1</span>))
+
+  from <span class="dt">Dog</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
+  from <span class="dt">Cat</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
+
+  to (<span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Dog</span>
+  to (<span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Cat</span>
+
+<span class="kw">data</span> <span class="dt">T_Animal</span>
+<span class="kw">data</span> <span class="dt">C_Dog</span>
+<span class="kw">data</span> <span class="dt">C_Cat</span></code></pre></div>
+<p>The instance here is purely and can be derived from GHC’s internal representation of it’s syntax tree, namely the types; <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. And the</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE DeriveGeneric #-}</span>
+
+<span class="kw">data</span> <span class="dt">Animal</span>
+  <span class="fu">=</span> <span class="dt">Dog</span>
+  <span class="fu">|</span> <span class="dt">Cat</span>
+  <span class="kw">deriving</span> (<span class="dt">Generic</span>)</code></pre></div>
+<p>Lest we not handwave away the work that GHC is doing, let’s actually recreate the introspection logic that GHC uses when instantiating a Generic class from a module’s data definitions. Let’s load a module dynamically, intercept the compilation and dump out the internal structure of the it’s datatypes to see how this would be mechanically translated into a typeclass instance.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">GHC</span>
+<span class="kw">import </span><span class="dt">GHC.Paths</span> <span class="kw">as</span> <span class="dt">Paths</span>
+
+<span class="kw">import </span><span class="dt">Name</span>
+<span class="kw">import </span><span class="dt">TyCon</span>
+<span class="kw">import </span><span class="dt">TypeRep</span>
+<span class="kw">import </span><span class="dt">DataCon</span>
+<span class="kw">import </span><span class="dt">HscTypes</span>
+
+<span class="kw">import </span><span class="dt">Text.Show.Pretty</span>
+
+<span class="ot">main ::</span> <span class="dt">IO</span> ()
+main <span class="fu">=</span> <span class="kw">do</span>
+
+  <span class="co">-- Inside the GHC Monad</span>
+  rep <span class="ot">&lt;-</span> runGhc (<span class="dt">Just</span> Paths.libdir) <span class="fu">$</span> <span class="kw">do</span>
+
+    <span class="co">-- Spin up a GHC compiler environment</span>
+    dflags <span class="ot">&lt;-</span> getSessionDynFlags
+    setSessionDynFlags dflags
+
+    <span class="co">-- Make a dummy module to inject</span>
+    <span class="kw">let</span> mn <span class="fu">=</span> mkModuleName <span class="st">&quot;Test&quot;</span>
+
+    <span class="co">-- Make a dummy target</span>
+    addTarget <span class="dt">Target</span> {
+      targetId <span class="fu">=</span> <span class="dt">TargetModule</span> mn
+    , targetAllowObjCode <span class="fu">=</span> <span class="dt">True</span>
+    , targetContents <span class="fu">=</span> <span class="dt">Nothing</span>
+    }
+
+    <span class="co">-- Run the GHC pipeline</span>
+    load <span class="dt">LoadAllTargets</span>
+    modSum <span class="ot">&lt;-</span> getModSummary mn
+    p <span class="ot">&lt;-</span> parseModule modSum
+    t <span class="ot">&lt;-</span> typecheckModule p
+
+    <span class="co">-- Pluck out the module tycons after we're done type-checking</span>
+    <span class="dt">DesugaredModule</span> tcmod modguts <span class="ot">&lt;-</span> desugarModule t
+    <span class="kw">let</span> tycons <span class="fu">=</span> mg_tcs modguts
+
+    <span class="co">-- Deconstruct all datatypes into their sums-of-products.</span>
+    return (deconstruct tycons)
+
+  putStrLn (ppShow rep)</code></pre></div>
+<p>Now that we have access to GHC’s internal representation of the “module guts” we can write our deconstructor logic. The logic is a slim few hundred lines of mostly ADT munging.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">deconstruct ::</span> [<span class="dt">TyCon</span>] <span class="ot">-&gt;</span> [<span class="dt">Data</span>]
+deconstruct <span class="fu">=</span> fmap go
+  <span class="kw">where</span>
+    go x
+      <span class="fu">|</span> isProduct x <span class="fu">=</span> <span class="dt">M1</span> <span class="fu">$</span> <span class="dt">D</span> <span class="dt">Datatype</span>
+        { dataTypeName <span class="fu">=</span> getOccString (tyConName x)
+        , modName      <span class="fu">=</span> modString x
+        , isNewtype    <span class="fu">=</span> isNewTyCon x
+        , datatype     <span class="fu">=</span> <span class="dt">Product</span> (mkProduct x)
+        , recursive    <span class="fu">=</span> isRecursiveTyCon x
+        }
+
+      <span class="fu">|</span> isVoid x <span class="fu">=</span> <span class="dt">M1</span> <span class="fu">$</span> <span class="dt">D</span> <span class="dt">Datatype</span>
+        { dataTypeName <span class="fu">=</span> getOccString (tyConName x)
+        , modName      <span class="fu">=</span> modString x
+        , isNewtype    <span class="fu">=</span> isNewTyCon x
+        , datatype     <span class="fu">=</span> <span class="dt">V1</span>
+        , recursive    <span class="fu">=</span> isRecursiveTyCon x
+        }
+
+      <span class="fu">|</span> otherwise <span class="fu">=</span> <span class="dt">M1</span> <span class="fu">$</span> <span class="dt">D</span> <span class="dt">Datatype</span>
+        { dataTypeName <span class="fu">=</span> getOccString (tyConName x)
+        , modName      <span class="fu">=</span> modString x
+        , isNewtype    <span class="fu">=</span> isNewTyCon x
+        , datatype     <span class="fu">=</span> <span class="dt">Sum</span> (mkProduct x)
+        , recursive    <span class="fu">=</span> isRecursiveTyCon x
+        }
+
+<span class="ot">mkRecord ::</span> <span class="dt">TyCon</span> <span class="ot">-&gt;</span> [<span class="dt">Data</span>]
+mkRecord x <span class="fu">=</span> concatMap mkRProduct (tyConDataCons x)
+
+<span class="ot">mkProduct ::</span> <span class="dt">TyCon</span> <span class="ot">-&gt;</span> [<span class="dt">Data</span>]
+mkProduct x <span class="fu">=</span> fmap go (tyConDataCons x)
+  <span class="kw">where</span>
+<span class="ot">    go ::</span> <span class="dt">DataCon</span> <span class="ot">-&gt;</span> <span class="dt">Data</span>
+    go x <span class="fu">|</span> isRecord x   <span class="fu">=</span> <span class="dt">Product</span> (mkRProduct x)
+    go x <span class="fu">|</span> isDProduct x <span class="fu">=</span> <span class="dt">Product</span> (mkDProduct x)
+    go x                <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">C</span> (<span class="dt">Constructor</span> (conNames x)))
+
+<span class="ot">mkDProduct ::</span> <span class="dt">DataCon</span> <span class="ot">-&gt;</span> [<span class="dt">Data</span>]
+mkDProduct xs <span class="fu">=</span> [<span class="dt">K1</span> (showType x) <span class="fu">|</span> x <span class="ot">&lt;-</span> dataConOrigArgTys xs]
+
+<span class="ot">mkRProduct ::</span> <span class="dt">DataCon</span> <span class="ot">-&gt;</span> [<span class="dt">Data</span>]
+mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class="dt">S</span> (<span class="dt">Selector</span> (getOccString fld)) ty) <span class="fu">|</span> (fld, ty) <span class="ot">&lt;-</span> zip (fieldNames x) (mkDProduct x)]</code></pre></div>
+<p>Setting up the dummy module <code>Test.hs</code> to run our decompilation script:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">PlatonicSolid</span>
+  <span class="fu">=</span> <span class="dt">Tetrahedron</span>
+  <span class="fu">|</span> <span class="dt">Cube</span>
+  <span class="fu">|</span> <span class="dt">Octahedron</span>
+  <span class="fu">|</span> <span class="dt">Dodecahedron</span>
+  <span class="fu">|</span> <span class="dt">Icosahedron</span>
+
+<span class="kw">data</span> <span class="dt">Person</span> <span class="fu">=</span> <span class="dt">Person</span>
+  {<span class="ot"> firstName       ::</span> <span class="dt">String</span>
+  ,<span class="ot"> lastName        ::</span> <span class="dt">String</span>
+  ,<span class="ot"> age             ::</span> <span class="dt">Int</span>
+  ,<span class="ot"> height          ::</span> <span class="dt">Float</span>
+  ,<span class="ot"> phoneNumber     ::</span> <span class="dt">String</span>
+  ,<span class="ot"> flavor          ::</span> <span class="dt">String</span>
+  } <span class="kw">deriving</span> (<span class="dt">Show</span>)
+
+<span class="kw">data</span> <span class="dt">T</span>
+  <span class="fu">=</span> <span class="dt">T1</span> {<span class="ot"> a ::</span> <span class="dt">Int</span>,<span class="ot"> b ::</span> <span class="dt">Float</span> }
+  <span class="fu">|</span> <span class="dt">T2</span> {<span class="ot"> c ::</span> <span class="dt">Int</span>,<span class="ot"> d ::</span> <span class="dt">Double</span> }</code></pre></div>
+<p>For <code>PlatonicSolid</code> we get the representation:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">M1</span>
+   (<span class="dt">D</span> <span class="dt">Datatype</span>
+        { dataTypeName <span class="fu">=</span> <span class="st">&quot;PlatonicSolid&quot;</span>
+        , modName <span class="fu">=</span> <span class="st">&quot;Test&quot;</span>
+        , isNewtype <span class="fu">=</span> <span class="dt">False</span>
+        , datatype <span class="fu">=</span>
+            <span class="dt">Sum</span>
+              [ <span class="dt">M1</span> (<span class="dt">C</span> <span class="dt">Constructor</span> { conName <span class="fu">=</span> <span class="st">&quot;Tetrahedron&quot;</span> })
+              , <span class="dt">M1</span> (<span class="dt">C</span> <span class="dt">Constructor</span> { conName <span class="fu">=</span> <span class="st">&quot;Cube&quot;</span> })
+              , <span class="dt">M1</span> (<span class="dt">C</span> <span class="dt">Constructor</span> { conName <span class="fu">=</span> <span class="st">&quot;Octahedron&quot;</span> })
+              , <span class="dt">M1</span> (<span class="dt">C</span> <span class="dt">Constructor</span> { conName <span class="fu">=</span> <span class="st">&quot;Dodecahedron&quot;</span> })
+              , <span class="dt">M1</span> (<span class="dt">C</span> <span class="dt">Constructor</span> { conName <span class="fu">=</span> <span class="st">&quot;Icosahedron&quot;</span> })
+              ]
+        , recursive <span class="fu">=</span> <span class="dt">False</span>
+        })</code></pre></div>
+<p>For <code>Person</code> we get the representation:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">M1</span>
+    (<span class="dt">D</span> <span class="dt">Datatype</span>
+         { dataTypeName <span class="fu">=</span> <span class="st">&quot;Person&quot;</span>
+         , modName <span class="fu">=</span> <span class="st">&quot;Test&quot;</span>
+         , isNewtype <span class="fu">=</span> <span class="dt">False</span>
+         , datatype <span class="fu">=</span>
+             <span class="dt">Product</span>
+               [ <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;firstName&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;String&quot;</span>))
+               , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;lastName&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;String&quot;</span>))
+               , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;age&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Int&quot;</span>))
+               , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;height&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Float&quot;</span>))
+               , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;phoneNumber&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;String&quot;</span>))
+               , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;flavor&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;String&quot;</span>))
+               ]
+         , recursive <span class="fu">=</span> <span class="dt">False</span>
+       })</code></pre></div>
+<p>For the sum of products <code>T</code> we get the representation:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">M1</span>
+  (<span class="dt">D</span> <span class="dt">Datatype</span>
+       { dataTypeName <span class="fu">=</span> <span class="st">&quot;T&quot;</span>
+       , modName <span class="fu">=</span> <span class="st">&quot;Test&quot;</span>
+       , isNewtype <span class="fu">=</span> <span class="dt">False</span>
+       , datatype <span class="fu">=</span>
+           <span class="dt">Sum</span>
+             [ <span class="dt">Product</span>
+                 [ <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;a&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Int&quot;</span>))
+                 , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;b&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Float&quot;</span>))
+                 ]
+             , <span class="dt">Product</span>
+                 [ <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;c&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Int&quot;</span>))
+                 , <span class="dt">M1</span> (<span class="dt">S</span> <span class="dt">Selector</span> { selName <span class="fu">=</span> <span class="st">&quot;d&quot;</span> } (<span class="dt">K1</span> <span class="st">&quot;Double&quot;</span>))
+                 ]
+             ]
+       , recursive <span class="fu">=</span> <span class="dt">False</span>
+       })</code></pre></div>
+<p>So that’s how <code>-XDeriveGeneric</code> works under the hood, nothing terribly complicated just book keeping.</p>
+<h4 id="ghc.generics">GHC.Generics</h4>
+<p>From the internal representation we crank out several typeclass instances which store the metadata about the various constructors.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Datatype</span> d <span class="kw">where</span>
+<span class="ot">  datatypeName ::</span> t d f a <span class="ot">-&gt;</span> <span class="dt">String</span>
+<span class="ot">  moduleName   ::</span> t d f a <span class="ot">-&gt;</span> <span class="dt">String</span>
+<span class="ot">  isNewtype    ::</span> t d f a <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+  isNewtype _ <span class="fu">=</span> <span class="dt">False</span>
+
+<span class="kw">class</span> <span class="dt">Selector</span> s <span class="kw">where</span>
+<span class="ot">  selName ::</span> t s f a <span class="ot">-&gt;</span> <span class="dt">String</span>
+
+<span class="kw">class</span> <span class="dt">Constructor</span> c <span class="kw">where</span>
+<span class="ot">  conName ::</span> t c f a <span class="ot">-&gt;</span> <span class="dt">String</span>
+
+<span class="ot">  conFixity ::</span> t c f a <span class="ot">-&gt;</span> <span class="dt">Fixity</span>
+  conFixity _ <span class="fu">=</span> <span class="dt">Prefix</span>
+
+<span class="ot">  conIsRecord ::</span> t c f a <span class="ot">-&gt;</span> <span class="dt">Bool</span>
+  conIsRecord _ <span class="fu">=</span> <span class="dt">False</span></code></pre></div>
+<p>For example for <code>Animal</code> example from before we’d have several constructor instances automatically generated by which we could query the names from the AST.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Animal</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Dog</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Cat</span> <span class="dt">U1</span>))))
+
+<span class="kw">data</span> <span class="dt">T_Animal</span>
+<span class="kw">data</span> <span class="dt">C_Dog</span>
+<span class="kw">data</span> <span class="dt">C_Cat</span>
+
+<span class="kw">instance</span> <span class="dt">Datatype</span> <span class="dt">T_Animal</span> <span class="kw">where</span>
+  datatypeName _ <span class="fu">=</span> <span class="st">&quot;Animal&quot;</span>
+  moduleName _ <span class="fu">=</span> <span class="st">&quot;Main&quot;</span>
+
+<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Dog</span> <span class="kw">where</span>
+  conName _ <span class="fu">=</span> <span class="st">&quot;Dog&quot;</span>
+
+<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Cat</span> <span class="kw">where</span>
+  conName _ <span class="fu">=</span> <span class="st">&quot;Cat&quot;</span></code></pre></div>
+<p>Unlike reflection in languages like Java, Generics are not pushing type information into the runtime. Apart from a dictionary lookup for they are a <strong>zero-cost abstraction</strong> that has no overhead. We’re simply making more information from the compiler manifest in the types during the type-checking phase, all of which gets erased during compilation.</p>
+<h4 id="example">Example</h4>
+<p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, traversals, command line parsers) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
+<p>So we have a Pie type, naturally.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pie</span> <span class="fu">=</span> <span class="dt">Pie</span>
+  {<span class="ot"> filling ::</span> <span class="dt">Filling</span>
+  ,<span class="ot"> topping ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>
+  } <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)
+
+<span class="kw">data</span> <span class="dt">Filling</span> <span class="fu">=</span> <span class="dt">Apple</span> <span class="fu">|</span> <span class="dt">Cherry</span> <span class="fu">|</span> <span class="dt">Pumpkin</span>
+  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)
+
+<span class="kw">data</span> <span class="dt">Topping</span> <span class="fu">=</span> <span class="dt">IceCream</span> <span class="fu">|</span> <span class="dt">WhipCream</span>
+  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</code></pre></div>
+<p>Using generics we’d like to a generate a list of the types of pie that we can put on a menu from the structure of the Haskell types. Records will denote named variations (“filling” vs “topping”) of the menu item, while sum denote the various options on the variations (“cherry” vs “apple”).</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Item</span>
+  <span class="fu">=</span> <span class="dt">Item</span> <span class="dt">Text</span> [<span class="dt">Item</span>]
+  <span class="fu">|</span> <span class="dt">Variant</span> <span class="dt">Text</span> [<span class="dt">Item</span>]
+  <span class="fu">|</span> <span class="dt">Choice</span> <span class="dt">Text</span>
+  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</code></pre></div>
+<p>We implement a typeclass with a <strong>default signature</strong> which gives us the option to manually specify how a type gets converted into a menu item, or fall back on using it’s generic representation to automatically generate it.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Menu</span> a <span class="kw">where</span>
+<span class="ot">  menu ::</span> a <span class="ot">-&gt;</span> [<span class="dt">Item</span>]
+  default<span class="ot"> menu ::</span> (<span class="dt">Generic</span> a, <span class="dt">GMenu</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> [<span class="dt">Item</span>]
+  menu _ <span class="fu">=</span> gmenu (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> a)
+
+<span class="ot">gmenu ::</span> forall a<span class="fu">.</span> (<span class="dt">Generic</span> a, <span class="dt">GMenu</span> (<span class="dt">Rep</span> a)) <span class="ot">=&gt;</span> <span class="dt">Proxy</span> a <span class="ot">-&gt;</span> [<span class="dt">Item</span>]
+gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> (<span class="dt">Rep</span> a))</code></pre></div>
+<p>Our generic menu operates over various GHC.Generics types to expand out the sums and products into the Item categories that correspond to the menu. The instance for <code>GMenu (K1 R f)</code> has a Menu constraint which allows manual override for specific datatypes. Since we’re passing around a proxy we’ll have to manually thread the dictionary around sometimes by passing an <code>undefined</code> cast to the type of the instance we need to resolve.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generic Menu</span>
+<span class="kw">class</span> <span class="dt">GMenu</span> a <span class="kw">where</span>
+<span class="ot">  gopts ::</span> <span class="dt">Proxy</span> a <span class="ot">-&gt;</span> [<span class="dt">Item</span>]
+
+<span class="co">-- Datatype</span>
+<span class="kw">instance</span> <span class="dt">GMenu</span> f <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (<span class="dt">M1</span> <span class="dt">D</span> x f) <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> f)
+
+<span class="co">-- Constructor Metadata</span>
+<span class="kw">instance</span> (<span class="dt">GMenu</span> f, <span class="dt">Constructor</span> c) <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (<span class="dt">M1</span> <span class="dt">C</span> c f) <span class="kw">where</span>
+  gopts x
+    <span class="fu">|</span> conIsRecord (undefined<span class="ot"> ::</span> t c f a) <span class="fu">=</span>
+      [<span class="dt">Item</span> (pack (conName m)) (gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> f))]
+
+    <span class="fu">|</span> otherwise <span class="fu">=</span> [<span class="dt">Choice</span> (pack (conName m))]
+    <span class="kw">where</span> m <span class="fu">=</span> (undefined<span class="ot"> ::</span> t c f a)
+
+<span class="co">-- Selector Metadata</span>
+<span class="kw">instance</span> (<span class="dt">GMenu</span> f, <span class="dt">Selector</span> c) <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (<span class="dt">M1</span> <span class="dt">S</span> c f) <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> [<span class="dt">Variant</span> (pack (selName m)) (gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> f))]
+    <span class="kw">where</span> m <span class="fu">=</span> (undefined<span class="ot"> ::</span> t c f a)
+
+<span class="co">-- Constructor Paramater</span>
+<span class="kw">instance</span> (<span class="dt">GMenu</span> (<span class="dt">Rep</span> f), <span class="dt">Menu</span> f) <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (<span class="dt">K1</span> <span class="dt">R</span> f) <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> menu (undefined<span class="ot"> ::</span> f)
+
+<span class="co">-- Sum branch</span>
+<span class="kw">instance</span> (<span class="dt">GMenu</span> a, <span class="dt">GMenu</span> b) <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (a <span class="fu">:+:</span> b) <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> a) <span class="fu">++</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> b)
+
+<span class="co">-- Product branch</span>
+<span class="kw">instance</span> (<span class="dt">GMenu</span> a, <span class="dt">GMenu</span> b) <span class="ot">=&gt;</span> <span class="dt">GMenu</span> (a <span class="fu">:*:</span> b) <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> a) <span class="fu">++</span> gopts (<span class="dt">Proxy</span><span class="ot"> ::</span> <span class="dt">Proxy</span> b)
+
+<span class="co">-- Void branch</span>
+<span class="kw">instance</span> <span class="dt">GMenu</span> <span class="dt">U1</span> <span class="kw">where</span>
+  gopts _ <span class="fu">=</span> []</code></pre></div>
+<p>Specifically we’ll override the <code>Maybe</code> type so that it simply expands out to a choice of either “AsIs” of the variant or just the list of choices endowed by the inner parameter.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Menu</span> a <span class="ot">=&gt;</span> <span class="dt">Menu</span> (<span class="dt">Maybe</span> a) <span class="kw">where</span>
+  menu _ <span class="fu">=</span> [<span class="dt">Choice</span> (pack <span class="st">&quot;AsIs&quot;</span>)] <span class="fu">++</span> (menu (undefined<span class="ot"> ::</span> a))
+
+<span class="kw">instance</span> <span class="dt">Menu</span> a <span class="ot">=&gt;</span> <span class="dt">Menu</span> [a] <span class="kw">where</span>
+  menu _ <span class="fu">=</span> (menu (undefined<span class="ot"> ::</span> a))
+
+<span class="kw">instance</span> (<span class="dt">Menu</span> a, <span class="dt">Menu</span> b) <span class="ot">=&gt;</span> <span class="dt">Menu</span> (a,b) <span class="kw">where</span>
+  menu _ <span class="fu">=</span> menu (undefined<span class="ot"> ::</span> a) <span class="fu">++</span> menu (undefined<span class="ot"> ::</span> b)</code></pre></div>
+<p>As an example <code>Maybe Topping</code> expands out into three choices.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">menu (<span class="ot">a ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>) <span class="fu">~</span> [<span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;whipCream&quot;</span>]</code></pre></div>
+<p>Using GHC 7.10’s new <code>-XDeriveAnyClass</code> extension we can actually go back and automatically derive</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pie</span> <span class="fu">=</span> <span class="dt">Pie</span>
+  {<span class="ot"> filling ::</span> <span class="dt">Filling</span>
+  ,<span class="ot"> topping ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>
+  } <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>, <span class="dt">Menu</span>)</code></pre></div>
+<p>Now synthesizing a dictionary for Pie we can get a menu</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">menu (undefined<span class="ot"> ::</span> <span class="dt">Pie</span>)</code></pre></div>
+<p>And voila:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">[ <span class="dt">Item</span>
+    <span class="st">&quot;Pie&quot;</span>
+    [ <span class="dt">Variant</span>
+        <span class="st">&quot;filling&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Apple&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cherry&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Pumpkin&quot;</span> ]
+    , <span class="dt">Variant</span>
+        <span class="st">&quot;topping&quot;</span>
+        [ <span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;WhipCream&quot;</span> ]
+    ]
+]</code></pre></div>
+<p>Since our logic is datatype generic, any Haskell we can write down can be automatically translated to a Menu just by <code>deriving Menu</code>. So now we can a new <code>Crisp</code> ( my favorite!) desert and we get everything for free.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Crisp</span> <span class="fu">=</span> <span class="dt">Crisp</span>
+  {<span class="ot"> contents ::</span> <span class="dt">Filling</span>
+  ,<span class="ot"> temperature ::</span> <span class="dt">Temperature</span>
+  } <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>, <span class="dt">Menu</span>)
+
+<span class="kw">data</span> <span class="dt">Temperature</span> <span class="fu">=</span> <span class="dt">Warm</span> <span class="fu">|</span> <span class="dt">Cold</span>
+  <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>, <span class="dt">Menu</span>)
+
+<span class="co">-- Add an instance for a pair of menu items. That expands into mutlilple items.</span>
+<span class="kw">instance</span> (<span class="dt">Menu</span> a, <span class="dt">Menu</span> b) <span class="ot">=&gt;</span> <span class="dt">Menu</span> (a,b) <span class="kw">where</span>
+  menu _ <span class="fu">=</span> menu (undefined<span class="ot"> ::</span> a) <span class="fu">++</span> menu (undefined<span class="ot"> ::</span> b)</code></pre></div>
+<p>And we can generate the composite menu of both deserts:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">menu (undefined<span class="ot"> ::</span> (<span class="dt">Pie</span>, <span class="dt">Crisp</span>))</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">[ <span class="dt">Item</span>
+    <span class="st">&quot;Pie&quot;</span>
+    [ <span class="dt">Variant</span>
+        <span class="st">&quot;filling&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Apple&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cherry&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Pumpkin&quot;</span> ]
+    , <span class="dt">Variant</span>
+        <span class="st">&quot;topping&quot;</span>
+        [ <span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;WhipCream&quot;</span> ]
+    ]
+, <span class="dt">Item</span>
+    <span class="st">&quot;Crisp&quot;</span>
+    [ <span class="dt">Variant</span>
+        <span class="st">&quot;contents&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Apple&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cherry&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Pumpkin&quot;</span> ]
+    , <span class="dt">Variant</span> <span class="st">&quot;temperature&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Warm&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cold&quot;</span> ]
+    ]
+]</code></pre></div>
+<p>So that’s pretty darn cool.</p>
+<h4 id="generics">Generics</h4>
+<p>So that’s generics. One of the best goto examples of how an expressive type system and a few clever compiler hooks can make programmers lives easier by reducing boilerplate and leading to more correct code.</p>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
