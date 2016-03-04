@@ -8,7 +8,7 @@
     <!-- Basic Page Needs
   ================================================== -->
     <meta charset="utf-8">
-    <title>Cooking Classes for Datatype Generic Programming</title>
+    <title>Cooking Classes with Datatype Generic Programming</title>
     <meta name="description" content="{{description}}">
     <meta name="author" content="{{author}}">
 
@@ -74,17 +74,16 @@
         </div>
 
         <div class="twelve columns offset-by-one content">
-            <h3 id="cooking-classes-for-datatype-generic-programming">Cooking Classes for Datatype Generic Programming</h3>
+            <h3 id="cooking-classes-with-datatype-generic-programming">Cooking Classes with Datatype Generic Programming</h3>
 <p>Haskell Generics are a somewhat misunderstood topic but are an extremely powerful technique for writing reusable and comparable interfaces across an enormous universe of types with very little effort. They are probably my favorite example of the advantages of an expressive type system endows us with.</p>
 <p>Source for examples code is <a href="https://github.com/sdiehl/cooking-generics">available here</a>.</p>
 <p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. It’s also a fairly new technique arising out of a paper by Lammel and SPJ in 2003. Generics fall out of the simple observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
 <p>A <strong>sum type</strong>, is a data structure used to hold a value that could take on several different, but fixed, types. For example:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">PlatonicSolid</span>
-  <span class="fu">=</span> <span class="dt">Tetrahedron</span>
-  <span class="fu">|</span> <span class="dt">Cube</span>
-  <span class="fu">|</span> <span class="dt">Octahedron</span>
-  <span class="fu">|</span> <span class="dt">Dodecahedron</span>
-  <span class="fu">|</span> <span class="dt">Icosahedron</span></code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pastry</span>
+  <span class="fu">=</span> <span class="dt">Turnover</span>
+  <span class="fu">|</span> <span class="dt">Macaroon</span>
+  <span class="fu">|</span> <span class="dt">Brownie</span>
+  <span class="fu">|</span> <span class="dt">Cookie</span></code></pre></div>
 <p>A <strong>product type</strong>, is a data structure used to hold a fixed ordered set of several types. Selecting a single field is called projection.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Person</span> <span class="fu">=</span> <span class="dt">Person</span>
   {<span class="ot"> firstName       ::</span> <span class="dt">String</span>
@@ -167,28 +166,28 @@ int eval(Expr t)
 <span class="kw">newtype</span> <span class="dt">K1</span>    i c p <span class="fu">=</span> <span class="dt">K1</span> {<span class="ot"> unK1 ::</span> c }    <span class="co">-- a container for a c</span>
 <span class="kw">newtype</span> <span class="dt">M1</span>  i t f p <span class="fu">=</span> <span class="dt">M1</span> {<span class="ot"> unM1 ::</span> f p }  <span class="co">-- a wrapper</span></code></pre></div>
 <p>Now we could write this instance by hand for all of our datatypes, and for a simple enumeration it would look like the following:</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Animal</span>
-  <span class="fu">=</span> <span class="dt">Dog</span>
-  <span class="fu">|</span> <span class="dt">Cat</span>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Ingredient</span>
+  <span class="fu">=</span> <span class="dt">Flour</span>
+  <span class="fu">|</span> <span class="dt">Sugar</span>
 
-<span class="kw">instance</span> <span class="dt">Generic</span> <span class="dt">Animal</span> <span class="kw">where</span>
-  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Animal</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Dog</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">MC</span> <span class="dv">1</span> (<span class="dt">C_Cat</span> <span class="dt">U1</span>))))
+<span class="kw">instance</span> <span class="dt">Generic</span> <span class="dt">Ingredient</span> <span class="kw">where</span>
+  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Ingredient</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Ingredient</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Flour</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">MC</span> <span class="dv">1</span> (<span class="dt">C_Sugar</span> <span class="dt">U1</span>))))
 
-  from <span class="dt">Dog</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
-  from <span class="dt">Cat</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
+  from <span class="dt">Flour</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
+  from <span class="dt">Sugar</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
 
-  to (<span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Dog</span>
-  to (<span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Cat</span>
+  to (<span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Flour</span>
+  to (<span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))) <span class="fu">=</span> <span class="dt">Sugar</span>
 
-<span class="kw">data</span> <span class="dt">T_Animal</span>
-<span class="kw">data</span> <span class="dt">C_Dog</span>
-<span class="kw">data</span> <span class="dt">C_Cat</span></code></pre></div>
+<span class="kw">data</span> <span class="dt">T_Ingredient</span>
+<span class="kw">data</span> <span class="dt">C_Flour</span>
+<span class="kw">data</span> <span class="dt">C_Sugar</span></code></pre></div>
 <p>The instance here is purely mechanical and can be derived from GHC’s internal representation of it’s syntax tree, namely the types <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. Using the <code>-XeriveGeneric</code> extension we can have GHC crank this typeclass out automatically:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE DeriveGeneric #-}</span>
 
-<span class="kw">data</span> <span class="dt">Animal</span>
-  <span class="fu">=</span> <span class="dt">Dog</span>
-  <span class="fu">|</span> <span class="dt">Cat</span>
+<span class="kw">data</span> <span class="dt">Ingredient</span>
+  <span class="fu">=</span> <span class="dt">Flour</span>
+  <span class="fu">|</span> <span class="dt">Sugar</span>
   <span class="kw">deriving</span> (<span class="dt">Generic</span>)</code></pre></div>
 <p>Lest we not handwave away the work that GHC is doing, let’s actually recreate the introspection logic that GHC uses when instantiating a Generic class from a module’s data definitions. Let’s load a module dynamically, intercept the compilation and dump out the internal structure of the it’s datatypes to see how this would be mechanically translated into a typeclass instance.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">GHC</span>
@@ -373,22 +372,22 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
 
 <span class="ot">  conIsRecord ::</span> t c f a <span class="ot">-&gt;</span> <span class="dt">Bool</span>
   conIsRecord _ <span class="fu">=</span> <span class="dt">False</span></code></pre></div>
-<p>For example, for <code>Animal</code> example from before, we’d have several constructor instances automatically generated by which we could query the names from the AST.</p>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Animal</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Dog</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Cat</span> <span class="dt">U1</span>))))
+<p>For example, for <code>Ingredient</code> example from before, we’d have several constructor instances automatically generated by which we could query the names from the AST.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Ingredient</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Ingredient</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Flour</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Sugar</span> <span class="dt">U1</span>))))
 
-<span class="kw">data</span> <span class="dt">T_Animal</span>
-<span class="kw">data</span> <span class="dt">C_Dog</span>
-<span class="kw">data</span> <span class="dt">C_Cat</span>
+<span class="kw">data</span> <span class="dt">T_Ingredient</span>
+<span class="kw">data</span> <span class="dt">C_Flour</span>
+<span class="kw">data</span> <span class="dt">C_Sugar</span>
 
-<span class="kw">instance</span> <span class="dt">Datatype</span> <span class="dt">T_Animal</span> <span class="kw">where</span>
-  datatypeName _ <span class="fu">=</span> <span class="st">&quot;Animal&quot;</span>
+<span class="kw">instance</span> <span class="dt">Datatype</span> <span class="dt">T_Ingredient</span> <span class="kw">where</span>
+  datatypeName _ <span class="fu">=</span> <span class="st">&quot;Ingredient&quot;</span>
   moduleName _ <span class="fu">=</span> <span class="st">&quot;Main&quot;</span>
 
-<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Dog</span> <span class="kw">where</span>
-  conName _ <span class="fu">=</span> <span class="st">&quot;Dog&quot;</span>
+<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Flour</span> <span class="kw">where</span>
+  conName _ <span class="fu">=</span> <span class="st">&quot;Flour&quot;</span>
 
-<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Cat</span> <span class="kw">where</span>
-  conName _ <span class="fu">=</span> <span class="st">&quot;Cat&quot;</span></code></pre></div>
+<span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Sugar</span> <span class="kw">where</span>
+  conName _ <span class="fu">=</span> <span class="st">&quot;Sugar&quot;</span></code></pre></div>
 <p>Unlike reflection in languages like Java, Generics are not pushing type information into the runtime. Apart from a dictionary lookup for they are a effectively free abstraction that has no overhead. We’re simply making more information from the compiler manifest in the types during the type-checking phase, all of which gets erased during compilation.</p>
 <h4 id="example">Example</h4>
 <p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, traversals, command line parsers, etc) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
