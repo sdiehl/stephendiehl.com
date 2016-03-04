@@ -471,6 +471,8 @@ data Topping = IceCream | WhipCream
   deriving (Show, Generic)
 ```
 
+<a href="https://www.flickr.com/photos/theleggett/4409912246"><img src="/images/pie.jpg"></img></a>
+
 Using generics we'd like to a generate a list of the types of pie that we can
 put on a menu from the structure of the Haskell types. Records will denote named
 variations ("filling" vs "topping") of the menu item, while sum types denote the

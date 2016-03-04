@@ -403,6 +403,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
 
 <span class="kw">data</span> <span class="dt">Topping</span> <span class="fu">=</span> <span class="dt">IceCream</span> <span class="fu">|</span> <span class="dt">WhipCream</span>
   <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</code></pre></div>
+<p><a href="https://www.flickr.com/photos/theleggett/4409912246"><img src="../images/pie.jpg" /></a></p>
 <p>Using generics we’d like to a generate a list of the types of pie that we can put on a menu from the structure of the Haskell types. Records will denote named variations (“filling” vs “topping”) of the menu item, while sum types denote the various options in the variations (“cherry filling” vs “apple filling”).</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Item</span>
   <span class="fu">=</span> <span class="dt">Item</span> <span class="dt">Text</span> [<span class="dt">Item</span>]
