@@ -15,9 +15,9 @@ here](https://github.com/sdiehl/cooking-generics).
 
 Generics are a form of *datatype-generic programming*, which although the
 namesake has some similarity to Java Generics they are different concepts
-entirely. It's also a fairly new technique arising out of a paper by Lammel and
-SPJ in 2003. Generics fall out of the simple observation that all datatypes in
-Haskell can be written as a combination of a *sum of products*.
+entirely. GHC's implementation of Generics fall out of the simple observation
+that all datatypes in Haskell can be written as a combination of a *sum of
+products*.
 
 A **sum type**, is a data structure used to hold a value that could take on
 several different, but fixed, types. For example:
@@ -392,8 +392,8 @@ M1
 ```
 
 These data points are then used to generate the Rep instance in the derived
-Generic instances. So that's how ``-XDeriveGeneric`` works under the hood,
-nothing terribly complicated just book keeping.
+Generic instances. So that's a *rough approximation* of how ``-XDeriveGeneric``
+works under the hood, nothing terribly complicated just book keeping.
 
 #### GHC.Generics
 

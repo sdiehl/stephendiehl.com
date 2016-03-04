@@ -77,7 +77,7 @@
             <h3 id="cooking-classes-with-datatype-generic-programming">Cooking Classes with Datatype Generic Programming</h3>
 <p>Haskell Generics are a somewhat misunderstood topic but are an extremely powerful technique for writing reusable and comparable interfaces across an enormous universe of types with very little effort. They are probably my favorite example of the advantages of an expressive type system endows us with.</p>
 <p>Source for examples code is <a href="https://github.com/sdiehl/cooking-generics">available here</a>.</p>
-<p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. It’s also a fairly new technique arising out of a paper by Lammel and SPJ in 2003. Generics fall out of the simple observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
+<p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. GHC’s implementation of Generics fall out of the simple observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
 <p>A <strong>sum type</strong>, is a data structure used to hold a value that could take on several different, but fixed, types. For example:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pastry</span>
   <span class="fu">=</span> <span class="dt">Turnover</span>
@@ -352,7 +352,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
              ]
        , recursive <span class="fu">=</span> <span class="dt">False</span>
        })</code></pre></div>
-<p>These data points are then used to generate the Rep instance in the derived Generic instances. So that’s how <code>-XDeriveGeneric</code> works under the hood, nothing terribly complicated just book keeping.</p>
+<p>These data points are then used to generate the Rep instance in the derived Generic instances. So that’s a <em>rough approximation</em> of how <code>-XDeriveGeneric</code> works under the hood, nothing terribly complicated just book keeping.</p>
 <h4 id="ghc.generics">GHC.Generics</h4>
 <p>From the internal representation we crank out several typeclass instances which store the metadata about the various constructors.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Datatype</span> d <span class="kw">where</span>
