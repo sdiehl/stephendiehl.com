@@ -77,7 +77,7 @@
             <h3 id="cooking-classes-for-datatype-generic-programming">Cooking Classes for Datatype Generic Programming</h3>
 <p>Haskell Generics are a somewhat misunderstood topic but are an extremely powerful technique for writing reusable and comparable interfaces across an enormous universe of types with very little effort. They are probably my favorite example of the advantages of an expressive type system endows us with.</p>
 <p>Source for examples code is <a href="https://github.com/sdiehl/cooking-generics">available here</a>.</p>
-<p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. It’s also a fairly new technique arising out of a paper by Lammel and SPJ in 2003. Generics fall out of the observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
+<p>Generics are a form of <em>datatype-generic programming</em>, which although the namesake has some similarity to Java Generics they are different concepts entirely. It’s also a fairly new technique arising out of a paper by Lammel and SPJ in 2003. Generics fall out of the simple observation that all datatypes in Haskell can be written as a combination of a <em>sum of products</em>.</p>
 <p>A <strong>sum type</strong>, is a data structure used to hold a value that could take on several different, but fixed, types. For example:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">PlatonicSolid</span>
   <span class="fu">=</span> <span class="dt">Tetrahedron</span>
@@ -85,7 +85,7 @@
   <span class="fu">|</span> <span class="dt">Octahedron</span>
   <span class="fu">|</span> <span class="dt">Dodecahedron</span>
   <span class="fu">|</span> <span class="dt">Icosahedron</span></code></pre></div>
-<p>A <strong>product type</strong>, is a data structure used to hold a fixed ordered set of several types.</p>
+<p>A <strong>product type</strong>, is a data structure used to hold a fixed ordered set of several types. Selecting a single field is called projection.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Person</span> <span class="fu">=</span> <span class="dt">Person</span>
   {<span class="ot"> firstName       ::</span> <span class="dt">String</span>
   ,<span class="ot"> lastName        ::</span> <span class="dt">String</span>
@@ -114,7 +114,7 @@ x (<span class="dt">Point</span> a _) <span class="fu">=</span> a
 <span class="ot">y ::</span> <span class="dt">Point</span> b <span class="ot">-&gt;</span> b
 y (<span class="dt">Point</span> _ b) <span class="fu">=</span> b</code></pre></div>
 <p>The rest of the information about products largely gets thrown out after compilation, and the product just get expanded into pattern matching code. For sum types the only information that is kept around is the tag for each constructor of the sum type. For instance <code>Add</code> is assigned the tag 1, <code>Mul</code> is assigned 2 etc. In a case statement the only information that is available at runtime is which branch we’re scrutinizing.</p>
-<p>What if we didn’t toss out all this information and instead exposed it to our program so that we could write generic logic that can introspect the “structure” of our datatypes.</p>
+<p>So what if consider not tossing out all this information and instead exposed it to our program so that we could write generic logic that can introspect the “structure” of our datatypes.</p>
 <!--
 For instance if we were to translate the above expression language into a rough
 approximation of how it's evaluated by the GHC runtime it would look like the
@@ -154,7 +154,7 @@ int eval(Expr t)
 ```
 -->
 <h4 id="compiler-hooks">Compiler Hooks</h4>
-<p>Since GHC 6.10 we’ve had type families which, among other things, allow us to associate data type with typeclass. So the structure of our Generic class can have <code>Rep</code> object which carries the structure of our datatype.</p>
+<p>Since GHC 6.10 we’ve had type families which, among other things, allow us to associate data type with out typeclass. So the structure of our Generic class can have a associated <code>Rep</code> type which can carry information along with the typeclass.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Generic</span> a <span class="kw">where</span>
   <span class="kw">type</span> <span class="dt">Rep</span><span class="ot"> a ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>
 <span class="ot">  from ::</span> a <span class="ot">-&gt;</span> (<span class="dt">Rep</span> a) x
@@ -172,7 +172,7 @@ int eval(Expr t)
   <span class="fu">|</span> <span class="dt">Cat</span>
 
 <span class="kw">instance</span> <span class="dt">Generic</span> <span class="dt">Animal</span> <span class="kw">where</span>
-  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">D1</span> <span class="dt">T_Animal</span> ((<span class="dt">C1</span> <span class="dt">C_Dog</span> <span class="dt">U1</span>) <span class="fu">:+:</span> (<span class="dt">C1</span> <span class="dt">C_Cat</span> <span class="dt">U1</span>))
+  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Animal</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Dog</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">MC</span> <span class="dv">1</span> (<span class="dt">C_Cat</span> <span class="dt">U1</span>))))
 
   from <span class="dt">Dog</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
   from <span class="dt">Cat</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
@@ -183,7 +183,7 @@ int eval(Expr t)
 <span class="kw">data</span> <span class="dt">T_Animal</span>
 <span class="kw">data</span> <span class="dt">C_Dog</span>
 <span class="kw">data</span> <span class="dt">C_Cat</span></code></pre></div>
-<p>The instance here is purely and can be derived from GHC’s internal representation of it’s syntax tree, namely the types; <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. And the</p>
+<p>The instance here is purely mechanical and can be derived from GHC’s internal representation of it’s syntax tree, namely the types <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. Using the <code>-XeriveGeneric</code> extension we can have GHC crank this typeclass out automatically:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE DeriveGeneric #-}</span>
 
 <span class="kw">data</span> <span class="dt">Animal</span>
@@ -373,7 +373,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
 
 <span class="ot">  conIsRecord ::</span> t c f a <span class="ot">-&gt;</span> <span class="dt">Bool</span>
   conIsRecord _ <span class="fu">=</span> <span class="dt">False</span></code></pre></div>
-<p>For example for <code>Animal</code> example from before we’d have several constructor instances automatically generated by which we could query the names from the AST.</p>
+<p>For example, for <code>Animal</code> example from before, we’d have several constructor instances automatically generated by which we could query the names from the AST.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Animal</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Animal</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Dog</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Cat</span> <span class="dt">U1</span>))))
 
 <span class="kw">data</span> <span class="dt">T_Animal</span>
@@ -389,9 +389,9 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
 
 <span class="kw">instance</span> <span class="dt">Constructor</span> <span class="dt">C_Cat</span> <span class="kw">where</span>
   conName _ <span class="fu">=</span> <span class="st">&quot;Cat&quot;</span></code></pre></div>
-<p>Unlike reflection in languages like Java, Generics are not pushing type information into the runtime. Apart from a dictionary lookup for they are a <strong>zero-cost abstraction</strong> that has no overhead. We’re simply making more information from the compiler manifest in the types during the type-checking phase, all of which gets erased during compilation.</p>
+<p>Unlike reflection in languages like Java, Generics are not pushing type information into the runtime. Apart from a dictionary lookup for they are a effectively free abstraction that has no overhead. We’re simply making more information from the compiler manifest in the types during the type-checking phase, all of which gets erased during compilation.</p>
 <h4 id="example">Example</h4>
-<p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, traversals, command line parsers) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
+<p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, traversals, command line parsers, etc) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
 <p>So we have a Pie type, naturally.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pie</span> <span class="fu">=</span> <span class="dt">Pie</span>
   {<span class="ot"> filling ::</span> <span class="dt">Filling</span>
@@ -403,7 +403,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
 
 <span class="kw">data</span> <span class="dt">Topping</span> <span class="fu">=</span> <span class="dt">IceCream</span> <span class="fu">|</span> <span class="dt">WhipCream</span>
   <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>)</code></pre></div>
-<p>Using generics we’d like to a generate a list of the types of pie that we can put on a menu from the structure of the Haskell types. Records will denote named variations (“filling” vs “topping”) of the menu item, while sum denote the various options on the variations (“cherry” vs “apple”).</p>
+<p>Using generics we’d like to a generate a list of the types of pie that we can put on a menu from the structure of the Haskell types. Records will denote named variations (“filling” vs “topping”) of the menu item, while sum types denote the various options in the variations (“cherry filling” vs “apple filling”).</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Item</span>
   <span class="fu">=</span> <span class="dt">Item</span> <span class="dt">Text</span> [<span class="dt">Item</span>]
   <span class="fu">|</span> <span class="dt">Variant</span> <span class="dt">Text</span> [<span class="dt">Item</span>]
@@ -457,13 +457,7 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
   gopts _ <span class="fu">=</span> []</code></pre></div>
 <p>Specifically we’ll override the <code>Maybe</code> type so that it simply expands out to a choice of either “AsIs” of the variant or just the list of choices endowed by the inner parameter.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">instance</span> <span class="dt">Menu</span> a <span class="ot">=&gt;</span> <span class="dt">Menu</span> (<span class="dt">Maybe</span> a) <span class="kw">where</span>
-  menu _ <span class="fu">=</span> [<span class="dt">Choice</span> (pack <span class="st">&quot;AsIs&quot;</span>)] <span class="fu">++</span> (menu (undefined<span class="ot"> ::</span> a))
-
-<span class="kw">instance</span> <span class="dt">Menu</span> a <span class="ot">=&gt;</span> <span class="dt">Menu</span> [a] <span class="kw">where</span>
-  menu _ <span class="fu">=</span> (menu (undefined<span class="ot"> ::</span> a))
-
-<span class="kw">instance</span> (<span class="dt">Menu</span> a, <span class="dt">Menu</span> b) <span class="ot">=&gt;</span> <span class="dt">Menu</span> (a,b) <span class="kw">where</span>
-  menu _ <span class="fu">=</span> menu (undefined<span class="ot"> ::</span> a) <span class="fu">++</span> menu (undefined<span class="ot"> ::</span> b)</code></pre></div>
+  menu _ <span class="fu">=</span> [<span class="dt">Choice</span> (pack <span class="st">&quot;AsIs&quot;</span>)] <span class="fu">++</span> (menu (undefined<span class="ot"> ::</span> a))</code></pre></div>
 <p>As an example <code>Maybe Topping</code> expands out into three choices.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">menu (<span class="ot">a ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>) <span class="fu">~</span> [<span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;whipCream&quot;</span>]</code></pre></div>
 <p>Using GHC 7.10’s new <code>-XDeriveAnyClass</code> extension we can actually go back and automatically derive</p>
@@ -483,7 +477,7 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
         [ <span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;WhipCream&quot;</span> ]
     ]
 ]</code></pre></div>
-<p>Since our logic is datatype generic, any Haskell we can write down can be automatically translated to a Menu just by <code>deriving Menu</code>. So now we can a new <code>Crisp</code> ( my favorite!) desert and we get everything for free.</p>
+<p>Since our logic is datatype generic, any Haskell we can write down can be automatically translated to a Menu just by <code>deriving Menu</code>. So now we can a new <code>Crisp</code> desert (my favorite!) <em>and we get everything for free</em>!</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Crisp</span> <span class="fu">=</span> <span class="dt">Crisp</span>
   {<span class="ot"> contents ::</span> <span class="dt">Filling</span>
   ,<span class="ot"> temperature ::</span> <span class="dt">Temperature</span>
@@ -512,8 +506,6 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
     , <span class="dt">Variant</span> <span class="st">&quot;temperature&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Warm&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cold&quot;</span> ]
     ]
 ]</code></pre></div>
-<p>So that’s pretty darn cool.</p>
-<h4 id="generics">Generics</h4>
 <p>So that’s generics. One of the best goto examples of how an expressive type system and a few clever compiler hooks can make programmers lives easier by reducing boilerplate and leading to more correct code.</p>
         </div>
     </div>
