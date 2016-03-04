@@ -563,7 +563,7 @@ menu (a :: Maybe Topping) ~ [Choice "AsIs", Choice "IceCream", Choice "whipCream
 ```
 
 Using GHC 7.10's new ``-XDeriveAnyClass`` extension we can actually go back and
-automatically derive
+automatically derive Menu inside the deriving clause.
 
 ```haskell
 data Pie = Pie
@@ -606,7 +606,7 @@ data Crisp = Crisp
 data Temperature = Warm | Cold
   deriving (Show, Generic, Menu)
 
--- Add an instance for a pair of menu items. That expands into mutlilple items.
+-- Add an instance for a pair of menu items. That expands into multiple items.
 instance (Menu a, Menu b) => Menu (a,b) where
   menu _ = menu (undefined :: a) ++ menu (undefined :: b)
 ```
@@ -637,4 +637,6 @@ menu (undefined :: (Pie, Crisp))
 
 So that's generics. One of the best goto examples of how an expressive type
 system and a few clever compiler hooks can make programmers lives easier by
-reducing boilerplate and leading to more correct code.
+cooking our boilerplate for us and giving tastier more correct code.
+
+<a href="https://www.flickr.com/photos/theleggett/4409912246"><img src="/images/pie2.jpg"></img></a>

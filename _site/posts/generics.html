@@ -461,7 +461,7 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
   menu _ <span class="fu">=</span> [<span class="dt">Choice</span> (pack <span class="st">&quot;AsIs&quot;</span>)] <span class="fu">++</span> (menu (undefined<span class="ot"> ::</span> a))</code></pre></div>
 <p>As an example <code>Maybe Topping</code> expands out into three choices.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">menu (<span class="ot">a ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>) <span class="fu">~</span> [<span class="dt">Choice</span> <span class="st">&quot;AsIs&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;IceCream&quot;</span>, <span class="dt">Choice</span> <span class="st">&quot;whipCream&quot;</span>]</code></pre></div>
-<p>Using GHC 7.10’s new <code>-XDeriveAnyClass</code> extension we can actually go back and automatically derive</p>
+<p>Using GHC 7.10’s new <code>-XDeriveAnyClass</code> extension we can actually go back and automatically derive Menu inside the deriving clause.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pie</span> <span class="fu">=</span> <span class="dt">Pie</span>
   {<span class="ot"> filling ::</span> <span class="dt">Filling</span>
   ,<span class="ot"> topping ::</span> <span class="dt">Maybe</span> <span class="dt">Topping</span>
@@ -487,7 +487,7 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
 <span class="kw">data</span> <span class="dt">Temperature</span> <span class="fu">=</span> <span class="dt">Warm</span> <span class="fu">|</span> <span class="dt">Cold</span>
   <span class="kw">deriving</span> (<span class="dt">Show</span>, <span class="dt">Generic</span>, <span class="dt">Menu</span>)
 
-<span class="co">-- Add an instance for a pair of menu items. That expands into mutlilple items.</span>
+<span class="co">-- Add an instance for a pair of menu items. That expands into multiple items.</span>
 <span class="kw">instance</span> (<span class="dt">Menu</span> a, <span class="dt">Menu</span> b) <span class="ot">=&gt;</span> <span class="dt">Menu</span> (a,b) <span class="kw">where</span>
   menu _ <span class="fu">=</span> menu (undefined<span class="ot"> ::</span> a) <span class="fu">++</span> menu (undefined<span class="ot"> ::</span> b)</code></pre></div>
 <p>And we can generate the composite menu of both deserts:</p>
@@ -507,7 +507,8 @@ gmenu _ <span class="fu">=</span> gopts (<span class="dt">Proxy</span><span clas
     , <span class="dt">Variant</span> <span class="st">&quot;temperature&quot;</span> [ <span class="dt">Choice</span> <span class="st">&quot;Warm&quot;</span> , <span class="dt">Choice</span> <span class="st">&quot;Cold&quot;</span> ]
     ]
 ]</code></pre></div>
-<p>So that’s generics. One of the best goto examples of how an expressive type system and a few clever compiler hooks can make programmers lives easier by reducing boilerplate and leading to more correct code.</p>
+<p>So that’s generics. One of the best goto examples of how an expressive type system and a few clever compiler hooks can make programmers lives easier by cooking our boilerplate for us and giving tastier more correct code.</p>
+<p><a href="https://www.flickr.com/photos/theleggett/4409912246"><img src="../images/pie2.jpg" /></a></p>
         </div>
     </div>
 
