@@ -154,7 +154,7 @@ data    U1        p = U1                  -- ()
 data    (:+:) f g p = L1 (f p) | R1 (g p) -- Sum
 data    (:*:) f g p = (f p) :*: (g p)     -- Product
 newtype K1    i c p = K1 { unK1 :: c }    -- a container for a c
-newtype M1  i t f p = M1 { unM1 :: f p }  -- a wrapper
+newtype M1  i t f p = M1 { unM1 :: f p }  -- metadata wrapper
 ```
 
 Now we could write this instance by hand for all of our datatypes, and for a
@@ -391,8 +391,9 @@ M1
        })
 ```
 
-So that's how ``-XDeriveGeneric`` works under the hood, nothing terribly
-complicated just book keeping.
+These data points are then used to generate the Rep instance in the derived
+Generic instances. So that's how ``-XDeriveGeneric`` works under the hood,
+nothing terribly complicated just book keeping.
 
 #### GHC.Generics
 
@@ -450,10 +451,10 @@ phase, all of which gets erased during compilation.
 #### Example
 
 I tried to come up a non-contrived example for illustrating the usefulness of
-generics, and there are plenty of examples (serializes for JSON, traversals,
-command line parsers, etc) that are well-documented elsewhere on the web. So
-let's consider an example based on the silly pun in the title of this article,
-namely cooking typeclasses.
+generics, and there are plenty of examples (serializes for JSON, Protocol
+Buffers, SQL Generation, traversals, command line parsers, etc) that are
+well-documented elsewhere on the web. So let's consider an example based on the
+silly pun in the title of this article, namely cooking typeclasses.
 
 So we have a Pie type, naturally. 
 

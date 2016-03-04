@@ -164,7 +164,7 @@ int eval(Expr t)
 <span class="kw">data</span>    (<span class="fu">:+:</span>) f g p <span class="fu">=</span> <span class="dt">L1</span> (f p) <span class="fu">|</span> <span class="dt">R1</span> (g p) <span class="co">-- Sum</span>
 <span class="kw">data</span>    (<span class="fu">:*:</span>) f g p <span class="fu">=</span> (f p) <span class="fu">:*:</span> (g p)     <span class="co">-- Product</span>
 <span class="kw">newtype</span> <span class="dt">K1</span>    i c p <span class="fu">=</span> <span class="dt">K1</span> {<span class="ot"> unK1 ::</span> c }    <span class="co">-- a container for a c</span>
-<span class="kw">newtype</span> <span class="dt">M1</span>  i t f p <span class="fu">=</span> <span class="dt">M1</span> {<span class="ot"> unM1 ::</span> f p }  <span class="co">-- a wrapper</span></code></pre></div>
+<span class="kw">newtype</span> <span class="dt">M1</span>  i t f p <span class="fu">=</span> <span class="dt">M1</span> {<span class="ot"> unM1 ::</span> f p }  <span class="co">-- metadata wrapper</span></code></pre></div>
 <p>Now we could write this instance by hand for all of our datatypes, and for a simple enumeration it would look like the following:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Ingredient</span>
   <span class="fu">=</span> <span class="dt">Flour</span>
@@ -352,7 +352,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
              ]
        , recursive <span class="fu">=</span> <span class="dt">False</span>
        })</code></pre></div>
-<p>So that’s how <code>-XDeriveGeneric</code> works under the hood, nothing terribly complicated just book keeping.</p>
+<p>These data points are then used to generate the Rep instance in the derived Generic instances. So that’s how <code>-XDeriveGeneric</code> works under the hood, nothing terribly complicated just book keeping.</p>
 <h4 id="ghc.generics">GHC.Generics</h4>
 <p>From the internal representation we crank out several typeclass instances which store the metadata about the various constructors.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Datatype</span> d <span class="kw">where</span>
@@ -390,7 +390,7 @@ mkRProduct x <span class="fu">=</span> [<span class="dt">M1</span> (<span class=
   conName _ <span class="fu">=</span> <span class="st">&quot;Sugar&quot;</span></code></pre></div>
 <p>Unlike reflection in languages like Java, Generics are not pushing type information into the runtime. Apart from a dictionary lookup for they are a effectively free abstraction that has no overhead. We’re simply making more information from the compiler manifest in the types during the type-checking phase, all of which gets erased during compilation.</p>
 <h4 id="example">Example</h4>
-<p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, traversals, command line parsers, etc) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
+<p>I tried to come up a non-contrived example for illustrating the usefulness of generics, and there are plenty of examples (serializes for JSON, Protocol Buffers, SQL Generation, traversals, command line parsers, etc) that are well-documented elsewhere on the web. So let’s consider an example based on the silly pun in the title of this article, namely cooking typeclasses.</p>
 <p>So we have a Pie type, naturally.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Pie</span> <span class="fu">=</span> <span class="dt">Pie</span>
   {<span class="ot"> filling ::</span> <span class="dt">Filling</span>
