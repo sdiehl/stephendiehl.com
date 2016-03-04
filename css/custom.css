@@ -41,9 +41,6 @@ nav ul li a:focus {
     header h1 { font-size: 34px; line-height: 37px; }
     nav { position: relative; }
     nav ul,
-    .carbonad {
-            display: none;
-    }
     #logo { text-align: left; }
     #examples .four.columns {
         padding-top: 30px;
@@ -52,10 +49,8 @@ nav ul li a:focus {
 
 /* Mobile Landscape */
 @media only screen and (min-width: 480px) and (max-width: 767px) {
-    nav ul {
-        display: none;
-    }
-}
+
+
 
 /* Non 960 */
 @media only screen and (max-width: 959px) {
@@ -92,7 +87,6 @@ nav ul li a:focus {
 
 /* Anything smaller than standard 960 on a device */
 @media only screen and (max-width: 959px) and (max-device-width: 1000px) {
-    .resize { display: none; }
 }
 
 table{
