@@ -131,7 +131,7 @@ int eval(Expr t)
 #### Compiler Hooks
 
 Since GHC 6.10 we've had type families which, among other things, allow us to
-associate data type with out typeclass. So the structure of our Generic class
+associate data types with our typeclass. So the structure of our Generic class
 can have a associated ``Rep`` type which can carry information along with the
 typeclass.
 
@@ -166,7 +166,7 @@ data Ingredient
   | Sugar
 
 instance Generic Ingredient where
-  type Rep Ingredient = M1 D (T_Ingredient ((M1 C (C_Flour U1)) :+: (MC 1 (C_Sugar U1))))
+  type Rep Ingredient = M1 D (T_Ingredient ((M1 C (C_Flour U1)) :+: (M1 C (C_Sugar U1))))
 
   from Flour = M1 (L1 (M1 U1))
   from Sugar = M1 (R1 (M1 U1))
@@ -184,7 +184,7 @@ representation of it's syntax tree, namely the types
 [GHC.DataCon](https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html)
 and
 [GHC.TypeCon](https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html).
-Using the ``-XeriveGeneric`` extension we can have GHC crank this typeclass out
+Using the ``-XDeriveGeneric`` extension we can have GHC crank this typeclass out
 automatically: 
 
 ```haskell

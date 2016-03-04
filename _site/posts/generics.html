@@ -153,7 +153,7 @@ int eval(Expr t)
 ```
 -->
 <h4 id="compiler-hooks">Compiler Hooks</h4>
-<p>Since GHC 6.10 we’ve had type families which, among other things, allow us to associate data type with out typeclass. So the structure of our Generic class can have a associated <code>Rep</code> type which can carry information along with the typeclass.</p>
+<p>Since GHC 6.10 we’ve had type families which, among other things, allow us to associate data types with our typeclass. So the structure of our Generic class can have a associated <code>Rep</code> type which can carry information along with the typeclass.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Generic</span> a <span class="kw">where</span>
   <span class="kw">type</span> <span class="dt">Rep</span><span class="ot"> a ::</span> <span class="fu">*</span> <span class="ot">-&gt;</span> <span class="fu">*</span>
 <span class="ot">  from ::</span> a <span class="ot">-&gt;</span> (<span class="dt">Rep</span> a) x
@@ -171,7 +171,7 @@ int eval(Expr t)
   <span class="fu">|</span> <span class="dt">Sugar</span>
 
 <span class="kw">instance</span> <span class="dt">Generic</span> <span class="dt">Ingredient</span> <span class="kw">where</span>
-  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Ingredient</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Ingredient</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Flour</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">MC</span> <span class="dv">1</span> (<span class="dt">C_Sugar</span> <span class="dt">U1</span>))))
+  <span class="kw">type</span> <span class="dt">Rep</span> <span class="dt">Ingredient</span> <span class="fu">=</span> <span class="dt">M1</span> <span class="dt">D</span> (<span class="dt">T_Ingredient</span> ((<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Flour</span> <span class="dt">U1</span>)) <span class="fu">:+:</span> (<span class="dt">M1</span> <span class="dt">C</span> (<span class="dt">C_Sugar</span> <span class="dt">U1</span>))))
 
   from <span class="dt">Flour</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">L1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
   from <span class="dt">Sugar</span> <span class="fu">=</span> <span class="dt">M1</span> (<span class="dt">R1</span> (<span class="dt">M1</span> <span class="dt">U1</span>))
@@ -182,7 +182,7 @@ int eval(Expr t)
 <span class="kw">data</span> <span class="dt">T_Ingredient</span>
 <span class="kw">data</span> <span class="dt">C_Flour</span>
 <span class="kw">data</span> <span class="dt">C_Sugar</span></code></pre></div>
-<p>The instance here is purely mechanical and can be derived from GHC’s internal representation of it’s syntax tree, namely the types <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. Using the <code>-XeriveGeneric</code> extension we can have GHC crank this typeclass out automatically:</p>
+<p>The instance here is purely mechanical and can be derived from GHC’s internal representation of it’s syntax tree, namely the types <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/DataCon.html">GHC.DataCon</a> and <a href="https://downloads.haskell.org/~ghc/7.10.2/docs/html/libraries/ghc-7.10.2/TyCon.html">GHC.TypeCon</a>. Using the <code>-XDeriveGeneric</code> extension we can have GHC crank this typeclass out automatically:</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE DeriveGeneric #-}</span>
 
 <span class="kw">data</span> <span class="dt">Ingredient</span>
