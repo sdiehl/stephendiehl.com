@@ -106,7 +106,7 @@ $ <span class="kw">stack</span> setup</code></pre></div>
 <span class="kw">Prelude&gt;</span> </code></pre></div>
 <h4 id="pathogen">pathogen</h4>
 <p>Pathogen is a bundling system for vim that will allow us to pull directly from Git repos to manage and update our vim packages off of the <code>bundles</code> directory.</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> -p ~/.vim/autoload ~/.vim/bundle <span class="kw">&amp;&amp;</span> <span class="kw">\</span>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">mkdir</span> -p ~/.vim/autoload ~/.vim/bundle
 $ <span class="kw">curl</span> -LSso ~/.vim/autoload/pathogen.vim https://tpo.pe/pathogen.vim</code></pre></div>
 <p>Using pathogen we’ll install the following libraries.</p>
 <ol style="list-style-type: decimal">
@@ -142,7 +142,7 @@ $ <span class="kw">cd</span> vimproc.vim
 $ <span class="kw">make</span></code></pre></div>
 <hr />
 <h4 id="ghc-mod">ghc-mod</h4>
-<p>The preferred tool for background checking of Haskell syntax is still <code>ghc-mod</code>. Over the years it has become more featureful and more efficient. The hlint tool is also used to supplement and provide helpful hints about ways to refactor common code smells. We will integrate with ghc-mod in several ways, but the first step is to command-line tool <code>ghc-mod</code> which vim will send program changes to query information. To install it we use stack.</p>
+<p>The preferred tool for background checking of Haskell syntax is still <code>ghc-mod</code>. Over the years it has become more featureful and more efficient. The hlint tool is also used to supplement and provide helpful hints about ways to refactor common code smells. We will integrate with ghc-mod in several ways, but the first step is to install the command-line tool <code>ghc-mod</code> which vim will send program changes to query information. To install it we use stack.</p>
 <div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">stack</span> install hlint ghc-mod</code></pre></div>
 <pre class="shell"><code>Copied executables to /home/user/.local/bin:
 - ghc-mod
@@ -345,14 +345,10 @@ let g:ctrlp_custom_ignore = <span class="kw">'</span><span class="st">\v[\/]dist
 <td align="left">Open file explorer</td>
 </tr>
 <tr class="even">
-<td align="left"><kbd>\</kbd> + <kbd>t</kbd></td>
-<td align="left">Open fuzzy file finder</td>
-</tr>
-<tr class="odd">
 <td align="left"><kbd>\</kbd> + <kbd>c</kbd> + <kbd>Space</kbd></td>
 <td align="left">Toggle comment of text under cursor</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td align="left"><kbd>\</kbd> + <kbd>c</kbd> + <kbd>s</kbd></td>
 <td align="left">Toggle “sexy” comment of text</td>
 </tr>

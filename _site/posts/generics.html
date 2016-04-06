@@ -107,10 +107,10 @@ In C the approximation of these concepts is in *struct* and *union* types.
   <span class="fu">|</span> <span class="dt">Number</span> {<span class="ot"> val ::</span> <span class="dt">Int</span> }</code></pre></div>
 <p>During compilation most of the information about the structure of the datatypes is thrown out, by design Haskell erases all type information. Prior to type-checking a phase known as <strong>elaboration</strong> expands out all record selectors into toplevel functions which extract the named fields of a product.</p>
 <div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">Point</span> a b <span class="fu">=</span> <span class="dt">Point</span> {<span class="ot"> x ::</span> a,<span class="ot"> y ::</span> b }</code></pre></div>
-<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">x ::</span> <span class="dt">Point</span> a <span class="ot">-&gt;</span> a
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">x ::</span> <span class="dt">Point</span> a b <span class="ot">-&gt;</span> a
 x (<span class="dt">Point</span> a _) <span class="fu">=</span> a
 
-<span class="ot">y ::</span> <span class="dt">Point</span> b <span class="ot">-&gt;</span> b
+<span class="ot">y ::</span> <span class="dt">Point</span> a b <span class="ot">-&gt;</span> b
 y (<span class="dt">Point</span> _ b) <span class="fu">=</span> b</code></pre></div>
 <p>The rest of the information about products largely gets thrown out after compilation, and the product just get expanded into pattern matching code. For sum types the only information that is kept around is the tag for each constructor of the sum type. For instance <code>Add</code> is assigned the tag 1, <code>Mul</code> is assigned 2 etc. In a case statement the only information that is available at runtime is which branch we’re scrutinizing.</p>
 <p>So what if consider not tossing out all this information and instead exposed it to our program so that we could write generic logic that can introspect the “structure” of our datatypes.</p>

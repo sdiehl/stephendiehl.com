@@ -71,10 +71,10 @@ data Point a b = Point { x :: a, y :: b }
 ```
 
 ```haskell
-x :: Point a -> a
+x :: Point a b -> a
 x (Point a _) = a
 
-y :: Point b -> b
+y :: Point a b -> b
 y (Point _ b) = b
 ```
 
