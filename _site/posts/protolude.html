@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="en"> <!--<![endif]-->
+<head>
+
+    <!-- Basic Page Needs
+  ================================================== -->
+    <meta charset="utf-8">
+    <title>Building a Better Custom Haskell Prelude</title>
+    <meta name="description" content="{{description}}">
+    <meta name="author" content="{{author}}">
+
+    <!-- Mobile Specific Metas
+  ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- CSS
+  ================================================== -->
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/skeleton.css">
+    <link rel="stylesheet" href="../css/typography.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/syntax.css">
+    <link rel="stylesheet" href="../css/custom.css">
+
+    <link href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Droid+Serif:400,400italic|Inconsolata" rel="stylesheet">
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+    </script>
+    <script type="text/x-mathjax-config">
+    </script>
+
+    <!-- Google Analytics -->
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-49839533-1', 'stephendiehl.com');
+      ga('send', 'pageview');
+    </script>
+
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Favicons
+    ================================================== -->
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+
+</head>
+<body>
+
+    <div class="container">
+        <div class="three columns sidebar">
+            <nav>
+                <h3 id="logo">Stephen Diehl</h3>
+                <ul>
+                    <li><a href="../">Index</a></li>
+                    <li><a href="../posts.html">Blog</a></li>
+                    <li><a href="../pages/writings.html">Writings</a></li>
+                    <li><a href="../pages/hire.html">Contact Me</a></li>
+                    <li><a href="../pages/pgp.html">PGP Key</a></li>
+                    <li><a href="https://github.com/sdiehl">Github</a></li>
+                    <li><a href="https://twitter.com/#!/smdiehl">Twitter</a></li>
+                </ul>
+            </nav>
+            &nbsp;
+        </div>
+
+        <div class="twelve columns offset-by-one content">
+            <h3 id="building-a-better-custom-haskell-prelude">Building a Better Custom Haskell Prelude</h3>
+<p>The Haskell Prelude is the default import into all Haskell modules, it provides an endless number of ways to shoot yourself in the foot and historical cruft that can’t be removed. While it is difficult to fix upstream, we can however you can remove the Prelude entirely on a project-level and replace it with a more sensible set of defaults using the <code>-XNoImplicitPrelude</code> language extension.</p>
+<p>There are two philosophies on building new Preludes:</p>
+<ul>
+<li><em>Big Vehicle Prelude</em> - Fix most of the deficiencies in the Prelude by introducing new abstractions that replace large portions of the basic types and class, and generally redefine the way we write Haskell. See <a href="https://hackage.haskell.org/package/numeric-prelude">numeric-prelude</a>.</li>
+<li><em>Small Vehicle Prelude</em> - Fix the broken parts of the Prelude by building on existing types and classes and masking broken bits. See <a href="https://hackage.haskell.org/package/numeric-prelude">basic-prelude</a>.</li>
+</ul>
+<p>I don’t prescribe to the large vehicle approach, a lot of the Haskell is not ideal but good enough to get the job done. And interoperability with the rest of the ecosystem which typically uses default Base and Prelude is incredibly important. In <a href="http://www.stephendiehl.com/posts/production.html">previous posts</a> I’ve written about rolling your own small-vehicle Prelude is a good idea for large teams working in industry but I left it somewhat ambiguous about what to include. Obviously everyone’s company is different so I thought I’d expand on what I consider a sensible set of defaults that one could use to then build a custom Prelude. We’ll call this a <em>Protolude</em>.</p>
+<p style="text-align:center">
+<strong><a href="https://github.com/sdiehl/protolude">Example Project</a></strong>
+</p>
+<h4 id="module-structure">Module Structure</h4>
+<p>The basic module structure is consists of a main module reexport which we’ll dump everything in called <code>X</code>. And various miscellaneous functions which we’ll reexport from the root module. Off of this we’ll have several utilities modules which have domain specific functions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE NoImplicitPrelude #-}</span>
+
+<span class="kw">module</span> <span class="dt">Protolude</span> (
+  <span class="kw">module</span> <span class="dt">X</span>,
+  identity,
+  bool,
+  (<span class="fu">&amp;</span>),
+  uncons,
+  applyN,
+  print,
+
+  <span class="dt">LText</span>,
+  <span class="dt">LByteString</span>,
+) <span class="kw">where</span>
+
+<span class="kw">import qualified</span> <span class="dt">Prelude</span> <span class="kw">as</span> <span class="dt">P</span>
+
+<span class="kw">import qualified</span> <span class="dt">List</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import qualified</span> <span class="dt">Show</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import qualified</span> <span class="dt">Bool</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import qualified</span> <span class="dt">Debug</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import qualified</span> <span class="dt">Monad</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import qualified</span> <span class="dt">Applicative</span> <span class="kw">as</span> <span class="dt">X</span></code></pre></div>
+<h4 id="base-types">Base Types</h4>
+<p>The Basic types (<code>Int</code>, <code>Integer</code>, <code>Float</code>, <code>Char</code>) we reexport wholesale along with their associated functions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Base types</span>
+<span class="kw">import </span><span class="dt">Data.Int</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Bits</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Word</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Bool</span> <span class="kw">as</span> <span class="dt">X</span> <span class="kw">hiding</span> (bool)
+<span class="kw">import </span><span class="dt">Data.Char</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">Char</span>)
+<span class="kw">import </span><span class="dt">Data.Maybe</span> <span class="kw">as</span> <span class="dt">X</span> <span class="kw">hiding</span> (fromJust)
+<span class="kw">import </span><span class="dt">Data.Either</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Complex</span> <span class="kw">as</span> <span class="dt">X</span>
+
+<span class="kw">import </span><span class="dt">Data.Function</span> <span class="kw">as</span> <span class="dt">X</span> (
+    id
+  , const
+  , (<span class="fu">.</span>)
+  , flip
+  , fix
+  , on
+  )</code></pre></div>
+<p>We define the flipped application operator for GHC &lt; 7.10 which does not provide this be default.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">(&amp;) ::</span> a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> b
+x <span class="fu">&amp;</span> f <span class="fu">=</span> f x</code></pre></div>
+<p>We rename the <code>id</code> function to identity since it’s far more likely we’ll have variable names called <code>id</code> over the identity function. This is a contentious point and your mileage may vary with this change.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">identity ::</span> a <span class="ot">-&gt;</span> a
+identity x <span class="fu">=</span> x</code></pre></div>
+<p>The bool function (the combinator analogue of <code>maybe</code> and <code>either</code>) is provided by GHC 7.10, but we reexport it for earlier versions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">bool ::</span> a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> a
+bool f t b <span class="fu">=</span> <span class="kw">if</span> b <span class="kw">then</span> t <span class="kw">else</span> f</code></pre></div>
+<p>The <code>uncons</code> function is not provided by default, but it unpacks a list into a Maybe tuple containing the head in the first tuple parameter if it exists.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">uncons ::</span> [a] <span class="ot">-&gt;</span> <span class="dt">Maybe</span> (a, [a])
+uncons []     <span class="fu">=</span> <span class="dt">Nothing</span>
+uncons (x<span class="fu">:</span>xs) <span class="fu">=</span> <span class="dt">Just</span> (x, xs)</code></pre></div>
+<p>The <code>applyN</code> function takes a function and a count and applies it <code>n</code> number of times.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">applyN ::</span> <span class="dt">Int</span> <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a
+applyN n f <span class="fu">=</span> X.foldr (<span class="fu">.</span>) id (X.replicate n f)</code></pre></div>
+<p>And then we reexport various boolean combinators for working with branching monadic logic.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">whenM ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m <span class="dt">Bool</span> <span class="ot">-&gt;</span> m () <span class="ot">-&gt;</span> m ()
+whenM p m <span class="fu">=</span>
+  p <span class="fu">&gt;&gt;=</span> flip when m
+
+<span class="ot">unlessM ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m <span class="dt">Bool</span> <span class="ot">-&gt;</span> m () <span class="ot">-&gt;</span> m ()
+unlessM p m <span class="fu">=</span>
+  p <span class="fu">&gt;&gt;=</span> flip unless m
+
+<span class="ot">ifM ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> m <span class="dt">Bool</span> <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m a
+ifM p x y <span class="fu">=</span> p <span class="fu">&gt;&gt;=</span> \b <span class="ot">-&gt;</span> <span class="kw">if</span> b <span class="kw">then</span> x <span class="kw">else</span> y
+
+<span class="ot">guardM ::</span> <span class="dt">MonadPlus</span> m <span class="ot">=&gt;</span> m <span class="dt">Bool</span> <span class="ot">-&gt;</span> m ()
+guardM f <span class="fu">=</span> guard <span class="fu">=&lt;&lt;</span> f</code></pre></div>
+<h4 id="safe">Safe</h4>
+<p><a href="https://hackage.haskell.org/package/safe">Safe</a> provides Maybe versions of many of the various partial functions (<code>head</code>, <code>tail</code>) that are shipped by default. Wrapping it up in a Maybe is widely considered the right approach and if Haskell were designed today, they would not be present.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Maybe'ized version of partial functions</span>
+<span class="kw">import </span><span class="dt">Safe</span> <span class="kw">as</span> <span class="dt">X</span> (
+  headMay,
+  initMay,
+  tailMay
+  )</code></pre></div>
+<h4 id="debugging">Debugging</h4>
+<p>Various debugging and trap commands are still provided since they are useful for partial code and various fatal program logic. However now they have a warning emitted by the compiler if they are left in place, with position information about where they are used. This can be toggled between production code and debugging code.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">{-# WARNING undefined &quot;'undefined' remains in code&quot; #-}</span>
+undefined<span class="ot"> ::</span> a
+undefined <span class="fu">=</span> P.undefined
+
+<span class="ot">{-# WARNING error &quot;'error' remains in code&quot; #-}</span>
+error<span class="ot"> ::</span> <span class="dt">P.String</span> <span class="ot">-&gt;</span> a
+error <span class="fu">=</span> P.error
+
+<span class="ot">{-# WARNING trace &quot;'trace' remains in code&quot; #-}</span>
+<span class="ot">trace ::</span> <span class="dt">P.String</span> <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> a
+trace <span class="fu">=</span> T.trace
+
+<span class="ot">{-# WARNING traceShow &quot;'traceShow' remains in code&quot; #-}</span>
+<span class="ot">traceShow ::</span> <span class="dt">P.Show</span> a <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> a
+traceShow a <span class="fu">=</span> T.trace (P.show a) a
+
+<span class="ot">{-# WARNING traceShowM &quot;'traceShowM' remains in code&quot; #-}</span>
+<span class="ot">traceShowM ::</span> (<span class="dt">P.Show</span> a, <span class="dt">P.Monad</span> m) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> m ()
+traceShowM a <span class="fu">=</span> T.traceM (P.show a)
+
+<span class="ot">{-# WARNING traceM &quot;'traceM' remains in code&quot; #-}</span>
+<span class="ot">traceM ::</span> <span class="dt">P.Monad</span> m <span class="ot">=&gt;</span> <span class="dt">P.String</span> <span class="ot">-&gt;</span> m ()
+traceM <span class="fu">=</span> T.traceM
+
+<span class="ot">{-# WARNING traceIO &quot;'traceIO' remains in code&quot; #-}</span>
+<span class="ot">traceIO ::</span> <span class="dt">P.String</span> <span class="ot">-&gt;</span> <span class="dt">P.IO</span> ()
+traceIO <span class="fu">=</span> T.traceIO
+
+<span class="ot">{-# WARNING notImplemented &quot;'notImplemented' remains in code&quot; #-}</span>
+<span class="ot">notImplemented ::</span> a
+notImplemented <span class="fu">=</span> P.error <span class="st">&quot;Not implemented&quot;</span></code></pre></div>
+<h4 id="either">Either</h4>
+<p>Various either combinators to convert between Maybe and Either probably should be provided but are not, there are four various combinations of these. Handling a maybe which happens to have a monoidal instance for mempty in Left is also fairly common task.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">leftToMaybe ::</span> <span class="dt">Either</span> l r <span class="ot">-&gt;</span> <span class="dt">Maybe</span> l
+leftToMaybe <span class="fu">=</span> either <span class="dt">Just</span> (const <span class="dt">Nothing</span>)
+
+<span class="ot">rightToMaybe ::</span> <span class="dt">Either</span> l r <span class="ot">-&gt;</span> <span class="dt">Maybe</span> r
+rightToMaybe <span class="fu">=</span> either (const <span class="dt">Nothing</span>) <span class="dt">Just</span>
+
+<span class="ot">maybeToRight ::</span> l <span class="ot">-&gt;</span> <span class="dt">Maybe</span> r <span class="ot">-&gt;</span> <span class="dt">Either</span> l r
+maybeToRight l <span class="fu">=</span> maybe (<span class="dt">Left</span> l) <span class="dt">Right</span>
+
+<span class="ot">maybeToLeft ::</span> r <span class="ot">-&gt;</span> <span class="dt">Maybe</span> l <span class="ot">-&gt;</span> <span class="dt">Either</span> l r
+maybeToLeft r <span class="fu">=</span> maybe (<span class="dt">Right</span> r) <span class="dt">Left</span>
+
+<span class="ot">maybeToEither ::</span> <span class="dt">Monoid</span> b <span class="ot">=&gt;</span> <span class="dt">Maybe</span> a <span class="ot">-&gt;</span> <span class="dt">Either</span> b a
+maybeToEither <span class="fu">=</span> maybe mempty</code></pre></div>
+<h4 id="list">List</h4>
+<p>The various list functions are exported wholesale excpet for the ones which are generalized by Foldable and Traversable. head is reexported as a total function written in terms of foldr. The <code>ordNub</code> function is accidentally quadratic in the Prelude is replaced by a logarithmic variant using a hashmap underneath.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">head<span class="ot"> ::</span> (<span class="dt">Foldable</span> f) <span class="ot">=&gt;</span> f a <span class="ot">-&gt;</span> <span class="dt">Maybe</span> a
+head <span class="fu">=</span> foldr (\x _ <span class="ot">-&gt;</span> return x) <span class="dt">Nothing</span>
+
+<span class="ot">sortOn ::</span> (<span class="dt">Ord</span> o) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> o) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> [a]
+sortOn <span class="fu">=</span> sortBy <span class="fu">.</span> comparing
+
+<span class="co">-- O(n * log n)</span>
+<span class="ot">ordNub ::</span> (<span class="dt">Ord</span> a) <span class="ot">=&gt;</span> [a] <span class="ot">-&gt;</span> [a]
+ordNub l <span class="fu">=</span> go Set.empty l
+  <span class="kw">where</span>
+    go _ []     <span class="fu">=</span> []
+    go s (x<span class="fu">:</span>xs) <span class="fu">=</span>
+      <span class="kw">if</span> x <span class="ot">`Set.member`</span> s
+      <span class="kw">then</span> go s xs
+      <span class="kw">else</span> x <span class="fu">:</span> go (Set.insert x s) xs</code></pre></div>
+<h4 id="monad">Monad</h4>
+<p>The core moand class, functions, and combinators are reexported wholesale. Variants like <code>mapM</code> are provided by <code>Data.Traversable</code> instead of <code>Control.Monad</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">module</span> <span class="dt">Monad</span> (
+    <span class="dt">Monad</span>(<span class="fu">..</span>)
+  , <span class="dt">MonadPlus</span>(<span class="fu">..</span>)
+
+  , (<span class="fu">=&lt;&lt;</span>)
+  , (<span class="fu">&gt;=&gt;</span>)
+  , (<span class="fu">&lt;=&lt;</span>)
+  , forever
+
+  , join
+  , mfilter
+  , filterM
+  , mapAndUnzipM
+  , zipWithM
+  , zipWithM_
+  , foldM
+  , foldM_
+  , replicateM
+  , replicateM_
+  , concatMapM
+
+  , guard
+  , when
+  , unless
+
+  , liftM
+  , liftM2
+  , liftM3
+  , liftM4
+  , liftM5
+  , liftM'
+  , liftM2'
+  , ap
+
+  , (<span class="fu">&lt;$!&gt;</span>)
+  ) <span class="kw">where</span>
+
+<span class="kw">import </span><span class="dt">Prelude</span> (concat, seq)
+<span class="kw">import </span><span class="dt">Control.Monad</span>
+
+<span class="ot">concatMapM ::</span> (<span class="dt">Monad</span> m) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> m [b]) <span class="ot">-&gt;</span> [a] <span class="ot">-&gt;</span> m [b]
+concatMapM f xs <span class="fu">=</span> liftM concat (mapM f xs)</code></pre></div>
+<p>Strict versions of <code>liftM</code> are also provided by default since this is a common source of unexpected laziness.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">liftM' ::</span> <span class="dt">Monad</span> m <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b
+liftM' <span class="fu">=</span> (<span class="fu">&lt;$!&gt;</span>)
+<span class="ot">{-# INLINE liftM' #-}</span>
+
+<span class="ot">liftM2' ::</span> (<span class="dt">Monad</span> m) <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b <span class="ot">-&gt;</span> c) <span class="ot">-&gt;</span> m a <span class="ot">-&gt;</span> m b <span class="ot">-&gt;</span> m c
+liftM2' f a b <span class="fu">=</span> <span class="kw">do</span>
+  x <span class="ot">&lt;-</span> a
+  y <span class="ot">&lt;-</span> b
+  <span class="kw">let</span> z <span class="fu">=</span> f x y
+  z <span class="ot">`seq`</span> return z
+<span class="ot">{-# INLINE liftM2' #-}</span></code></pre></div>
+<h4 id="applicative">Applicative</h4>
+<p>The applicative module core types are reexported wholesale. Unlike in 7.8 we have the Applicative class in scope by default, as it should be in this day and age.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Applicatives</span>
+<span class="kw">import </span><span class="dt">Control.Applicative</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">Applicative</span>(<span class="fu">..</span>)
+  , <span class="dt">Alternative</span>(<span class="fu">..</span>)
+  , <span class="dt">Const</span>(<span class="fu">..</span>)
+  , <span class="dt">ZipList</span>(<span class="fu">..</span>)
+  , (<span class="fu">&lt;**&gt;</span>)
+  , liftA
+  , liftA2
+  , liftA3
+  , optional
+  )</code></pre></div>
+<h4 id="typeclasses">Typeclasses</h4>
+<p>The core GHC typeclasses for ordering and numeric tower are reexported wholesale. We also bring Traversable and Foldable into scope masking a few of the partial functions which generally should be avoided. Semiring is also common enough these days that it should be in scope implicitly.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Base typeclasses</span>
+<span class="kw">import </span><span class="dt">Data.Eq</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Ord</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Monoid</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Traversable</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Foldable</span> <span class="kw">as</span> <span class="dt">X</span> <span class="kw">hiding</span> (
+    foldr1
+  , foldl1
+  , maximum
+  , maximumBy
+  , minimum
+  , minimumBy
+  )
+<span class="kw">import </span><span class="dt">Data.Semiring</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Functor.Identity</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.Functor</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">Functor</span>(<span class="fu">..</span>)
+  , (<span class="fu">$&gt;</span>)
+  , (<span class="fu">&lt;$&gt;</span>)
+  , void
+  )</code></pre></div>
+<h4 id="deepseq">Deepseq</h4>
+<p>Deepseq is usually an important typeclass to derive for various usecases, and so we bring in the <code>deepseq</code> library and it’s various functions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Deepseq</span>
+<span class="kw">import </span><span class="dt">Control.DeepSeq</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">NFData</span>(<span class="fu">..</span>)
+  , (<span class="fu">$!!</span>)
+  , deepseq
+  , force
+  )</code></pre></div>
+<h4 id="data-structures">Data Structures</h4>
+<p>The core data structures provided by GHC are reexported, but with List we make sure to mask the partial functions, and operators are provided in more general interfaces.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Data structures</span>
+<span class="kw">import </span><span class="dt">Data.Tuple</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Data.List</span> <span class="kw">as</span> <span class="dt">X</span> (
+    splitAt
+  , break
+  , intercalate
+  , isPrefixOf
+  , drop
+  , filter
+  , reverse
+  , replicate
+  )</code></pre></div>
+<p>The containers library all provide functions which overlap with each other (lookup, insert, etc) so we just export the types for these structures so we can use them in signatures. On a module level these would then be typically imported using a qualified import like <code>import qualified Data.Map as Map</code>.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import </span><span class="dt">Data.Map</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">Map</span>)
+<span class="kw">import </span><span class="dt">Data.Set</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">Set</span>)
+<span class="kw">import </span><span class="dt">Data.Sequence</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">Seq</span>)
+<span class="kw">import </span><span class="dt">Data.IntMap</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">IntMap</span>)
+<span class="kw">import </span><span class="dt">Data.IntSet</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">IntSet</span>)</code></pre></div>
+<h4 id="monad-transformers">Monad Transformers</h4>
+<p>The basic <code>mtl</code> transformer stack are usually ubiqitious in modern Haskell, specifically StateT, ReaderT and ExceptT. We don’t export all functions in these modules but just enough that most uses cases of the common transformers are brought into scope.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Monad transformers</span>
+<span class="kw">import </span><span class="dt">Control.Monad.State</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">MonadState</span>,
+    <span class="dt">State</span>,
+    <span class="dt">StateT</span>,
+    put,
+    get,
+    gets,
+    modify,
+    withState,
+
+    runStateT,
+    execStateT,
+    evalStateT,
+  )
+
+<span class="kw">import </span><span class="dt">Control.Monad.Reader</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">MonadReader</span>,
+    <span class="dt">Reader</span>,
+    <span class="dt">ReaderT</span>,
+    ask,
+    asks,
+    local,
+    runReader,
+    runReaderT,
+  )
+
+<span class="kw">import </span><span class="dt">Control.Monad.Except</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">MonadError</span>,
+    <span class="dt">Except</span>,
+    <span class="dt">ExceptT</span>,
+    throwError,
+    catchError,
+    runExcept,
+    runExceptT,
+  )
+
+<span class="kw">import </span><span class="dt">Control.Monad.Trans</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">MonadIO</span>,
+    lift,
+    liftIO,
+  )</code></pre></div>
+<h4 id="wired-in-types">Wired-In Types</h4>
+<p>Several basic types (IO, Show) are necessary to do anything so we obviously bring these in. The <code>Exts</code> provides the various pointer types for working with FFI as well as the Constraint type which is somewhat common in the presence of <code>-XConstraintKinds</code> and more advanced type family techniques.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Base GHC types</span>
+<span class="kw">import </span><span class="dt">GHC.IO</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">IO</span>)
+<span class="kw">import </span><span class="dt">GHC.Num</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">GHC.Real</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">GHC.Float</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">GHC.Show</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">GHC.Exts</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">Constraint</span>
+  , <span class="dt">Ptr</span>
+  , <span class="dt">FunPtr</span>
+  , the
+  )</code></pre></div>
+<h4 id="generics">Generics</h4>
+<p>Generics are also ubiqitious in modern Haskell and the various typeclasses and type synonyms should be provided so that we can <code>-XDeriveGeneric</code> as well as implement default instances for Generic classes.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- Generics</span>
+<span class="kw">import </span><span class="dt">GHC.Generics</span> (
+    <span class="dt">Generic</span>(<span class="fu">..</span>)
+  , <span class="dt">Rep</span>
+  , <span class="dt">K1</span>(<span class="fu">..</span>)
+  , <span class="dt">M1</span>(<span class="fu">..</span>)
+  , <span class="dt">U1</span>(<span class="fu">..</span>)
+  , <span class="dt">V1</span>
+  , <span class="dt">D1</span>
+  , <span class="dt">C1</span>
+  , <span class="dt">S1</span>
+  , (<span class="fu">:+:</span>)
+  , (<span class="fu">:*:</span>)
+  , <span class="dt">NoSelector</span>
+  , <span class="dt">Rec0</span>
+  , <span class="dt">Par0</span>
+  , <span class="dt">Constructor</span>(<span class="fu">..</span>)
+  , <span class="dt">Selector</span>(<span class="fu">..</span>)
+  , <span class="dt">Arity</span>(<span class="fu">..</span>)
+  , <span class="dt">Fixity</span>(<span class="fu">..</span>)
+  )</code></pre></div>
+<h4 id="string-types">String Types</h4>
+<p>Strings in Haskell are a giant fractal of suffering. In a just world, we would all just use Text most of the time, and ByteString when we needed to deal with network but we don’t live in that world an large portions of Hasell ecosystem still use the wildly-inefficient linked-list of Char.</p>
+<p>Controversially we just reexport the Lazy text type as a type synonym <code>LText</code> and provide the <code>string-conv</code> library function <code>toS</code> which automatically converts between any two string types using a multiparam typeclass. String heavy programs might also consider reexporting the various Text and ByteString builder classes.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- ByteString</span>
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString.Lazy</span>
+<span class="kw">import qualified</span> <span class="dt">Data.ByteString</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">ByteString</span>)
+
+<span class="co">-- Text</span>
+<span class="kw">import </span><span class="dt">Data.Text</span> <span class="kw">as</span> <span class="dt">X</span> (<span class="dt">Text</span>)
+<span class="kw">import qualified</span> <span class="dt">Data.Text.Lazy</span>
+<span class="kw">import qualified</span> <span class="dt">Data.Text.IO</span>
+<span class="kw">import </span><span class="dt">Text.Printf</span> <span class="kw">as</span> <span class="dt">X</span> (printf)
+
+<span class="kw">import </span><span class="dt">Data.Text.Lazy</span> (
+    toStrict
+  , fromStrict
+  )
+
+<span class="kw">import </span><span class="dt">Data.String.Conv</span> <span class="kw">as</span> <span class="dt">X</span> (
+    strConv
+  , toS
+  , toSL
+  , <span class="dt">Leniency</span>(<span class="fu">..</span>)
+  )
+
+<span class="co">-- Printf</span>
+<span class="kw">import </span><span class="dt">Text.Printf</span> <span class="kw">as</span> <span class="dt">Exports</span> (
+    <span class="dt">PrintfArg</span>
+  , printf
+  , hPrintf
+  )</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">type</span> <span class="dt">LText</span> <span class="fu">=</span> <span class="dt">Data.Text.Lazy.Text</span>
+<span class="kw">type</span> <span class="dt">LByteString</span> <span class="fu">=</span> <span class="dt">Data.ByteString.Lazy.ByteString</span></code></pre></div>
+<h4 id="io">IO</h4>
+<p>IO is essentially obvious, so we reexport the various IO operations and command low-level command line option and file handler functions.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- IO</span>
+<span class="kw">import </span><span class="dt">System.Exit</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">System.Environment</span> <span class="kw">as</span> <span class="dt">X</span> (getArgs)
+<span class="kw">import </span><span class="dt">System.IO</span> <span class="kw">as</span> <span class="dt">X</span> (
+    <span class="dt">Handle</span>
+  , hClose
+  )</code></pre></div>
+<p>In a just world we’d have a generic <code>putStr</code> that didn’t require us to put boilerplate imports in every damn module just to print a bloody string, but alas we don’t live in that world. But we can implement a basic class to do this for the common text representation and then just export the class instead of the four libraries that all provide the same interface.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">class</span> <span class="dt">Print</span> a <span class="kw">where</span>
+<span class="ot">  putStr ::</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> m ()
+<span class="ot">  putStrLn ::</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> m ()
+
+<span class="kw">instance</span> <span class="dt">Print</span> <span class="dt">T.Text</span> <span class="kw">where</span>
+  putStr <span class="fu">=</span> liftIO <span class="fu">.</span> T.putStr
+  putStrLn <span class="fu">=</span> liftIO <span class="fu">.</span> T.putStrLn
+
+<span class="kw">instance</span> <span class="dt">Print</span> <span class="dt">TL.Text</span> <span class="kw">where</span>
+  putStr <span class="fu">=</span> liftIO <span class="fu">.</span> TL.putStr
+  putStrLn <span class="fu">=</span> liftIO <span class="fu">.</span> TL.putStrLn
+
+<span class="kw">instance</span> <span class="dt">Print</span> <span class="dt">BS.ByteString</span> <span class="kw">where</span>
+  putStr <span class="fu">=</span> liftIO <span class="fu">.</span> BS.putStr
+  putStrLn <span class="fu">=</span> liftIO <span class="fu">.</span> BS.putStrLn
+
+<span class="kw">instance</span> <span class="dt">Print</span> <span class="dt">BL.ByteString</span> <span class="kw">where</span>
+  putStr <span class="fu">=</span> liftIO <span class="fu">.</span> BL.putStr
+  putStrLn <span class="fu">=</span> liftIO <span class="fu">.</span> BL.putStrLn
+
+<span class="kw">instance</span> <span class="dt">Print</span> [<span class="dt">Char</span>] <span class="kw">where</span>
+  putStr <span class="fu">=</span> liftIO <span class="fu">.</span> Prelude.putStr
+  putStrLn <span class="fu">=</span> liftIO <span class="fu">.</span> Prelude.putStrLn
+
+<span class="co">-- For forcing type inference</span>
+<span class="ot">putText ::</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">T.Text</span> <span class="ot">-&gt;</span> m ()
+putText <span class="fu">=</span> putStrLn
+<span class="ot">{-# SPECIALIZE putText :: T.Text -&gt; IO () #-}</span>
+
+<span class="ot">putLText ::</span> <span class="dt">MonadIO</span> m <span class="ot">=&gt;</span> <span class="dt">TL.Text</span> <span class="ot">-&gt;</span> m ()
+putLText <span class="fu">=</span> putStrLn
+<span class="ot">{-# SPECIALIZE putLText :: TL.Text -&gt; IO () #-}</span></code></pre></div>
+<p>Like the functions above we automatically lift print and the various string IO operations into a generic <code>MonadIO</code> instance so we can embed them in transformer stacks.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">print<span class="ot"> ::</span> (<span class="dt">X.MonadIO</span> m, <span class="dt">P.Show</span> a) <span class="ot">=&gt;</span> a <span class="ot">-&gt;</span> m ()
+print <span class="fu">=</span> liftIO <span class="fu">.</span> P.print</code></pre></div>
+<h4 id="concurrency">Concurrency</h4>
+<p>The basic thread primitives are common enough that they should be brought into scope implicitly. The <code>async</code> library provides the preferred method of interacting with concurrent logic and so we export this wholesale as well.</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- ST</span>
+<span class="kw">import </span><span class="dt">Control.Monad.ST</span> <span class="kw">as</span> <span class="dt">ST</span>
+
+<span class="co">-- Concurrency and Parallelism</span>
+<span class="kw">import </span><span class="dt">Control.Exception</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Control.Concurrent</span> <span class="kw">as</span> <span class="dt">X</span>
+<span class="kw">import </span><span class="dt">Control.Concurrent.Async</span> <span class="kw">as</span> <span class="dt">X</span></code></pre></div>
+<hr />
+<p>Now in your cabal file you can just add:</p>
+<div class="sourceCode"><pre class="sourceCode haskell"><code class="sourceCode haskell">default<span class="fu">-</span>extensions<span class="fu">:</span>
+  <span class="dt">NoImplicitPrelude</span></code></pre></div>
+<p>And then include your sensible Prelude in your modules. You can escape hatch out of this choice on a module-by-module basis by just pulling in Prelude explicitly using <code>import Prelude</code>.</p>
+<p>So that’s the basic proto-prelude I use for my large multi-cabal-file projects. Your mileage by vary on some of these choices, but I consider this a pretty sensible and practical foundational set of functions and types that should at least provide a good starting point.</p>
+        </div>
+    </div>
+
+    <!-- JS
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+
+<!-- End Document
+================================================== -->
+</body>
