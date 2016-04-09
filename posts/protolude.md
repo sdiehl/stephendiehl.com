@@ -6,9 +6,9 @@ date: April 7, 2016
 ### Building a Better Custom Haskell Prelude
 
 The Haskell Prelude is the default import into all Haskell modules, it provides
-an endless number of ways to shoot yourself in the foot and historical cruft
-that can't be removed. While it is difficult to fix upstream, we can however you
-can remove the Prelude entirely on a project-level and replace it with a more
+an endless number of ways to shoot ourselves in the foot and historical cruft
+that can't be removed. While it is difficult to fix upstream, we can however
+remove the Prelude entirely on a project-level and replace it with a more
 sensible set of defaults using the ``-XNoImplicitPrelude`` language extension.
 
 There are two philosophies on building new Preludes:
@@ -21,15 +21,17 @@ There are two philosophies on building new Preludes:
   existing types and classes and masking broken bits. See
   [basic-prelude](https://hackage.haskell.org/package/numeric-prelude).
 
-I don't prescribe to the large vehicle approach, a lot of the Haskell is not
-ideal but good enough to get the job done. And interoperability with the rest of
-the ecosystem which typically uses default Base and Prelude is incredibly
-important.  In [previous posts](http://www.stephendiehl.com/posts/production.html)  I've
-written about rolling your own small-vehicle Prelude is a good idea for large
+I don't prescribe to the large vehicle approach, a lot of the default Prelude is
+not ideal but good enough to get the job done. And interoperability with the
+rest of the ecosystem, which typically uses default Base and Prelude, is
+incredibly important. 
+
+In [previous posts](http://www.stephendiehl.com/posts/production.html)  I've
+written about how rolling our own small-vehicle Prelude is a good idea for large
 teams working in industry but I left it somewhat ambiguous about what to
 include. Obviously everyone's company is different so I thought I'd expand on
 what I consider a sensible set of defaults that one could use to then build a
-custom Prelude. We'll call this a *Protolude*.
+custom Prelude.  We'll call this a *Protolude*.
 
 <p style="text-align:center">
 **[Example Project](https://github.com/sdiehl/protolude)**
@@ -234,7 +236,7 @@ maybeToRight l = maybe (Left l) Right
 maybeToLeft :: r -> Maybe l -> Either l r
 maybeToLeft r = maybe (Right r) Left
 
-maybeToEither :: Monoid b => Maybe a -> Either b a
+maybeToEither :: Monoid b => (a -> b) -> Maybe a -> b
 maybeToEither = maybe mempty
 ```
 
@@ -601,10 +603,10 @@ import System.IO as X (
 ```
 
 In a just world we'd have a generic ``putStr`` that didn't require us to put
-boilerplate imports in every damn module just to print a bloody string, but alas
-we don't live in that world. But we can implement a basic class to do this for
-the common text representation and then just export the class instead of the
-four libraries that all provide the same interface.
+boilerplate imports in every damn module just to print a string, but alas we
+don't live in that world. But we can implement a basic class to do this for the
+common text representation and then just export the class instead of the four
+libraries that all provide the same interface.
 
 ```haskell
 class Print a where
@@ -668,7 +670,7 @@ import Control.Concurrent.Async as X
 
 <hr/>
 
-Now in your cabal file you can just add:
+Now in our cabal file we can just add:
 
 ```haskell
 default-extensions:
