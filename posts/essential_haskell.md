@@ -12,7 +12,7 @@ Here is a list of papers and writings of what I consider are essential Haskell r
 * [The Essence of Functional Programming](http://homepages.inf.ed.ac.uk/wadler/papers/essence/essence.ps.gz)
 * [How to make ad-hoc polymorphism less ad hoc](http://homepages.inf.ed.ac.uk/wadler/papers/class/class.ps.gz)
 * [Monads for functional programming](http://homepages.inf.ed.ac.uk/wadler/papers/marktoberdorf/baastad.pdf)
-* [Monad Transformers: Step-By-Step](http://www.cs.virginia.edu/~wh5a/personal/Transformers.pdf)
+* [Monad Transformers: Step-By-Step](http://catamorph.de/documents/Transformers.pdf)
 * [Some interesting features of Haskell's type system](https://jeltsch.wordpress.com/2013/02/09/some-interesting-features-of-haskells-type-system/)
 * [Functional Programming with Bananas, Lenses, Envelopes and Barbed Wire](http://eprints.eemcs.utwente.nl/7281/01/db-utwente-40501F46.pdf)
 * [Applicative Programming with Effects](http://strictlypositive.org/IdiomLite.pdf)
