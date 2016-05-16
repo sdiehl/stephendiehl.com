@@ -30,7 +30,7 @@ Here is a list of papers and writings of what I consider are essential Haskell r
 * [Parallel and Concurrent Programming in Haskell](http://chimera.labs.oreilly.com/books/1230000000929)
 * [Beautiful Differentiation](http://conal.net/blog/posts/beautiful-differentiation)
 * [Typed Tagless Interpretations and Typed Compilation](http://okmij.org/ftp/tagless-final/)
-* [Species and Functors and Types, Oh My!](http://www.cis.upenn.edu/~byorgey/papers/species-pearl.pdf)
+* [Species and Functors and Types, Oh My!](http://repository.upenn.edu/cgi/viewcontent.cgi?article=1774&context=cis_papers)
 * [The Implementation of Functional Programming Languages](http://research.microsoft.com/en-us/um/people/simonpj/papers/slpj-book-1987/)
 * [Datatype-generic Programming in Haskell](http://www.andres-loeh.de/DGP-Intro.pdf)
 * [Giving Haskell a Promotion](https://research.microsoft.com/en-us/people/dimitris/fc-kind-poly.pdf)
