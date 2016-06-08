@@ -34,7 +34,7 @@ what I consider a sensible set of defaults that one could use to then build a
 custom Prelude.  We'll call this a *Protolude*.
 
 <p style="text-align:center">
-**[Example Project](https://github.com/sdiehl/protolude)**
+**[Git Project](https://github.com/sdiehl/protolude)**
 </p>
 
 

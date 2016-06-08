@@ -84,7 +84,7 @@
 <p>I don’t prescribe to the large vehicle approach, a lot of the default Prelude is not ideal but good enough to get the job done. And interoperability with the rest of the ecosystem, which typically uses default Base and Prelude, is incredibly important.</p>
 <p>In <a href="http://www.stephendiehl.com/posts/production.html">previous posts</a> I’ve written about how rolling our own small-vehicle Prelude is a good idea for large teams working in industry but I left it somewhat ambiguous about what to include. Obviously everyone’s company is different so I thought I’d expand on what I consider a sensible set of defaults that one could use to then build a custom Prelude. We’ll call this a <em>Protolude</em>.</p>
 <p style="text-align:center">
-<strong><a href="https://github.com/sdiehl/protolude">Example Project</a></strong>
+<strong><a href="https://github.com/sdiehl/protolude">Git Project</a></strong>
 </p>
 <h4 id="module-structure">Module Structure</h4>
 <p>The basic module structure is consists of a main module reexport which we’ll dump everything in called <code>X</code>. And various miscellaneous functions which we’ll reexport from the root module. Off of this we’ll have several utilities modules which have domain specific functions.</p>
