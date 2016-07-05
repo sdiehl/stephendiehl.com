@@ -25,21 +25,6 @@ internal structure of the compiler.
 **[Accompaying Source Code](https://github.com/sdiehl/dive-into-ghc)**
 </p>
 
-<!--
-> An underlying issue is one of effort budget. GHC has essentially no full-timers, unlike many open-source projects. 
-
-As someone who is heavily invested in Industrial Haskell, I'm a little concerned
-that the weight of such an enormous project falls on the shoulders of such a
-small group of part time volunteers. GHC really is the torchbearer for progress
-in functional programming and it would not take too much for that light to go
-out if priorities change or certain key individuals have career changes.
-
-GHC is really important ( at a human civilization level of importance ) and we
-have to be asking ourselves some fundamental questions about the incentive
-structures that give rise to the fact that neither academia or industry are able
-to support such an important project.
--->
-
 ***
 
 #### Official Commentary
