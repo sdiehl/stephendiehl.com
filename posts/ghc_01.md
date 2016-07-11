@@ -6,7 +6,7 @@ date: June 21, 2016
 ### Dive into GHC: Pipeline
 
 After reading [Simon's](https://ghc.haskell.org/trac/ghc/blog/ContributingToGhc)
-call for more volunteer writing about GHC I thought I would be timely to share
+call for more volunteer writing about GHC I thought it would be timely to share
 some knowledge I've accumulated over the years about working with the with GHC
 internals.
 
@@ -17,12 +17,12 @@ times simply a high-level overview and a small bit of runnable example code is
 enough to encourage further involvement with an open source project and this
 what I aim to write.
 
-So begins a mutli-part writeup on the structure of GHC structured around several
+So begins a multipart writeup on the structure of GHC structured around several
 examples that use the GHC API for some small project that shows off some
 internal structure of the compiler.
 
 <p style="text-align:center">
-**[Accompaying Source Code](https://github.com/sdiehl/dive-into-ghc)**
+**[Accompaying Source Code](https://github.com/sdiehl/dive-into-ghc/tree/master/01-pipeline)**
 </p>
 
 ***
@@ -45,21 +45,12 @@ the historical context and the research that led up to GHC today.
 
 1. [GHC Reading List](https://ghc.haskell.org/trac/ghc/wiki/ReadingList)
 
-<!--
-
-#### Building GHC
-
-
--->
-
 #### Toplevel
 
 GHC is a quirky beast of a codebase, but as far compilers go it is a fairly
 well-engineered and documented project if you know where to look. Yes, it uses a
 somewhat idiosyncratic convention in places, but after all it is a 20-year old
-codebase and for some perspective: while GHC was implementing typeclasses and
-Rank-N polymorphism while the rest of the world was meddling with Visual Basic
-and Object Pascal.
+codebase.
 
 To get the source for the compiler clone the official repo:
 
@@ -604,9 +595,8 @@ So that's our custom Mini GHCi. In practice [real
 GHCi](https://github.com/ghc/ghc/tree/master/libraries/ghci) does things a
 little differently, but some underlying machinery remains the same. Other
 features like name lookup and introspection are left as an exercise to the
-reader. A fun next project would be to create tiny shell with ``Applicative``
-and ``ApplicativeDo`` syntax instead of the usual IO embedding or to create a
-introspection tool querying the original source code of any definition in scope.
+reader. A fun next project would be to create tiny shell with an introspection
+tool querying the original source code of any definition in scope.
 
 #### Summary & Next Steps
 
