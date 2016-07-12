@@ -149,12 +149,12 @@ and identifiers while preserving the syntax tree structure.
 1. **HsType** - Frontend type annotation.
 1. **Pat** - Pattern match in a case statement or toplevel binding.
 
-There are many times of
+There are many variants of
 [identifiers](https://downloads.haskell.org/~ghc/7.10.3/docs/html/libraries/ghc-7.10.3/Var.html#t:Var)
 used in different phases of compilation. In order of generality:
 
 1. **OccName** - Simplest name used, it holds the names as strings with the namespace that the name came from and position.
-1. **RdrName** - Is the type of names that come directly from the parser. Contains information whether thane is unqualified or qualified (with module name).
+1. **RdrName** - Is the type of names that come directly from the parser. Contains information whether the name is unqualified or qualified (with module name).
 1. **Name** -  Is the type of names that have had their scoping and binding resolved. They have an OccName but also a Unique that disambiguates Names
 1. **Var** - Is the type of names that not only have a Name but also a Type. Vars are either global or local.
 
@@ -294,7 +294,7 @@ add x y = x + y
 
 After parsing we run the renamer pass which is responsible for resolving scopes,
 operator precedences, and unique'ifying all names so that clashes cannot occur.
-The renamed resolves the ``RdrName`` into ``Name`` across all syntax elements.
+The renamer resolves ``RdrName``s into ``Name``s across all syntax elements.
 In addition it annotates each name with whether they are qualified and global or
 local to the current module. If a name is not in scope, compilation simply halts
 here and reports the missing name.
@@ -327,7 +327,7 @@ data TypecheckedModule = TypecheckedModule
   }
 ```
 
-The reuslting structure is a a typechecked module which contains the toplevel
+The resulting structure is a typechecked module which contains the toplevel
 types of all bindings and all subexpressions.
 
 ```haskell
@@ -340,7 +340,7 @@ types of all bindings and all subexpressions.
     Binds: add x y = (+) x y}}
 ```
 
-The resulting datatypes has a field for ``ModuleInfo`` which contains various
+The resulting datatype has a field for ``ModuleInfo``, which contains various
 metadata about the typing environment, the names in scope, and typeclasses
 exported.
 
