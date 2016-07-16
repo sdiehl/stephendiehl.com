@@ -22,10 +22,8 @@ into the pieces that comprise the frontend of the compilation pipeline, namely:
 
 #### Passes
 
-These steps are that are used inside of the main compiler driver functions in
-``HscMain`` , and are comprised of the following interstitial transformations
-which manipulate the internal representation of Haskell module into a form that
-can be compiled into machine code or interpreted.
+The following functions are the main passes are that are used inside of the
+compiler driver functions in ``HscMain`` .
 
 ```haskell
 -- Parse a module.
@@ -43,6 +41,10 @@ coreModule :: DesugaredMod m => m -> ModGuts
 -- Generated STG bindings from Core module
 coreToStg :: DynFlags -> Module -> CoreProgram -> IO [StgBinding]
 ```
+
+Each of the these functions manipulates an *intermediate form* used in the
+process of compiling a Haskell module into a form that can be compiled into
+machine code or interpreted.
 
 #### Parser
 
@@ -215,7 +217,7 @@ intermediate forms as it's run through the compiler.
 ```haskell
 module Example where
 
-data Aniaml = Cat | Dog
+data Animal = Cat | Dog
 
 add :: Int -> Int -> Int
 add x y = x + y 
@@ -283,7 +285,7 @@ data ParsedModule = ParsedModule
 ```haskell
 ===============================Parsed Source===============================
 module Example where
-data Aniaml = Cat | Dog
+data Animal = Cat | Dog
 add :: Int -> Int -> Int
 add x y = x + y
 ```
@@ -304,7 +306,7 @@ here and reports the missing name.
 Just (add :: Int -> Int -> Int
       add x y = x + y
       
-      data Aniaml = Cat | Dog,
+      data Animal = Cat | Dog,
       [import (implicit) Prelude],
       Nothing,
       Nothing)
@@ -403,14 +405,14 @@ modInfoExports :: ModuleInfo -> [Name]
 
 ```haskell
 =========================Typed Toplevel Definitions=========================
-[Type constructor ‘Aniaml’, Data constructor ‘Cat’,
+[Type constructor ‘Animal’, Data constructor ‘Cat’,
  Data constructor ‘Dog’, Identifier ‘add’, Identifier ‘Cat’,
  Identifier ‘Dog’]
 ```
 
 ```haskell
 ===========================Typed Toplevel Exports===========================
-[Aniaml, Cat, Dog, add]
+[Animal, Cat, Dog, add]
 ```
 
 ***
