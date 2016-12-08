@@ -82,6 +82,7 @@ posts = do
   match "posts/*" $ do
     route $ setExtension "html"
     compile $ compiler
+      >>= saveSnapshot "content"
       >>= loadAndApplyTemplate "templates/default.html"    postCtx
       >>= relativizeUrls
 
@@ -107,11 +108,37 @@ archive = do
 templates :: Rules ()
 templates = match "templates/*" $ compile templateCompiler
 
+feeds :: Rules ()
+feeds = do
+  let getPosts = recentFirst =<< loadAllSnapshots "posts/*" "content"
+  let config = FeedConfiguration
+        { feedAuthorEmail = "stephen.m.diehl@gmail.com"
+        , feedAuthorName = "Stephen Diehl"
+        , feedDescription = "Stephen Diehl's blog."
+        , feedRoot = "http://www.stephendiehl.com"
+        , feedTitle = "Stephen Diehl"
+        }
+  let context = mconcat
+        [ bodyField "description"
+        , postCtx
+        ]
+  create ["feed.atom"] $ do
+    route idRoute
+    compile $ do
+      posts <- getPosts
+      renderAtom config context posts
+  create ["feed.rss"] $ do
+    route idRoute
+    compile $ do
+      posts <- getPosts
+      renderRss config context posts
+
 main :: IO ()
 main = hakyllWith cfg $ do
   static
   pages
   posts
+  feeds
   archive
   index
   templates
