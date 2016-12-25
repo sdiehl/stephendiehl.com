@@ -483,9 +483,3 @@ main = runGhc (Just libdir) $ do
 And then we get a ``Example.asm`` file outputted from our synthetic core module.
 A next step project would be to target a more complicated language to GHC Core
 to take advantage of it's compiler optimizations and native code generation.
-
-#### Summary & Next Steps
-
-We mentioned Stg and Cmm only briefly. The next time we'll dive into the
-structure of these languages, how to read their output, the big ideas that
-inform their design and their construction as Haskell types.

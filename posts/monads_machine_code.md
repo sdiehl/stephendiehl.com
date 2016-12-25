@@ -1,9 +1,9 @@
 ---
-title: Monads to Machine Code (Part 1)
+title: Monads to Machine Code
 date: January 4, 2016
 ---
 
-### Monads to Machine Code (Part 1)
+### Monads to Machine Code
 
 Just-in-time or JIT compilation is compilation done by dynamically generating
 executable code. It's a common technique used in many language runtimes to
@@ -1080,6 +1080,4 @@ $ stack exec example
 Hello Haskell
 ```
 
-So that's basic JIT compilation in a nutshell. Next time we'll add another layer
-which abstracts over register allocation, instruction selection, and converts
-from ANF into lower level control flow.
+So that's basic JIT compilation in a nutshell.
