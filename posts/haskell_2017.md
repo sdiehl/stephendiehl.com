@@ -327,7 +327,7 @@ foo = ECoerce (EFloat 3) (EInt 4)
 **OverloadedRecordFields**
 
 This was a source of great pain in previous releases where common identifiers
-like ``id`` would have to have superflous prefixes associated with each record,
+like ``id`` would have to have superfluous prefixes associated with each record,
 this is no longer an issue with the ``OverloadedRecordFields`` extension.
 
 ```haskell
@@ -486,7 +486,7 @@ informations when we have to panic or unwind the stack.
 For explicitly defined functions we can annotate call sites with a
 ``HasCallStack`` constraint which can be used to to obtain a partial call-stack
 at any point in the program. HasCallStack is a type constraint synonym for
-threading an implicit paramater ``?callStack``.
+threading an implicit parameter ``?callStack``.
 
 ```haskell
 type HasCallStack = ?callStack :: CallStack
@@ -563,7 +563,7 @@ optimized.
 
 **Compact Regions**
 
-Support for 'Compact Regionss' is planned for GHC 8.2. Compact regions are
+Support for 'Compact Regions' is planned for GHC 8.2. Compact regions are
 manually allocated regions where the data allocated inside it are compacted and
 not traversed by the GC. This is amenable for long-lived data structures that
 are resident in memory without mutation frequently occurring. William Sewell
@@ -654,8 +654,8 @@ to use-tooling.
 
 #### Probabilistic Programming
 
-Probalistic domain languages are designed to describe probabilistic models by
-allowing variables defined in the language to represent stochastic quantitaties,
+Probabilistic domain languages are designed to describe probabilistic models by
+allowing variables defined in the language to represent stochastic quantities,
 and then perform inference (Markov Chain Monte-Carlo, Gibbs Sampling, etc) on
 combinations of these stochastic models according to the structure of the their
 combination in the program. Probabilistic programming is an exciting, and
@@ -744,8 +744,8 @@ Also a friendly reminder that the NSA has likely developed the capability to
 decrypt a large number of HTTPS, SSH, and VPN connections using an attack on
 common primes used in the parameters of the Diffie-Hellman key exchange
 algorithm with keys less than 2048 bits. Some estimates also put decryption with
-the D-Wave computers within 10 years which poses a thread to current
-crytographic approachs based on the discrete-logarithm problem in finite fields
+the D-Wave computers within 10 years which poses a threat to current
+cryptographic approaches based on the discrete-logarithm problem in finite fields
 and elliptic curves.  Be safe as we go into uncertain territory in 2017.
 
 At ICFP there was a [fascinating
@@ -840,9 +840,9 @@ node.
 
 The single largest reported pain point for the Haskell language is simply from
 certain "naughty" historical things in the Prelude which no longer reflect
-modern thinking. The default Prelude makes it much too accidently shoot oneself
+modern thinking. The default Prelude makes it much too accidentally shoot oneself
 in the foot by using suboptimal String types, partial functions, impure
-exception throwing, and a variety of other papercuts.
+exception throwing, and a variety of other paper cuts.
 
 Earlier this year I released my perspective on the issue: Protolude. Protolude
 is likely the least ambitious alt-prelude ever. It doesn't do anyting new, just
@@ -1335,9 +1335,9 @@ consisted of the following traedoffs:
 > Haskell SQL libraries: endless boilerplate, opaque metaprogramming, or wall of
 > 15 language exts and no inference. Pick two.
 
-A lot of industrial Haskell I've seen sadsly still uses string interpolation for
-SQL synthesis, or fall back on libraries that use TemplateHaskell to unsafely
-lock a specific build to a snapshot of a database at compile-time. Both of these
+A lot of industrial Haskell sadly still uses string interpolation for SQL
+synthesis, or fall back on libraries that use TemplateHaskell to unsafely lock a
+specific build to a snapshot of a database at compile-time. Both of these
 trade-offs are suboptimal and fall short of what we can do in other robust
 frameworks like SQLAlchemy in Python. There's three different key points that
 need to be addressed:
@@ -1407,7 +1407,7 @@ FrontRow, Clearmatics, Standard Chartered, Digital Asset Holdings and Microsoft.
 Since last year I've been criss-crossing the globe through Germany, London,
 Paris, San Francisco, Zurich, Portland, New York and Boston doing some mix of
 advising, consulting, and investments.  Late this year, I finally ended up
-starting a new company, which I'll speak about publically in the next few
+starting a new company, which I'll speak about publicly in the next few
 months.
 
 I'm especially grateful for the warmth and kindness I felt traveling across
