@@ -271,7 +271,7 @@ allow the addition of explicit type arguments directly to polymorphic
 call-sites. For instance:
 
 ```haskell
-show (read @Int 42")
+show (read @Int "42")
 ```
 
 **Custom Type Errors**
