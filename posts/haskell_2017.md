@@ -20,6 +20,7 @@ takes to plant Haskell in a corporate environment and foster it's growth.
 1. [Four Months with Haskell](https://lexi-lambda.github.io/blog/2016/06/12/four-months-with-haskell/) by Alexis King
 1. [The Joy and Agony of Haskell in Production](http://www.stephendiehl.com/posts/production.html) by Stephen Diehl
 1. [Production Haskell](https://www.youtube.com/watch?v=AZQLkkDXy68&t=1s) by Reid Draper
+1. [The day to day practice of using Haskell to write large systems](https://skillsmatter.com/skillscasts/9098-haskell-in-the-large-the-day-to-day-practice-of-using-haskell-to-write-large-systems) by Don Stewart
 
 #### Writing
 
@@ -844,13 +845,13 @@ modern thinking. The default Prelude makes it much too accidentally shoot onesel
 in the foot by using suboptimal String types, partial functions, impure
 exception throwing, and a variety of other paper cuts.
 
-Earlier this year I released my perspective on the issue: Protolude. Protolude
-is likely the least ambitious alt-prelude ever. It doesn't do anyting new, just
-fixes Base exports with the legacy bits masked and much of the mental overload
-of String conversions smoothed over. Notably it maintains ABI compatibility with
-existing Haskell code. Judging by the number of uses of Github it seems
-well-received and is being used in the core of major projects like PostgREST and
-Purescript.
+Earlier this year I released my perspective on the issue:
+[Protolude](https://github.com/sdiehl/protolude). Protolude is likely the least
+ambitious alt-prelude ever. It doesn't do anyting new, just fixes Base exports
+with the legacy bits masked and much of the mental overload of String
+conversions smoothed over. Notably it maintains ABI compatibility with existing
+Haskell code. Judging by the number of uses of Github it seems well-received and
+is being used in the core of major projects like PostgREST and Purescript.
 
 There are plenty of other approaches to [prelude
 design](https://hackage.haskell.org/packages/#cat:Prelude) and I believe the
@@ -1089,7 +1090,7 @@ first principles. It's never been easier to learn.
 #### Javascript
 
 Javascript unfortunately continues to exist. While I remain skeptical of the
-entire transpiring phenomenon and think it will lead to an endless amount of
+entire transpiling phenomenon and think it will lead to an endless amount of
 wasted person-hours and legacy code. However the pragmatist in me also knows
 that the browser vendors are not economically incentivized to change the status
 quo, so nothing will change quickly and we should adapt ourselves to the least
