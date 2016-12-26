@@ -880,8 +880,7 @@ $ stack new protolude
 #### Foundation
 
 Alternate preludes are only routing around the problem because of the
-constraints of being unable to fix problems upstream. The [Foundation]( library
-is https://github.com/haskell-foundation/foundation) bit grander in scope and
+constraints of being unable to fix problems upstream. The [Foundation](https://github.com/haskell-foundation/foundation) library is a bit grander in scope and
 aims to fix quite a few of the overarching problems with the ecosystem.
 
 1. UTF8 based strings are default and are stored as packed array of codepoints.
