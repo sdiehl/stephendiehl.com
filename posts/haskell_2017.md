@@ -139,7 +139,7 @@ early.
 
 #### GHC
 
-The Glorious Glasgow Haskell Compiler had it's 8.0 release, and landed to to
+The Glorious Glasgow Haskell Compiler had it's 8.0 release, and landed to
 much rejoicing. It was a big release and landed quite a few new features. It
 also staged quite a bit of partial work that will be manifest in the 8.2 which
 is tentatively scheduled for release candidate in mid-February 2017 and release
