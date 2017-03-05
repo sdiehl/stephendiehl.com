@@ -91,7 +91,7 @@ For this post we'll concern ourselves with the ``compiler`` folder.
 ├── rename       # Frontend renamer
 ├── simplCore    # Core-To-Core simplifier
 ├── simplStg     # Stg-To-Stg simplifier
-├── specialise   # Specisliation pass ( Eliminates Overloading )
+├── specialise   # Specialisation pass ( Eliminates Overloading )
 ├── stgSyn       # Stg Core Language
 ├── stranal      # Strictness Analyzer
 ├── typecheck    # Typechecker
@@ -436,7 +436,7 @@ techniques used in tools like ``cabal`` and ``stack``.
 extraPkgConfs :: [PkgConfRef] -> [PkgConfRef]
 ```
 
-To modify the given dynflagas with a filepath, the following function can be
+To modify the given dynflags with a filepath, the following function can be
 used to extend the state.
 
 ```haskell
@@ -457,7 +457,9 @@ this will be discussed later.
 
 Ok, so let's a build a very small interactive shell for GHC. If you're not
 familiar with [Haskeline](http://dev.stephendiehl.com/hask/#haskeline) (the
-platform-agnostic readline abstraction) then read up on that first. 
+platform-agnostic [readline][readline] abstraction) then read up on that first. 
+
+[readline]:https://cnswww.cns.cwru.edu/php/chet/readline/rltop.html
 
 The Haskeline interface is exposed as a monad transformer ``InputT`` which
 inside of IO gives us our interactive repl monad.
