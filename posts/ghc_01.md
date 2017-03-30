@@ -178,7 +178,7 @@ data HscEnv
   }
 ```
 
-The ``hsc_dlfags`` holds the settings objects (more on this next). The
+The ``hsc_dflags`` holds the settings objects (more on this next). The
 ``hsc_targets`` holds the roots of the Module graph which are traversed
 bottom-up to build up the entire set of modules needed for compilation of the
 current package. The entire set of modules involved in this (roots and
