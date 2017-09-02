@@ -504,7 +504,7 @@ session env m = runGhc (Just libdir) $ do
 The evaluator function tries two different compilation steps. First it tries to
 compile the expression as is to see if it evaluates to a ``IO a`` action. If it
 does it is then evaluated directly within the monad. If it does not then the
-``fromDyanamic`` cast will simply yield a Nothing and we'll try to wrap the
+``fromDynamic`` cast will simply yield a Nothing and we'll try to wrap the
 expression in a print statement. The resulting compiled expression is guaranteed
 to be an ``IO a`` so we unsafely coerce the compiled code pointer that GHC gives
 us into IO and run it.
