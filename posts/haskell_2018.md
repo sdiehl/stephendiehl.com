@@ -17,9 +17,10 @@ is eight times as large as last year. At least seven new companies came into
 existence and many existing firms unexpectedly dropped large open source Haskell
 projects into the public sphere. Driven by a lot of software catastrophes, the
 intersection of security, software correctness and formal methods have been
-become quite active area across industry and academia. It's really never been an
-easier and more exciting time to be programming professionally in the world's
-most advanced (yet usable) statically typed language.
+become quite an active area of investment and research across both industry and
+academia. It's really never been an easier and more exciting time to be
+programming professionally in the world's most advanced (yet usable) statically
+typed language.
 
 Per what I guess is now a tradition, I will write my end of year retrospective
 on my highlights of what happened in the Haskell scene in retrospect.
@@ -197,8 +198,8 @@ the binder
 
 Simon Peyton Jones presented the keynote at Haskell Exchange on his
 collaboration on [Compiling without
-Continuation](https://skillsmatter.com/skillscasts/9182-keynote-compiling-without-continuations).
-Which present the ideas and core optimizations that are allowed by the new join
+Continuation](https://skillsmatter.com/skillscasts/9182-keynote-compiling-without-continuations)
+which present the ideas and core optimizations that are allowed by the new join
 points.
 
 **Deriving Strategies**
@@ -584,7 +585,7 @@ also released Smudge a tool for doing developemtn and [analysis of large state
 machines](https://github.com/Bose/Smudge) for hardware testing.
 
 Florian Knupfer released a new high-performance HTML [combinator
-library](https://github.com/knupfer/type-of-html) for tempesting.
+library](https://github.com/knupfer/type-of-html) for templating.
 
 Galois continued with HalVM unikernel continued development this year, and
 several [HalVM Docker
@@ -826,6 +827,6 @@ Most of the videos are freely available online.
 <img src="/images/zurihac.jpg" style="width: 100%" alt="Haskellers by the lake in Rapperswil, Switzerland"/>
 
 In 2018 I have plans to visit Zurich, Sydney, Budapest, Amsterdam, San
-Francisco, Copenhagen and Tokyo this year. Hopefully I get to meet more
+Francisco, Paris, Copenhagen and Tokyo this year. Hopefully I get to meet more
 Haskellers and share some ideas about the future of our beautiful language.
 Until then, Merry Christmas and Happy New Haskell Year. 
