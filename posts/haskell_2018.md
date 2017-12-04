@@ -533,7 +533,7 @@ situation aren't going to change anytime soon is that no one person or company
 has the economic means to champion such a change. It would be enormously
 expensive and any solution will never satisfy everyone's concerns and desires.
 *Consensus is expensive*, while making everything opt-in is relatively cheap.
-This is ultimately the equilibrium we've converged on and baring some large sea
+This is ultimately the equilibrium we've converged on and barring some large sea
 change the language is going to remain in this equilibrium.
 
 #### Haskell Survey
