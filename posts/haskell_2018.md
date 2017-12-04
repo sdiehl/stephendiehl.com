@@ -516,7 +516,7 @@ Michael Burge wrote a cheeky article about extracting a specification for a
 browser](http://www.michaelburge.us/2017/08/25/writing-a-formally-verified-porn-browser-in-coq.html)
 from Coq into Haskell.
 
-#### Pragma Proflieration & Prelude
+#### Pragma Proliferation & Prelude
 
 Writing Haskell is almost trivial in practice. You just start with the magic
 fifty line `{-# LANGUAGE ... #-}` incantation to fast-forward to 2017,
