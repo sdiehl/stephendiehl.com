@@ -7,6 +7,7 @@ date: November 23, 2017
 
 Alas, another year has come and gone. It feels like just yesterday I was writing
 the last reflection blog post on my flight back to Boston for Christmas. I've
+spent most of the last year traveling and working in Europe, meeting a lot of
 new Haskellers and putting a lot of faces to names.
 
 Haskell has had a great year and 2017 was defined by vast quantities of new
