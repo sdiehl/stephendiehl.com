@@ -676,7 +676,7 @@ RestructuredText would allow easy migration of existing documentation.
 This year saw two new approaches to Haskell database integration:
 
 1. [Selda](https://github.com/valderman/selda) - A library interacting with relational databases inspired by LINQ and Opaleye.
-1. [Squel](https://github.com/morphismtech/squeal) -  A deep embedding of PostgreSQL in Haskell using generics-sop.
+1. [Squeal](https://github.com/morphismtech/squeal) -  A deep embedding of PostgreSQL in Haskell using generics-sop.
 
 This still remains an area in the ecosystem where many solutions end up
 needlessly falling back to TemplateHaskell to generate data structures and
