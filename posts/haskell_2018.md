@@ -137,7 +137,7 @@ main = compact (B.pack ['a'..'c'])
 ```
 
 The [test suite](https://github.com/shlevy/ghc/tree/f1dfce1cb2a823696d6d3a9ea41c2bc73d949f12/libraries/compact/tests)
-inside GHC maintains the best illustrations of it's use for complex non-traditional data structures.
+inside GHC maintains the best illustrations of its use for complex non-traditional data structures.
 
 **Type.Reflection**
 
