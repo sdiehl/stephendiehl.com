@@ -263,7 +263,7 @@ unit str-list where
         len = length
 ```
 
-The modules can then be opened as speific namespaces with the exported functions
+The modules can then be opened as specific namespaces with the exported functions
 able to be called over both module types.
 
 ```haskell
@@ -332,7 +332,7 @@ Arnaud Spiwack prototyped a [extension of
 GHC](https://github.com/tweag/linear-types) which augments the type system with
 linear types. [Edsko de
 Vries](http://edsko.net/2017/01/08/linearity-in-haskell/) wrote a detailed blog
-post about the nature of linearity and it's uses.
+post about the nature of linearity and its uses.
 
 The proposal extends the typing of functions to include linearity constraints on
 arrows, enforcing that variables or references are created and consumed with
@@ -342,7 +342,7 @@ lifetime constraints on closures and eliminating long-lived memory from being
 used with constructed unbounded lifetimes, thereby eliminating garbage
 collection for some Haskell functions.
 
-For instance use of the linear arrow ``(a ->. b)`` can enrich the existing raw
+For instance, use of the linear arrow ``(a ->. b)`` can enrich the existing raw
 memory access functions enforcing the matching of allocation and free commands
 statically. The multiplicity of usage is either ``0``, ``1`` or ``ω`` and the
 linear arrow is syntatic sugar for unit multiplicity are aliases for ``(:'1
@@ -426,9 +426,9 @@ isJust (Data.Maybe.Just x)  = true
 isJust (Data.Maybe.Nothing) = false 
 ```
 
-This year saw the addition of inductive predicates allowing more complex
+This year saw the addition of inductive predicates, allowing more complex
 properties about non-arithmetic refinements to be checked. Including properties
-about lists 
+about lists:
 
 ```haskell
 measure len :: [a] -> Int
@@ -445,13 +445,13 @@ append :: xs:[a] -> ys:[a] -> {v:[a]| len v = len xs + len ys}
 
 The full library of specifications is now quite extensive and adding
 [LiquidHaskell](https://github.com/ucsd-progsys/liquidhaskell/blob/develop/include)
-to an existing codebase is pretty seamelss
+to an existing codebase is pretty seamless.
 
 #### Foundation
 
 Foundation is an alternative Prelude informed by modern design practices and
 data structures. It ships a much more sensible and efficient packed array of
-UTF8 points as it's default [`String`](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation-String.html)
+UTF8 points as its default [`String`](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation-String.html)
 type. Rethinks the `Num` [numerical tower](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation-Numerical.html) , and statically distinguishes [partial functions](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation.html#t:Partial).
 Also has fledgling documentation beyond just
 
@@ -557,7 +557,7 @@ became one of the larger languages which is itself written in Haskell.
 
 The most prolific Haskell library Pandoc released its version 2.0.
 
-Several other groups published new compilers in the Haksell-family of languages.
+Several other groups published new compilers in the Haskell-family of languages.
 Intel finally open sourced the [Intell Haskell
 compiler](https://github.com/IntelLabs/flrc) which was a research project in
 more optimal compilation techniques. Morgan Stanley also released
@@ -566,8 +566,8 @@ internally at the bank featuring several novel extensions to row-types and C++
 FFI integration. A prototype Haskell compiler was also written in
 [Rust](https://github.com/Marwes/haskell-compiler).
 
-The SMT solver integration library SBV saw a major rewrite of it's internal and
-it's old [tactics
+The SMT solver integration library SBV saw a major rewrite of its internal and
+its old [tactics
 system](https://hackage.haskell.org/package/sbv-7.3/docs/Data-SBV-Control.html).
 The library is heavily used in various projects as an interface to Z3 and CVC4
 solvers.
@@ -581,13 +581,13 @@ their commercial offering.
 The Advanced Telematic Systems group in Berlin released a Quickcheck family
 library for doing for property testing of models about [state
 machines](https://github.com/advancedtelematic/quickcheck-state-machine).  Bose
-also released Smudge a tool for doing developemtn and [analysis of large state
+also released Smudge a tool for doing development and [analysis of large state
 machines](https://github.com/Bose/Smudge) for hardware testing.
 
 Florian Knupfer released a new high-performance HTML [combinator
 library](https://github.com/knupfer/type-of-html) for templating.
 
-Galois continued with HalVM unikernel continued development this year, and
+Galois continued with HalVM unikernel development this year, and
 several [HalVM Docker
 Imagaes](https://github.com/GaloisInc/HaLVM/wiki/Using-Docker-and-the-HaLVM)
 were published allowing a very convenient way to write and test code against
@@ -666,7 +666,7 @@ GHC.Proof proved 1 equalities
 
 Haddock is creaking at the seams. Most large Haskell projects (GHC, Stack, Agda,
 Cabal, Idris, etc) no longer use it for documentation. The codebase is dated and
-long standing issue like dealing with reexported modules are still open.
+long standing issues like dealing with reexported modules are still open.
 
 There is a large vacuum for a better solution to emerge and compatibility with
 RestructuredText would allow easy migration of existing documentation.
