@@ -508,7 +508,7 @@ converts haskell code to equivalent Coq code.
 
 The Galois group started [formalizing the
 semantics](https://github.com/GaloisInc/cryptol-semantics) of Cryptol, a
-compiler compiler for high-assurance cryptographic protocols which is itself
+compiler for high-assurance cryptographic protocols which is itself
 written in Haskell.
 
 Michael Burge wrote a cheeky article about extracting a specification for a
