@@ -555,7 +555,7 @@ to find*, and don't *integrate well*.
 Idris, the experimental dependently typed language, reached 1.0 release and
 became one of the larger languages which is itself written in Haskell.
 
-The most prolific Haskell library Pandoc release it's version 2.0.
+The most prolific Haskell library Pandoc released its version 2.0.
 
 Several other groups published new compilers in the Haksell-family of languages.
 Intel finally open sourced the [Intell Haskell
