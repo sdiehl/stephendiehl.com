@@ -406,11 +406,11 @@ hasZero (x:xs) = x == 0 || (hasZero xs)
 
 type HasZero = {v : [Int] | (hasZero v)}
 
--- Accepted
+-- Rejected
 xs :: HasZero
 xs = [1,2,3,4]
 
--- Rejected
+-- Accepted
 ys :: HasZero
 ys = [0,1,2,3]
 ```
