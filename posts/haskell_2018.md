@@ -797,7 +797,7 @@ have published Haskell open sources libraries follows:
 | Bose                 |
 +----------------------+
 
-There are three consulting companies also supporting Haskell in industry.
+There are four consulting companies also supporting Haskell in industry.
 
 +----------------------+
 | Consultancies        |
@@ -807,6 +807,8 @@ There are three consulting companies also supporting Haskell in industry.
 | Tweag                |
 +----------------------+
 | FP Complete          |
++----------------------+
+| Obsidian Systems     |
 +----------------------+
 
 #### Conferences
