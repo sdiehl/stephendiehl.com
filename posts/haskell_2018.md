@@ -94,7 +94,7 @@ greater use of more transparent platforms such as Github for GHC development.
 
 There is work on a major refactor of the AST types to use the new [Trees that
 Grow](https://ghc.haskell.org/trac/ghc/wiki/ImplementingTreesThatGrow) research
-to allow GHC API user to extend the AST for their own purposes,Eventually this
+to allow GHC API user to extend the AST for their own purposes. Eventually this
 may allow the split of the AST types out of the ghc package, allowing tooling
 authors, Template Haskell users, and the compiler itself to use the same AST
 representation.
