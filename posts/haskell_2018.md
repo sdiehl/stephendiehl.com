@@ -392,7 +392,7 @@ patches could be integrated quite quickly in GHC.
 #### LiquidHaskell
 
 [LiquidHaskell](https://ucsd-progsys.github.io/liquidhaskell-blog/) the large
-sutie of tools for adding refinement types to GHC Haskell continued development
+suite of tools for adding refinement types to GHC Haskell continued development
 and became considerably more polished. At HaskellExchange several companies were
 using it in anger in production. For example, we can enforce statically the
 lists given at compile-time statically cannot contain certain values by
