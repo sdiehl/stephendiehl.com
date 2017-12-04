@@ -519,8 +519,8 @@ from Coq into Haskell.
 #### Pragma Proflieration & Prelude
 
 Writing Haskell is almost trivial in practice. You just start with the magic
-fifty line `{-# LANGUAGE ... #-}` incantation to fast-forward to 2017, add
-then add  150 libraries that you've blessed by trial and error to your cabal
+fifty line `{-# LANGUAGE ... #-}` incantation to fast-forward to 2017,
+then add 150 libraries that you've blessed by trial and error to your cabal
 file, and then just write down a single type signature whose inhabitant is
 `Refl` to your program. In fact if your program is longer than your import list
 you're clearly doing Haskell all wrong.
