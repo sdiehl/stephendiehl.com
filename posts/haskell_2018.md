@@ -194,7 +194,7 @@ points](https://ghc.haskell.org/trac/ghc/wiki/SequentCore) which modifies GHC
 Core to optimize for join points in code. In Core, a *join point* is a specially
 tagged function whose only occurrences are saturated tail calls. In the actual
 GHC Core AST, a join point is simple bit of metadata indicated by `IdDetails` of
-the binder
+the binder.
 
 Simon Peyton Jones presented the keynote at Haskell Exchange on his
 collaboration on [Compiling without
