@@ -65,7 +65,7 @@ which is freely available and also generated as
 [PDF](https://github.com/hmemcpy/milewski-ctfp-pdf/releases/download/v0.4/category-theory-for-programmers.pdf).
 
 Brent Yorgey drafted a new course for teaching introduction to Computer Science
-using Haksell at [Hendrix
+using Haskell at [Hendrix
 University](http://ozark.hendrix.edu/~yorgey/360/f16/). Dmitry Kovanikov and
 Arseniy Seroka also drafted a course for a wide variety of [intermediate to
 advanced Haskell topics](https://github.com/jagajaga/FP-Course-ITMO) at ITMO
