@@ -83,9 +83,9 @@ Semigroup is now a [superclass of Monoid](
 https://prime.haskell.org/wiki/Libraries/Proposals/SemigroupMonoid).
 
 There was quite a bit of work on GHC [cross
-compilation](https://medium.com/@zw3rk/the-haskell-cabal-and-cross-compilation-e9885fd5e2f)
-to ARM. The new build system [Hadrian](https://github.com/snowleopard/hadrian) has been
-in work for the past three years, has was finally been merged into the GHC tree.
+compilation](https://medium.com/@zw3rk) to ARM. The new build system
+[Hadrian](https://github.com/snowleopard/hadrian) has been in work for the past
+three years, has was finally been merged into the GHC tree.
 
 The DevOps Group has officially started and is being funded to help maintain the
 infrastructure used to host Haskell packages and build GHC. The general push of
