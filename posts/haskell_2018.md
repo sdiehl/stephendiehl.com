@@ -317,7 +317,7 @@ In a collaboration with Joachim Breitner and myself at Zurihac a type-safe LLVM
 library which embeds the semantics of LLVM instructions into the Haskell
 [type-system](https://github.com/llvm-hs/llvm-hs-typed) was written.
 
-Siddharth Brat started work on an STG to LLVM backend
+Siddharth Bhat started work on an STG to LLVM backend
 [simplehxc](https://pixel-druid.com/blog/announcing-simplexhc/) before doing a
 rewrite in C++.
 
