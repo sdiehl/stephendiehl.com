@@ -702,7 +702,7 @@ Tom Nielson is furiously working on a
 [suite](https://github.com/diffusionkinetics/open) of of projects, mostly
 related to data science, machine learning and statistics in Haskell.
 
-The [Accelerate project](https://github.com/Accelerate) has been seeing a lot of
+The [Accelerate project](https://github.com/AccelerateHS) has been seeing a lot of
 development work recently and now has support for latest versions of LLVM and
 CUDA through llvm-hs project.
 
