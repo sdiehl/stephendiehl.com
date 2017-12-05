@@ -453,7 +453,7 @@ Foundation is an alternative Prelude informed by modern design practices and
 data structures. It ships a much more sensible and efficient packed array of
 UTF8 points as its default [`String`](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation-String.html)
 type. Rethinks the `Num` [numerical tower](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation-Numerical.html) , and statically distinguishes [partial functions](https://hackage.haskell.org/package/foundation-0.0.17/docs/Foundation.html#t:Partial).
-Also has fledgling documentation beyond just
+Also has fledgling documentation beyond just ???
 
 Last year Foundation was a bit early, but this year at Zurihac several companies
 in London reported using it fully in production as a full industrial focused
