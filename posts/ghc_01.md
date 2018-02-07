@@ -96,7 +96,7 @@ For this post we'll concern ourselves with the ``compiler`` folder.
 ├── stranal      # Strictness Analyzer
 ├── typecheck    # Typechecker
 ├── types        # Type language, data constructors, and type families
-├── utils        # Misc functions and core data sstructures
+├── utils        # Misc functions and core data structures
 └── vectorise    # Vectorisation optimiations
 ```
 
