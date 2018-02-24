@@ -35,7 +35,7 @@ $ make
 License
 -------
 
-Copyright (c) 2012-2017, Stephen Diehl
+Copyright (c) 2012-2018, Stephen Diehl
 
 All written content on this site is provided under a Creative Commons ShareAlike
 license. All code is provided under a MIT license unless otherwise stated.
