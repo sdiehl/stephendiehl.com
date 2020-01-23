@@ -37,6 +37,12 @@ interesting story about the internal corporate politics of this project and as
 such I thought it apt to do some diligence on what I see as a truly strange set
 of architectural choices that break the entire system and put consumers at risk.
 
+There is another technical review of this architecture from
+[mcclure111](https://twitter.com/mcclure111/status/1142485680515366913) which
+comes to similar conclusion about the apparent faux-innovation and mental
+gymnastics this project does to pretend to be a decentralised blockchain when
+it's actually just a slow replicated database for shadow banking.
+
 I won't pretend to have an objective opinion about Facebook as a company. Few
 people in tech view the company in a positive light anymore. Reading through the
 publications released, it is clear there is a fundamental deception in the
@@ -126,7 +132,7 @@ aren't really problems in nation states which have modernised their clearing
 infrastructure in the last decade.  For retail consumers in the European Union,
 moving money is simply a non-issue.  It can be done simply with a standard
 smartphone in seconds with traditional infrastructure. For large corporate
-treasury debarments there are different mechanisms and regulations involved for
+treasury department there are different mechanisms and regulations involved for
 moving large quantities of money.
 
 There is no technical reason that cross border payments could also not settle
@@ -227,9 +233,6 @@ these libraries have had security audits nor do they have standard practice
 disclosure policies.  Several core libraries in particular are indeterminate
 about their vulnerabilities to side channel and timing attacks.
 
-1. [ed25519-dalek](https://github.com/calibra/ed25519-dalek.git)
-2. [curve25519-dalek](https://github.com/calibra/curve25519-dalek)
-
 The library gets even more experimental and ventures quite outside the
 [Cryptography Standard
 Model](https://en.wikipedia.org/wiki/Standard_model_(cryptography)) by folding
@@ -256,10 +259,10 @@ render services. There are similar regulations across EU, Asia and North
 America.
 
 The current Libra design includes no protocol to comply with consumer protection
-laws and has clear plan to build one. Even worse, from an data architecture the
-finality of the core authenticated data structure based on a Merkle accumulator
-state admits no mechanism to build this into the core ledger without a redesign
-of the core.
+laws and has no clear plan to build one. Even worse, from an data architecture
+the finality of the core authenticated data structure based on a Merkle
+accumulator state admits no mechanism to build this into the core ledger without
+a redesign of the core.
 
 ***
 
