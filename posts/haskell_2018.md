@@ -796,6 +796,8 @@ have published Haskell open sources libraries follows:
 +----------------------+
 | Bose                 |
 +----------------------+
+| Symbiont             |
++----------------------+
 
 There are four consulting companies also supporting Haskell in industry.
 
